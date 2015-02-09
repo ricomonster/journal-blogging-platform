@@ -48,12 +48,4 @@ class ApiAuthController extends ApiController
         return $this->setStatusCode(401)
             ->respondWithError('Incorrect username or password');
     }
-
-    public function logout()
-    {
-        // destroy auth
-        Auth::logout();
-
-        return redirect('journal/login');
-    }
 }

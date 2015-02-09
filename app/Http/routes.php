@@ -20,6 +20,10 @@ Route::group(['prefix' => 'journal'], function() {
 	Route::get('login', 'AuthController@login');
 	Route::get('logout', 'AuthController@logout');
 
+	Route::get('/', function() {
+		return redirect('/journal/posts');
+	});
+
 	// must be logged in routes
 	Route::group(['middleware' => 'auth'], function() {
 		Route::get('settings', 'SettingsController@index');

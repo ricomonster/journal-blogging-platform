@@ -9,6 +9,7 @@
     <title>Journal</title>
     <link href="/vendor/stylesheets/bootstrap.min.css" rel="stylesheet">
     <link href="/vendor/stylesheets/font-awesome.min.css" rel="stylesheet">
+    <link href="/vendor/stylesheets/bootstrap-notify.css" rel="stylesheet">
     <style>
         /* Get Font from Google Fonts */
         @import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700);
@@ -107,7 +108,8 @@
 <div class="notifications top-right"></div>
 
 <script src="/vendor/javascript/jquery.min.js"></script>
-{{--<script src="{{ asset(journal_path('js/plugins/bootstrap-notify.min.js')) }}"></script>--}}
+<script src="/vendor/javascript/bootstrap.min.js"></script>
+<script src="/vendor/javascript/bootstrap-notify.js"></script>
 <script>
     (function($) {
         $('#login_form').on('submit', function(e) {
@@ -128,12 +130,13 @@
                 }
             }).error(function(error) {
                 if(error.responseJSON.errors) {
-//                    $('.top-right').notify({
-//                        type : 'danger',
-//                        message: { text: error.responseJSON.errors.message },
-//                        fadeOut: { enabled: true, delay: 10000 }
-//                    }).show();
+                    $('.top-right').notify({
+                        type : 'danger',
+                        message: { text: error.responseJSON.errors.message },
+                        fadeOut: { enabled: true, delay: 10000 }
+                    }).show();
                 }
+
                 form.find('button[type="submit"]').removeAttr('disabled')
                         .addClass('btn-disabled');
             });

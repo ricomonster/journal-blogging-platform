@@ -84,13 +84,18 @@ var Editor = {
         }).done(function(response) {
             if(response.data) {
                 var post = response.data.post;
+                // check if post id exists
+                if ($('input[name="post_id"]').val() == '') {
+                    window.location.href = window.location.href + '/' + post.id;
+                }
+
                 // populate inputs
                 $('input[name="title"]').val(post.title);
                 $('input[name="slug"]').val(post.slug);
                 // update ui
                 Editor.setSubmitButton();
                 // show success message
-                //notification(response.data.message, 'success');
+                Journal.notification(response.data.message, 'success');
                 // show delete link
                 $('.delete-this-post').show();
                 // update post id
@@ -99,7 +104,7 @@ var Editor = {
                 $('input[name="post_status"]').val(post.status);
             }
         }).error(function(error) {
-            //notification(error.responseJSON.errors.message, 'danger');
+            Journal.notification(error.responseJSON.errors.message, 'danger');
         });
     },
     /**
@@ -154,7 +159,7 @@ var Editor = {
         // validate first if the id is 0
         if(postId == 0) {
             // show notification
-            notification('Something went wrong. Please try again later.', 'danger');
+            Journal.notification('Something went wrong. Please try again later.', 'danger');
             // close modal
             $('#delete_posts_modal').modal('hide');
             return;

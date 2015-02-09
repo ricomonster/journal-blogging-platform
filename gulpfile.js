@@ -22,6 +22,8 @@ gulp.task('build-assets', function() {
   // bootstrap
   'bower_components/bootstrap/dist/js/bootstrap.js',
   'bower_components/bootstrap/dist/js/bootstrap.min.js',
+  // bootstrap notify
+  'bower_components/bootstrap-notify/js/bootstrap-notify.js',
   // codemirror
   'bower_components/codemirror/lib/codemirror.js',
   // jquery
@@ -41,6 +43,8 @@ gulp.task('build-assets', function() {
   'bower_components/bootstrap/dist/css/bootstrap.css',
   'bower_components/bootstrap/dist/css/bootstrap.min.css',
   'bower_components/bootstrap/dist/css/bootstrap.css.map',
+  // bootstrap notify
+  'bower_components/bootstrap-notify/css/bootstrap-notify.css',
   // codemirror
   'bower_components/codemirror/lib/codemirror.css',
   // font awesome

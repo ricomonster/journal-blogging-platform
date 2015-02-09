@@ -7,6 +7,7 @@
     <title>@yield('title') &lsaquo; [Site Title] &#8212; Journal</title>
     <link href="/vendor/stylesheets/bootstrap.min.css" rel="stylesheet">
     <link href="/vendor/stylesheets/font-awesome.min.css" rel="stylesheet">
+    <link href="/vendor/stylesheets/bootstrap-notify.css" rel="stylesheet">
     <link href="/stylesheets/screen.css" rel="stylesheet">
     <style type="text/css">
         /* Notifications plugin */
@@ -186,6 +187,8 @@
 
     <script src="/vendor/javascript/jquery.min.js"></script>
     <script src="/vendor/javascript/bootstrap.min.js"></script>
+    <script src="/vendor/javascript/bootstrap-notify.js"></script>
+    <script src="/javascript/journal.min.js"></script>
     <script>
         //NProgress.configure({ showSpinner: false });
 
@@ -220,15 +223,6 @@
                 $('body').removeClass('transition-sidebar');
             }
         });
-
-        function notification(message, type) {
-            $('.top-right').notify({
-                type : type,
-                message: { text: message },
-                transition : 'fade',
-                fadeOut: { enabled: true, delay: 10000 }
-            }).show();
-        }
     </script>
     @yield('footer.js')
 </body>
