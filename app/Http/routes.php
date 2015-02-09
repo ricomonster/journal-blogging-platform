@@ -16,7 +16,7 @@
 | Admin Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['prefix' => 'journal'], function() {
+Route::group(['prefix' => 'journal', 'middleware' => 'installation'], function() {
 	Route::get('login', 'AuthController@login');
 	Route::get('logout', 'AuthController@logout');
 
@@ -43,6 +43,15 @@ Route::group(['prefix' => 'journal'], function() {
 			Route::get('add', 'UsersController@addUser');
 		});
 	});
+});
+
+/*
+|--------------------------------------------------------------------------
+| Installer Routes
+|--------------------------------------------------------------------------
+*/
+Route::group(['prefix' => 'installer'], function() {
+	Route::get('/', 'InstallerController@index');
 });
 
 /*

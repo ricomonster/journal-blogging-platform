@@ -46,4 +46,11 @@ interface SettingRepositoryInterface
      * @return mixed
      */
     public function delete($setting);
+
+    /**
+     * Checks the installation of the platform
+     *
+     * @return bool
+     */
+    public function installation();
 }

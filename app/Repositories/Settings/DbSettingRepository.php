@@ -2,6 +2,7 @@
 namespace Journal\Repositories\Settings;
 
 use Journal\Setting;
+use Schema;
 
 class DbSettingRepository implements SettingRepositoryInterface
 {
@@ -117,5 +118,20 @@ class DbSettingRepository implements SettingRepositoryInterface
     public function delete($setting)
     {
 
+    }
+
+    /**
+     * Checks the installation of the platform
+     *
+     * @return bool
+     */
+    public function installation()
+    {
+        // check if there's a setting table or a row with a key of installed
+        if (Schema::hasTable('settings') && $this->get('installed')) {
+            return true;
+        }
+
+        return false;
     }
 }

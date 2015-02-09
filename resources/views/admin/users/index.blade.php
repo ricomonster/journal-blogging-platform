@@ -37,7 +37,7 @@ Users
 		@foreach($users as $key => $user)
 		<article class="user-details">
 			<a href="#" class="user-hyperlink clearfix">
-				<img src="/images/shared/default_avatar.png" class="user-avatar img-circle"/>
+				<img src="http://41.media.tumblr.com/d7a4552d99639890d00b5e85d9a18673/tumblr_mldfty8fh41qcnibxo1_1280.png" class="user-avatar img-circle"/>
 				<div class="user-content">
 					<h3 class="user-name">{{ $user->name }}</h3>
 					<p class="text-muted last-login">Last login</p>
