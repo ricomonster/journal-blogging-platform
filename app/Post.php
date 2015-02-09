@@ -1,0 +1,78 @@
+<?php //-->
+namespace Journal;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Post extends Model {
+    /**
+     * Table associated with the model
+     *
+     * @var string
+     */
+    protected $table = 'posts';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = array('author_id', 'title', 'content', 'slug', 'status',
+        'active', 'published_at');
+
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = array('tag');
+
+    /**
+     * The attributes/accessors that will be accessed via JSON or array
+     *
+     * @var array
+     */
+    protected $appends = array('tags');
+
+    /**
+     * User/Author Relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function author()
+    {
+        return $this->belongsTo('Journal\User', 'author_id');
+    }
+
+    /**
+     * Tags Relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tag()
+    {
+        return $this->belongsToMany('Journal\Tag', 'post_tag', 'post_id', 'tag_id');
+    }
+    /**
+     * Customized the structure for the tags
+     *
+     * @return array
+     */
+    public function getTagsAttribute()
+    {
+        // get tags
+        $postTags = $this->relations['tag'];
+        // check if there
+        if(!isset($postTags)) {
+            return [];
+        }
+        $tagValues = [];
+        // check if tags is not empty
+        if(!empty($postTags)) {
+            $tagValues = array();
+            foreach($postTags as $key => $postTag) {
+                $tagValues[] = $postTag->tag;
+            }
+        }
+        return $tagValues;
+    }
+}
