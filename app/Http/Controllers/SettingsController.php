@@ -7,7 +7,9 @@ class SettingsController extends Controller
 {
     public function appearance()
     {
-        return view('admin.settings.appearance');
+        return view('admin.settings.appearance', [
+            'themes' => $this->themes()
+        ]);
     }
 
     public function index(SettingRepositoryInterface $settingsRepository)

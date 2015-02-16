@@ -5,7 +5,7 @@ Appearance
 
 @section('body')
 <style type="text/css">
-	.appearance-settings-page .page-header { padding: 20px 0 0; }
+	.appearance-settings-page .page-header { padding: 5px 0 15px; }
 </style>
 <section class="main-content appearance-settings-page centered">
 	<header class="page-header">
@@ -13,6 +13,16 @@ Appearance
 	</header>
 	<section class="content-wrapper centralized">
 		<form method="post" id="appearance_settings_form" autocomplete="off">
+			<div class="form-group">
+				<label class="control-label" for="themes">Themes</label>
+				<select name="theme" class="form-control">
+					<option value="" selected>-- Select your theme --</option>
+					@foreach($themes as $key => $theme)
+					<option value="{{ $key }}">{{ $theme }}</option>
+					@endforeach
+				</select>
+				<span class="help-block">Select the theme of your blog.</span>
+			</div>
 			<div class="form-group">
 				<label class="control-label" for="blog_logo">Blog logo</label>
 				<a href="#" class="btn btn-success pull-right">Upload image</a>
@@ -41,7 +51,7 @@ Appearance
 @stop
 @section('footer.js')
 <script type="text/javascript">
-	$('#settings_uploader_modal').modal('show');
+	//$('#settings_uploader_modal').modal('show');
 </script>
 <script type="text/javascript">
 	(function($) {

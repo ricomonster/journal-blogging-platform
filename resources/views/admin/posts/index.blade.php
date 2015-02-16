@@ -3,7 +3,7 @@
 
 @section('body')
 <style type="text/css">
-	.post-list-page .page-header { padding: 20px 20px 0 20px; }
+	.post-list-page .page-header { padding: 5px 20px 0 20px; }
 	.post-list-page .page-header .hero-title { float: left; }
 	.post-list-page .content-wrapper {
 		-webkit-overflow-scrolling: touch;
@@ -15,7 +15,7 @@
 		overflow-y: auto;
 		position: absolute;
 		right: 0;
-		top: 135px;
+		top: 115px;
 	}
 
 	.post-list-page .content-wrapper .list-of-posts {

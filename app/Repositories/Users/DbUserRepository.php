@@ -27,9 +27,7 @@ class DbUserRepository implements UserRepositoryInterface {
             'password'      => Hash::make($password),
             'name'          => $name,
             'role'          => $role,
-            'slug'          => $this->validateSlug($name),
-            'updated_at'    => time(),
-            'created_at'    => time()));
+            'slug'          => $this->validateSlug($name)));
     }
     /**
      * Returns all active user
@@ -78,13 +76,13 @@ class DbUserRepository implements UserRepositoryInterface {
         $user = $this->findById($id);
         // update
         $user->fill(array(
-            'email' => $email,
-            'name' => $name,
+            'email'         => $email,
+            'name'          => $name,
             'biography'     => $biography,
             'website'       => $website,
             'location'      => $location,
-            'slug'          => $this->validateSlug($name, $id),
-            'updated_at'    => time()))->save();
+            'slug'          => $this->validateSlug($name, $id)))->save();
+
         return $user;
     }
     /**

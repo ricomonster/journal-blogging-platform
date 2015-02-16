@@ -5,7 +5,7 @@ Settings
 
 @section('body')
 <style type="text/css">
-    .general-settings-page .page-header { padding: 20px 0 0; }
+    .general-settings-page .page-header { padding: 5px 0 15px; }
 </style>
 <section class="main-content general-settings-page centered">
     <header class="page-header">

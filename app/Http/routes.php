@@ -52,6 +52,11 @@ Route::group(['prefix' => 'journal', 'middleware' => 'installation'], function()
 */
 Route::group(['prefix' => 'installer'], function() {
 	Route::get('/', 'InstallerController@index');
+	Route::get('account', 'InstallerController@account');
+	Route::get('blog', 'InstallerController@blog');
+
+	Route::post('create_account', 'InstallerController@createAccount');
+	Route::post('setup_blog', 'InstallerController@setupBlog');
 });
 
 /*
@@ -91,5 +96,7 @@ Route::group(['prefix' => 'api/v1'], function() {
 | Blog Routes
 |--------------------------------------------------------------------------
 */
-Route::get('/', 'BlogController@index');
-Route::get('posts/{id}', 'BlogController@posts');
+Route::group(['middleware' => 'installation'], function() {
+	Route::get('/', 'BlogController@index');
+	Route::get('posts/{id}', 'BlogController@posts');
+});

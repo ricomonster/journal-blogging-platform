@@ -20,6 +20,7 @@ class ApiUsersController extends ApiController
         $email      = Input::get('email');
         $password   = Input::get('password');
         $name       = Input::get('name');
+        $role       = Input::get('role');
 
         // validate
         $messages = $users->validateCreate($email, $password, $name);
@@ -31,8 +32,11 @@ class ApiUsersController extends ApiController
                 ->respondWithError($messages);
         }
 
+        // check if role is set
+        $role = (empty($role)) ? '2' : $role;
+
         // create user
-        $user = $users->create($email, $password, $name, 2);
+        $user = $users->create($email, $password, $name, $role);
 
         return $this->respond(array(
             'data' => array(
