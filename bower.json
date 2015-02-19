@@ -8,6 +8,7 @@
     "jquery.cookie": "~1.4.1",
     "codemirror": "~4.11.0",
     "showdown": "~0.3.4",
-    "bootstrap-notify": "goodybag/bootstrap-notify#~0.2.0"
+    "bootstrap-notify": "goodybag/bootstrap-notify#~0.2.0",
+    "jquery-form": "~3.46.0"
   }
 }

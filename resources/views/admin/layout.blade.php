@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title') &lsaquo; [Site Title] &#8212; Journal</title>
-    <link href="/vendor/stylesheets/bootstrap.min.css" rel="stylesheet">
-    <link href="/vendor/stylesheets/font-awesome.min.css" rel="stylesheet">
-    <link href="/vendor/stylesheets/bootstrap-notify.css" rel="stylesheet">
-    <link href="/stylesheets/screen.css" rel="stylesheet">
+    <link href="{{ asset('vendor/stylesheets/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/stylesheets/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/stylesheets/bootstrap-notify.css') }}" rel="stylesheet">
+    <link href="{{ asset('stylesheets/screen.css') }}" rel="stylesheet">
     <style type="text/css">
         /* Notifications plugin */
         .notifications {
@@ -164,7 +164,7 @@
 					<ul class="nav navbar-nav pull-right">
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle"
-							data-toggle="dropdown">[Name] <span class="caret"></span></a>
+							data-toggle="dropdown">{{ Auth::user()->name }} <span class="caret"></span></a>
 							<ul class="dropdown-menu dropdown-menu-right" role="menu">
 								<li><a href="/journal/users/profile">Edit Profile</a></li>
 								<li><a href="/journal/logout">Log Out</a></li>
@@ -185,10 +185,10 @@
     <aside class="notifications top-right"></aside>
     <!--  End of Content  -->
 
-    <script src="/vendor/javascript/jquery.min.js"></script>
-    <script src="/vendor/javascript/bootstrap.min.js"></script>
-    <script src="/vendor/javascript/bootstrap-notify.js"></script>
-    <script src="/javascript/journal.min.js"></script>
+    <script src="{{ asset('vendor/javascript/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/javascript/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('vendor/javascript/bootstrap-notify.js') }}"></script>
+    <script src="{{ asset('javascript/journal.min.js') }}"></script>
     <script>
         //NProgress.configure({ showSpinner: false });
 

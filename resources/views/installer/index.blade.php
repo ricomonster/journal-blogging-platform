@@ -17,7 +17,10 @@
                 <p>Please configure your database within <code>app/config/database.php</code>
                     and make sure that the <code>app/storage/</code> is rewritable.</p>
             </div>
-            <a href="#" class="btn btn-primary">Proceed</a>
+            <form action="/installer/setup" method="post">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <button type="submit" class="btn btn-primary">Proceed</button>
+            </form>
         </div>
     </section>
 @stop

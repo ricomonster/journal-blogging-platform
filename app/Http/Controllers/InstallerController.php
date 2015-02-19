@@ -7,7 +7,7 @@ use Journal\Repositories\Posts\PostRepositoryInterface;
 use Journal\Repositories\Settings\SettingRepositoryInterface;
 use Journal\Repositories\Users\UserRepositoryInterface;
 use Journal\User;
-use Auth, Input;
+use Artisan, Auth, Input;
 
 class InstallerController extends Controller
 {
@@ -33,6 +33,28 @@ class InstallerController extends Controller
     {
         return view('installer.blog', [
             'themes' => $this->themes()]);
+    }
+
+    public function index()
+    {
+        return view('installer.index');
+    }
+
+    public function setup()
+    {
+        // run artisan commands
+        Artisan::call('key:generate');
+        // run artisan migrate
+        $migrate = Artisan::call('migrate');
+
+        // check if migration is successfull
+        if (!$migrate) {
+            // redirect
+            return redirect('installer/account');
+        }
+
+        return redirect('installer')
+            ->with('message', 'There is something wrong. Please check your database configuration to continue.');
     }
 
     public function setupBlog(SetupBlogRequest $request, PostRepositoryInterface $postRepository, SettingRepositoryInterface $settingsRepository)
@@ -62,10 +84,5 @@ class InstallerController extends Controller
         Auth::loginUsingId($user->id);
         // redirect
         return redirect('journal');
-    }
-
-    public function index()
-    {
-        return view('installer.index');
     }
 }

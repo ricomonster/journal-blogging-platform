@@ -7,14 +7,31 @@ use Schema;
 class DbSettingRepository implements SettingRepositoryInterface
 {
     /**
-     * Creates a setting
+     * Creates or updates a setting
      *
      * @param $setting
      * @param $value
      * @return mixed
      */
-    public function create($setting, $value)
+    public function set($setting, $value)
     {
+        // check first if setting exists
+        $result = $this->get($setting);
+
+        // there's a setting set
+        if ($result) {
+            // update
+            $update = Setting::where('key', '=', $setting)->first();
+            $update->fill(array(
+                'value' => $value))->save();
+
+            $response = new Setting();
+            $response[$update->key] = $update->value;
+
+            return $response;
+        }
+
+        // create
         $result = Setting::create(array(
             'key' => $setting, 'value' => $value));
 
@@ -76,37 +93,6 @@ class DbSettingRepository implements SettingRepositoryInterface
         }
 
         return false;
-    }
-
-    /**
-     * Update a setting
-     *
-     * @param $setting
-     * @param $value
-     * @return mixed
-     */
-    public function update($setting, $value)
-    {
-        // check first if setting exists
-        $result = $this->get($setting);
-
-        // there's a setting set
-        if ($result) {
-            // update
-            $update = Setting::where('key', '=', $setting)->first();
-            $update->fill(array(
-                'value' => $value))->save();
-
-            $response = new Setting();
-            $response[$update->key] = $update->value;
-
-            return $response;
-        }
-
-        // create
-        $response = $this->create($setting, $value);
-
-        return $response;
     }
 
     /**

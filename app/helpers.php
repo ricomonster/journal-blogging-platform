@@ -1,5 +1,11 @@
 <?php //-->
 
+/**
+ * Returns if the variable is the current route
+ *
+ * @param $menu
+ * @return string
+ */
 if ( ! function_exists('header_menu'))
 {
     function header_menu($menu)

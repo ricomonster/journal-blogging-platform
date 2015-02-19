@@ -80,7 +80,7 @@ Editor
 		text-align: center;
 	}
 
-	.post-editor-page #rendered_markdown img { width: 100%; }
+	.post-editor-page #rendered_markdown img { width: auto; }
 	.post-editor-page #rendered_markdown code { white-space: normal; }
 	.post-editor-page #rendered_markdown em { font-family: 'Noto Serif', serif; font-size: 16px; }
 

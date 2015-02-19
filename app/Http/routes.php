@@ -55,6 +55,7 @@ Route::group(['prefix' => 'installer'], function() {
 	Route::get('account', 'InstallerController@account');
 	Route::get('blog', 'InstallerController@blog');
 
+	Route::post('setup', 'InstallerController@setup');
 	Route::post('create_account', 'InstallerController@createAccount');
 	Route::post('setup_blog', 'InstallerController@setupBlog');
 });
@@ -77,7 +78,7 @@ Route::group(['prefix' => 'api/v1'], function() {
 
 	Route::group(['prefix' => 'settings'], function() {
 		Route::post('update_general_settings', 'Api\ApiSettingsController@updateGeneralSettings');
-		Route::post('upload', 'Api\ApiSettingsController@uploader');
+		Route::post('upload-image', 'Api\ApiSettingsController@uploader');
 	});
 
 	Route::group(['prefix' => 'users'], function() {
@@ -97,6 +98,9 @@ Route::group(['prefix' => 'api/v1'], function() {
 |--------------------------------------------------------------------------
 */
 Route::group(['middleware' => 'installation'], function() {
-	Route::get('/', 'BlogController@index');
-	Route::get('posts/{id}', 'BlogController@posts');
+	//Route::get('/', 'BlogController@index');
+	//Route::get('posts/{id}', 'BlogController@posts');
+	Route::get('/', function() {
+		return view('welcome');
+	});
 });

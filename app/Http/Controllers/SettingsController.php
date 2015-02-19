@@ -5,9 +5,11 @@ use Journal\Repositories\Settings\SettingRepositoryInterface;
 
 class SettingsController extends Controller
 {
-    public function appearance()
+    public function appearance(SettingRepositoryInterface $settingsRepository)
     {
         return view('admin.settings.appearance', [
+            'settings' => $settingsRepository->get([
+                'blog_cover', 'blog_logo', 'theme']),
             'themes' => $this->themes()
         ]);
     }

@@ -101,7 +101,6 @@ class DbPostRepository implements PostRepositoryInterface
         $post->content = $content;
         $post->slug = $slug;
         $post->status = $status;
-        $post->updated_date = time();
         // save
         $post->save();
 

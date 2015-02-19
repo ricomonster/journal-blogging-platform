@@ -30,6 +30,8 @@ gulp.task('build-assets', function() {
   'bower_components/jquery/dist/jquery.js',
   'bower_components/jquery/dist/jquery.min.js',
   'bower_components/jquery/dist/jquery.min.map',
+  // jquery form
+  'bower_components/jquery-form/jquery.form.js',
   // jquery cookie
   'bower_components/jquery.cookie/jquery.cookie.js',
   // showdown

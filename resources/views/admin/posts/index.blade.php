@@ -96,7 +96,7 @@
 		position: relative;
 	}
 
-	.post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown img { width: 100%; }
+	.post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown img { width: auto; }
 	.post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown code { white-space: normal; }
 	.post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown em { font-family: 'Noto Serif', serif; font-size: 16px; }
 </style>

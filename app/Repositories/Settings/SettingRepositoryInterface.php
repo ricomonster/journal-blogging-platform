@@ -7,13 +7,13 @@ namespace Journal\Repositories\Settings;
 interface SettingRepositoryInterface
 {
     /**
-     * Creates a setting
+     * Creates or updates a setting
      *
      * @param $setting
      * @param $value
      * @return mixed
      */
-    public function create($setting, $value);
+    public function set($setting, $value);
 
     /**
      * Gets all the setting saved in the database
@@ -29,15 +29,6 @@ interface SettingRepositoryInterface
      * @return mixed
      */
     public function get($setting);
-
-    /**
-     * Update a setting
-     *
-     * @param $setting
-     * @param $value
-     * @return mixed
-     */
-    public function update($setting, $value);
 
     /**
      * Removes a setting

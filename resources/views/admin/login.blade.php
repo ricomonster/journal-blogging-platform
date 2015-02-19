@@ -88,7 +88,7 @@
 <body>
 <main class="container">
     <section class="login-box">
-        <form action="post" id="login_form">
+        <form action="post" id="login_form" autocomplete="off">
             <h1 class="hero-title">Journal</h1>
 
             <div class="form-group">
