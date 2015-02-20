@@ -47,3 +47,11 @@ if ( ! function_exists('markdown'))
         return $parser->transform($str);
     }
 }
+
+if ( ! function_exists('site_title')) {
+    function site_title()
+    {
+        $response = Journal\Setting::where('key', '=', 'blog_title')->first();
+        return $response->value;
+    }
+}

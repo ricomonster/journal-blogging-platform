@@ -1,7 +1,8 @@
 <style type="text/css">
     #settings_uploader_modal .modal-body { padding: 10px 15px; }
+	#settings_uploader_modal .modal-backdrop { height: auto !important; }
     #settings_uploader_modal .image-upload-preview { display: none; margin-bottom: 15px; }
-    #settings_uploader_modal .image-upload-preview img { display: block; margin: auto; width: 100%; }
+    #settings_uploader_modal .image-upload-preview img { display: block; margin: auto; max-height: 400px; max-width: 100%; }
 
 	#settings_uploader_modal .image-uploader { display: none; padding: 15px 0; }
     #settings_uploader_modal .image-uploader.active { display: block; }
@@ -67,7 +68,7 @@
                         <section class="url-image-uploader">
                             <div class="form-group">
                                 <label class="control-label" for="image_url">Image URL</label>
-                                <input type="text" name="image_url" class="form-control"
+                                <input type="text" name="url_of_image" class="form-control"
                                 placeholder="http://"/>
                             </div>
                         </section>
@@ -78,6 +79,7 @@
 
                     <div class="upload-controls pull-right">
                         <input type="hidden" name="setting_name" value=""/>
+						<input type="hidden" name="image_url"/>
 
                         <a href="#" class="btn btn-info upload-option traditional">
                             <i class="fa fa-external-link-square"></i>

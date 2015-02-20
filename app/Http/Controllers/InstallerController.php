@@ -45,9 +45,9 @@ class InstallerController extends Controller
         // run artisan commands
         Artisan::call('key:generate');
         // run artisan migrate
-        $migrate = Artisan::call('migrate');
+        $migrate = Artisan::call('migrate', ['--force' => true]);
 
-        // check if migration is successfull
+        // check if migration is successful
         if (!$migrate) {
             // redirect
             return redirect('installer/account');
@@ -64,11 +64,11 @@ class InstallerController extends Controller
         $theme              = Input::get('theme');
 
         // create settings
-        $settingsRepository->create('blog_title', $blogTitle);
-        $settingsRepository->create('blog_description', $blogDescription);
-        $settingsRepository->create('theme', $theme);
-        $settingsRepository->create('theme_name', ucfirst($theme));
-        $settingsRepository->create('installed', 'true');
+        $settingsRepository->set('blog_title', $blogTitle);
+        $settingsRepository->set('blog_description', $blogDescription);
+        $settingsRepository->set('theme', $theme);
+        $settingsRepository->set('theme_name', ucfirst($theme));
+        $settingsRepository->set('installed', 'true');
 
         // get first user
         $user = User::orderBy('id', 'desc')->first();

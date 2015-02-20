@@ -141,7 +141,7 @@
 				</div>
 				<nav class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li><a href="/">[Site Title]</a></li>
+						<li><a href="/">{{ site_title() }}</a></li>
                         <li class="site-directory {{ header_menu('posts') }}">
                             <a href="/journal/posts">Posts</a>
                         </li>
