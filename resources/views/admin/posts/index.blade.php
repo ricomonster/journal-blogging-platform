@@ -33,9 +33,10 @@
 		bottom: 0;
 		left: 0;
 		overflow: auto;
+        padding-top: 40px;
 		position: absolute;
 		right: 0;
-		top: 40px;
+		top: 0;
 	}
 
 	.list-of-posts .post-lists-stream .post-wrapper { margin: 0; padding: 0; position: relative; }
@@ -83,10 +84,10 @@
 		hyphens: auto;
 		left: 0;
 		overflow: auto;
-		padding: 20px 7% 60px;
+		padding: 60px 7%;
 		position: absolute;
 		right: 0;
-		top: 40px;
+		top: 0;
 		word-break: break-all;
 	}
 
@@ -96,7 +97,13 @@
 		position: relative;
 	}
 
-	.post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown img { width: auto; }
+	.post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown img {
+        display: block;
+        height: auto;
+        margin: 0 auto;
+        max-width: 100%;
+    }
+
 	.post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown code { white-space: normal; }
 	.post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown em { font-family: 'Noto Serif', serif; font-size: 16px; }
 </style>
@@ -119,7 +126,7 @@
 						<section class="post-meta">
 							<span class="post-status">
 								@if($post->status == 1)
-								<time class="date-published text-muted">Published x time ago</time>
+								<time class="date-published text-muted">Published {{ convert_readable_time($post->published_at) }}</time>
 								@endif
 								@if($post->status == 2)
 								<span class="draft text-danger">Draft</span>

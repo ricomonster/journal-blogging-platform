@@ -9,7 +9,7 @@ class SettingsController extends Controller
     {
         return view('admin.settings.appearance', [
             'settings' => $settingsRepository->get([
-                'blog_cover', 'blog_logo', 'theme']),
+                'blog_cover', 'blog_logo', 'theme', 'theme_name']),
             'themes' => $this->themes()
         ]);
     }

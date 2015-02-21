@@ -19,9 +19,10 @@ Appearance
 			<div class="form-group">
 				<label class="control-label" for="themes">Themes</label>
 				<select name="theme" class="form-control">
-					<option value="" selected>-- Select your theme --</option>
+					<option value="" {{ (!$settings->theme) ? 'selected' : null }}>-- Select your theme --</option>
 					@foreach($themes as $key => $theme)
-					<option value="{{ $key }}">{{ $theme }}</option>
+					<option value="{{ $key }}" {{ ($settings->theme == $key) ?
+					'selected' : null }}>{{ $theme }}</option>
 					@endforeach
 				</select>
 				<span class="help-block">Select the theme of your blog.</span>
@@ -58,6 +59,37 @@ Appearance
 <script src="/vendor/javascript/jquery.form.js"></script>
 <script src="{{ asset('javascript/settings-uploader.min.js') }}"></script>
 <script type="text/javascript">
-    //$('#settings_uploader_modal').modal('show');
+	(function($) {
+		$('#appearance_settings_form').on('submit', function(e) {
+			e.preventDefault();
+			var form = $(this);
+
+			// disable button
+			form.find('button[type="submit"]').addClass('btn-disable')
+				.attr('disabled', 'disabled');
+
+			$.ajax({
+				type : 'post',
+                url : '/api/v1/settings/update_theme',
+                data : {
+                    theme : $('select[name="theme"] :selected').val()
+                },
+                dataType : 'json'
+			}).done(function(response) {
+                form.find('button[type="submit"]').removeClass('btn-disable')
+                    .removeAttr('disabled');
+
+                if (response.data) {
+                    // show success message
+                    Journal.notification(response.data.message, 'success');
+                }
+            }).error(function(error) {
+                form.find('button[type="submit"]').removeClass('btn-disable')
+                    .removeAttr('disabled');
+
+                Journal.notification(error.responseJSON.errors.message, 'danger');
+            })
+		});
+	})(jQuery);
 </script>
 @stop

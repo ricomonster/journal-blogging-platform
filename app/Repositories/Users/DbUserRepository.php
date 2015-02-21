@@ -22,12 +22,12 @@ class DbUserRepository implements UserRepositoryInterface {
      */
     public function create($email, $password, $name, $role)
     {
-        return User::create(array(
+        return User::create([
             'email'         => $email,
             'password'      => Hash::make($password),
             'name'          => $name,
             'role'          => $role,
-            'slug'          => $this->validateSlug($name)));
+            'slug'          => $this->validateSlug($name)]);
     }
     /**
      * Returns all active user
@@ -68,20 +68,21 @@ class DbUserRepository implements UserRepositoryInterface {
      * @param  string $biography
      * @param  string $website
      * @param  string $location
+     * @param  string $slug
      * @return User
      */
-    public function update($id, $email, $name, $biography, $website, $location)
+    public function update($id, $email, $name, $biography, $website, $location, $slug)
     {
         // fetch user details
         $user = $this->findById($id);
         // update
-        $user->fill(array(
+        $user->fill([
             'email'         => $email,
             'name'          => $name,
             'biography'     => $biography,
             'website'       => $website,
             'location'      => $location,
-            'slug'          => $this->validateSlug($name, $id)))->save();
+            'slug'          => $slug])->save();
 
         return $user;
     }
@@ -96,7 +97,7 @@ class DbUserRepository implements UserRepositoryInterface {
         // get user
         $user = $this->findById($id);
         // update and set field active to 0
-        $user->fill(array('active' => 0))->save();
+        $user->fill(['active' => 0])->save();
     }
     /**
      * Logs in the user to the platform
@@ -111,13 +112,13 @@ class DbUserRepository implements UserRepositoryInterface {
         // check if the login request is from 3rd party (mobile app or via api)
         if ($apiRequest) {
             // validate
-            if (Auth::validate(array('email' => $email, 'password' => $password))) {
+            if (Auth::validate(['email' => $email, 'password' => $password])) {
                 return true;
             }
             return false;
         }
         // normal login authentication
-        if (Auth::attempt(array('email' => $email, 'password' => $password))) {
+        if (Auth::attempt(['email' => $email, 'password' => $password])) {
             return true;
         }
         return false;
@@ -142,24 +143,28 @@ class DbUserRepository implements UserRepositoryInterface {
     public function validateCreate($email, $password, $name)
     {
         // prep data
-        $data = array(
+        $data = [
             'email'     => $email,
             'password'  => $password,
-            'name'      => $name);
+            'name'      => $name];
+
         // prepare the rules
-        $rules = array(
+        $rules = [
             'email'     => 'required|unique:users,email',
             'password'  => 'required|min:6',
-            'name'      => 'required');
+            'name'      => 'required'];
+
         // prepare the messages, customized!
-        $messages = array(
+        $messages = [
             'email.required'    => 'An email is required',
             'name.required'     => 'A name is required',
             'password.required' => 'A password is required',
-            'password.min'      => 'Password should be :min+ characters');
+            'password.min'      => 'Password should be :min+ characters'];
+
         // validate!
         $validator = Validator::make($data, $rules, $messages);
         $validator->passes();
+
         return $validator->errors();
     }
     /**
@@ -170,23 +175,32 @@ class DbUserRepository implements UserRepositoryInterface {
      * @param string $biography
      * @param string $website
      * @param string $location
+     * @param string $slug
      * @param int $id
      * @return \Illuminate\Support\MessageBag
      */
-    public function validateUpdate($email, $name, $biography, $website, $location, $id)
+    public function validateUpdate($email, $name, $biography, $website, $location, $slug, $id)
     {
         // prep data
-        $data = array(
-            'email'     => $email,
-            'name'      => $name);
+        $data = [
+            'email' => $email,
+            'name'  => $name,
+            'slug'  => $slug];
+
         // prepare the rules
-        $rules = array(
-            'email'     => 'required|unique:users,email,'.$id,
-            'name'      => 'required');
+        $rules = [
+            'email' => 'required|unique:users,email,'.$id,
+            'name'  => 'required',
+            'slug'  => 'required|unique:users,slug,'.$id];
+
         // prepare the messages, customized!
-        $messages = array(
+        $messages = [
             'email.required'    => 'An email is required',
-            'name.required'     => 'A name is required');
+            'email.unique'      => 'Email already exists',
+            'name.required'     => 'A name is required',
+            'slug.required'     => 'A slug is required',
+            'slug.unique'       => 'Slug already exists'];
+
         // check if website exists
         if (!is_null($website)) {
             // add to the data to be validated
@@ -196,9 +210,11 @@ class DbUserRepository implements UserRepositoryInterface {
             // prepare the message
             $messages['website.url'] = 'Website URL is not valid';
         }
+
         // validate!
         $validator = Validator::make($data, $rules, $messages);
         $validator->passes();
+
         return $validator->errors();
     }
     /**
@@ -224,18 +240,21 @@ class DbUserRepository implements UserRepositoryInterface {
     {
         // slugify
         $slugified = Str::slug(strtolower($slug));
+
         // check if id is set
         if (is_null($id)) {
             $slugCount = count(User::where('slug', 'LIKE', $slugified.'%')->get());
             // return the slug
             return ($slugCount > 0) ? "{$slugified}-{$slugCount}" : $slugified;
         }
+
         // there is an id set, get user
         $user = $this->findById($id);
         // check if slug is the same with the user slug
         if ($user->slug == $slugified) {
             return $user->slug;
         }
+
         return false;
     }
 }

@@ -216,7 +216,8 @@ var SettingsUploader = {
 		var form = $(this);
 
 		// disable the buttons
-		//form.find('.btn').addClass('btn-disabled').attr('disabled', 'disabled');
+		form.find('.btn').addClass('btn-disabled')
+            .attr('disabled', 'disabled');
 
 		// upload
 		form.ajaxSubmit({

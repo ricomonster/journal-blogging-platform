@@ -48,6 +48,9 @@ if ( ! function_exists('markdown'))
     }
 }
 
+/**
+ * Shows the blog title
+ */
 if ( ! function_exists('site_title')) {
     function site_title()
     {
@@ -55,3 +58,21 @@ if ( ! function_exists('site_title')) {
         return $response->value;
     }
 }
+
+/**
+ * Converts datetime to normal human readable time (eg. 45 minutes ago)
+ */
+use Carbon\Carbon;
+
+if ( ! function_exists('convert_readable_time')) {
+    function convert_readable_time($dateTime)
+    {
+        // check if date is greater than 1 week
+        if(strtotime($dateTime) < strtotime('-1 week')) {
+            return date('M d, Y', strtotime($dateTime));
+        }
+
+        return Carbon::createFromTimeStamp(strtotime($dateTime))->diffForHumans();
+    }
+}
+

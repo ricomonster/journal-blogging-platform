@@ -32,6 +32,26 @@ class ApiSettingsController extends ApiController
                 'blog_title', 'blog_description', 'post_per_page'])]]);
     }
 
+    public function updateTheme(SettingRepositoryInterface $settingsRepository)
+    {
+        $theme = Input::get('theme');
+
+        // check if theme is set
+        if (empty($theme)) {
+            return $this->setStatusCode(400)
+                ->respondWithError('Please select a theme for your blog.');
+        }
+
+        // save
+        $settingsRepository->set('theme', $theme);
+        $settingsRepository->set('theme_name', ucfirst($theme));
+
+        return $this->respond(['data' => [
+            'message'   => 'You have successfully applied your theme',
+            'settings'  => $settingsRepository->get(['theme', 'theme_name'])
+        ]]);
+    }
+
     public function uploader(SettingRepositoryInterface $settingsRepository)
     {
         $files          = Input::file('files');

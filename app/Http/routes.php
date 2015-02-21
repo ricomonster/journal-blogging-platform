@@ -41,6 +41,7 @@ Route::group(['prefix' => 'journal', 'middleware' => 'installation'], function()
 		Route::group(['prefix' => 'users'], function() {
 			Route::get('/', 'UsersController@index');
 			Route::get('add', 'UsersController@addUser');
+            Route::get('profile/{id}', 'UsersController@profile');
 		});
 	});
 });
@@ -73,11 +74,15 @@ Route::group(['prefix' => 'api/v1'], function() {
 	});
 
 	Route::group(['prefix' => 'posts'], function() {
+        Route::get('all_posts', 'Api\ApiPostsController@getAllPosts');
+        Route::get('get_slug', 'Api\ApiPostsController@generateSlug');
+
 		Route::post('save', 'Api\ApiPostsController@savePost');
 	});
 
 	Route::group(['prefix' => 'settings'], function() {
 		Route::post('update_general_settings', 'Api\ApiSettingsController@updateGeneralSettings');
+        Route::post('update_theme', 'Api\ApiSettingsController@updateTheme');
 		Route::post('upload-image', 'Api\ApiSettingsController@uploader');
 	});
 
@@ -85,6 +90,7 @@ Route::group(['prefix' => 'api/v1'], function() {
 		Route::get('lists', 'Api\ApiUsersController@allUsers');
 
 		Route::post('create', 'Api\ApiUsersController@createUser');
+        Route::post('update_account', 'Api\ApiUsersController@updateAccount');
 	});
 
 	Route::group(['prefix' => 'tags'], function() {

@@ -9,53 +9,6 @@
     <link href="{{ asset('vendor/stylesheets/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/stylesheets/bootstrap-notify.css') }}" rel="stylesheet">
     <link href="{{ asset('stylesheets/screen.css') }}" rel="stylesheet">
-    <style type="text/css">
-        /* Notifications plugin */
-        .notifications {
-            position: fixed;
-            width: 300px;
-            z-index: 1000;
-        }
-
-        .modal-open .notifications { z-index: 15000; }
-
-        .notifications.top-right { right: 10px; top: 55px; }
-        .notifications > div { margin: 5px 0; position: relative; z-index: 9999; }
-
-        .notifications > .alert { color: rgba(255,255,255,0.9); }
-
-        .notifications > .alert.alert-danger { background: #e25440; border-color: #e25440; }
-        .notifications > .alert.alert-success { background: #9fbb58; border-color: #9fbb58;}
-        .notifications > .alert-alert-warning { background: #f2a925; border-color: #f2a925; }
-
-        .notifications > .alert > .close { color: #ffffff; opacity: 1; }
-
-        /* Responsive Layouts */
-        @media only screen and (max-width: 768px) {
-            h1 { font-size: 46px; }
-            h2 { font-size: 38px; }
-            h3 { font-size: 30px; }
-
-            .content-wrapper.centralized { width: 80%; }
-
-            .notifications { right: 0; left: 0; width: 100%; z-index: 10000 }
-            .notifications.top-right { top: 0px; }
-            .notifications > div { margin: 0; }
-
-            .sidebar .scrollable-content .menu-lists li.blog-page { display: block; }
-            .sidebar .scrollable-content .user-menu { display: block; }
-
-            .collapse.navbar-collapse { display: none !important; }
-            .admin-header .page-header-title { display: block; }
-            .admin-header .navbar-header { display: block; margin: 0; width: 100%; }
-            .admin-header .navbar-header .navbar-toggle { display: block; float: left; }
-            .admin-header .navbar-header .navbar-brand.trigger-sidebar { display: none; }
-        }
-
-        @media only screen and (max-width: 480px) {
-            .content-wrapper.centralized { width: 100%; }
-        }
-    </style>
     @yield('css')
 </head>
 <body>

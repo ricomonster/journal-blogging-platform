@@ -17,12 +17,14 @@ interface UserRepositoryInterface
      * @return User
      */
     public function create($email, $password, $name, $role);
+
     /**
      * Returns all active user
      *
      * @return User
      */
     public function all();
+
     /**
      * Fetches a user by its id
      *
@@ -30,12 +32,14 @@ interface UserRepositoryInterface
      * @return User
      */
     public function findById($id);
+
     /**
      * Fetches a user by its email
      * @param string $email
      * @return User
      */
     public function findByEmail($email);
+
     /**
      * Updates user details
      *
@@ -45,9 +49,11 @@ interface UserRepositoryInterface
      * @param  string $biography
      * @param  string $website
      * @param  string $location
+     * @param  string $slug
      * @return User
      */
-    public function update($id, $email, $name, $biography, $website, $location);
+    public function update($id, $email, $name, $biography, $website, $location, $slug);
+
     /**
      * Sets a user to be inactive
      *
@@ -55,6 +61,7 @@ interface UserRepositoryInterface
      * @return void
      */
     public function setInactive($id);
+
     /**
      * Logs in the user to the platform
      *
@@ -64,12 +71,14 @@ interface UserRepositoryInterface
      * @return bool
      */
     public function login($email, $password, $apiRequest);
+
     /**
      * Logs out the to the platform
      *
      * @return void
      */
     public function logout();
+
     /**
      * Validates user details for creation
      *
@@ -79,6 +88,7 @@ interface UserRepositoryInterface
      * @return \Illuminate\Support\MessageBag
      */
     public function validateCreate($email, $password, $name);
+
     /**
      * Validates if data is valid for update
      *
@@ -87,10 +97,12 @@ interface UserRepositoryInterface
      * @param string $biography
      * @param string $website
      * @param string $location
+     * @param string $slug
      * @param int $id
      * @return \Illuminate\Support\MessageBag
      */
-    public function validateUpdate($email, $name, $biography, $website, $location, $id);
+    public function validateUpdate($email, $name, $biography, $website, $location, $slug, $id);
+
     /**
      * Validates if passwords are valid
      *
@@ -101,6 +113,7 @@ interface UserRepositoryInterface
      * @return \Illuminate\Support\MessageBag
      */
     public function validateChangePassword($id, $oldPassword, $newPassword, $confirmNewPassword);
+
     /**
      * Checks if slug exists and generates a slugified string
      *
