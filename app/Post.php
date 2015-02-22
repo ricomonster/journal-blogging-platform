@@ -2,6 +2,7 @@
 namespace Journal;
 
 use Illuminate\Database\Eloquent\Model;
+use Request;
 
 class Post extends Model {
     /**
@@ -52,6 +53,17 @@ class Post extends Model {
     {
         return $this->belongsToMany('Journal\Tag', 'post_tag', 'post_id', 'tag_id');
     }
+
+    /**
+     * Creates the permalink of a post
+     *
+     * @return string
+     */
+    public function getPermalinkAttribute()
+    {
+        return Request::root().'/post/'.$this->attributes['slug'];
+    }
+
     /**
      * Customized the structure for the tags
      *
@@ -61,10 +73,12 @@ class Post extends Model {
     {
         // get tags
         $postTags = $this->relations['tag'];
+
         // check if there
         if(!isset($postTags)) {
             return [];
         }
+
         $tagValues = [];
         // check if tags is not empty
         if(!empty($postTags)) {
@@ -73,6 +87,7 @@ class Post extends Model {
                 $tagValues[] = $postTag->tag;
             }
         }
+
         return $tagValues;
     }
 }

@@ -45,7 +45,7 @@ textarea, input, select { border: 0; }
     -webkit-transition: -webkit-transform 150ms cubic-bezier(.2, .3, .25, .9);
     background: #fff;
     height: 100%;
-    padding: 55px 0 0;
+    padding: 50px 0 0;
     transition: transform 150ms cubic-bezier(.2, .3, .25, .9);
 }
 

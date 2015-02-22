@@ -49,17 +49,6 @@ if ( ! function_exists('markdown'))
 }
 
 /**
- * Shows the blog title
- */
-if ( ! function_exists('site_title')) {
-    function site_title()
-    {
-        $response = Journal\Setting::where('key', '=', 'blog_title')->first();
-        return $response->value;
-    }
-}
-
-/**
  * Converts datetime to normal human readable time (eg. 45 minutes ago)
  */
 use Carbon\Carbon;
@@ -76,3 +65,22 @@ if ( ! function_exists('convert_readable_time')) {
     }
 }
 
+if ( ! function_exists('theme_path')) {
+    function theme_path($file = null)
+    {
+        // get the theme
+        $theme = Journal\Setting::where('key', '=', 'theme')->first();
+        return asset('themes/' . $theme->value . '/' . $file);
+    }
+}
+
+/**
+ * Shows the blog title
+ */
+if ( ! function_exists('site_title')) {
+    function site_title()
+    {
+        $response = Journal\Setting::where('key', '=', 'blog_title')->first();
+        return $response->value;
+    }
+}

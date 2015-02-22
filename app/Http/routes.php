@@ -104,9 +104,6 @@ Route::group(['prefix' => 'api/v1'], function() {
 |--------------------------------------------------------------------------
 */
 Route::group(['middleware' => 'installation'], function() {
-	//Route::get('/', 'BlogController@index');
-	//Route::get('posts/{id}', 'BlogController@posts');
-	Route::get('/', function() {
-		return view('welcome');
-	});
+	Route::get('/', 'BlogController@index');
+	Route::get('post/{slug}', 'BlogController@post');
 });
