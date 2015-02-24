@@ -4,22 +4,29 @@ namespace Journal\Http\Controllers;
 use Journal\Repositories\Users\UserRepositoryInterface;
 
 class UsersController extends Controller {
+    protected $users;
+
+    public function __construct(UserRepositoryInterface $users)
+    {
+        $this->users = $users;
+    }
+
     public function addUser()
     {
         return view('admin.users.add');
     }
 
-    public function index(UserRepositoryInterface $usersRepository)
+    public function index()
     {
         return view('admin.users.index', [
-            'users' => $usersRepository->all()
+            'users' => $this->users->all()
         ]);
     }
 
-    public function profile($id, UserRepositoryInterface $usersRepository)
+    public function profile($id)
     {
         // get the user
-        $user = $usersRepository->findById($id);
+        $user = $this->users->findById($id);
 
         // check if the user exists
         if (empty($user)) {

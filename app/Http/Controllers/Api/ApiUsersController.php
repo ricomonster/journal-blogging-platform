@@ -11,25 +11,40 @@ use Input;
 class ApiUsersController extends ApiController
 {
     /**
-     * Returns all active users
+     * The user repository implementation
+     *
+     * @var UserRepositoryInterface
+     */
+    protected $users;
+
+    /**
+     * Creates a new API User Controller
      *
      * @param UserRepositoryInterface $users
+     */
+    public function __construct(UserRepositoryInterface $users)
+    {
+        $this->users = $users;
+    }
+
+    /**
+     * Returns all active users
+     *
      * @return mixed
      */
-    public function allUsers(UserRepositoryInterface $users)
+    public function allUsers()
     {
         return $this->respond([
             'data' => [
-                'user' => $users->all()]]);
+                'user' => $this->users->all()]]);
     }
 
     /**
      * Creates a new user
      *
-     * @param UserRepositoryInterface $users
      * @return mixed
      */
-    public function createUser(UserRepositoryInterface $users)
+    public function createUser()
     {
         $email      = Input::get('email');
         $password   = Input::get('password');
@@ -37,7 +52,7 @@ class ApiUsersController extends ApiController
         $role       = Input::get('role');
 
         // validate
-        $messages = $users->validateCreate($email, $password, $name);
+        $messages = $this->users->validateCreate($email, $password, $name);
 
         // check for errors
         if (count($messages) > 0) {
@@ -50,7 +65,7 @@ class ApiUsersController extends ApiController
         $role = (empty($role)) ? '2' : $role;
 
         // create user
-        $user = $users->create($email, $password, $name, $role);
+        $user = $this->users->create($email, $password, $name, $role);
 
         return $this->respond([
             'data' => [
@@ -61,32 +76,33 @@ class ApiUsersController extends ApiController
     /**
      * Fetches a user using its id
      *
-     * @param UserRepositoryInterface $users
      * @return mixed
      */
-    public function get(UserRepositoryInterface $users)
+    public function get()
     {
         $id = Input::get('id');
 
         // check if there is an id supplied
         if (empty($id)) {
             // send error message
+            return $this->setStatusCode(400)
+                ->respondWithError('Please set the user ID.');
         }
 
         // get user
-        $user = $users->findById($id);
+        $user = $this->users->findById($id);
 
         return $this->respond([
-            'data' => ['user' => $user]]);
+            'data' => [
+                'user' => $user]]);
     }
 
     /**
      * Update the users account
      *
-     * @param UserRepositoryInterface $usersRepository
      * @return mixed
      */
-    public function updateAccount(UserRepositoryInterface $usersRepository)
+    public function updateAccount()
     {
         $name       = Input::get('name');
         $email      = Input::get('email');
@@ -97,7 +113,7 @@ class ApiUsersController extends ApiController
         $id         = Input::get('id');
 
         // validate
-        $messages = $usersRepository->validateUpdate($email, $name, $biography, $website, $location, $slug, $id);
+        $messages = $this->users->validateUpdate($email, $name, $biography, $website, $location, $slug, $id);
 
         // check for errors
         if (count($messages) > 0) {
@@ -107,11 +123,11 @@ class ApiUsersController extends ApiController
         }
 
         // update
-        $user = $usersRepository->update($id, $email, $name, $biography, $website, $location, $slug);
+        $user = $this->users->update($id, $email, $name, $biography, $website, $location, $slug);
 
         return $this->respond([
             'data' => [
-                'message' => 'You have successfully updated your account',
-                'user' => $user->toArray()]]);
+                'message'   => 'You have successfully updated your account',
+                'user'      => $user->toArray()]]);
     }
 }

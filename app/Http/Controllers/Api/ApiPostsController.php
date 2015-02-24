@@ -12,31 +12,48 @@ use Input;
 class ApiPostsController extends ApiController
 {
     /**
-     * Handles request for slug generation
+     * The post repository implementation
+     *
+     * @var PostRepositoryInterface
+     */
+    protected $posts;
+
+    /**
+     * Creates a new API Posts Controller
+     *
+     * @param PostRepositoryInterface $posts
+     */
+    public function __construct(PostRepositoryInterface $posts)
+    {
+        $this->posts = $posts;
+    }
+
+    /**
+     * Checks and creates a slug
      *
      * @return mixed
      */
-    public function generateSlug(PostRepositoryInterface $posts)
+    public function generateSlug()
     {
         $string = Input::get('string');
         $id     = Input::get('id');
 
         // generate slug
-        $slug = $this->createSlug($string, $id, $posts);
+        $slug = $this->createSlug($string, $id);
 
         return $this->respond(array(
             'data' => array('slug' => $slug)));
     }
 
     /**
-     * Returns all posts saved
+     * Get all posts
      *
      * @return mixed
      */
-    public function getAllPosts(PostRepositoryInterface $posts)
+    public function getAllPosts()
     {
         // get all posts
-        $posts = $posts->all();
+        $posts = $this->posts->all();
 
         // return
         return $this->respond(array(
@@ -49,23 +66,36 @@ class ApiPostsController extends ApiController
      *
      * @return mixed
      */
-    public function getPost(PostRepositoryInterface $posts)
+    public function getPost()
     {
-        $id = Input::get('post_id');
-        // get the post
-        $post = $posts->findById($id);
+        $id = Input::get('id');
+        // check if id is set
+        if (empty($id)) {
+            return $this->setStatusCode(400)
+                ->respondWithError('Please set the post ID.');
+        }
 
-        return $this->respond(array(
-            'data' => array(
-                'post' => $post->toArray())));
+        // get the post
+        $post = $this->posts->findById($id);
+
+        // check if post exists
+        if (empty($post)) {
+            return $this->setStatusCode(400)
+                ->respondWithError('Post does not exists.');
+        }
+
+        return $this->respond([
+            'data' => [
+                'post' => $post->toArray()]]);
     }
 
     /**
-     * Update and creates a post
+     * Creates or updates a post
      *
+     * @param TagRepositoryInterface $tagsRepository
      * @return mixed
      */
-    public function savePost(PostRepositoryInterface $postsRepository, TagRepositoryInterface $tagsRepository)
+    public function savePost(TagRepositoryInterface $tagsRepository)
     {
         // prepare the variables
         $tagsId = [];
@@ -82,7 +112,7 @@ class ApiPostsController extends ApiController
         // check if title is set
         $title = (isset($title) && !empty($title)) ? $title : 'Untitled';
         // check if slug is set
-        $slug = (isset($slug) && !empty($slug)) ? $slug : $this->createSlug($title, $id, $postsRepository);
+        $slug = (isset($slug) && !empty($slug)) ? $slug : $this->createSlug($title, $id);
 
         // check if there are tags
         if (!empty($tags)) {
@@ -95,7 +125,7 @@ class ApiPostsController extends ApiController
         // check if id of the post is set
         if (isset($id) && $id != 0) {
             // update post
-            $post = $postsRepository->update($id, $authorId, $title, $content, $slug, $status, $tagsId);
+            $post = $this->posts->update($id, $authorId, $title, $content, $slug, $status, $tagsId);
 
             // return a response
             return $this->respond(array(
@@ -105,7 +135,7 @@ class ApiPostsController extends ApiController
         }
 
         // create post
-        $post = $postsRepository->create($authorId, $title, $content, $slug, $status, $publishDate, $tagsId);
+        $post = $this->posts->create($authorId, $title, $content, $slug, $status, $publishDate, $tagsId);
 
         // return a response
         return $this->respond(array(
@@ -121,9 +151,9 @@ class ApiPostsController extends ApiController
      * @param $id
      * @return mixed
      */
-    protected function createSlug($title, $id, $posts)
+    protected function createSlug($title, $id)
     {
         $id = (empty($id) || $id == 0) ? null : $id;
-        return $posts->createSlug($title, $id);
+        return $this->posts->createSlug($title, $id);
     }
 }

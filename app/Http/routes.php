@@ -66,7 +66,10 @@ Route::group(['prefix' => 'installer'], function() {
 | API Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['prefix' => 'api/v1'], function() {
+Route::group(['prefix' => 'api/v1', 'middleware' => 'cors'], function() {
+    // fix for CORS
+    header('Access-Control-Allow-Origin: *');
+
 	Route::group(['prefix' => 'auth'], function() {
 		Route::get('handshake', 'Api\ApiAuthController@handshake');
 
@@ -75,6 +78,7 @@ Route::group(['prefix' => 'api/v1'], function() {
 
 	Route::group(['prefix' => 'posts'], function() {
         Route::get('all_posts', 'Api\ApiPostsController@getAllPosts');
+        ROute::get('get_post', 'Api\ApiPostsController@getPost');
         Route::get('get_slug', 'Api\ApiPostsController@generateSlug');
 
 		Route::post('save', 'Api\ApiPostsController@savePost');

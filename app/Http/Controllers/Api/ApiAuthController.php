@@ -4,8 +4,17 @@ namespace Journal\Http\Controllers\Api;
 use Journal\Repositories\Users\UserRepositoryInterface;
 use Auth, Input, Request;
 
+/**
+ * Class ApiAuthController
+ * @package Journal\Http\Controllers\Api
+ */
 class ApiAuthController extends ApiController
 {
+    /**
+     * Validates that application exists
+     *
+     * @return mixed
+     */
     public function handshake()
     {
         $parameter = Input::get('verify');
@@ -18,6 +27,12 @@ class ApiAuthController extends ApiController
         }
     }
 
+    /**
+     * Validates the user credentials via API or normal log in
+     *
+     * @param UserRepositoryInterface $userRepository
+     * @return mixed
+     */
     public function login(UserRepositoryInterface $userRepository)
     {
         // validate credentials

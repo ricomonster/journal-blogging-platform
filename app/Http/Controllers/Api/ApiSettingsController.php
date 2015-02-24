@@ -4,35 +4,75 @@ namespace Journal\Http\Controllers\Api;
 use Journal\Repositories\Settings\SettingRepositoryInterface;
 use Input, Request;
 
+/**
+ * Class ApiSettingsController
+ * @package Journal\Http\Controllers\Api
+ */
 class ApiSettingsController extends ApiController
 {
+    /**
+     * The upload directory
+     *
+     * @var string
+     */
     protected $uploadPath;
+
+    /**
+     * The url of the upload directory
+     *
+     * @var string
+     */
     protected $uploadUrl;
 
-    public function __construct()
+    /**
+     * The settings repository implementation
+     *
+     * @var SettingRepositoryInterface
+     */
+    protected $settings;
+
+    /**
+     * Creates a new API Settings Controller
+     *
+     * @param SettingRepositoryInterface $settings
+     */
+    public function __construct(SettingRepositoryInterface $settings)
     {
+        // set the directory paths
         $this->uploadPath   = public_path('uploads/user');
         $this->uploadUrl    = Request::root().'/uploads/user';
+
+        $this->settings = $settings;
     }
 
-    public function updateGeneralSettings(SettingRepositoryInterface $settingsRepository)
+    /**
+     * Update general settings (blog title, blog description, post per page)
+     *
+     * @return mixed
+     */
+    public function updateGeneralSettings()
     {
         $title          = Input::get('blog_title');
         $description    = Input::get('blog_description');
         $postPerPage    = Input::get('post_per_page');
 
         // save data
-        $settingsRepository->set('blog_title', $title);
-        $settingsRepository->set('blog_description', $description);
-        $settingsRepository->set('post_per_page', $postPerPage);
+        $this->settings->set('blog_title', $title);
+        $this->settings->set('blog_description', $description);
+        $this->settings->set('post_per_page', $postPerPage);
 
         // return results
         return $this->respond(['data' => [
-            'settings' => $settingsRepository->get([
+            'settings' => $this->settings->get([
                 'blog_title', 'blog_description', 'post_per_page'])]]);
     }
 
-    public function updateTheme(SettingRepositoryInterface $settingsRepository)
+    /**
+     * Updates the theme of the blog
+     *
+     * @return mixed
+     */
+    public function updateTheme()
     {
         $theme = Input::get('theme');
 
@@ -43,16 +83,21 @@ class ApiSettingsController extends ApiController
         }
 
         // save
-        $settingsRepository->set('theme', $theme);
-        $settingsRepository->set('theme_name', ucfirst($theme));
+        $this->settings->set('theme', $theme);
+        $this->settings->set('theme_name', ucfirst($theme));
 
         return $this->respond(['data' => [
             'message'   => 'You have successfully applied your theme',
-            'settings'  => $settingsRepository->get(['theme', 'theme_name'])
+            'settings'  => $this->settings->get(['theme', 'theme_name'])
         ]]);
     }
 
-    public function uploader(SettingRepositoryInterface $settingsRepository)
+    /**
+     * Uploads a file for the blog (cover or logo)
+     *
+     * @return mixed
+     */
+    public function uploader()
     {
         $files          = Input::file('files');
         $settingName    = Input::get('setting_name');
@@ -67,10 +112,10 @@ class ApiSettingsController extends ApiController
         // check if there's a file
         if (empty($files)) {
             // image is just a url, update the field
-            $settingsRepository->set($settingName, $imageUrl);
+            $this->settings->set($settingName, $imageUrl);
 
             return $this->respond(['data' => [
-                'settings' => $settingsRepository->get($settingName)
+                'settings' => $this->settings->get($settingName)
             ]]);
         }
 
@@ -92,11 +137,11 @@ class ApiSettingsController extends ApiController
         $fileUrl = $this->uploadUrl.'/'.rawurlencode($filename);
 
         // save
-        $settingsRepository->set($settingName, $fileUrl);
+        $this->settings->set($settingName, $fileUrl);
 
         // return
         return $this->respond(['data' => [
-            'settings' => $settingsRepository->get($settingName)
+            'settings' => $this->settings->get($settingName)
         ]]);
     }
 }

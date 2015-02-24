@@ -28,7 +28,8 @@ class Kernel extends HttpKernel {
 		'auth.basic' 	=> 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
 		'guest' 		=> 'Journal\Http\Middleware\RedirectIfAuthenticated',
 		'installation'	=> 'Journal\Http\Middleware\InstallationVerifier',
-		'installed'		=> 'Journal\Http\Middleware\InstalledVerifier'
+		'installed'		=> 'Journal\Http\Middleware\InstalledVerifier',
+        'cors'          => 'Journal\Http\Middleware\CorsFilterMiddleware'
 	];
 
 }

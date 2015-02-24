@@ -15,32 +15,49 @@ class BlogController extends Controller {
     protected $theme = 'medium';
 
     /**
-     *
+     * @var PostRepositoryInterface
      */
-    public function __construct()
+    protected $posts;
+
+    /**
+     * @var SettingRepositoryInterface
+     */
+    protected $settings;
+
+    /**
+     * @param PostRepositoryInterface $posts
+     * @param SettingRepositoryInterface $settings
+     */
+    public function __construct(PostRepositoryInterface $posts, SettingRepositoryInterface $settings)
     {
         // setup the view
         View::addLocation(base_path('themes'));
+
+        // set the repositories
+        $this->posts    = $posts;
+        $this->settings = $settings;
     }
 
     /**
-     * @param PostRepositoryInterface $postsRepository
-     * @param SettingRepositoryInterface $settingsRepository
      * @return View
      */
-    public function index(PostRepositoryInterface $postsRepository, SettingRepositoryInterface $settingsRepository)
+    public function index()
     {
         return view($this->theme.'.index', [
-            'blog' => $settingsRepository->get([
+            'blog' => $this->settings->get([
                 'blog_title', 'blog_description', 'blog_logo', 'blog_cover']),
-            'posts' => $postsRepository->all()
+            'posts' => $this->posts->all()
         ]);
     }
 
-    public function post($slug, PostRepositoryInterface $postsRepository, SettingRepositoryInterface $settingsRepository)
+    /**
+     * @param $slug
+     * @return View
+     */
+    public function post($slug)
     {
         // get post
-        $post = $postsRepository->findBySlug($slug);
+        $post = $this->posts->findBySlug($slug);
 
         // check if there's a slug or post
         if (empty($slug) || empty($post)) {
@@ -48,7 +65,7 @@ class BlogController extends Controller {
         }
 
         return view($this->theme.'.post', [
-            'blog' => $settingsRepository->get([
+            'blog' => $this->settings->get([
                 'blog_title', 'blog_description', 'blog_logo', 'blog_cover']),
             'post' => $post
         ]);

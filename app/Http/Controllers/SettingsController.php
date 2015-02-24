@@ -5,19 +5,26 @@ use Journal\Repositories\Settings\SettingRepositoryInterface;
 
 class SettingsController extends Controller
 {
-    public function appearance(SettingRepositoryInterface $settingsRepository)
+    protected $settings;
+
+    public function __construct(SettingRepositoryInterface $settings)
+    {
+        $this->settings = $settings;
+    }
+
+    public function appearance()
     {
         return view('admin.settings.appearance', [
-            'settings' => $settingsRepository->get([
+            'settings' => $this->settings->get([
                 'blog_cover', 'blog_logo', 'theme', 'theme_name']),
             'themes' => $this->themes()
         ]);
     }
 
-    public function index(SettingRepositoryInterface $settingsRepository)
+    public function index()
     {
         return view('admin.settings.index', [
-            'settings' => $settingsRepository->get([
+            'settings' => $this->settings->get([
                 'blog_title', 'blog_description', 'post_per_page'])
         ]);
     }

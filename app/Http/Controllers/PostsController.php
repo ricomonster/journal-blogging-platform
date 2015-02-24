@@ -4,6 +4,13 @@ use Journal\Repositories\Posts\PostRepositoryInterface;
 use Carbon\Carbon;
 
 class PostsController extends Controller {
+    protected $posts;
+
+    public function __construct(PostRepositoryInterface $posts)
+    {
+        $this->posts = $posts;
+    }
+
     public function editor()
     {
         return view('admin.posts.editor', [
@@ -13,10 +20,10 @@ class PostsController extends Controller {
         ]);
     }
 
-    public function editorWithId($id, PostRepositoryInterface $postsRepository)
+    public function editorWithId($id)
     {
         // get the post
-        $post = $postsRepository->findById($id);
+        $post = $this->posts->findById($id);
 
         // check if the post exists
         if (empty($post)) {
@@ -30,10 +37,10 @@ class PostsController extends Controller {
         ]);
     }
 
-    public function index(PostRepositoryInterface $posts)
+    public function index()
     {
         return view('admin.posts.index', [
-            'posts' => $posts->all()]);
+            'posts' => $this->posts->all()]);
     }
 
     /**

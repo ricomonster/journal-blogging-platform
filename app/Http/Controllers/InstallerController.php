@@ -11,19 +11,30 @@ use Artisan, Auth, Input;
 
 class InstallerController extends Controller
 {
+    protected $posts;
+    protected $settings;
+    protected $users;
+
+    public function __construct(PostRepositoryInterface $posts, SettingRepositoryInterface $settings,UserRepositoryInterface $users)
+    {
+        $this->posts = $posts;
+        $this->settings = $settings;
+        $this->users = $users;
+    }
+
     public function account()
     {
         return view('installer.account');
     }
 
-    public function createAccount(CreateAccountRequest $request, UserRepositoryInterface $userRepository)
+    public function createAccount(CreateAccountRequest $request)
     {
         $name       = Input::get('name');
         $email      = Input::get('email');
         $password   = Input::get('password');
 
         // create user
-        $userRepository->create($email, $password, $name, 1);
+        $this->users->create($email, $password, $name, 1);
 
         // redirect to next page
         return redirect('installer/blog');
@@ -57,18 +68,18 @@ class InstallerController extends Controller
             ->with('message', 'There is something wrong. Please check your database configuration to continue.');
     }
 
-    public function setupBlog(SetupBlogRequest $request, PostRepositoryInterface $postRepository, SettingRepositoryInterface $settingsRepository)
+    public function setupBlog(SetupBlogRequest $request)
     {
         $blogTitle          = Input::get('blog_title');
         $blogDescription    = Input::get('blog_description');
         $theme              = Input::get('theme');
 
         // create settings
-        $settingsRepository->set('blog_title', $blogTitle);
-        $settingsRepository->set('blog_description', $blogDescription);
-        $settingsRepository->set('theme', $theme);
-        $settingsRepository->set('theme_name', ucfirst($theme));
-        $settingsRepository->set('installed', 'true');
+        $this->settings->set('blog_title', $blogTitle);
+        $this->settings->set('blog_description', $blogDescription);
+        $this->settings->set('theme', $theme);
+        $this->settings->set('theme_name', ucfirst($theme));
+        $this->settings->set('installed', 'true');
 
         // get first user
         $user = User::orderBy('id', 'desc')->first();
@@ -76,9 +87,9 @@ class InstallerController extends Controller
         // create first post
         // open readme
         $content = file_get_contents(base_path('readme.md'));
-        $slug = $postRepository->createSlug('Laravel 5', null);
+        $slug = $this->posts->createSlug('Laravel 5', null);
 
-        $postRepository->create($user->id, 'Laravel 5', $content, $slug, 1, date('Y-m-d h:i:s'), []);
+        $this->posts->create($user->id, 'Laravel 5', $content, $slug, 1, date('Y-m-d h:i:s'), []);
 
         // log in the current user
         Auth::loginUsingId($user->id);
