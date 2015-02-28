@@ -1,19 +1,19 @@
 <style type="text/css">
-    #settings_uploader_modal .modal-body { padding: 10px 15px; }
-	#settings_uploader_modal .modal-backdrop { height: auto !important; }
-    #settings_uploader_modal .image-upload-preview { display: none; margin-bottom: 15px; }
-    #settings_uploader_modal .image-upload-preview img { display: block; margin: auto; max-height: 400px; max-width: 100%; }
+    #uploader_modal .modal-body { padding: 10px 15px; }
+	#uploader_modal .modal-backdrop { height: auto !important; }
+    #uploader_modal .image-upload-preview { display: none; margin-bottom: 15px; }
+    #uploader_modal .image-upload-preview img { display: block; margin: auto; max-height: 400px; max-width: 100%; }
 
-	#settings_uploader_modal .image-uploader { display: none; padding: 15px 0; }
-    #settings_uploader_modal .image-uploader.active { display: block; }
-	#settings_uploader_modal .image-uploader .progress { display: none; margin-bottom: 0; }
-	#settings_uploader_modal .image-uploader .btn {
+	#uploader_modal .image-uploader { display: none; padding: 15px 0; }
+    #uploader_modal .image-uploader.active { display: block; }
+	#uploader_modal .image-uploader .progress { display: none; margin-bottom: 0; }
+	#uploader_modal .image-uploader .btn {
 		margin-left: 1px;
 		overflow: hidden;
 		position: relative;
 	}
 
-	#settings_uploader_modal .image-uploader .btn input[type="file"] {
+	#uploader_modal .image-uploader .btn input[type="file"] {
 		background: #fff;
 		cursor: inherit;
 		display: block;
@@ -29,16 +29,16 @@
 		top: 0;
 	}
 
-    #settings_uploader_modal .url-image-uploader { display: none; padding: 0 50px; }
-    #settings_uploader_modal .url-image-uploader.active { display: block; }
-    #settings_uploader_modal .url-image-uploader .form-group {
+    #uploader_modal .url-image-uploader { display: none; padding: 0 50px; }
+    #uploader_modal .url-image-uploader.active { display: block; }
+    #uploader_modal .url-image-uploader .form-group {
         border-bottom: 0;
         margin-bottom: 6px;
     }
 
-    #settings_uploader_modal .upload-controls .remove-image { display: none; }
+    #uploader_modal .upload-controls .remove-image { display: none; }
 </style>
-<article class="modal fade" id="settings_uploader_modal" tabindex="-1" role="dialog" aria-hidden="true">
+<article class="modal fade" id="uploader_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <section class="modal-dialog modal-lg" style="width: 650px;">
         <section class="modal-content">
             <header class="modal-header">

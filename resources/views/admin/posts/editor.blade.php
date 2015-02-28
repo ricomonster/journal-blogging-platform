@@ -316,8 +316,8 @@ Editor
 @section('footer.js')
 <script src="/vendor/javascript/codemirror.js"></script>
 <script src="/vendor/javascript/showdown.js"></script>
-<script src="/javascript/editor.min.js"></script>
-<script src="/javascript/tags.min.js"></script>
+<script src="/assets/javascript/editor.min.js"></script>
+<script src="/assets/javascript/tags.min.js"></script>
 <script type="text/javascript">
 	$('.show-settings').on('click', function(e) {
 		// check if the body is set to toggle the sidebar

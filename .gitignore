@@ -5,6 +5,6 @@ composer.phar
 composer.lock
 /bower_components
 /public/vendor
-/public/javascript
-/public/stylesheets
+/public/assets/javascript
+/public/assets/stylesheets
 .idea

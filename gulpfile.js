@@ -67,7 +67,7 @@ gulp.task('build-javascript', function() {
       }
      }))
      .pipe(rename({ extname : '.min.js' }))
-     .pipe(gulp.dest('public/javascript'));
+     .pipe(gulp.dest('public/assets/javascript'));
 });
 
 // build stylesheet files
@@ -102,7 +102,7 @@ gulp.task('build-stylesheets', function() {
        this.emit('end');
       }
      }))
-     .pipe(gulp.dest('public/stylesheets'));
+     .pipe(gulp.dest('public/assets/stylesheets'));
 });
 
 // build task

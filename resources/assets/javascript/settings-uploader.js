@@ -14,8 +14,7 @@ var SettingsUploader = {
 			.on('change', '.file-uploader', this.readUrl)
 			.on('click', '.remove-image', this.removeImage)
 			.on('click', '.upload-option', this.setUploadOption)
-			.on('click', '.upload-image', this.showModalUploader)
-			.on('submit', '#settings_uploader_form', this.submitUpload);
+			.on('click', '.upload-image', this.showModalUploader);
 	},
 	/**
 	 * Listens for url to be inputted
@@ -136,7 +135,7 @@ var SettingsUploader = {
 	showModalUploader : function(e) {
 		e.preventDefault();
 		var $this = $(this),
-			modal = $('#settings_uploader_modal'),
+			modal = $('#uploader_modal'),
 			settingType = $this.data('setting'),
 			imageUrl = '';
 
@@ -207,61 +206,6 @@ var SettingsUploader = {
 			.find('i.fa').removeClass('fa-camera-retro')
 			.addClass('fa-external-link-square');
 		return;
-	},
-	/**
-	 * Submits the content of the form
-	 */
-	submitUpload : function(e) {
-		e.preventDefault();
-		var form = $(this);
-
-		// disable the buttons
-		form.find('.btn').addClass('btn-disabled')
-            .attr('disabled', 'disabled');
-
-		// upload
-		form.ajaxSubmit({
-			url : '/api/v1/settings/upload-image',
-			dataType : 'json',
-			beforeSend : function() {
-				// check if there's a file
-				var hasFile = $('input[type="files"]').filter(function() {
-						return $.trim(this.value) != ''
-					}).length > 0;
-
-				// if there's a file to be uploaded, show the progress bar
-				if (hasFile) {
-					$('.image-uploader').show().find('.progress').show();
-				}
-			},
-			uploadProgress : function(event, position, total, percentComplete) {
-				var percentVal = percentComplete + '%';
-				$('.image-uploader').find('.progress-bar')
-					.css('width', percentVal);
-			},
-			success : function(response) {
-				if (response.data) {
-					// reset the modal
-					SettingsUploader.resetModal();
-					// apply the image to the appearance page
-					$.each(response.data.settings, function(key, value) {
-						if (value == '') {
-							$('#' + key).find('.image-wrapper').removeClass('active')
-								.find('img').attr('src', '');
-						}
-
-						if (value != '') {
-							// find the wrapper and apply the image
-							$('#' + key).find('.image-wrapper').addClass('active')
-								.find('img').attr('src', value);
-						}
-					});
-
-					// close the modal
-					$('#settings_uploader_modal').modal('hide');
-				}
-			}
-		})
 	}
 };
 

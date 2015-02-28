@@ -65,11 +65,11 @@
         <form method="post" id="user_profile_form">
             <div class="form-group" id="name">
                 <input type="text" name="name" class="form-control" value="{{ $user->name }}"
-                       placeholder="What's your name?"/>
+                placeholder="What's your name?"/>
             </div>
             <div class="form-group" id="biography">
-            <textarea name="biography" class="form-control"
-                      placeholder="Tell something about yourself">{{ $user->biography }}</textarea>
+                <textarea name="biography" class="form-control"
+                placeholder="Tell something about yourself">{{ $user->biography }}</textarea>
             </div>
             <div class="form-group" id="email">
                 <label class="control-label" for="email">E-mail</label>
@@ -100,6 +100,8 @@
 @stop
 
 @section('footer.js')
+<script src="/vendor/javascript/jquery.form.js"></script>
+<script src="{{ asset('assets/javascript/uploader.min.js') }}"></script>
 <script type="text/javascript">
     (function($) {
         $('#user_profile_form').on('submit', function(e) {

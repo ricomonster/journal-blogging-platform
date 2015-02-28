@@ -57,7 +57,7 @@ Appearance
 @stop
 @section('footer.js')
 <script src="/vendor/javascript/jquery.form.js"></script>
-<script src="{{ asset('javascript/settings-uploader.min.js') }}"></script>
+<script src="{{ asset('assets/javascript/uploader.min.js') }}"></script>
 <script type="text/javascript">
 	(function($) {
 		$('#appearance_settings_form').on('submit', function(e) {
@@ -90,6 +90,61 @@ Appearance
                 Journal.notification(error.responseJSON.errors.message, 'danger');
             })
 		});
+
+        // handles image upload
+        $('#uploader_form').on('submit', function(e
+        ) {
+            e.preventDefault();
+            var form = $(this);
+
+            // disable the buttons
+            form.find('.btn').addClass('btn-disabled')
+                .attr('disabled', 'disabled');
+
+            // upload
+            form.ajaxSubmit({
+                url : '/api/v1/settings/upload-image',
+                dataType : 'json',
+                beforeSend : function() {
+                    // check if there's a file
+                    var hasFile = $('input[type="files"]').filter(function() {
+                                return $.trim(this.value) != ''
+                            }).length > 0;
+
+                    // if there's a file to be uploaded, show the progress bar
+                    if (hasFile) {
+                        $('.image-uploader').show().find('.progress').show();
+                    }
+                },
+                uploadProgress : function(event, position, total, percentComplete) {
+                    var percentVal = percentComplete + '%';
+                    $('.image-uploader').find('.progress-bar')
+                            .css('width', percentVal);
+                },
+                success : function(response) {
+                    if (response.data) {
+                        // reset the modal
+                        SettingsUploader.resetModal();
+                        // apply the image to the appearance page
+                        $.each(response.data.settings, function(key, value) {
+                            if (value == '') {
+                                $('#' + key).find('.image-wrapper').removeClass('active')
+                                        .find('img').attr('src', '');
+                            }
+
+                            if (value != '') {
+                                // find the wrapper and apply the image
+                                $('#' + key).find('.image-wrapper').addClass('active')
+                                        .find('img').attr('src', value);
+                            }
+                        });
+
+                        // close the modal
+                        $('#settings_uploader_modal').modal('hide');
+                    }
+                }
+            })
+        });
 	})(jQuery);
 </script>
 @stop

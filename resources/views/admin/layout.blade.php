@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title') &lsaquo; [Site Title] &#8212; Journal</title>
+    <title>@yield('title') &lsaquo; {{ site_title() }} &#8212; Journal</title>
     <link href="{{ asset('vendor/stylesheets/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/stylesheets/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/stylesheets/bootstrap-notify.css') }}" rel="stylesheet">
-    <link href="{{ asset('stylesheets/screen.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/stylesheets/screen.css') }}" rel="stylesheet">
     <style type="text/css">
         /* Notifications plugin */
         .notifications {
@@ -188,7 +188,7 @@
 <script src="{{ asset('vendor/javascript/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/javascript/bootstrap.min.js') }}"></script>
 <script src="{{ asset('vendor/javascript/bootstrap-notify.js') }}"></script>
-<script src="{{ asset('javascript/journal.min.js') }}"></script>
+<script src="{{ asset('assets/javascript/journal.min.js') }}"></script>
 <script>
     //NProgress.configure({ showSpinner: false });
 
