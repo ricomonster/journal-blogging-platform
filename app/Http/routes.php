@@ -87,14 +87,16 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'cors'], function() {
 	Route::group(['prefix' => 'settings'], function() {
 		Route::post('update_general_settings', 'Api\ApiSettingsController@updateGeneralSettings');
         Route::post('update_theme', 'Api\ApiSettingsController@updateTheme');
-		Route::post('upload-image', 'Api\ApiSettingsController@uploader');
+		Route::post('upload_image', 'Api\ApiSettingsController@uploader');
 	});
 
 	Route::group(['prefix' => 'users'], function() {
 		Route::get('lists', 'Api\ApiUsersController@allUsers');
 
+        Route::post('change_password', 'Api\ApiUserController@changePassword');
 		Route::post('create', 'Api\ApiUsersController@createUser');
         Route::post('update_account', 'Api\ApiUsersController@updateAccount');
+        Route::post('upload_image', 'Api\ApiUsersController@uploadImage');
 	});
 
 	Route::group(['prefix' => 'tags'], function() {

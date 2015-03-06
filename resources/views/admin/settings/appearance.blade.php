@@ -53,11 +53,11 @@ Appearance
 </section>
 @stop
 @section('modals')
-	@include('admin.modal.settingsuploader')
+	@include('admin.modal.uploader')
 @stop
 @section('footer.js')
 <script src="/vendor/javascript/jquery.form.js"></script>
-<script src="{{ asset('assets/javascript/uploader.min.js') }}"></script>
+<script src="{{ asset('assets/javascript/settings-uploader.min.js') }}"></script>
 <script type="text/javascript">
 	(function($) {
 		$('#appearance_settings_form').on('submit', function(e) {
@@ -92,8 +92,7 @@ Appearance
 		});
 
         // handles image upload
-        $('#uploader_form').on('submit', function(e
-        ) {
+        $('#uploader_form').on('submit', function(e) {
             e.preventDefault();
             var form = $(this);
 
@@ -103,7 +102,7 @@ Appearance
 
             // upload
             form.ajaxSubmit({
-                url : '/api/v1/settings/upload-image',
+                url : '/api/v1/settings/upload_image',
                 dataType : 'json',
                 beforeSend : function() {
                     // check if there's a file
@@ -140,7 +139,7 @@ Appearance
                         });
 
                         // close the modal
-                        $('#settings_uploader_modal').modal('hide');
+                        $('#uploader_modal').modal('hide');
                     }
                 }
             })

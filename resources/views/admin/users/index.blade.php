@@ -40,7 +40,7 @@ Users
 				<img src="http://41.media.tumblr.com/d7a4552d99639890d00b5e85d9a18673/tumblr_mldfty8fh41qcnibxo1_1280.png" class="user-avatar img-circle"/>
 				<div class="user-content">
 					<h3 class="user-name">{{ $user->name }}</h3>
-					<p class="text-muted last-login">Last login</p>
+					{{--<p class="text-muted last-login">Last login</p>--}}
 				</div>
 				@if($user->role == 1)
 				<span class="label label-success role">Administrator</span>

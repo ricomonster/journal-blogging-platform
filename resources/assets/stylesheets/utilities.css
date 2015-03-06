@@ -58,7 +58,7 @@ textarea.form-control { resize: none; }
 }
 
 .admin-header .navbar-collapse .nav li.active.site-directory a {
-    background: #fff;
+    background: none;
     border-bottom: 2px rgba(0,0,0,0.8) solid;
 }
 /* End of Header Styling */

@@ -55,6 +55,25 @@ interface UserRepositoryInterface
     public function update($id, $email, $name, $biography, $website, $location, $slug);
 
     /**
+     * Saves a user image either cover or avatar
+     *
+     * @param $target
+     * @param $url
+     * @param $id
+     * @return User
+     */
+    public function updateImage($target, $url, $id);
+
+    /**
+     * Updates the users password
+     *
+     * @param $id
+     * @param $password
+     * @return User
+     */
+    public function updatePassword($id, $password);
+
+    /**
      * Sets a user to be inactive
      *
      * @param int $id
@@ -107,12 +126,12 @@ interface UserRepositoryInterface
      * Validates if passwords are valid
      *
      * @param int $id
-     * @param string $oldPassword
+     * @param string $currentPassword
      * @param string $newPassword
      * @param string $confirmNewPassword
      * @return \Illuminate\Support\MessageBag
      */
-    public function validateChangePassword($id, $oldPassword, $newPassword, $confirmNewPassword);
+    public function validateChangePassword($id, $currentPassword, $newPassword, $confirmNewPassword);
 
     /**
      * Checks if slug exists and generates a slugified string

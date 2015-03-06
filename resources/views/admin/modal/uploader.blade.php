@@ -48,7 +48,7 @@
                 </button>
                 <h4 class="modal-title">Upload Image</h4>
             </header>
-            <form enctype="multipart/form-data" id="settings_uploader_form" method="post" autocomplete="off">
+            <form enctype="multipart/form-data" id="uploader_form" method="post" autocomplete="off">
                 <section class="modal-body">
                     <div class="uploader">
                         <section class="image-upload-preview">

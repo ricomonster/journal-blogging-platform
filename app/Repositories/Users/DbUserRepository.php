@@ -29,6 +29,7 @@ class DbUserRepository implements UserRepositoryInterface {
             'role'          => $role,
             'slug'          => $this->validateSlug($name)]);
     }
+
     /**
      * Returns all active user
      *
@@ -40,6 +41,7 @@ class DbUserRepository implements UserRepositoryInterface {
             ->orderBy('email', 'ASC')
             ->get();
     }
+
     /**
      * Fetches a user by its id
      *
@@ -50,6 +52,7 @@ class DbUserRepository implements UserRepositoryInterface {
     {
         return User::where('id', '=', $id)->first();
     }
+
     /**
      * Fetches a user by its email
      * @param string $email
@@ -59,6 +62,7 @@ class DbUserRepository implements UserRepositoryInterface {
     {
         return User::where('email', '=', $email)->first();
     }
+
     /**
      * Updates user details
      *
@@ -86,6 +90,43 @@ class DbUserRepository implements UserRepositoryInterface {
 
         return $user;
     }
+
+    /**
+     * Saves a user image either cover or avatar
+     *
+     * @param $target
+     * @param $url
+     * @param $id
+     * @return User
+     */
+    public function updateImage($target, $url, $id)
+    {
+        // get user first
+        $user = $this->findById($id);
+
+        // update
+        $user->fill([ $target => $url ])->save();
+
+        return $user;
+    }
+
+    /**
+     * Updates the users password
+     *
+     * @param $id
+     * @param $password
+     * @return User
+     */
+    public function updatePassword($id, $password)
+    {
+        // get user first
+        $user = $this->findById($id);
+
+        // update
+        $user->fill([
+            'password' => Hash::make($password)])->save();
+    }
+
     /**
      * Sets a user to be inactive
      *
@@ -99,6 +140,7 @@ class DbUserRepository implements UserRepositoryInterface {
         // update and set field active to 0
         $user->fill(['active' => 0])->save();
     }
+
     /**
      * Logs in the user to the platform
      *
@@ -123,6 +165,7 @@ class DbUserRepository implements UserRepositoryInterface {
         }
         return false;
     }
+
     /**
      * Logs out the to the platform
      *
@@ -132,6 +175,7 @@ class DbUserRepository implements UserRepositoryInterface {
     {
         Auth::logout();
     }
+
     /**
      * Validates user details for creation
      *
@@ -167,6 +211,7 @@ class DbUserRepository implements UserRepositoryInterface {
 
         return $validator->errors();
     }
+
     /**
      * Validates if data is valid for update
      *
@@ -217,18 +262,50 @@ class DbUserRepository implements UserRepositoryInterface {
 
         return $validator->errors();
     }
+
     /**
      * Validates if passwords are valid
      *
      * @param int $id
-     * @param string $oldPassword
+     * @param string $currentPassword
      * @param string $newPassword
      * @param string $confirmNewPasswords
      * @return \Illuminate\Support\MessageBag
      */
-    public function validateChangePassword($id, $oldPassword, $newPassword, $confirmNewPasswords)
+    public function validateChangePassword($id, $currentPassword, $newPassword, $confirmNewPasswords)
     {
+        // create a new custom validator to check the current password if it's
+        // the same
+        Validator::extend('current_password', function($attribute, $value, $parameters) use ($id) {
+            $user = User::where('id', '=', $id)->first();
+            return Hash::check($value, $user->password);
+        });
+
+        $data = [
+            'current_password'  => $currentPassword,
+            'new_password'      => $newPassword,
+            'repeat_password'   => $confirmNewPasswords];
+
+        $rules = [
+            'current_password'  => 'required|current_password',
+            'new_password'      => 'required|min:6',
+            'repeat_password'   => 'required|same:new_password'];
+
+        $messages = [
+            'current_password.required'         => 'We need your current password',
+            'current_password.current_password' => 'This is not your current password',
+            'new_password.required'             => 'A new password is required',
+            'new_password.min'                  => 'Your new password should :min+ characters',
+            'repeat_password.required'          => 'We need again your new password',
+            'repeat_password.same'              => 'Passwords should be the same'];
+
+        // validate
+        $validator = Validator::make($data, $rules, $messages);
+        $validator->passes();
+
+        return $validator->errors();
     }
+
     /**
      * Checks if slug exists and generates a slugified string
      *

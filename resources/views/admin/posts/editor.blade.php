@@ -36,8 +36,10 @@ Editor
 		left: 0;
 		position: absolute;
 		right: 0;
-		top: 40px;
+		top: 0;
 	}
+
+    .post-editor-page .entry-markdown .editor-content .CodeMirror .CodeMirror-scroll { padding-top: 50px; }
 
 	.post-editor-page .entry-markdown .editor-content .CodeMirror pre {
 		font-family: Inconsolata, monospace;
@@ -61,10 +63,10 @@ Editor
 		left: 0;
 		line-height: 1.5em;
 		overflow: auto;
-		padding: 0 40px 40px;
+		padding: 50px 40px 40px;
 		position: absolute;
 		right: 0;
-		top: 40px;
+		top: 0;
 		user-select: none;
 		word-break: break-all;
 	}
@@ -254,7 +256,7 @@ Editor
 					</div>
 
 					<input type="hidden" name="tags" value="{{ ($post) ?
-					implode("','", $post->tags) : null }}"/>
+					implode(",", $post->tags) : null }}"/>
 				</section>
 
 				<section class="post-controls col-md-3">
@@ -287,9 +289,9 @@ Editor
 					@if(!$post || ($post && $post->status == 2))
 						<div class="btn-group dropup post-status">
 							<button type="submit" class="btn btn-primary"
-									id="submit_post">Save as Draft</button>
+                            id="submit_post">Save as Draft</button>
 							<button type="button" class="btn btn-primary dropdown-toggle"
-									data-toggle="dropdown">
+							data-toggle="dropdown">
 								<span class="caret"></span>
 								<span class="sr-only"></span>
 							</button>

@@ -1,6 +1,6 @@
-var SettingsUploader = {
+var ProfileUploader = {
 	/**
-	 * Initializes the settings uploader script
+	 * Initializes the profile uploader script
 	 */
 	init : function() {
 		this.bindEvents();
@@ -14,7 +14,7 @@ var SettingsUploader = {
 			.on('change', '.file-uploader', this.readUrl)
 			.on('click', '.remove-image', this.removeImage)
 			.on('click', '.upload-option', this.setUploadOption)
-			.on('click', '.upload-image', this.showModalUploader);
+			.on('click', '.show-modal', this.showModalUploader);
 	},
 	/**
 	 * Listens for url to be inputted
@@ -29,7 +29,7 @@ var SettingsUploader = {
 
 			$('input[name="image_url"]').val($this.val());
 
-			SettingsUploader.previewImageUrl($this.val());
+            ProfileUploader.previewImageUrl($this.val());
 		}
 
 		return;
@@ -41,6 +41,9 @@ var SettingsUploader = {
 		$('.image-upload-preview').find('img').attr('src', url).load(function() {
 			// check if image is valid
 			if(this.complete || typeof this.naturalWidth != "undefined" || this.naturalWidth != 0) {
+                // check first if the method of getting the image is via url
+                // if via url, check if image is square
+
 				// show preview wrapper
 				$('.image-upload-preview').show();
 			}
@@ -124,6 +127,10 @@ var SettingsUploader = {
 		$('input[name="image_url"]').val('');
 		$('input[name="setting_name"]').val('');
 
+        // all buttons remove disable state
+        $('#uploader_form').find('.btn').removeClass('btn-disabled')
+            .removeAttr('disabled');
+
 		$('input[name="files"]').replaceWith($('input[name="files"]')
 			.val('').clone(true));
 
@@ -134,21 +141,31 @@ var SettingsUploader = {
 	 */
 	showModalUploader : function(e) {
 		e.preventDefault();
-		var $this = $(this),
-			modal = $('#uploader_modal'),
+		var $this       = $(this),
+			modal       = $('#uploader_modal'),
 			settingType = $this.data('setting'),
-			imageUrl = '';
+			imageUrl    = '';
 
 		// reset contents of modal
-		SettingsUploader.resetModal();
+        ProfileUploader.resetModal();
 
 		// set necessary info in the modal
 		modal.find('input[name="setting_name"]').val(settingType);
+        if (settingType == 'cover_url' && $('#cover_url').hasClass('active')) {
+            // get the element that holds the cover url
+            imageUrl = $('#cover_url').css('background-image')
+                .replace('url(','')
+                .replace(')','');
+        }
+
+        if (settingType == 'avatar_url' && $('#avatar_url').find('.image-wrapper')
+            .hasClass('active')) {
+            imageUrl = $('#avatar_url').find('.image-wrapper').css('background-image')
+                .replace('url(','').replace(')','');
+        }
 
 		// check if there's an image set
-		if ($this.siblings('.image-wrapper').hasClass('active')) {
-			// get image
-			imageUrl = $this.siblings('.image-wrapper').find('img').attr('src');
+		if (imageUrl) {
 			// set necessary details and info in the modal
 			// show the image
 			$('.image-upload-preview').show().find('img')
@@ -191,7 +208,7 @@ var SettingsUploader = {
 
 			// check if input is empty
 			if ($('input[name="url_of_image"]').val().length != 0) {
-				SettingsUploader.previewImageUrl($('input[name="image_url"]').val());
+                ProfileUploader.previewImageUrl($('input[name="image_url"]').val());
 			}
 
 			return;
@@ -209,4 +226,4 @@ var SettingsUploader = {
 	}
 };
 
-SettingsUploader.init();
+ProfileUploader.init();
