@@ -74,6 +74,12 @@ class ApiUsersController extends ApiController
         }
 
         // update password
+        $this->users->updatePassword($id, $newPassword);
+
+        // send response
+        return $this->respond([
+            'data' => [
+                'message' => 'Password successfully changed.']]);
     }
 
     /**

@@ -93,7 +93,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'cors'], function() {
 	Route::group(['prefix' => 'users'], function() {
 		Route::get('lists', 'Api\ApiUsersController@allUsers');
 
-        Route::post('change_password', 'Api\ApiUserController@changePassword');
+        Route::post('change_password', 'Api\ApiUsersController@changePassword');
 		Route::post('create', 'Api\ApiUsersController@createUser');
         Route::post('update_account', 'Api\ApiUsersController@updateAccount');
         Route::post('upload_image', 'Api\ApiUsersController@uploadImage');

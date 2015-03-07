@@ -112,7 +112,7 @@
 
         <form method="post" id="user_password_form">
             <div class="form-group">
-                <label class="control-label" for="current_password">Old password</label>
+                <label class="control-label" for="current_password">Current password</label>
                 <input type="password" name="current_password" class="form-control"/>
                 <span class="help-block">What's your current password?</span>
             </div>
@@ -196,6 +196,9 @@
                     form.find('button[type="submit"]')
                         .removeClass('btn-disable')
                         .removeAttr('disabled');
+
+                    // empty contents of the fields
+                    form.find('input').val('').blur();
 
                     Journal.notification(response.data.message, 'success');
                 }
