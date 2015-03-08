@@ -12,7 +12,7 @@ class BlogController extends Controller {
     /**
      * @var string
      */
-    protected $theme = 'medium';
+    protected $theme = 'casper';
 
     /**
      * @var PostRepositoryInterface

@@ -68,7 +68,8 @@ Editor
 		right: 0;
 		top: 0;
 		user-select: none;
-		word-break: break-all;
+        word-wrap: break-word;
+        word-break: normal;
 	}
 
 	.post-editor-page #rendered_markdown .embedded-javascript,

@@ -65,8 +65,8 @@ if ( ! function_exists('convert_readable_time')) {
     }
 }
 
-if ( ! function_exists('theme_path')) {
-    function theme_path($file = null)
+if ( ! function_exists('theme_assets')) {
+    function theme_assets($file = null)
     {
         // get the theme
         $theme = Journal\Setting::where('key', '=', 'theme')->first();

@@ -88,7 +88,8 @@
 		position: absolute;
 		right: 0;
 		top: 0;
-		word-break: break-all;
+        word-wrap: break-word;
+        word-break: normal;
 	}
 
 	.post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown {

@@ -1,74 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html class="no-js" lang="">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{{ $blog->blog_description }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>{{ $blog->blog_title }}</title>
-    <link href="{{ theme_path('assets/css/global.css') }}" rel="stylesheet"/>
-    <link href="{{ theme_path('assets/css/screen.css') }}" rel="stylesheet"/>
-    <style>
-        .home-template .main-header { height: 100%; }
-        .home-template .main-header.no-cover { height: 60%; }
-    </style>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ theme_assets('assets/css/screen.css') }}" rel="stylesheet"/>
+    <link href="{{ theme_assets('assets/css/font-awesome.css') }}" rel="stylesheet"/>
 </head>
 <body class="home-template">
-    <header {!! ($blog->blog_cover) ?
-    'class="main-header" style="background-image: url('.$blog->blog_cover.')"' :
-    'class="main-header no-cover"' !!}>
-        <nav class="main-nav" style="display: none;">
-            <a href="/rss" class="rss-button"><i class="fa fa-rss"></i> RSS</a>
+    <header class="main-header {{ ($blog->blog_cover) ? null : 'no-cover' }}" {!! ($blog->blog_cover) ? 'style="background-image: url('.$blog->blog_cover.')"' : null !!}>
+        <nav class="site-nav clearfix">
+            <a href="#" class="rss-button">
+                <i class="fa fa-rss"></i>
+                Subscribe
+            </a>
         </nav>
         <div class="vertical">
             <div class="header-content">
-                {{-- Logo goes in here --}}
                 <h1 class="blog-title">{{ $blog->blog_title }}</h1>
                 <h2 class="blog-description">{{ $blog->blog_description }}</h2>
             </div>
         </div>
     </header>
-    <main class="container content">
-        @if(!$posts->isEmpty())
-        @foreach($posts as $key => $post)
-            <article class="post-wrapper">
-                <header class="post-header">
-                    <h2 class="post-title">
-                        <a href="{{ $post->permalink }}">{{ $post->title }}</a>
-                    </h2>
-                </header>
-                <section class="post-excerpt post-content">
-                    {{ markdown($post->content, true, 50) }}
-                </section>
-                <footer class="post-footer-meta">
-                    <span class="post-meta">
-                    <a href="/author/{{ $post->author->slug }}" class="post-author">
-                        {{ $post->author->name }}
-                    </a>
-                        <div class="tags">
-                            on
-                        </div>
-                        <time class="post-date">
-                            {{ date('d F Y', strtotime($post->published_at)) }}
-                        </time>
-                </span>
-                </footer>
-            </article>
+    <main class="content">
+        @foreach($posts as $post)
+        <article class="post">
+            <header class="post-header">
+                <h2 class="post-title">
+                    <a href="{{ $post->permalink }}">{{ $post->title }}</a>
+                </h2>
+            </header>
+            <section class="post-content">{!! markdown($post->content, true, 50) !!}</section>
+            <footer class="post-meta">
+                <a href="#">{{ $post->author->name }}</a>
+                on
+                <a>Tags</a>
+                <date class="post-date">{{ $post->published_at }}</date>
+            </footer>
+        </article>
         @endforeach
-        @endif
     </main>
-    <footer class="site-footer">
-        <div class="inner">
-            <section class="copyright">
-                <a href="/" class="blog-name">{{ $blog->blog_title }}</a> &copy;
-                {{ date('Y') }} &bull; All rights reserved.
-            </section>
-            <section class="poweredby">
-                Proudly published with
-                <a href="http://github.com/ricomonster/journal-blogging-platform"
-                target="_blank">Journal</a>
-            </section>
-        </div>
+    <footer class="site-footer clearfix">
+        <section class="blog">
+            <a href="#">{{ $blog->blog_title }}</a> &copy; {{ date('Y') }}
+        </section>
+        <section class="platform">
+            Proudly published with <a href="#" target="_blank">Journal</a>
+        </section>
     </footer>
 </body>
 </html>
