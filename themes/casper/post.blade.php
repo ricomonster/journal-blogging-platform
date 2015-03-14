@@ -28,8 +28,10 @@
                 <h1 class="post-title">{{ $post->title }}</h1>
                 <section class="post-meta">
                     <date class="post-date">{{ $post->published_at }}</date>
+                    @if($post->tags)
                     on
-                    <a>Tags</a>
+                    @endif
+                    {!! convert_tags_to_links($post->tags) !!}
                 </section>
             </header>
             <section class="post-content">{!! markdown($post->content) !!}</section>

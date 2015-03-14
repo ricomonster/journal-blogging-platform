@@ -35,8 +35,10 @@
             <section class="post-content">{!! markdown($post->content, true, 50) !!}</section>
             <footer class="post-meta">
                 <a href="#">{{ $post->author->name }}</a>
+                @if($post->tags)
                 on
-                <a>Tags</a>
+                @endif
+                {!! convert_tags_to_links($post->tags) !!}
                 <date class="post-date">{{ $post->published_at }}</date>
             </footer>
         </article>

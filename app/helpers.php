@@ -50,6 +50,9 @@ if ( ! function_exists('markdown'))
 
 /**
  * Converts datetime to normal human readable time (eg. 45 minutes ago)
+ *
+ * @param string
+ * @return string
  */
 use Carbon\Carbon;
 
@@ -65,6 +68,25 @@ if ( ! function_exists('convert_readable_time')) {
     }
 }
 
+/**
+ * Convert datetime according to format
+ *
+ * @param string
+ * @
+ */
+if ( ! function_exists('convert_datetime')) {
+    function convert_datetime($datetime, $format = 'F j, Y h:i')
+    {
+
+    }
+}
+
+/**
+ * Sets the path url of a file or assets
+ *
+ * @param string
+ * @return string
+ */
 if ( ! function_exists('theme_assets')) {
     function theme_assets($file = null)
     {
@@ -82,5 +104,18 @@ if ( ! function_exists('site_title')) {
     {
         $response = Journal\Setting::where('key', '=', 'blog_title')->first();
         return $response->value;
+    }
+}
+
+if ( ! function_exists('convert_tags_to_links')) {
+    function convert_tags_to_links($tagsArray) {
+        $tagsLinksArray = array();
+
+        foreach ($tagsArray as $tag) {
+            $tagName = trim($tag);
+            $tagsLinksArray[] = '<a href="/tags/'.urlencode($tagName).'">'.$tagName.'</a>';
+        }
+
+        return implode(', ', $tagsLinksArray);
     }
 }
