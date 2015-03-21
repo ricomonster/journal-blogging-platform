@@ -45,6 +45,22 @@ interface PostRepositoryInterface
     public function findBySlug($slug);
 
     /**
+     * Get all posts according to its tag ID
+     *
+     * @param $tagId
+     * @return Post
+     */
+    public function getPostsByTag($tagId);
+
+    /**
+     * Get posts by its author
+     *
+     * @param $authorId
+     * @return Post
+     */
+    public function getPostsByAuthor($authorId);
+
+    /**
      * Updates a posts
      *
      * @param int $id

@@ -16,8 +16,8 @@
 
 			<div class="form-group">
 				<label class="control-label">Post URL</label>
-				<input type="text" name="slug" class="form-control"
-				placeholder="{{ Request::root() }}" value=""/>
+				<input type="text" name="slug" class="form-control" placeholder="{{ Request::root() }}"
+                value="{{ (empty($post)) ? null : $post->slug }}"/>
 			</div>
 
 			<div class="form-group">

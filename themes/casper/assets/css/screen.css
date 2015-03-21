@@ -167,7 +167,7 @@ p, ul, ol, dl {
 }
 
 ol, ul {
-    padding-left: 0;
+    /*padding-left: 0;*/
 }
 
 ol ol, ul ul,
@@ -205,9 +205,8 @@ hr {
 blockquote {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    margin: 1.7em 0 1.7em -2.2em;
     padding: 0 0 0 1.6em;
-    border-left: #4A4A4A 0.4em solid;
+    border-left: #4A4A4A 0.2em solid;
 }
 
 blockquote p {
@@ -307,6 +306,7 @@ pre code, tt {
 .header-content {
     margin: 0 auto;
     max-width: 710px;
+    padding: 40px 0;
     position: relative;
     width: 80%;
 }
@@ -487,7 +487,7 @@ pre code, tt {
     text-align: right;
 }
 
-.blog-title {
+.blog-title, .author-name {
     margin: 10px 0 10px 0;
     font-size: 5rem;
     letter-spacing: -1px;
@@ -496,7 +496,8 @@ pre code, tt {
     color: #fff;
 }
 
-.no-cover .blog-title { color: rgba(0,0,0,0.8); }
+.no-cover .blog-title,
+.no-cover .author-name { color: rgba(0,0,0,0.8); }
 
 .blog-description {
     margin: 0;
@@ -511,8 +512,8 @@ pre code, tt {
 .no-cover .blog-description { color: rgba(0,0,0,0.5); }
 /* End of Common styles */
 
-/* Main Page */
-.home-template .site-nav {
+.home-template .site-nav,
+.author-template .site-nav {
     position: absolute;
     top: 0;
     left: 0;
@@ -527,11 +528,10 @@ pre code, tt {
 
 .home-template .site-nav a { border-color: rgba(255,255,255,0.6); color: #fff; }
 
-.home-template .post-title { font-size: 3.6rem; }
-.home-template .post-title a { text-decoration: none; }
-/* End of Main Page styles */
+.home-template .post-title, .author-template .post-title { font-size: 3.6rem; }
+.home-template .post-title a, .author-template .post-title a { text-decoration: none; }
 
-/* Posts Page */
+.post-template .post { border-bottom: 0; }
 .post-template .main-header {
     height: 85px;
     min-height: 0;
@@ -541,4 +541,14 @@ pre code, tt {
 
 .post-template .header { margin-bottom: 30px; }
 .post-template .post-date { border-left: 0; margin-left: 0; padding-left: 0; }
-/* End of Posts Page styles */
+.post-template .post-header { margin-bottom: 20px; }
+
+.author-template .author-avatar {
+    left: auto;
+    right: auto;
+    margin: auto;
+    position: relative;
+}
+
+.author-template .author-meta { color: #ffffff; font-size: 1.7rem; letter-spacing: 0.01rem; }
+.author-template .no-cover .author-meta { color: rgba(0,0,0,0.5); }

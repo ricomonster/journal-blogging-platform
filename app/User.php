@@ -31,7 +31,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var array
      */
-    protected $appends = array('avatar_url');
+    protected $appends = ['avatar_url', 'permalink'];
 
 	/**
 	 * The attributes that are mass assignable.
@@ -59,5 +59,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return (empty($this->attributes['avatar_url'])) ?
             Request::root() . '/images/shared/default_avatar.png' :
             $this->attributes['avatar_url'];
+    }
+
+    /**
+     * Sets the permalink of the author
+     *
+     * @return string
+     */
+    public function getPermalinkAttribute() {
+        return Request::root().'/author/'.$this->attributes['slug'];
     }
 }

@@ -113,7 +113,7 @@ if ( ! function_exists('convert_tags_to_links')) {
 
         foreach ($tagsArray as $tag) {
             $tagName = trim($tag);
-            $tagsLinksArray[] = '<a href="/tags/'.urlencode($tagName).'">'.$tagName.'</a>';
+            $tagsLinksArray[] = '<a href="/tag/'.\Illuminate\Support\Str::slug($tagName).'">'.$tagName.'</a>';
         }
 
         return implode(', ', $tagsLinksArray);

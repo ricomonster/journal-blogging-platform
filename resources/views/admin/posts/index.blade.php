@@ -3,8 +3,10 @@
 
 @section('body')
 <style type="text/css">
-	.post-list-page .page-header { padding: 5px 20px 0 20px; }
+	.post-list-page .page-header { padding: 10px 20px 0 20px; }
 	.post-list-page .page-header .hero-title { float: left; }
+    .post-list-page .page-header .btn {  }
+
 	.post-list-page .content-wrapper {
 		-webkit-overflow-scrolling: touch;
 		background: #fff;

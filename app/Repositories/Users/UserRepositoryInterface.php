@@ -41,6 +41,14 @@ interface UserRepositoryInterface
     public function findByEmail($email);
 
     /**
+     * Fetch a user using its slug
+     *
+     * @param $slug
+     * @return User
+     */
+    public function findBySlug($slug);
+
+    /**
      * Updates user details
      *
      * @param  int $id

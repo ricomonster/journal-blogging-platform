@@ -5,7 +5,7 @@ Users
 
 @section('body')
 <style type="text/css">
-	.user-list-page .page-header { padding: 20px 0 0; }
+	.user-list-page .page-header { padding: 10px 0 0; }
 
 	.user-list-page .user-details { border-bottom: #f6f6f6 1px solid; padding: 10px 0; }
 	.user-list-page .user-details .user-hyperlink { display: block; }

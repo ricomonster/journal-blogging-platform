@@ -5,6 +5,7 @@ use Journal\Http\Requests\CreateAccountRequest;
 use Journal\Http\Requests\SetupBlogRequest;
 use Journal\Repositories\Posts\PostRepositoryInterface;
 use Journal\Repositories\Settings\SettingRepositoryInterface;
+use Journal\Repositories\Tags\TagRepositoryInterface;
 use Journal\Repositories\Users\UserRepositoryInterface;
 use Journal\User;
 use Artisan, Auth, Input;
@@ -14,12 +15,14 @@ class InstallerController extends Controller
     protected $posts;
     protected $settings;
     protected $users;
+    protected $tags;
 
-    public function __construct(PostRepositoryInterface $posts, SettingRepositoryInterface $settings,UserRepositoryInterface $users)
+    public function __construct(PostRepositoryInterface $posts, SettingRepositoryInterface $settings,UserRepositoryInterface $users, TagRepositoryInterface $tags)
     {
         $this->posts = $posts;
         $this->settings = $settings;
         $this->users = $users;
+        $this->tags = $tags;
     }
 
     public function account()
@@ -89,7 +92,10 @@ class InstallerController extends Controller
         $content = file_get_contents(base_path('readme.md'));
         $slug = $this->posts->createSlug('Laravel 5', null);
 
-        $this->posts->create($user->id, 'Laravel 5', $content, $slug, 1, date('Y-m-d h:i:s'), []);
+        // create tags
+        $tags = $this->tags->set(['laravel 5', 'php framework', 'artisan']);
+
+        $this->posts->create($user->id, 'Laravel 5', $content, $slug, 1, date('Y-m-d h:i:s'), $tags);
 
         // log in the current user
         Auth::loginUsingId($user->id);

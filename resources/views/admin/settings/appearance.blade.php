@@ -5,7 +5,7 @@ Appearance
 
 @section('body')
 <style type="text/css">
-	.appearance-settings-page .page-header { padding: 5px 0 15px; }
+	.appearance-settings-page .page-header { padding: 10px 0 15px; }
     .appearance-settings-page form .image-wrapper { display: none; margin: 30px 0 10px; padding: 0 20px; }
     .appearance-settings-page form .image-wrapper.active { display: block; }
     .appearance-settings-page form .image-wrapper img { display: block; width: 100%; margin: auto; }

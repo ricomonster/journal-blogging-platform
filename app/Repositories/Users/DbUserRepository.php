@@ -64,6 +64,17 @@ class DbUserRepository implements UserRepositoryInterface {
     }
 
     /**
+     * Fetch a user using its slug
+     *
+     * @param $slug
+     * @return User
+     */
+    public function findBySlug($slug)
+    {
+        return User::where('slug', '=', $slug)->first();
+    }
+
+    /**
      * Updates user details
      *
      * @param  int $id

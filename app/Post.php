@@ -17,22 +17,22 @@ class Post extends Model {
      *
      * @var array
      */
-    protected $fillable = array('author_id', 'title', 'content', 'slug', 'status',
-        'active', 'published_at');
+    protected $fillable = ['author_id', 'title', 'content', 'slug', 'status',
+        'active', 'published_at'];
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    protected $hidden = array('tag');
+    protected $hidden = ['tag'];
 
     /**
      * The attributes/accessors that will be accessed via JSON or array
      *
      * @var array
      */
-    protected $appends = array('tags');
+    protected $appends = ['tags', 'meta'];
 
     /**
      * User/Author Relationship
@@ -52,6 +52,13 @@ class Post extends Model {
     public function tag()
     {
         return $this->belongsToMany('Journal\Tag', 'post_tag', 'post_id', 'tag_id');
+    }
+
+    public function getMetaAttribute()
+    {
+        return [
+            'meta_title' => $this->attributes['title']
+        ];
     }
 
     /**

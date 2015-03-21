@@ -8,7 +8,7 @@
     <link href="/vendor/stylesheets/bootstrap.min.css" rel="stylesheet">
     <link href="/vendor/stylesheets/font-awesome.min.css" rel="stylesheet">
     <link href="/vendor/stylesheets/bootstrap-notify.css" rel="stylesheet">
-    <link href="/stylesheets/screen.css" rel="stylesheet">
+    <link href="/assets/stylesheets/screen.css" rel="stylesheet">
     <style type="text/css">
         .container {
             position: absolute;

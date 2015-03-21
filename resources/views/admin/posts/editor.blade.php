@@ -6,7 +6,7 @@ Editor
 @section('css')
 <link href="/vendor/stylesheets/codemirror.css" rel="stylesheet">
 <style>
-	.post-editor-page .title-wrapper { padding: 0 5px; }
+	.post-editor-page .title-wrapper { border-bottom: 0; padding: 0 5px; }
 	.post-editor-page .title-wrapper input[name="title"] {
 		font-size: 40px;
 		font-weight: bold;

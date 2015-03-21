@@ -40,13 +40,13 @@ textarea, input, select { border: 0; }
 /* Custom Styling starts now! */
 /* Global Styles */
 .main-container {
-    -moz-transition: -moz-transform 150ms cubic-bezier(.2, .3, .25, .9);
-    -o-transition: -o-transform 150ms cubic-bezier(.2, .3, .25, .9);
-    -webkit-transition: -webkit-transform 150ms cubic-bezier(.2, .3, .25, .9);
     background: #fff;
     height: 100%;
     padding: 50px 0 0;
     transition: transform 150ms cubic-bezier(.2, .3, .25, .9);
+    -moz-transition: -moz-transform 150ms cubic-bezier(.2, .3, .25, .9);
+    -o-transition: -o-transform 150ms cubic-bezier(.2, .3, .25, .9);
+    -webkit-transition: -webkit-transform 150ms cubic-bezier(.2, .3, .25, .9);
 }
 
 body.transition-sidebar .main-container {

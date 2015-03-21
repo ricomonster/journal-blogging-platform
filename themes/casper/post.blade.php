@@ -37,29 +37,36 @@
             <section class="post-content">{!! markdown($post->content) !!}</section>
             <footer class="post-footer clearfix">
                 <figure class="author-avatar">
-                    <a href="#" class="img" style="background-image: url('{{ $post->author->avatar_url }}')"></a>
+                    <a href="{{ $post->author->permalink }}" class="img" style="background-image: url('{{ $post->author->avatar_url }}')"></a>
                 </figure>
                 <section class="author">
                     <h4>
-                        <a>{{ $post->author->name }}</a>
+                        <a href="{{ $post->author->permalink }}">{{ $post->author->name }}</a>
                     </h4>
                     <p>{{ $post->author->biography }}</p>
                     <div class="author-meta">
+                        @if($post->author->location)
                         <span class="author-location">
                             <i class="fa fa-map-marker"></i>
                             {{ $post->author->location }}
                         </span>
+                        @endif
+                        @if($post->author->website)
                         <span class="author-website">
                             <i class="fa fa-link"></i>
                             <a href="{{ $post->author->website }}" target="_blank">{{ $post->author->website }}</a>
                         </span>
+                        @endif
                     </div>
                 </section>
                 <section class="share">
                     <h4>Share</h4>
-                    <a href="#"><i class="fa fa-facebook-square"></i></a>
-                    <a href="#"><i class="fa fa-twitter"></i></a>
-                    <a href="#"><i class="fa fa-google-plus-square"></i></a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ $post->permalink }}"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" class="fa fa-facebook-square"></a>
+                    <a href="https://twitter.com/share?text={{ urlencode($post->title) }}&url={{ $post->permalink }}"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" class="fa fa-twitter"></a>
+                    <a href="https://plus.google.com/share?url={{ $post->permalink }}"
+                    onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" class="fa fa-google-plus-square"></a>
                 </section>
             </footer>
         </article>

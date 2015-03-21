@@ -79,6 +79,40 @@ class DbPostRepository implements PostRepositoryInterface
     }
 
     /**
+     * Get all posts according to its tag ID
+     *
+     * @param $tagId
+     * @return Post
+     */
+    public function getPostsByTag($tagId)
+    {
+        return Post::with(array('author', 'tag'))
+            ->whereHas('tag', function($query) use ($tagId) {
+                // set a query to fetch posts according to the tag ID to which
+                // a tag is related to
+                $query->where('id', '=', $tagId);
+            })
+            ->where('active', '=', 1)
+            ->orderBy('id', 'desc')
+            ->get();
+    }
+
+    /**
+     * Get posts by its author
+     *
+     * @param $authorId
+     * @return Post
+     */
+    public function getPostsByAuthor($authorId)
+    {
+        return Post::with(array('author', 'tag'))
+            ->where('author_id', '=', $authorId)
+            ->where('active', '=', 1)
+            ->orderBy('id', 'desc')
+            ->get();
+    }
+
+    /**
      * Updates a posts
      *
      * @param int $id

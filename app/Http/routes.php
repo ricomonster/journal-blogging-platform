@@ -111,5 +111,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'cors'], function() {
 */
 Route::group(['middleware' => 'installation'], function() {
 	Route::get('/', 'BlogController@index');
+    Route::get('author/{slug}', 'BlogController@author');
 	Route::get('post/{slug}', 'BlogController@post');
+    Route::get('tag/{tag}', 'BlogController@tag');
 });
