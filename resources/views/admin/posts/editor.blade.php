@@ -223,7 +223,7 @@ Editor
 			<span class="header-title">Markdown</span>
 		</header>
 		<section class="editor-content">
-			<textarea name="content" id="the_editor">{{ ($post) ? $post->content : null }}</textarea>
+			<textarea name="markdown" id="the_editor">{{ ($post) ? $post->markdown : null }}</textarea>
 		</section>
 	</section>
 	<section class="editor-section entry-preview">

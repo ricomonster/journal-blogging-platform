@@ -22,8 +22,8 @@ class DbSettingRepository implements SettingRepositoryInterface
         if ($result) {
             // update
             $update = Setting::where('key', '=', $setting)->first();
-            $update->fill(array(
-                'value' => $value))->save();
+            $update->fill([
+                'value' => $value])->save();
 
             $response = new Setting();
             $response[$update->key] = $update->value;
@@ -32,8 +32,8 @@ class DbSettingRepository implements SettingRepositoryInterface
         }
 
         // create
-        $result = Setting::create(array(
-            'key' => $setting, 'value' => $value));
+        $result = Setting::create([
+            'key' => $setting, 'value' => $value]);
 
         $setting = new Setting();
         $setting[$result->key] = $result->value;

@@ -21,9 +21,9 @@ class ApiAuthController extends ApiController
 
         if (isset($parameter) && $parameter == 'true') {
             // return response
-            return $this->respond(array(
+            return $this->respond([
                 'validated' => true,
-                'url' => Request::root()));
+                'url' => Request::root()]);
         }
     }
 
@@ -52,10 +52,10 @@ class ApiAuthController extends ApiController
             // get user details
             $user = $userRepository->findByEmail($email);
             // login user
-            return $this->respond(array(
-                'data' => array(
+            return $this->respond([
+                'data' => [
                     'url'   => Request::root().'/journal',
-                    'user'  => $user->toArray())));
+                    'user'  => $user->toArray()]]);
         }
 
         // authentication is not successful due to email is not found or incorrect

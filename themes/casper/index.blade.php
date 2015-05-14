@@ -1,7 +1,7 @@
 <!doctype html>
 <html class="no-js" lang="">
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-6">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>{{ $blog->blog_title }}</title>
     <meta name="description" content="">
@@ -32,7 +32,7 @@
                     <a href="{{ $post->permalink }}">{{ $post->title }}</a>
                 </h2>
             </header>
-            <section class="post-content">{!! markdown($post->content, true, 50) !!}</section>
+            <section class="post-content">{!! markdown($post->markdown, true, 50) !!}</section>
             <footer class="post-meta">
                 <a href="{{ $post->author->permalink }}">{{ $post->author->name }}</a>
                 @if($post->tags)

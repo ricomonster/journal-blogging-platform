@@ -41,8 +41,8 @@ class ApiPostsController extends ApiController
         // generate slug
         $slug = $this->createSlug($string, $id);
 
-        return $this->respond(array(
-            'data' => array('slug' => $slug)));
+        return $this->respond([
+            'data' => ['slug' => $slug]]);
     }
 
     /**
@@ -56,9 +56,9 @@ class ApiPostsController extends ApiController
         $posts = $this->posts->all();
 
         // return
-        return $this->respond(array(
-            'data' => array(
-                'posts' => $posts->toArray())));
+        return $this->respond([
+            'data' => [
+                'posts' => $posts->toArray()]]);
     }
 
     /**
@@ -103,7 +103,7 @@ class ApiPostsController extends ApiController
         $id             = Input::get('post_id');
         $authorId       = Input::get('author_id');
         $title          = Input::get('title');
-        $content        = Input::get('content');
+        $markdown        = Input::get('markdown');
         $slug           = Input::get('slug');
         $status         = Input::get('status');
         $publishDate    = Input::get('publish_date');
@@ -125,7 +125,7 @@ class ApiPostsController extends ApiController
         // check if id of the post is set
         if (isset($id) && $id != 0) {
             // update post
-            $post = $this->posts->update($id, $authorId, $title, $content, $slug, $status, $tagsId);
+            $post = $this->posts->update($id, $authorId, $title, $markdown, $slug, $status, $tagsId);
 
             // return a response
             return $this->respond(array(
@@ -135,13 +135,13 @@ class ApiPostsController extends ApiController
         }
 
         // create post
-        $post = $this->posts->create($authorId, $title, $content, $slug, $status, $publishDate, $tagsId);
+        $post = $this->posts->create($authorId, $title, $markdown, $slug, $status, $publishDate, $tagsId);
 
         // return a response
-        return $this->respond(array(
-            'data' => array(
+        return $this->respond([
+            'data' => [
                 'message'   => 'Success!',
-                'post'      => $post->toArray())));
+                'post'      => $post->toArray()]]);
     }
 
     /**

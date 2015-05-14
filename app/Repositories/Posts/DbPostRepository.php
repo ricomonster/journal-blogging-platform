@@ -15,22 +15,22 @@ class DbPostRepository implements PostRepositoryInterface
      *
      * @param int $authorId
      * @param string $title
-     * @param string $content
+     * @param string $markdown
      * @param string $slug
      * @param int $status
      * @param string $publishDate
      * @param array $tagIds
      * @return Post
      */
-    public function create($authorId, $title, $content, $slug, $status, $publishDate, $tagIds)
+    public function create($authorId, $title, $markdown, $slug, $status, $publishDate, $tagIds)
     {
-        $post = Post::create(array(
+        $post = Post::create([
             'author_id'         => $authorId,
             'title'             => $title,
-            'content'           => $content,
+            'markdown'          => $markdown,
             'slug'              => $slug,
             'status'            => $status,
-            'published_at'      => $publishDate));
+            'published_at'      => $publishDate]);
 
         // check if there are tags
         if (!empty($tagIds)) {
@@ -47,7 +47,7 @@ class DbPostRepository implements PostRepositoryInterface
      */
     public function all()
     {
-        return Post::with(array('author', 'tag'))
+        return Post::with(['author', 'tag'])
             ->where('active', '=', 1)
             ->orderBy('id', 'desc')
             ->get();
@@ -61,8 +61,9 @@ class DbPostRepository implements PostRepositoryInterface
      */
     public function findById($id)
     {
-        return Post::with(array('author', 'tag'))
-            ->where('id', '=', $id)->first();
+        return Post::with(['author', 'tag'])
+            ->where('id', '=', $id)
+            ->first();
     }
 
     /**
@@ -73,9 +74,23 @@ class DbPostRepository implements PostRepositoryInterface
      */
     public function findBySlug($slug)
     {
-        return Post::with(array('author', 'tag'))
+        return Post::with(['author', 'tag'])
             ->where('slug', '=', $slug)
             ->first();
+    }
+
+    /**
+     * Get the posts for the blog
+     *
+     * @return Post
+     */
+    public function getBlogPosts()
+    {
+        return Post::with(['author', 'tag'])
+            ->where('active', '=', 1)
+            ->where('status', '=', 1)
+            ->orderBy('id', 'desc')
+            ->get();
     }
 
     /**
@@ -86,7 +101,7 @@ class DbPostRepository implements PostRepositoryInterface
      */
     public function getPostsByTag($tagId)
     {
-        return Post::with(array('author', 'tag'))
+        return Post::with(['author', 'tag'])
             ->whereHas('tag', function($query) use ($tagId) {
                 // set a query to fetch posts according to the tag ID to which
                 // a tag is related to
@@ -105,7 +120,7 @@ class DbPostRepository implements PostRepositoryInterface
      */
     public function getPostsByAuthor($authorId)
     {
-        return Post::with(array('author', 'tag'))
+        return Post::with(['author', 'tag'])
             ->where('author_id', '=', $authorId)
             ->where('active', '=', 1)
             ->orderBy('id', 'desc')
@@ -118,23 +133,23 @@ class DbPostRepository implements PostRepositoryInterface
      * @param int $id
      * @param int $authorId
      * @param string $title
-     * @param string $content
+     * @param string $markdown
      * @param string $slug
      * @param int $status
      * @param array $tagIds
      * @return Post
      */
-    public function update($id, $authorId, $title, $content, $slug, $status, $tagIds)
+    public function update($id, $authorId, $title, $markdown, $slug, $status, $tagIds)
     {
         // get post
         $post = $this->findById($id);
 
         // update
-        $post->author_id = $authorId;
-        $post->title = $title;
-        $post->content = $content;
-        $post->slug = $slug;
-        $post->status = $status;
+        $post->author_id    = $authorId;
+        $post->title        = $title;
+        $post->markdown     = $markdown;
+        $post->slug         = $slug;
+        $post->status       = $status;
         // save
         $post->save();
 

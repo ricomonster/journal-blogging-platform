@@ -12,14 +12,14 @@ interface PostRepositoryInterface
      *
      * @param int $authorId
      * @param string $title
-     * @param string $content
+     * @param string $markdown
      * @param string $slug
      * @param int $status
      * @param string $publishDate
      * @param array $tagIds
      * @return Post
      */
-    public function create($authorId, $title, $content, $slug, $status, $publishDate, $tagIds);
+    public function create($authorId, $title, $markdown, $slug, $status, $publishDate, $tagIds);
 
     /**
      * Returns all active posts
@@ -43,6 +43,13 @@ interface PostRepositoryInterface
      * @return Post
      */
     public function findBySlug($slug);
+
+    /**
+     * Get the posts for the blog
+     *
+     * @return Post
+     */
+    public function getBlogPosts();
 
     /**
      * Get all posts according to its tag ID
@@ -72,7 +79,7 @@ interface PostRepositoryInterface
      * @param array $tagIds
      * @return Post
      */
-    public function update($id, $authorId, $title, $content, $slug, $status, $tagIds);
+    public function update($id, $authorId, $title, $markdown, $slug, $status, $tagIds);
 
     /**
      * Set post to inactive

@@ -21,14 +21,14 @@ class Tag extends Model
      *
      * @var array
      */
-    protected $fillable = array('tag', 'slug');
+    protected $fillable = ['tag', 'slug'];
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    protected $hidden = array('created_at', 'id', 'updated_at');
+    protected $hidden = ['created_at', 'id', 'updated_at'];
 
     /**
      * Post relationship

@@ -179,7 +179,7 @@
 				</header>
 				<section class="preview-wrapper">
 					<div class="rendered-markdown">
-						{!! markdown($post->content) !!}
+						{!! markdown($post->markdown) !!}
 					</div>
 				</section>
 			</article>

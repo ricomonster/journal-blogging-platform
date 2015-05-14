@@ -73,7 +73,7 @@ var Editor = {
             data : {
                 author_id       : $('input[name="author_id"]').val(),
                 title           : $('input[name="title"]').val(),
-                content         : $('textarea[name="content"]').val(),
+                markdown        : $('textarea[name="markdown"]').val(),
                 post_id         : $('input[name="post_id"]').val(),
                 slug            : $('input[name="slug"]').val(),
                 tags            : $('input[name="tags"]').val(),

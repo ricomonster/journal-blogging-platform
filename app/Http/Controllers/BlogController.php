@@ -84,7 +84,7 @@ class BlogController extends Controller {
         return view($this->theme.'.index', [
             'blog' => $this->settings->get([
                 'blog_title', 'blog_description', 'blog_logo', 'blog_cover']),
-            'posts' => $this->posts->all()
+            'posts' => $this->posts->getBlogPosts()
         ]);
     }
 

@@ -17,8 +17,9 @@ class CreatePostsTable extends Migration {
 			$table->increments('id');
 			$table->integer('author_id')->unsigned();
 			$table->string('title');
-			$table->text('content')->nullable();
+			$table->text('markdown')->nullable();
 			$table->string('slug');
+            $table->string('featured_image')->nullable();
 			$table->tinyInteger('status')->default(2)->unsigned();
 			$table->tinyInteger('active')->default(1)->unsigned();
 			$table->dateTime('published_at');

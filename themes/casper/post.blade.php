@@ -34,7 +34,7 @@
                     {!! convert_tags_to_links($post->tags) !!}
                 </section>
             </header>
-            <section class="post-content">{!! markdown($post->content) !!}</section>
+            <section class="post-content">{!! markdown($post->markdown) !!}</section>
             <footer class="post-footer clearfix">
                 <figure class="author-avatar">
                     <a href="{{ $post->author->permalink }}" class="img" style="background-image: url('{{ $post->author->avatar_url }}')"></a>

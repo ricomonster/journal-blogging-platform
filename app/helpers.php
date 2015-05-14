@@ -31,6 +31,7 @@ if ( ! function_exists('markdown'))
     {
         $parser = new MarkdownExtra;
         $parser->no_markup = false;
+
         // check we wanted to trim the string
         if($trim) {
             $text = strip_tags($parser->transform($str));
@@ -109,7 +110,7 @@ if ( ! function_exists('site_title')) {
 
 if ( ! function_exists('convert_tags_to_links')) {
     function convert_tags_to_links($tagsArray) {
-        $tagsLinksArray = array();
+        $tagsLinksArray = [];
 
         foreach ($tagsArray as $tag) {
             $tagName = trim($tag);
