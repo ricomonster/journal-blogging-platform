@@ -1,4 +1,5 @@
-<?php //-->
+<?php
+
 namespace Journal;
 
 use Illuminate\Auth\Authenticatable;
@@ -6,67 +7,77 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Request;
 
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract
+{
+    use Authenticatable, CanResetPassword;
 
-	use Authenticatable, CanResetPassword;
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'users';
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'users';
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['name', 'email', 'password', 'biography', 'avatar_url', 'cover_url',
+        'location', 'website', 'slug', 'active'];
 
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
-	protected $hidden = ['password', 'remember_token'];
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * The attributes/accessors that will be accessed via JSON or array
      *
      * @var array
      */
-    protected $appends = ['avatar_url', 'permalink'];
-
-	/**
-	 * The attributes that are mass assignable.
-	 * @var array
-	 */
-	protected $fillable = ['email', 'password', 'name', 'biography', 'website', 'location',
-		'avatar_url', 'cover_url', 'role', 'active', 'slug', 'last_login'];
-
-	/**
-	 * Post relationship
-	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
-	 */
-	public function posts()
-	{
-		return $this->hasMany('Journal\Post');
-	}
+    protected $appends = ['created_at', 'updated_at'];
 
     /**
-     * Check if avatar url is empty, if empty it shows the default avatar
+     * Converts created date/time to timestamp
      *
-     * @return string
+     * @return int
      */
-    public function getAvatarUrlAttribute() {
-        return (empty($this->attributes['avatar_url'])) ?
-            Request::root() . '/images/shared/default_avatar.png' :
-            $this->attributes['avatar_url'];
+    public function getCreatedAtAttribute()
+    {
+        return strtotime($this->attributes['created_at']);
     }
 
     /**
-     * Sets the permalink of the author
+     * Makes the author permalink
      *
      * @return string
      */
-    public function getPermalinkAttribute() {
-        return Request::root().'/author/'.$this->attributes['slug'];
+    public function getPermalinkAttribute()
+    {
+        return '/author/'.$this->attributes['slug'];
+    }
+
+    /**
+     * Converts updated date/time to timestamp
+     *
+     * @return int
+     */
+    public function getUpdatedAtAttribute()
+    {
+        return strtotime($this->attributes['updated_at']);
+    }
+
+    /**
+     * Post Relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posts()
+    {
+        return $this->hasMany('Journal\Post');
     }
 }

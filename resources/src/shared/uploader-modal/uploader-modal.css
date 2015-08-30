@@ -1,0 +1,31 @@
+#uploader_modal .upload-wrapper {
+    background: #f6f7f8;
+    border-radius: 4px;
+    color: #808284;
+    text-align: center;
+}
+
+#uploader_modal .image-wrapper { position: relative; }
+#uploader_modal .image-wrapper .remove-image { position: absolute; top: 5px; right: 5px; }
+#uploader_modal .image-wrapper img { max-width: 100%; }
+
+#uploader_modal .upload-wrapper { position: relative; }
+#uploader_modal .upload-wrapper .switch-option {
+    bottom: 5px;
+    color: #808284;
+    font-size: 18px;
+    height: auto;
+    position: absolute;
+    left: 5px;
+}
+
+#uploader_modal .upload-wrapper .option { display: none; padding: 80px 50px; }
+#uploader_modal .upload-wrapper .option.active { display: block; }
+#uploader_modal .upload-wrapper .option .add-image-text {
+    color: #808284;
+    display: block;
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+#uploader_modal .upload-wrapper .via-file .drop-box { cursor: pointer; }

@@ -2,106 +2,55 @@
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-
-/*
-|--------------------------------------------------------------------------
-| Admin Routes
-|--------------------------------------------------------------------------
-*/
-Route::group(['prefix' => 'journal', 'middleware' => 'installation'], function() {
-	Route::get('login', 'AuthController@login');
-	Route::get('logout', 'AuthController@logout');
-
-	Route::get('/', function() {
-		return redirect('/journal/posts');
-	});
-
-	// must be logged in routes
-	Route::group(['middleware' => 'auth'], function() {
-		Route::get('settings', 'SettingsController@index');
-		Route::get('appearance', 'SettingsController@appearance');
-		Route::get('services', 'SettingsController@services');
-
-		// post routes
-		Route::group(['prefix' => 'posts'], function() {
-			Route::get('/', 'PostsController@index');
-			Route::get('editor', 'PostsController@editor');
-			Route::get('editor/{id}', 'PostsController@editorWithId');
-		});
-
-		// user routes
-		Route::group(['prefix' => 'users'], function() {
-			Route::get('/', 'UsersController@index');
-			Route::get('add', 'UsersController@addUser');
-            Route::get('profile/{id}', 'UsersController@profile');
-		});
-	});
-});
-
-/*
-|--------------------------------------------------------------------------
-| Installer Routes
-|--------------------------------------------------------------------------
-*/
-Route::group(['prefix' => 'installer'], function() {
-	Route::get('/', 'InstallerController@index');
-	Route::get('account', 'InstallerController@account');
-	Route::get('blog', 'InstallerController@blog');
-
-	Route::post('setup', 'InstallerController@setup');
-	Route::post('create_account', 'InstallerController@createAccount');
-	Route::post('setup_blog', 'InstallerController@setupBlog');
-});
-
-/*
-|--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['prefix' => 'api/v1', 'middleware' => 'cors'], function() {
-    // fix for CORS
-    header('Access-Control-Allow-Origin: *');
+Route::group(['prefix' => 'api/v1.0'], function() {
+    Route::group(['prefix' => 'auth'], function() {
+        Route::get('check', 'Api\ApiAuthController@checkAuthentication');
+        Route::get('check_installation', 'Api\ApiAuthController@checkInstallation');
 
-	Route::group(['prefix' => 'auth'], function() {
-		Route::get('handshake', 'Api\ApiAuthController@handshake');
+        Route::post('authenticate', 'Api\ApiAuthController@authenticate');
+    });
 
-		Route::post('login', 'Api\ApiAuthController@login');
-	});
+    // Post Routes
+    Route::group(['prefix' => 'posts'], function() {
+        Route::get('all', 'Api\ApiPostsController@all');
+        Route::get('check_slug', 'Api\ApiPostsController@checkSlug');
+        Route::get('get_post', 'Api\ApiPostsController@getPost');
 
-	Route::group(['prefix' => 'posts'], function() {
-        Route::get('all_posts', 'Api\ApiPostsController@getAllPosts');
-        ROute::get('get_post', 'Api\ApiPostsController@getPost');
-        Route::get('get_slug', 'Api\ApiPostsController@generateSlug');
+        Route::post('save', 'Api\ApiPostsController@save');
+    });
 
-		Route::post('save', 'Api\ApiPostsController@savePost');
-	});
+    Route::group(['prefix' => 'settings'], function() {
+        Route::get('get', 'Api\ApiSettingsController@getSettings');
 
-	Route::group(['prefix' => 'settings'], function() {
-		Route::post('update_general_settings', 'Api\ApiSettingsController@updateGeneralSettings');
-        Route::post('update_theme', 'Api\ApiSettingsController@updateTheme');
-		Route::post('upload_image', 'Api\ApiSettingsController@uploader');
-	});
+        Route::post('save', 'Api\ApiSettingsController@saveSettings');
+    });
 
-	Route::group(['prefix' => 'users'], function() {
-		Route::get('lists', 'Api\ApiUsersController@allUsers');
+    // Tag Routes
+    Route::group(['prefix' => 'tags'], function() {
+        Route::get('all', 'Api\ApiTagsController@all');
 
+        Route::post('create_tag', 'Api\ApiTagsController@createTag');
+    });
+
+    // User Routes
+    Route::group(['prefix' => 'users'], function() {
+        Route::get('all', 'Api\ApiUsersController@all');
+        Route::get('get_user', 'Api\ApiUsersController@getUser');
+
+        Route::post('create', 'Api\ApiUsersController@create');
+        Route::post('update_details', 'Api\ApiUsersController@updateDetails');
         Route::post('change_password', 'Api\ApiUsersController@changePassword');
-		Route::post('create', 'Api\ApiUsersController@createUser');
-        Route::post('update_account', 'Api\ApiUsersController@updateAccount');
-        Route::post('upload_image', 'Api\ApiUsersController@uploadImage');
-	});
+    });
 
-	Route::group(['prefix' => 'tags'], function() {
-		Route::get('all', 'Api\ApiTagsController@getAllTags');
-	});
+    Route::post('installer/create_account', 'Api\ApiInstallerController@createAccount');
+    Route::post('upload', 'Api\ApiUploadController@upload');
+});
+
+Route::get('journal', function() {
+    return view('journal');
 });
 
 /*
@@ -109,9 +58,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'cors'], function() {
 | Blog Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['middleware' => 'installation'], function() {
-	Route::get('/', 'BlogController@index');
-    Route::get('author/{slug}', 'BlogController@author');
-	Route::get('post/{slug}', 'BlogController@post');
-    Route::get('tag/{tag}', 'BlogController@tag');
-});
+Route::get('/', 'BlogController@index');
+Route::get('author/{slug}', 'BlogController@author');
+Route::get('post/{parameter}', 'BlogController@post');
+Route::get('tag/{slug}', 'BlogController@tags');

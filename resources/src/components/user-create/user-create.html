@@ -1,0 +1,31 @@
+<div ng-controller="UserCreateController as ucc">
+    <section id="user_create_page" class="main-container container-fluid">
+        <header class="page-header">
+            <h1 class="hero-title">Add new user</h1>
+        </header>
+        <section class="content">
+            <form autocomplete="off" ng-submit="ucc.createUser()">
+                <div class="form-group" ng-class="{'has-error' : ucc.errors.email}">
+                    <label class="control-label">E-mail</label>
+                    <input type="email" ng-model="ucc.user.email" class="form-control"
+                    placeholder="johndoe@mail.com"/>
+                    <span class="help-block">E-mail address of the user</span>
+                </div>
+                <div class="form-group" ng-class="{'has-error' : ucc.errors.password}">
+                    <label class="control-label">Password</label>
+                    <input type="password" ng-model="ucc.user.password" class="form-control"/>
+                    <span class="help-block">Password of the user</span>
+                </div>
+                <div class="form-group" ng-class="{'has-error' : ucc.errors.name}">
+                    <label class="control-label">Name</label>
+                    <input type="name" ng-model="ucc.user.name" class="form-control"
+                    placeholder="John Doe"/>
+                    <span class="help-block">Repeat the password of the user.</span>
+                </div>
+                <div class="form-action">
+                    <button type="submit" class="btn btn-primary">Add User</button>
+                </div>
+            </form>
+        </section>
+    </section>
+</div>

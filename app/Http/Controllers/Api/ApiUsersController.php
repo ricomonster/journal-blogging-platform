@@ -1,228 +1,142 @@
 <?php //-->
 namespace Journal\Http\Controllers\Api;
 
-use Journal\Repositories\Users\UserRepositoryInterface;
-use Input, Request;
+use Illuminate\Http\Request;
+use Journal\Http\Requests;
+use Journal\Repositories\User\UserRepositoryInterface;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use JWTAuth;
 
-/**
- * Class ApiUsersController
- * @package Journal\Http\Controllers\Api
- */
 class ApiUsersController extends ApiController
 {
-    /**
-     * The upload directory
-     *
-     * @var string
-     */
-    protected $uploadPath;
-
-    /**
-     * The url of the upload directory
-     *
-     * @var string
-     */
-    protected $uploadUrl;
-
-    /**
-     * The user repository implementation
-     *
-     * @var UserRepositoryInterface
-     */
     protected $users;
 
-    /**
-     * Creates a new API User Controller
-     *
-     * @param UserRepositoryInterface $users
-     */
-    public function __construct(UserRepositoryInterface $users)
+    public function __construct(UserRepositoryInterface $user)
     {
-        // set the directory paths
-        $this->uploadPath   = public_path('uploads/user');
-        $this->uploadUrl    = Request::root().'/uploads/user';
+        // set the JWT middleware
+        $this->middleware('jwt.auth', ['except' => ['all', 'getUser']]);
 
-        $this->users = $users;
+        $this->users = $user;
     }
 
-    /**
-     * Returns all active users
-     *
-     * @return mixed
-     */
-    public function allUsers()
+    public function all()
     {
+        // get all users
+        $users = $this->users->all();
+
         return $this->respond([
-            'data' => [
-                'user' => $this->users->all()]]);
+            'users' => $users->toArray()]);
     }
 
-    public function changePassword()
+    public function create(Request $request)
     {
-        $id                 = Input::get('id');
-        $currentPassword    = Input::get('current_password');
-        $newPassword        = Input::get('new_password');
-        $repeatPassword     = Input::get('repeat_password');
+        // validate first
+        $messages = $this->users->validateUserCreate($request->all());
 
-        $messages = $this->users->validateChangePassword($id, $currentPassword, $newPassword, $repeatPassword);
-
-        // check for errors
+        // check if there are errors
         if (count($messages) > 0) {
-            // return the error messages
-            return $this->setStatusCode(400)
+            return $this->setStatusCode(self::BAD_REQUEST)
                 ->respondWithError($messages);
         }
 
-        // update password
-        $this->users->updatePassword($id, $newPassword);
+        // create the user
+        $user = $this->users->create(
+            $request->input('name'),
+            $request->input('email'),
+            $request->input('password'));
 
-        // send response
+        // return
         return $this->respond([
-            'data' => [
-                'message' => 'Password successfully changed.']]);
+            'user' => $user->toArray()]);
     }
 
-    /**
-     * Creates a new user
-     *
-     * @return mixed
-     */
-    public function createUser()
+    public function changePassword(Request $request)
     {
-        $email      = Input::get('email');
-        $password   = Input::get('password');
-        $name       = Input::get('name');
-        $role       = Input::get('role');
+        $id = $request->input('user_id');
 
-        // validate
-        $messages = $this->users->validateCreate($email, $password, $name);
-
-        // check for errors
-        if (count($messages) > 0) {
-            // return the error messages
-            return $this->setStatusCode(400)
-                ->respondWithError($messages);
+        // check if ID is not empty or set
+        if (!$id || empty($id)) {
+            return $this->setStatusCode(self::BAD_REQUEST)
+                ->respondWithError(['message' => 'User ID is not set.']);
         }
 
-        // check if role is set
-        $role = (empty($role)) ? '2' : $role;
-
-        // create user
-        $user = $this->users->create($email, $password, $name, $role);
-
-        return $this->respond([
-            'data' => [
-                'message'   => 'You have successfully added a new user.',
-                'user'      => $user->toArray()]]);
-    }
-
-    /**
-     * Fetches a user using its id
-     *
-     * @return mixed
-     */
-    public function get()
-    {
-        // check if there is an id supplied
-        if (empty($id)) {
-            // send error message
-            return $this->setStatusCode(400)
-                ->respondWithError('Please set the user ID.');
-        }
-
-        // get user
+        // get the user
         $user = $this->users->findById($id);
 
-        return $this->respond([
-            'data' => [
-                'user' => $user]]);
+        // check if user exists
+        if (empty($user)) {
+            return $this->setStatusCode(self::NOT_FOUND)
+                ->respondWithError(['message' => 'User not found.']);
+        }
+
+        // validate passwords
     }
 
-    /**
-     * Update the users account
-     *
-     * @return mixed
-     */
-    public function updateAccount()
+    public function getUser(Request $request)
     {
-        $name       = Input::get('name');
-        $email      = Input::get('email');
-        $biography  = Input::get('biography');
-        $slug       = Input::get('slug');
-        $website    = Input::get('website');
-        $location   = Input::get('location');
-        $id         = Input::get('id');
+        $id = $request->input('user_id');
 
-        // validate
-        $messages = $this->users->validateUpdate($email, $name, $biography, $website, $location, $slug, $id);
+        // check if ID is not empty or set
+        if (!$id || empty($id)) {
+            return $this->setStatusCode(self::BAD_REQUEST)
+                ->respondWithError(['message' => 'User ID is not set.']);
+        }
 
-        // check for errors
+        // get the user
+        $user = $this->users->findById($id);
+
+        // check if user exists
+        if (empty($user)) {
+            return $this->setStatusCode(self::NOT_FOUND)
+                ->respondWithError(['message' => 'User not found.']);
+        }
+
+        // return the error
+        return $this->respond([
+            'user' => $user->toArray()]);
+    }
+
+    public function updateDetails(Request $request)
+    {
+        $id = $request->input('user_id');
+
+        // check if ID is not empty or set
+        if (!$id || empty($id)) {
+            return $this->setStatusCode(self::BAD_REQUEST)
+                ->respondWithError(['message' => 'User ID is not set.']);
+        }
+
+        // get the user
+        $user = $this->users->findById($id);
+
+        // check if user exists
+        if (empty($user)) {
+            return $this->setStatusCode(self::NOT_FOUND)
+                ->respondWithError(['message' => 'User not found.']);
+        }
+
+        // validate user details
+        $messages = $this->users->validateUserUpdate($request->all(), $id);
+
+        // check if there are errors
         if (count($messages) > 0) {
-            // return the error messages
-            return $this->setStatusCode(400)
+            return $this->setStatusCode(self::BAD_REQUEST)
                 ->respondWithError($messages);
         }
 
         // update
-        $user = $this->users->update($id, $email, $name, $biography, $website, $location, $slug);
+        $user = $this->users->updateDetails(
+            $id,
+            $request->input('name'),
+            $request->input('email'),
+            $request->input('biography'),
+            $request->input('location'),
+            $request->input('website'),
+            $request->input('avatar_url'),
+            $request->input('cover_url'));
 
+        // return user details
         return $this->respond([
-            'data' => [
-                'message'   => 'You have successfully updated your account',
-                'user'      => $user->toArray()]]);
-    }
-
-    public function uploadImage()
-    {
-        $id             = Input::get('id');
-        $files          = Input::file('files');
-        $settingName    = Input::get('setting_name');
-        $imageUrl       = Input::get('image_url');
-
-        // check first if ID is set
-        if (empty($id)) {
-            return $this->setStatusCode(400)
-                ->respondWithError('There is no ID set.');
-        }
-
-        // check if setting name is set
-        if (empty($settingName)) {
-            return $this->setStatusCode(400)
-                ->respondWithError('Your request cannot be processed. Please try again later.');
-        }
-
-        // check if there's a file
-        if (empty($files)) {
-            // image is just a url, update the field
-            $respond = $this->users->updateImage($settingName, $imageUrl, $id);
-
-            return $this->respond([
-                'data' => [
-                    'user' => $respond->toArray()]]);
-        }
-
-        // upload image
-        // get the file name
-        $filename = $files->getClientOriginalName();
-        // upload
-        $files->move($this->uploadPath, $filename);
-
-        // validate if file is uploaded
-        if (!Input::hasFile('files')) {
-            // send error message
-            return $this->setStatusCode(400)
-                ->respondWithError($filename.' could not be uploaded. Please try again later');
-        }
-
-        // file uploaded is uploaded
-        // prep url of the file
-        $fileUrl = $this->uploadUrl.'/'.rawurlencode($filename);
-        $respond = $this->users->updateImage($settingName, $fileUrl, $id);
-
-        // return url
-        return $this->respond([
-            'data' => [
-                'user' => $respond->toArray()]]);
-
+            'user' => $user->toArray()]);
     }
 }

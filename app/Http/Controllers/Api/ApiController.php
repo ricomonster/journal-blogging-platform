@@ -2,24 +2,52 @@
 namespace Journal\Http\Controllers\Api;
 
 use Journal\Http\Controllers\Controller;
-use Response, File;
+use Str;
 
-/**
- * Class ApiController
- * @package Journal\Controllers\Api
- */
-class ApiController extends Controller {
-    /**
-     * Stores the status code
-     *
-     * @var int
-     */
+class ApiController extends Controller
+{
+    const OK_REQUEST = 200;
+    const BAD_REQUEST = 400;
+    const UNAUTHORIZED = 401;
+    const FORBIDDEN = 403;
+    const NOT_FOUND = 404;
+    const INTERNAL_ERROR = 500;
+
     protected $statusCode = 200;
+
     /**
-     * Creates an API Controller
+     * Returns the status code
+     *
+     * @return int
      */
-    public function __construct() {
+    public function getStatusCode()
+    {
+        return $this->statusCode;
     }
+
+    /**
+     * Returns a response message
+     *
+     * @param $message
+     * @return mixed
+     */
+    public function respond($message)
+    {
+        return response()->json($message, $this->getStatusCode());
+    }
+
+    /**
+     * Returns an error response and message
+     *
+     * @param $message
+     * @return mixed
+     */
+    public function respondWithError($message)
+    {
+        return $this->respond([
+            'errors' => $message]);
+    }
+
     /**
      * Sets the status code
      *
@@ -30,30 +58,5 @@ class ApiController extends Controller {
     {
         $this->statusCode = $statusCode;
         return $this;
-    }
-    /**
-     * Returns the status code
-     *
-     * @return int
-     */
-    public function getStatusCode()
-    {
-        return $this->statusCode;
-    }
-    public function respondWithError($message = 'Error')
-    {
-        return $this->respond(array(
-            'errors' => array(
-                'message' => $message)));
-    }
-    /**
-     * Prepare data to return JSON
-     *
-     * @param $data
-     * @return mixed
-     */
-    public function respond($data)
-    {
-        return Response::json($data, $this->getStatusCode());
     }
 }

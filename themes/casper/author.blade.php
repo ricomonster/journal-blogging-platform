@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ theme_assets('assets/css/screen.css') }}" rel="stylesheet"/>
     <link href="{{ theme_assets('assets/css/font-awesome.css') }}" rel="stylesheet"/>
+
+    {!! $journal_head !!}
 </head>
 <body class="author-template">
 <header class="main-header {{ ($author->cover_url) ? null : 'no-cover' }}" {!! ($author->cover_url) ? 'style="background-image: url('.$author->cover_url.')"' : null !!}>
@@ -64,15 +66,15 @@
                 @if($post->tags)
                     on
                 @endif
-                {!! convert_tags_to_links($post->tags) !!}
-                <date class="post-date">{{ $post->published_at }}</date>
+                {!! get_post_tags($post) !!}
+                <date class="post-date">{{ post_date_time($post) }}</date>
             </footer>
         </article>
     @endforeach
 </main>
 <footer class="site-footer clearfix">
     <section class="blog">
-        <a href="#">{{ $blog->blog_title }}</a> &copy; {{ date('Y') }}
+        <a href="#">{{ $title }}</a> &copy; {{ date('Y') }}
     </section>
     <section class="platform">
         Proudly published with <a href="#" target="_blank">Journal</a>

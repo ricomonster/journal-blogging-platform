@@ -1,0 +1,27 @@
+<style type="text/css">
+    #installer_success_page {
+        font-size: 16px;
+        margin: auto;
+        text-align: center;
+        width: 40%;
+    }
+
+    #installer_success_page .page-header { margin: 10px 0 0; }
+    #installer_success_page .content .message { padding: 15px 0 0; }
+    #installer_success_page .content .btn { margin-top: 15px; }
+</style>
+<div ng-controller="InstallerSuccessController as isc">
+    <section id="installer_success_page">
+        <header class="page-header">
+            <h2 class="page-title">Congratulations!</h2>
+        </header>
+        <section class="content">
+            <div class="message">
+                <p>You're now ready to use Journal to write your thoughts and things that you want.</p>
+                <p>Click the button below to start writing and be awesome!</p>
+
+                <a ng-click="isc.go()" class="btn btn-info">Let's do this</a>
+            </div>
+        </section>
+    </section>
+</div>
