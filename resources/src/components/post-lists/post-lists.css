@@ -11,7 +11,7 @@
     overflow-y: auto;
     position: absolute;
     right: 0;
-    top: 115px;
+    top: 120px;
 }
 #post_lists_page .content-wrapper .list-of-posts {
     background: #fff;
@@ -84,8 +84,9 @@
     line-height: 1.5em;
 }
 .post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown img {
-    border: 0;
+    margin: 0 auto;
     max-width: 100%;
+    height: auto;
 }
 .post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown code { white-space: normal; }
 .post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown em { font-family: 'Noto Serif', serif; font-size: 16px; }
