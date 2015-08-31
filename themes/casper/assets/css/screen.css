@@ -345,8 +345,7 @@ pre code, tt {
 }
 
 .post-content img {
-    display: block;
-    max-width: 126%;
+    max-width: 100%;
     height: auto;
     margin: auto;
 }
