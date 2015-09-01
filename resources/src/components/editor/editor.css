@@ -142,7 +142,7 @@
     position: fixed;
     right: 0;
     top: 0;
-    z-index: 10000;
+    z-index: 1030;
 }
 
 #editor_page .editor-sidebar .editor-sidebar-content {
@@ -185,8 +185,16 @@
 #editor_page .editor-sidebar .sidebar-header .close-sidebar { color: #cccccc; }
 #editor_page .editor-sidebar .sidebar-header h3 { color: #333332; font-size: 22px; font-weight: 400; }
 
+#editor_page .editor-sidebar .sidebar-controls .form-group {
+    border-bottom: 0;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
 #editor_page .editor-sidebar .sidebar-controls label { font-size: 16px; }
 #editor_page .editor-sidebar .sidebar-controls .form-control { background-color: #fafafa; color: #333332; }
+#editor_page .editor-sidebar .sidebar-controls .danger-zone { padding-top: 20px; }
+#editor_page .editor-sidebar .sidebar-controls .danger-zone .help-block { color: #a94442; text-align: center; }
 
 /* Tag Input Directive */
 tag-input .tags-wrapper {

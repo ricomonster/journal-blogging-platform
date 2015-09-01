@@ -80,8 +80,10 @@ class BlogController extends Controller
         return view($this->theme.'.index', $data);
     }
 
-    public function post($slug)
+    public function post($slug, Request $request)
     {
+        // check if the request is just to preview the post
+
         // check if parameter is empty
         if (empty($slug)) {
             return $this->fourOhFour();
@@ -98,7 +100,7 @@ class BlogController extends Controller
         $data = $this->settings;
 
         // set the body class
-        $data['body_class'] = 'home-page';
+        $data['body_class'] = 'post-page';
         // set the post
         $data['post'] = $post;
         // set the head

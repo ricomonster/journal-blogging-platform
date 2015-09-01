@@ -13,9 +13,8 @@
 #user_profile_page.active .form-action{ display: block; }
 
 #user_profile_page .profile-header {
-    position: relative;
     width: auto;
-    height: 70%;
+    height: 400px;
     margin: 0;
     background: #fafafa no-repeat center center;
     background-size: cover;

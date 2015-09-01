@@ -157,8 +157,6 @@ class DbPostRepository implements PostRepositoryInterface
         // update user
         $post->active = 0;
         $post->save();
-
-        return $post;
     }
 
     /**
