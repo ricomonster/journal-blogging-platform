@@ -7,7 +7,7 @@
         <meta property="{{$m['value']}}" content="{{$m['content']}}">
         @endif
     @endif
-@if(isset($m['rel']) && !empty($m['href']))
-<link rel="{{$m['rel']}}" href="{{$m['href']}}">
-@endif
+    @if(isset($m['rel']) && !empty($m['href']))
+        <link rel="{{$m['rel']}}" href="{{$m['href']}}">
+    @endif
 @endforeach

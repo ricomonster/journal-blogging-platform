@@ -19,6 +19,7 @@ Route::group(['prefix' => 'api/v1.0'], function() {
         Route::get('check_slug', 'Api\ApiPostsController@checkSlug');
         Route::get('get_post', 'Api\ApiPostsController@getPost');
 
+        Route::post('delete', 'Api\ApiPostsController@deletePosts');
         Route::post('save', 'Api\ApiPostsController@save');
     });
 

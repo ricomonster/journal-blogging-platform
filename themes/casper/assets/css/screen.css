@@ -357,7 +357,7 @@ pre code, tt {
     position: relative;
 }
 
-.post-footer .author { float: left; margin-left: 120px; }
+.post-footer .author { float: left; margin-left: 120px; width: 65%; }
 
 .post-footer h4 { font-size: 1.8rem; margin: 0; }
 .post-footer h4 a { color: #57ad68; text-decoration: none;}

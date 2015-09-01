@@ -50,6 +50,32 @@ class ApiPostsController extends ApiController
         return $this->respond(['slug' => $slug]);
     }
 
+    public function deletePosts(Request $request)
+    {
+        $postId = $request->input('post_id');
+
+        // check if post id is empty
+        if (!$postId || empty($postId)) {
+            return $this->setStatusCode(self::BAD_REQUEST)
+                ->respondWithError(['message' => 'Post ID is not set.']);
+        }
+
+        // check if post exists
+        $post = $this->posts->findById($postId);
+
+        // check if post exists
+        if (empty($post)) {
+            return $this->setStatusCode(self::NOT_FOUND)
+                ->respondWithError(['message' => 'Post not found.']);
+        }
+
+        // delete post
+        $this->posts->setPostInactive($post->id);
+
+        return $this->respond([
+            'error' => false]);
+    }
+
     public function getPost(Request $request)
     {
         $id     = $request->input('post_id');

@@ -6,6 +6,7 @@
         'journal.routes',
         'journal.run',
         'journal.constant',
+        'journal.component.deletePostModal',
         'journal.component.login',
         'journal.component.header',
         'journal.component.editor',
@@ -33,6 +34,13 @@
     angular.module('journal.run', ['journal.shared.auth', 'ngProgressLite']);
 
     // COMPONENTS
+    angular.module('journal.component.deletePostModal', [
+        'journal.constant',
+        'journal.shared.auth',
+        'journal.shared.growl',
+        'ui.bootstrap',
+        'ui.router']);
+
     angular.module('journal.component.login', [
         'journal.constant',
         'journal.shared.auth',
@@ -47,7 +55,9 @@
         'journal.shared.auth',
         'journal.shared.markdownConverter',
         'journal.shared.growl',
+        'ngFileUpload',
         'ngSanitize',
+        'ui.bootstrap',
         'ui.codemirror',
         'ui.router']);
 
