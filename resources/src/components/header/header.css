@@ -21,3 +21,5 @@
     background: none;
     border-bottom: 2px rgba(0,0,0,0.8) solid;
 }
+
+#header .navbar-collapse .navbar-nav li.add-actions a i.fa { margin-right: 5px; }

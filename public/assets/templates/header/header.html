@@ -13,12 +13,18 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="site-directory nav navbar-nav navbar-left">
-                    <li><a ui-sref="post.lists">Posts</a></li>
-                    <li><a ui-sref="user.lists">Users</a></li>
-                    <li><a ui-sref="settings">Settings</a></li>
+                    <li ng-class="{ 'active' : hc.setActiveMenu('post') }">
+                        <a ui-sref="post.lists">Posts</a>
+                    </li>
+                    <li ng-class="{ 'active' : hc.setActiveMenu('user') }">
+                        <a ui-sref="user.lists">Users</a>
+                    </li>
+                    <li ng-class="{ 'active' : hc.setActiveMenu('settings') }">
+                        <a ui-sref="settings">Settings</a>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li dropdown>
+                    <li dropdown class="add-actions">
                         <a dropdown-toggle>
                             <i class="fa fa-plus"></i>
                             Add New <span class="caret"></span>
@@ -34,6 +40,7 @@
                             {{hc.user.name}} ({{hc.user.email}}) <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
+                            <li><a ui-sref="user.profile({userId:hc.user.id})">Edit Profile</a></li>
                             <li><a ng-click="hc.logout()">Log out</a></li>
                         </ul>
                     </li>

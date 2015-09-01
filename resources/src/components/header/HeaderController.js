@@ -19,6 +19,10 @@
             return;
         };
 
-
+        vm.setActiveMenu = function(menu) {
+            // get the current state name
+            var state = $state.current.name;
+            return (state.indexOf(menu) > -1);
+        };
     }
 })();
