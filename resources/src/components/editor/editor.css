@@ -134,6 +134,19 @@
 #editor_page .editor-publish-bar .btn-group .btn:first-child { width: 136px; }
 
 /* Editor Sidebar */
+#editor_page .overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1030;
+    background: rgba(255,255,255,.5);
+    display: none;
+}
+
+#editor_page .overlay.active { display: block; }
+
 #editor_page .editor-sidebar {
     background-color: #fafafa;
     border-left: 1px solid rgba(0,0,0,0.15);
