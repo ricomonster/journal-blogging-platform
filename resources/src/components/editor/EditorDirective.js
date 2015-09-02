@@ -3,7 +3,8 @@
 
     angular.module('journal.component.editor')
         .directive('checkPostSlug', ['$timeout', 'EditorService', CheckPostSlug])
-        .directive('tagInput', ['EditorService', TagInput]);
+        .directive('tagInput', ['EditorService', TagInput])
+        .directive('editorScroll', [EditorScroll]);
 
     function CheckPostSlug($timeout, EditorService) {
         return {
@@ -175,6 +176,30 @@
 
                 // fire away
                 scope.initialize();
+            }
+        }
+    }
+
+    function EditorScroll() {
+        return {
+            link : function() {
+                angular
+                    .element(document.getElementsByClassName('CodeMirror-scroll')[0])
+                    .on('scroll', function(event) {
+                        var editor = angular.element(event.target),
+                            previewContent = angular.element(
+                                document.getElementsByClassName('entry-preview-content')),
+                            sizer = angular.element(
+                                document.getElementsByClassName('CodeMirror-sizer')),
+                            renderedMarkdown = angular.element(
+                                document.getElementsByClassName('rendered-markdown')),
+                            editorDifference = sizer[0].offsetHeight - editor[0].offsetHeight,
+                            previewDifference = renderedMarkdown[0].offsetHeight - previewContent[0].offsetHeight,
+                            quotient = previewDifference / editorDifference,
+                            scroll = editor[0].scrollTop * quotient;
+
+                        previewContent[0].scrollTop = scroll;
+                    });
             }
         }
     }

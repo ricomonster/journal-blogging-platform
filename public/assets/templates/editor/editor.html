@@ -10,7 +10,7 @@
                 <header class="floating-header">
                     <span class="header-title">Markdown</span>
                 </header>
-                <section class="editor-content">
+                <section class="editor-content" editor-scroll="">
                     <ui-codemirror ng-model="ec.post.markdown" ui-codemirror-opts="ec.editor.codemirror"></ui-codemirror>
                 </section>
             </section>
@@ -20,7 +20,8 @@
                     <span class="word-count">{{ec.wordCounter()}}</span>
                 </header>
                 <section class="entry-preview-content">
-                    <div journal-markdown="ec.post.markdown" counter="ec.editor.counter" class="rendered-markdown"></div>
+                    <div journal-markdown="ec.post.markdown" hide-script-iframe="true"
+                    counter="ec.editor.counter" class="rendered-markdown"></div>
                 </section>
             </section>
             <footer class="editor-publish-bar">
