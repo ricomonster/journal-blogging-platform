@@ -67,7 +67,7 @@ class Post extends Model
 
     public function getPermalinkAttribute()
     {
-        return '/post/'.$this->attributes['slug'];
+        return url($this->attributes['slug']);
     }
 
     /**

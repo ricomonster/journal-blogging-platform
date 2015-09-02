@@ -15,6 +15,9 @@
             <li ng-repeat="tag in suggestedTags | filter:inputtedTag">
                 <a ng-click="addTag(tag.name)">{{tag.name}}</a>
             </li>
+            <li ng-show="(suggestedTags | filter:inputtedTag).length == 0">
+                <a ng-click="addTag(inputtedTag)">Add <strong>{{inputtedTag}}</strong></a>
+            </li>
         </ul>
     </div>
 </div>
