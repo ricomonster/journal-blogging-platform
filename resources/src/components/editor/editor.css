@@ -55,7 +55,7 @@
     left: 0;
     line-height: 1.5em;
     overflow: auto;
-    padding: 50px 40px 40px;
+    padding: 0 40px 0;
     position: absolute;
     right: 0;
     top: 0;
@@ -64,21 +64,22 @@
     word-break: normal;
 }
 
-/*#editor_page #rendered_markdown .embedded-javascript,*/
-/*#editor_page #rendered_markdown .embedded-iframe {*/
-    /*background: #f9f9f9;*/
-    /*border: none;*/
-    /*font-size: 16px;*/
-    /*font-weight: bold;*/
-    /*margin: 15px 0;*/
-    /*padding: 80px 20px;*/
-    /*text-align: center;*/
-/*}*/
-
+#editor_page .rendered-markdown { padding: 50px 0 40px; }
 #editor_page .rendered-markdown img {
     margin: 0 auto;
     max-width: 100%;
     height: auto;
+}
+
+#editor_page .rendered-markdown .embedded-javascript,
+#editor_page .rendered-markdown .embedded-iframe {
+    background: #f9f9f9;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 15px 0;
+    padding: 80px 20px;
+    text-align: center;
 }
 
 #editor_page .rendered-markdown code { white-space: normal; }

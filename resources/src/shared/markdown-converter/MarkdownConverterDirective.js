@@ -27,12 +27,30 @@
 
                 if (attributes.journalMarkdown) {
                     scope.$watch('journalMarkdown', function(value) {
-                        var html = value ? $sanitize(MarkdownConverter.makeHtml(value)) : '';
+                        var html = value ? MarkdownConverter.makeHtml(value) : '';
+
+                        if (attributes.hideScriptIframe) {
+                            // replace the scripts and iframes
+                            html = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+                                '<div class="embedded-javascript">Embedded JavaScript</div>');
+                            html = html.replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi,
+                                '<div class="embedded-iframe">Embedded iFrame</div>');
+                        }
+
                         element.html(html);
                         countWords();
                     });
                 } else {
-                    var html = $sanitize(MarkdownConverter.makeHtml(element.text()));
+                    var html = MarkdownConverter.makeHtml(element.text());
+
+                    if (attributes.hideScriptIframe) {
+                        // replace the scripts and iframes
+                        html = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+                            '<div class="embedded-javascript">Embedded JavaScript</div>');
+                        html = html.replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi,
+                            '<div class="embedded-iframe">Embedded iFrame</div>');
+                    }
+
                     element.html(html);
                     countWords();
                 }
