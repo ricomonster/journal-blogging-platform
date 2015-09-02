@@ -192,7 +192,6 @@
     filter: alpha(opacity=100);
     opacity: 1;
     transform: none;
-    width: 320px;
 }
 
 #editor_page .editor-sidebar .sidebar-header { margin-bottom: 10px; }
@@ -250,4 +249,8 @@ tag-input .tags-wrapper .tag-suggestions .dropdown-menu {
     right: 0;
     top: auto;
     left: auto;
+}
+
+@media only screen and (max-width : 480px) {
+    #editor_page .editor-sidebar .editor-sidebar-content { width: 100%; }
 }

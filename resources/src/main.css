@@ -1,6 +1,6 @@
 /* Google Font */
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
-@import url(http://fonts.googleapis.com/css?family=Noto+Serif:400,400italic);
+/*@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);*/
+/*@import url(http://fonts.googleapis.com/css?family=Noto+Serif:400,400italic);*/
 
 /* Initial styling */
 body {
@@ -127,6 +127,10 @@ label.control-label { font-size: 18px; margin: 0; }
 
 .growl-container > div.growl-item { border-radius: 0; }
 
+@media only screen and (max-width : 768px) {
+    .hero-title { font-size: 40px; }
+}
+
 /*==================================================
 =            Bootstrap 3 Media Queries             =
 ==================================================*/
@@ -134,55 +138,24 @@ label.control-label { font-size: 18px; margin: 0; }
 /*==========  Mobile First Method  ==========*/
 
 /* Custom, iPhone Retina */
-@media only screen and (min-width : 320px) {
+/*@media only screen and (min-width : 320px) {*/
 
-}
+/*}*/
 
-/* Extra Small Devices, Phones */
-@media only screen and (min-width : 480px) {
+/*/!* Extra Small Devices, Phones *!/*/
+/*@media only screen and (min-width : 480px) {*/
 
-}
+/*}*/
 
-/* Small Devices, Tablets */
-@media only screen and (min-width : 768px) {
-
-}
-
-/* Medium Devices, Desktops */
-@media only screen and (min-width : 992px) {
-
-}
-
-/* Large Devices, Wide Screens */
-@media only screen and (min-width : 1200px) {
-
-}
+/*/!* Small Devices, Tablets *!/*/
 
 
+/*/!* Medium Devices, Desktops *!/*/
+/*@media only screen and (min-width : 992px) {*/
 
-/*==========  Non-Mobile First Method  ==========*/
+/*}*/
 
-/* Large Devices, Wide Screens */
-@media only screen and (max-width : 1200px) {
-
-}
-
-/* Medium Devices, Desktops */
-@media only screen and (max-width : 992px) {
-
-}
-
-/* Small Devices, Tablets */
-@media only screen and (max-width : 768px) {
-
-}
-
-/* Extra Small Devices, Phones */
-@media only screen and (max-width : 480px) {
-
-}
-
-/* Custom, iPhone Retina */
-@media only screen and (max-width : 320px) {
-
-}
+/*/!* Large Devices, Wide Screens *!/*/
+/*@media only screen and (min-width : 1200px) {*/
+    /**/
+/*}*/
