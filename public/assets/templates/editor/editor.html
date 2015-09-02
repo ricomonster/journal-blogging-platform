@@ -1,0 +1,95 @@
+<div ng-controller="EditorController as ec">
+    <section id="editor_page" class="main-container container-fluid">
+        <form id="editor_form" ng-submit="ec.savePost()">
+            <header class="form-group title-wrapper">
+                <input type="text" ng-model="ec.post.title" class="form-control input-lg"
+                placeholder="Your post title" autocomplete="off"
+                post-id="ec.post.id" check-post-slug slug="ec.post.slug"/>
+            </header>
+            <section class="editor-section entry-markdown">
+                <header class="floating-header">
+                    <span class="header-title">Markdown</span>
+                </header>
+                <section class="editor-content" editor-scroll="">
+                    <ui-codemirror ng-model="ec.post.markdown" ui-codemirror-opts="ec.editor.codemirror"></ui-codemirror>
+                </section>
+            </section>
+            <section class="editor-section entry-preview">
+                <header class="floating-header">
+                    <span class="header-title">Preview</span>
+                    <span class="word-count">{{ec.wordCounter()}}</span>
+                </header>
+                <section class="entry-preview-content">
+                    <div journal-markdown="ec.post.markdown" hide-script-iframe="true"
+                    counter="ec.editor.counter" class="rendered-markdown"></div>
+                </section>
+            </section>
+            <footer class="editor-publish-bar">
+                <div class="container-fluid">
+                    <section class="tag-controls">
+                        <span class="icon"><i class="fa fa-tags"></i></span>
+                        <tag-input tags="ec.post.tags"></tag-input>
+                    </section>
+                    <section class="editor-controls">
+                        <a class="btn btn-default" ng-click="ec.toggleSidebar()">
+                            <i class="fa fa-gear"></i>
+                        </a>
+                        <div class="btn-group dropup" dropdown>
+                            <button type="submit" class="btn"
+                            ng-class="{'primary' : 'btn-primary', 'danger' : 'btn-danger', 'info' : 'btn-info'}[ec.editor.activeStatus.class]">{{ec.editor.activeStatus.text}}</button>
+                            <button type="button" class="btn" dropdown-toggle
+                            ng-class="{'primary' : 'btn-primary', 'danger' : 'btn-danger', 'info' : 'btn-info'}[ec.editor.activeStatus.class]">
+                                <span class="caret"></span>
+                                <span class="sr-only"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                <li ng-repeat="status in ec.editor.status"
+                                ng-if="status.group == ec.editor.activeStatus.group"
+                                ng-class="{'active' : status === ec.editor.activeStatus}"
+                                ng-click="ec.setPostStatus(status)">
+                                    <a>{{ status.text }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+            </footer>
+        </form>
+        <div class="overlay" ng-class="{ true: 'active' }[ec.sidebar]" ng-click="ec.toggleSidebar()"></div>
+        <aside class="editor-sidebar">
+            <div class="editor-sidebar-content" ng-class="{ true: 'active' }[ec.sidebar]">
+                <header class="sidebar-header">
+                    <a class="close-sidebar pull-right" ng-click="ec.toggleSidebar()">
+                        <i class="fa fa-close"></i>
+                    </a>
+                    <h3>Settings</h3>
+                </header>
+                <section class="sidebar-controls">
+                    <div class="form-group">
+                        <div ng-if="ec.post.id">
+                            <a href="/{{ec.post.slug}}" class="pull-right"
+                            ng-if="ec.post.status == 1">View post</a>
+                            <a href="/{{ec.post.slug}}?preview" class="pull-right"
+                            ng-if="ec.post.status == 2">View post</a>
+                        </div>
+                        <label class="control-label">Post URL</label>
+                        <input type="text" ng-model="ec.post.slug" class="form-control"/>
+                        <span class="help-block">{{ec.editor.baseUrl}}/{{ec.post.slug}}</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Publish Date</label>
+                        <input type="datetime-local" ng-model="ec.editor.dateNow" class="form-control"
+                        placeholder="yyyy-MM-dd HH:mm:ss"/>
+                    </div>
+                    <div class="danger-zone" ng-if="ec.post.id">
+                        <span class="help-block">I'm not sure you're ready to do this</span>
+                        <a class="btn btn-danger btn-block" ng-click="ec.deletePost()">
+                            <i class="fa fa-trash"></i>
+                            Delete this post
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </aside>
+    </section>
+</div>

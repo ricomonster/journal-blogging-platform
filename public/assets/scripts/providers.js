@@ -1,0 +1,1 @@
+!function(){"use strict";function n(){var n={};return{config:function(r){n=r},$get:function(){return new showdown.Converter(n)}}}angular.module("journal.shared.markdownConverter").provider("MarkdownConverter",[n])}();

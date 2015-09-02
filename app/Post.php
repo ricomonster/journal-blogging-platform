@@ -1,11 +1,13 @@
-<?php //-->
+<?php
+
 namespace Journal;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model {
+class Post extends Model
+{
     /**
-     * Table associated with the model
+     * The database table used by the model.
      *
      * @var string
      */
@@ -16,25 +18,45 @@ class Post extends Model {
      *
      * @var array
      */
-    protected $fillable = array('author_id', 'title', 'content', 'slug', 'status',
-        'active', 'published_at');
+    protected $fillable = ['author_id', 'title', 'markdown', 'slug', 'status',
+        'active', 'published_at'];
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    protected $hidden = array('tag');
+    protected $hidden = [];
 
     /**
      * The attributes/accessors that will be accessed via JSON or array
      *
      * @var array
      */
-    protected $appends = array('tags');
+    protected $appends = ['created_at', 'permalink', 'updated_at'];
 
     /**
-     * User/Author Relationship
+     * Converts created date/time to timestamp
+     *
+     * @return int
+     */
+    public function getCreatedAtAttribute()
+    {
+        return strtotime($this->attributes['created_at']);
+    }
+
+    /**
+     * Converts updated date/time to timestamp
+     *
+     * @return int
+     */
+    public function getUpdatedAtAttribute()
+    {
+        return strtotime($this->attributes['updated_at']);
+    }
+
+    /**
+     * User/Post Relationship
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -43,36 +65,18 @@ class Post extends Model {
         return $this->belongsTo('Journal\User', 'author_id');
     }
 
+    public function getPermalinkAttribute()
+    {
+        return url($this->attributes['slug']);
+    }
+
     /**
-     * Tags Relationship
+     * Post/Tag Relationship
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function tag()
+    public function tags()
     {
-        return $this->belongsToMany('Journal\Tag', 'post_tag', 'post_id', 'tag_id');
-    }
-    /**
-     * Customized the structure for the tags
-     *
-     * @return array
-     */
-    public function getTagsAttribute()
-    {
-        // get tags
-        $postTags = $this->relations['tag'];
-        // check if there
-        if(!isset($postTags)) {
-            return [];
-        }
-        $tagValues = [];
-        // check if tags is not empty
-        if(!empty($postTags)) {
-            $tagValues = array();
-            foreach($postTags as $key => $postTag) {
-                $tagValues[] = $postTag->tag;
-            }
-        }
-        return $tagValues;
+        return $this->belongsToMany('Journal\Tag', 'posts_tags', 'post_id', 'tag_id');
     }
 }

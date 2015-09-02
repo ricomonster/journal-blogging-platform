@@ -1,7 +1,8 @@
-<?php namespace Journal\Events;
+<?php
 
-abstract class Event {
+namespace Journal\Events;
 
-	//
-
+abstract class Event
+{
+    //
 }

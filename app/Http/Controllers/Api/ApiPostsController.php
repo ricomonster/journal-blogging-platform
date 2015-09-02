@@ -1,129 +1,214 @@
 <?php //-->
 namespace Journal\Http\Controllers\Api;
 
-use Journal\Repositories\Posts\PostRepositoryInterface;
-use Journal\Repositories\Tags\TagRepositoryInterface;
-use Input;
+use Illuminate\Http\Request;
+use Journal\Http\Requests;
+use Journal\Repositories\Post\PostRepositoryInterface;
+use Journal\Repositories\Tag\TagRepositoryInterface;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use JWTAuth;
 
-/**
- * Class ApiPostController
- * @package Journal\Core\Controllers\Api
- */
 class ApiPostsController extends ApiController
 {
-    /**
-     * Handles request for slug generation
-     *
-     * @return mixed
-     */
-    public function generateSlug(PostRepositoryInterface $posts)
+    protected $posts;
+
+    public function __construct(PostRepositoryInterface $posts, TagRepositoryInterface $tags)
     {
-        $string = Input::get('string');
-        $id     = Input::get('id');
+        // set the JWT middleware
+        $this->middleware('jwt.auth', [
+            'except' => ['all', 'checkSlug', 'getPost']]);
 
-        // generate slug
-        $slug = $this->createSlug($string, $id, $posts);
-
-        return $this->respond(array(
-            'data' => array('slug' => $slug)));
+        $this->posts = $posts;
+        $this->tags = $tags;
     }
 
-    /**
-     * Returns all posts saved
-     *
-     * @return mixed
-     */
-    public function getAllPosts(PostRepositoryInterface $posts)
+    public function all()
     {
         // get all posts
-        $posts = $posts->all();
+        $posts = $this->posts->all();
+
+        // return the posts
+        return $this->respond([
+            'posts' => $posts->toArray()]);
+    }
+
+    public function checkSlug(Request $request)
+    {
+        $slug   = $request->input('slug');
+        $id     = $request->input('post_id');
+
+        // check if slug is empty or set
+        if (!$slug || empty($slug)) {
+            return $this->setStatusCode(self::BAD_REQUEST)
+                ->respondWithError(['message' => 'Slug is required.']);
+        }
+
+        // check the slug if it is valid
+        $slug = $this->posts->validateSlug($slug, $id);
 
         // return
-        return $this->respond(array(
-            'data' => array(
-                'posts' => $posts->toArray())));
+        return $this->respond(['slug' => $slug]);
     }
 
-    /**
-     * Get a specific post using its id
-     *
-     * @return mixed
-     */
-    public function getPost(PostRepositoryInterface $posts)
+    public function deletePosts(Request $request)
     {
-        $id = Input::get('post_id');
-        // get the post
-        $post = $posts->findById($id);
+        $postId = $request->input('post_id');
 
-        return $this->respond(array(
-            'data' => array(
-                'post' => $post->toArray())));
+        // check if post id is empty
+        if (!$postId || empty($postId)) {
+            return $this->setStatusCode(self::BAD_REQUEST)
+                ->respondWithError(['message' => 'Post ID is not set.']);
+        }
+
+        // check if post exists
+        $post = $this->posts->findById($postId);
+
+        // check if post exists
+        if (empty($post)) {
+            return $this->setStatusCode(self::NOT_FOUND)
+                ->respondWithError(['message' => 'Post not found.']);
+        }
+
+        // delete post
+        $this->posts->setPostInactive($post->id);
+
+        return $this->respond([
+            'error' => false]);
     }
 
-    /**
-     * Update and creates a post
-     *
-     * @return mixed
-     */
-    public function savePost(PostRepositoryInterface $postsRepository, TagRepositoryInterface $tagsRepository)
+    public function getPost(Request $request)
     {
-        // prepare the variables
-        $tagsId = [];
+        $id     = $request->input('post_id');
+        $slug   = $request->input('slug');
 
-        $id             = Input::get('post_id');
-        $authorId       = Input::get('author_id');
-        $title          = Input::get('title');
-        $content        = Input::get('content');
-        $slug           = Input::get('slug');
-        $status         = Input::get('status');
-        $publishDate    = Input::get('publish_date');
-        $tags           = Input::get('tags');
+        // check if post_id is set
+        if ($id && !empty($id)) {
+            // get the post
+            $post = $this->posts->findById($id);
 
-        // check if title is set
-        $title = (isset($title) && !empty($title)) ? $title : 'Untitled';
+            // check if the post exists
+            if (empty($post)) {
+                return $this->setStatusCode(self::NOT_FOUND)
+                    ->respondWithError(['message' => 'Post not found.']);
+            }
+
+            // return the post
+            return $this->respond([
+                'post' => $post->toArray()]);
+        }
+
         // check if slug is set
-        $slug = (isset($slug) && !empty($slug)) ? $slug : $this->createSlug($title, $id, $postsRepository);
+        if ($slug && !empty($slug)) {
+            // get the post
+            $post = $this->posts->findBySlug($slug);
+
+            // check if the post exists
+            if (empty($post)) {
+                return $this->setStatusCode(self::NOT_FOUND)
+                    ->respondWithError(['message' => 'Post not found.']);
+            }
+
+            // return the post
+            return $this->respond([
+                'post' => $post->toArray()]);
+        }
+
+        // return an error
+        return $this->setStatusCode(self::BAD_REQUEST)
+            ->respondWithError(['message' => 'Post ID or slug is not set.']);
+    }
+
+    public function save(Request $request)
+    {
+        // check first the slug
+        $slug = $this->generateSlug($request->all());
+
+        // check if title is empty
+        $title = (empty($request->input('title'))) ?
+            'Untitled' : $request->input('title');
+
+        // get the ID of the tags
+        $tagIds = $this->generateTags($request->input('tags'));
+
+        // check if post_id is set
+        if ($request->input('post_id')) {
+            // check if post exists
+            $post = $this->posts->findById($request->input('post_id'));
+
+            // check if post exists
+            if (empty($post)) {
+                return $this->setStatusCode(self::NOT_FOUND)
+                    ->respondWithError(['message' => 'Post not found.']);
+            }
+
+            // update post
+            $post = $this->posts->update(
+                $request->input('post_id'),
+                $request->input('author_id'),
+                $title,
+                $request->input('markdown'),
+                $slug,
+                $request->input('status'),
+                $request->input('published_at'),
+                $tagIds);
+
+            // return post
+            return $this->respond(['post' => $post->toArray()]);
+        }
+
+        // create the post
+        $post = $this->posts->create(
+            $request->input('author_id'),
+            $title,
+            $request->input('markdown'),
+            $slug,
+            $request->input('status'),
+            $request->input('published_at'),
+            $tagIds);
+
+        // return
+        return $this->respond([
+            'post' => $post->toArray()]);
+    }
+
+    protected function generateSlug($request)
+    {
+        $postId = (isset($request['post_id'])) ? $request['post_id'] : null;
+
+        // check if there's a slug
+        if ($request['slug'] && !empty($request['slug'])) {
+            // check if title is set
+            if ($request['title'] && !empty($request['title'])) {
+                return $this->posts->validateSlug($request['title'], $postId);
+            }
+
+            return $this->posts->validateSlug($request['slug'], $postId);
+        }
+
+        // check if there's title
+        if ($request['title'] && !empty($request['title'])) {
+            return $this->posts->validateSlug($request['title'], $postId);
+        }
+
+        // no title?
+        return $this->posts->validateSlug('Untitled');
+    }
+
+    protected function generateTags($tags)
+    {
+        $tagIds = [];
 
         // check if there are tags
-        if (!empty($tags)) {
-            // set the tags to an array
-            $tagsArray = explode(',', $tags);
-            // create the tags and returns the id
-            $tagsId = $tagsRepository->set($tagsArray);
+        if ($tags) {
+            // loop
+            foreach ($tags as $key => $tag) {
+
+                $tag = $this->tags->create($tag['name']);
+                // get the ID and push it to the array
+                array_push($tagIds, $tag->id);
+            }
         }
 
-        // check if id of the post is set
-        if (isset($id) && $id != 0) {
-            // update post
-            $post = $postsRepository->update($id, $authorId, $title, $content, $slug, $status, $tagsId);
-
-            // return a response
-            return $this->respond(array(
-                'data' => array(
-                    'message' => 'Updated!',
-                    'post' => $post->toArray())));
-        }
-
-        // create post
-        $post = $postsRepository->create($authorId, $title, $content, $slug, $status, $publishDate, $tagsId);
-
-        // return a response
-        return $this->respond(array(
-            'data' => array(
-                'message'   => 'Success!',
-                'post'      => $post->toArray())));
-    }
-
-    /**
-     * Creates a slug
-     *
-     * @param $title
-     * @param $id
-     * @return mixed
-     */
-    protected function createSlug($title, $id, $posts)
-    {
-        $id = (empty($id) || $id == 0) ? null : $id;
-        return $posts->createSlug($title, $id);
+        return $tagIds;
     }
 }

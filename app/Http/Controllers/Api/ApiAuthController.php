@@ -1,51 +1,80 @@
 <?php //-->
 namespace Journal\Http\Controllers\Api;
 
-use Journal\Repositories\Users\UserRepositoryInterface;
-use Auth, Input, Request;
+use Illuminate\Http\Request;
+use Journal\Http\Requests;
+use Journal\Repositories\User\UserRepositoryInterface;
+use Journal\Repositories\Setting\SettingRepositoryInterface;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 class ApiAuthController extends ApiController
 {
-    public function handshake()
-    {
-        $parameter = Input::get('verify');
+    protected $users;
 
-        if (isset($parameter) && $parameter == 'true') {
-            // return response
-            return $this->respond(array(
-                'validated' => true,
-                'url' => Request::root()));
-        }
+    public function __construct(SettingRepositoryInterface $settings, UserRepositoryInterface $users)
+    {
+        $this->settings = $settings;
+        $this->users = $users;
     }
 
-    public function login(UserRepositoryInterface $userRepository)
+    public function authenticate(Request $request)
     {
-        // validate credentials
-        $email      = Input::get('email');
-        $password   = Input::get('password');
-        $apiRequest = Input::get('api_call');
-        $apiCall    = (isset($apiRequest) && $apiRequest == 'true');
+        $credentials = $request->only('email', 'password');
 
-        if (empty($email) || empty($password)) {
-            // return response
-            return $this->setStatusCode(400)
-                ->respondWithError('Username or password is not defined');
+        try {
+            // verify user credentials and generate token
+            $token = JWTAuth::attempt($credentials);
+
+            if (!$token) {
+                return $this->setStatusCode(self::UNAUTHORIZED)
+                    ->respondWithError(['message' => 'Invalid credentials']);
+            }
+        } catch (JWTException $e) {
+            // something went wrong
+            return $this->setStatusCode(self::INTERNAL_ERROR)
+                ->respondWithError(['message' => 'Something went wrong.']);
+
         }
 
-        // authenticate user
-        if($userRepository->login($email, $password, $apiCall)) {
-            // get user details
-            $user = $userRepository->findByEmail($email);
-            // login user
-            return $this->respond(array(
-                'data' => array(
-                    'url'   => Request::root().'/journal',
-                    'user'  => $user->toArray())));
+        // get first user details
+        $user = $this->users->findByEmail($request->input('email'));
+
+        // return token
+        return $this->respond([
+            'user'  => $user->toArray(),
+            'token' => $token]);
+    }
+
+    public function checkAuthentication()
+    {
+        try {
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                return $this->setStatusCode(self::NOT_FOUND)
+                    ->respondWithError(['message' => 'User not found.']);
+            }
+        } catch (TokenExpiredException $e) {
+            return $this->setStatusCode($e->getStatusCode())
+                ->respondWithError(['message' => 'Token expired.']);
+        } catch (TokenInvalidException $e) {
+            return $this->setStatusCode($e->getStatusCode())
+                ->respondWithError(['message' => 'Token invalid.']);
+        } catch (JWTException $e) {
+            return $this->setStatusCode($e->getStatusCode())
+                ->respondWithError(['message' => 'Token required.']);
         }
 
-        // authentication is not successful due to email is not found or incorrect
-        // or password is incorrect
-        return $this->setStatusCode(401)
-            ->respondWithError('Incorrect username or password');
+        // the token is valid and we have found the user via the sub claim
+        return $this->respond(['user' => $user]);
+    }
+
+    public function checkInstallation()
+    {
+        $installed = $this->settings->get('installed');
+
+        return $this->respond([
+            'installed' => !empty(current($installed))]);
     }
 }

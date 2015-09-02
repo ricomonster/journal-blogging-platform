@@ -1,58 +1,142 @@
 <?php //-->
 namespace Journal\Http\Controllers\Api;
 
-use Journal\Repositories\Users\UserRepositoryInterface;
-use Input;
+use Illuminate\Http\Request;
+use Journal\Http\Requests;
+use Journal\Repositories\User\UserRepositoryInterface;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use JWTAuth;
 
 class ApiUsersController extends ApiController
 {
-    public function allUsers(UserRepositoryInterface $users)
-    {
-        $users = $users->all();
+    protected $users;
 
-        return $this->respond(array(
-            'data' => array(
-                'user' => $users)));
+    public function __construct(UserRepositoryInterface $user)
+    {
+        // set the JWT middleware
+        $this->middleware('jwt.auth', ['except' => ['all', 'getUser']]);
+
+        $this->users = $user;
     }
 
-    public function createUser(UserRepositoryInterface $users)
+    public function all()
     {
-        $email      = Input::get('email');
-        $password   = Input::get('password');
-        $name       = Input::get('name');
+        // get all users
+        $users = $this->users->all();
 
-        // validate
-        $messages = $users->validateCreate($email, $password, $name);
+        return $this->respond([
+            'users' => $users->toArray()]);
+    }
 
-        // check for errors
+    public function create(Request $request)
+    {
+        // validate first
+        $messages = $this->users->validateUserCreate($request->all());
+
+        // check if there are errors
         if (count($messages) > 0) {
-            // return the error messages
-            return $this->setStatusCode(400)
+            return $this->setStatusCode(self::BAD_REQUEST)
                 ->respondWithError($messages);
         }
 
-        // create user
-        $user = $users->create($email, $password, $name, 2);
+        // create the user
+        $user = $this->users->create(
+            $request->input('name'),
+            $request->input('email'),
+            $request->input('password'));
 
-        return $this->respond(array(
-            'data' => array(
-                'message'   => 'You have successfully added a new user.',
-                'user'      => $user->toArray())));
+        // return
+        return $this->respond([
+            'user' => $user->toArray()]);
     }
 
-    public function get(UserRepositoryInterface $users)
+    public function changePassword(Request $request)
     {
-        $id = Input::get('id');
+        $id = $request->input('user_id');
 
-        // check if there is an id supplied
-        if (empty($id)) {
-            // send error message
+        // check if ID is not empty or set
+        if (!$id || empty($id)) {
+            return $this->setStatusCode(self::BAD_REQUEST)
+                ->respondWithError(['message' => 'User ID is not set.']);
         }
 
-        // get user
-        $user = $users->findById($id);
+        // get the user
+        $user = $this->users->findById($id);
 
-        return $this->respond(array(
-            'data' => array('user' => $user)));
+        // check if user exists
+        if (empty($user)) {
+            return $this->setStatusCode(self::NOT_FOUND)
+                ->respondWithError(['message' => 'User not found.']);
+        }
+
+        // validate passwords
+    }
+
+    public function getUser(Request $request)
+    {
+        $id = $request->input('user_id');
+
+        // check if ID is not empty or set
+        if (!$id || empty($id)) {
+            return $this->setStatusCode(self::BAD_REQUEST)
+                ->respondWithError(['message' => 'User ID is not set.']);
+        }
+
+        // get the user
+        $user = $this->users->findById($id);
+
+        // check if user exists
+        if (empty($user)) {
+            return $this->setStatusCode(self::NOT_FOUND)
+                ->respondWithError(['message' => 'User not found.']);
+        }
+
+        // return the error
+        return $this->respond([
+            'user' => $user->toArray()]);
+    }
+
+    public function updateDetails(Request $request)
+    {
+        $id = $request->input('user_id');
+
+        // check if ID is not empty or set
+        if (!$id || empty($id)) {
+            return $this->setStatusCode(self::BAD_REQUEST)
+                ->respondWithError(['message' => 'User ID is not set.']);
+        }
+
+        // get the user
+        $user = $this->users->findById($id);
+
+        // check if user exists
+        if (empty($user)) {
+            return $this->setStatusCode(self::NOT_FOUND)
+                ->respondWithError(['message' => 'User not found.']);
+        }
+
+        // validate user details
+        $messages = $this->users->validateUserUpdate($request->all(), $id);
+
+        // check if there are errors
+        if (count($messages) > 0) {
+            return $this->setStatusCode(self::BAD_REQUEST)
+                ->respondWithError($messages);
+        }
+
+        // update
+        $user = $this->users->updateDetails(
+            $id,
+            $request->input('name'),
+            $request->input('email'),
+            $request->input('biography'),
+            $request->input('location'),
+            $request->input('website'),
+            $request->input('avatar_url'),
+            $request->input('cover_url'));
+
+        // return user details
+        return $this->respond([
+            'user' => $user->toArray()]);
     }
 }

@@ -1,10 +1,9 @@
 /vendor
 /node_modules
-.env
-composer.phar
-composer.lock
 /bower_components
-/public/vendor
-/public/javascript
-/public/stylesheets
+/themes/bootstrap
+Homestead.yaml
+.env
 .idea
+composer.lock
+/public/uploads

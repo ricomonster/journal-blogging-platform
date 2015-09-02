@@ -1,45 +1,42 @@
-<?php namespace Journal\Providers;
+<?php
+
+namespace Journal\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class JournalServiceProvider extends ServiceProvider {
+class JournalServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap the application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        require __DIR__.'/../functions.php';
+    }
 
-	/**
-	 * Bootstrap the application services.
-	 *
-	 * @return void
-	 */
-	public function boot()
-	{
-		require __DIR__.'/../helpers.php';
-	}
+    /**
+     * Register the application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->bind(
+            'Journal\Repositories\Post\PostRepositoryInterface',
+            'Journal\Repositories\Post\DbPostRepository');
 
-	/**
-	 * Register the application services.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
-		$this->app->bind(
-			'Journal\Repositories\Posts\PostRepositoryInterface',
-			'Journal\Repositories\Posts\DbPostRepository'
-		);
+        $this->app->bind(
+            'Journal\Repositories\Setting\SettingRepositoryInterface',
+            'Journal\Repositories\Setting\DbSettingRepository');
 
-		$this->app->bind(
-			'Journal\Repositories\Settings\SettingRepositoryInterface',
-			'Journal\Repositories\Settings\DbSettingRepository'
-		);
+        $this->app->bind(
+            'Journal\Repositories\Tag\TagRepositoryInterface',
+            'Journal\Repositories\Tag\DbTagRepository');
 
-		$this->app->bind(
-			'Journal\Repositories\Tags\TagRepositoryInterface',
-			'Journal\Repositories\Tags\DbTagRepository'
-		);
-
-		$this->app->bind(
-			'Journal\Repositories\Users\UserRepositoryInterface',
-			'Journal\Repositories\Users\DbUserRepository'
-		);
-	}
-
+        $this->app->bind(
+            'Journal\Repositories\User\UserRepositoryInterface',
+            'Journal\Repositories\User\DbUserRepository');
+    }
 }

@@ -2,88 +2,56 @@
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-
-/*
-|--------------------------------------------------------------------------
-| Admin Routes
-|--------------------------------------------------------------------------
-*/
-Route::group(['prefix' => 'journal', 'middleware' => 'installation'], function() {
-	Route::get('login', 'AuthController@login');
-	Route::get('logout', 'AuthController@logout');
-
-	Route::get('/', function() {
-		return redirect('/journal/posts');
-	});
-
-	// must be logged in routes
-	Route::group(['middleware' => 'auth'], function() {
-		Route::get('settings', 'SettingsController@index');
-		Route::get('appearance', 'SettingsController@appearance');
-		Route::get('services', 'SettingsController@services');
-
-		// post routes
-		Route::group(['prefix' => 'posts'], function() {
-			Route::get('/', 'PostsController@index');
-			Route::get('editor', 'PostsController@editor');
-			Route::get('editor/{id}', 'PostsController@editorWithId');
-		});
-
-		// user routes
-		Route::group(['prefix' => 'users'], function() {
-			Route::get('/', 'UsersController@index');
-			Route::get('add', 'UsersController@addUser');
-		});
-	});
-});
-
-/*
-|--------------------------------------------------------------------------
-| Installer Routes
-|--------------------------------------------------------------------------
-*/
-Route::group(['prefix' => 'installer'], function() {
-	Route::get('/', 'InstallerController@index');
-});
-
-/*
-|--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['prefix' => 'api/v1'], function() {
-	Route::group(['prefix' => 'auth'], function() {
-		Route::get('handshake', 'Api\ApiAuthController@handshake');
+Route::group(['prefix' => 'api/v1.0'], function() {
+    Route::group(['prefix' => 'auth'], function() {
+        Route::get('check', 'Api\ApiAuthController@checkAuthentication');
+        Route::get('check_installation', 'Api\ApiAuthController@checkInstallation');
 
-		Route::post('login', 'Api\ApiAuthController@login');
-	});
+        Route::post('authenticate', 'Api\ApiAuthController@authenticate');
+    });
 
-	Route::group(['prefix' => 'posts'], function() {
-		Route::post('save', 'Api\ApiPostsController@savePost');
-	});
+    // Post Routes
+    Route::group(['prefix' => 'posts'], function() {
+        Route::get('all', 'Api\ApiPostsController@all');
+        Route::get('check_slug', 'Api\ApiPostsController@checkSlug');
+        Route::get('get_post', 'Api\ApiPostsController@getPost');
 
-	Route::group(['prefix' => 'settings'], function() {
-		Route::post('update_general_settings', 'Api\ApiSettingsController@updateGeneralSettings');
-		Route::post('upload', 'Api\ApiSettingsController@uploader');
-	});
+        Route::post('delete', 'Api\ApiPostsController@deletePosts');
+        Route::post('save', 'Api\ApiPostsController@save');
+    });
 
-	Route::group(['prefix' => 'users'], function() {
-		Route::get('lists', 'Api\ApiUsersController@allUsers');
+    Route::group(['prefix' => 'settings'], function() {
+        Route::get('get', 'Api\ApiSettingsController@getSettings');
 
-		Route::post('create', 'Api\ApiUsersController@createUser');
-	});
+        Route::post('save', 'Api\ApiSettingsController@saveSettings');
+    });
 
-	Route::group(['prefix' => 'tags'], function() {
-		Route::get('all', 'Api\ApiTagsController@getAllTags');
-	});
+    // Tag Routes
+    Route::group(['prefix' => 'tags'], function() {
+        Route::get('all', 'Api\ApiTagsController@all');
+
+        Route::post('create_tag', 'Api\ApiTagsController@createTag');
+    });
+
+    // User Routes
+    Route::group(['prefix' => 'users'], function() {
+        Route::get('all', 'Api\ApiUsersController@all');
+        Route::get('get_user', 'Api\ApiUsersController@getUser');
+
+        Route::post('create', 'Api\ApiUsersController@create');
+        Route::post('update_details', 'Api\ApiUsersController@updateDetails');
+        Route::post('change_password', 'Api\ApiUsersController@changePassword');
+    });
+
+    Route::post('installer/create_account', 'Api\ApiInstallerController@createAccount');
+    Route::post('upload', 'Api\ApiUploadController@upload');
+});
+
+Route::get('journal', function() {
+    return view('journal');
 });
 
 /*
@@ -92,4 +60,6 @@ Route::group(['prefix' => 'api/v1'], function() {
 |--------------------------------------------------------------------------
 */
 Route::get('/', 'BlogController@index');
-Route::get('posts/{id}', 'BlogController@posts');
+Route::get('author/{slug}', 'BlogController@author');
+Route::get('tag/{slug}', 'BlogController@tags');
+Route::get('{parameter}', 'BlogController@post');

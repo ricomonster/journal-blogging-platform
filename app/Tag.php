@@ -1,16 +1,13 @@
-<?php //-->
+<?php
+
 namespace Journal;
 
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Class Tag
- * @package Journal
- */
 class Tag extends Model
 {
     /**
-     * The table associated with the model
+     * The database table used by the model.
      *
      * @var string
      */
@@ -21,22 +18,49 @@ class Tag extends Model
      *
      * @var array
      */
-    protected $fillable = array('tag', 'slug');
+    protected $fillable = ['name', 'slug', 'active'];
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    protected $hidden = array('created_at', 'id', 'updated_at');
+    protected $hidden = ['pivot'];
 
     /**
-     * Post relationship
+     * The attributes/accessors that will be accessed via JSON or array
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @var array
+     */
+    protected $appends = ['created_at', 'updated_at'];
+
+    /**
+     * Converts created date/time to timestamp
+     *
+     * @return int
+     */
+    public function getCreatedAtAttribute()
+    {
+        return strtotime($this->attributes['created_at']);
+    }
+
+    /**
+     * Converts updated date/time to timestamp
+     *
+     * @return int
+     */
+    public function getUpdatedAtAttribute()
+    {
+        return strtotime($this->attributes['updated_at']);
+    }
+
+    /**
+     * Post/Tag Relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function posts()
     {
-        return $this->belongsToMany('Journal\Post', 'post_tag', 'tag_id', 'post_id');
+        return $this->belongsToMany('Journal\Post', 'posts_tags', 'tag_id', 'post_id');
     }
 }
