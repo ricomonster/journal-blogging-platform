@@ -54,7 +54,7 @@
                 </div>
             </footer>
         </form>
-        <div class="overlay" ng-class="{ true: 'active' }[ec.sidebar]"></div>
+        <div class="overlay" ng-class="{ true: 'active' }[ec.sidebar]" ng-click="ec.toggleSidebar()"></div>
         <aside class="editor-sidebar">
             <div class="editor-sidebar-content" ng-class="{ true: 'active' }[ec.sidebar]">
                 <header class="sidebar-header">
@@ -80,7 +80,7 @@
                         <input type="datetime-local" ng-model="ec.editor.dateNow" class="form-control"
                         placeholder="yyyy-MM-dd HH:mm:ss"/>
                     </div>
-                    <div class="danger-zone">
+                    <div class="danger-zone" ng-if="ec.post.id">
                         <span class="help-block">I'm not sure you're ready to do this</span>
                         <a class="btn btn-danger btn-block" ng-click="ec.deletePost()">
                             <i class="fa fa-trash"></i>

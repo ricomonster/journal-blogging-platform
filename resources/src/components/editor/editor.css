@@ -194,9 +194,9 @@
     width: 320px;
 }
 
-#editor_page .editor-sidebar .sidebar-header { text-align: center; }
+#editor_page .editor-sidebar .sidebar-header { margin-bottom: 10px; }
 #editor_page .editor-sidebar .sidebar-header .close-sidebar { color: #cccccc; }
-#editor_page .editor-sidebar .sidebar-header h3 { color: #333332; font-size: 22px; font-weight: 400; }
+#editor_page .editor-sidebar .sidebar-header h3 { color: #333332; font-size: 24px; font-weight: 400; }
 
 #editor_page .editor-sidebar .sidebar-controls .form-group {
     border-bottom: 0;

@@ -61,5 +61,5 @@ Route::get('journal', function() {
 */
 Route::get('/', 'BlogController@index');
 Route::get('author/{slug}', 'BlogController@author');
-Route::get('post/{parameter}', 'BlogController@post');
 Route::get('tag/{slug}', 'BlogController@tags');
+Route::get('{parameter}', 'BlogController@post');
