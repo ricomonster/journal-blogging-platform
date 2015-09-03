@@ -23,12 +23,12 @@
         'journal.component.userProfileModal',
         'journal.shared.auth',
         'journal.shared.fileUploader',
-        'journal.shared.growl',
         'journal.shared.storage',
+        'journal.shared.toastr',
         'journal.shared.markdownConverter']);
 
     // app files
-    angular.module('journal.config', ['angular-growl', 'LocalStorageModule']);
+    angular.module('journal.config', ['LocalStorageModule', 'toastr']);
     angular.module('journal.constant', []);
     angular.module('journal.routes', ['ui.router']);
     angular.module('journal.run', ['journal.shared.auth', 'ngProgressLite']);
@@ -37,14 +37,14 @@
     angular.module('journal.component.deletePostModal', [
         'journal.constant',
         'journal.shared.auth',
-        'journal.shared.growl',
+        'journal.shared.toastr',
         'ui.bootstrap',
         'ui.router']);
 
     angular.module('journal.component.login', [
         'journal.constant',
         'journal.shared.auth',
-        'journal.shared.growl',
+        'journal.shared.toastr',
         'ui.router']);
 
     angular.module('journal.component.header', ['journal.shared.auth', 'ui.bootstrap']);
@@ -54,7 +54,7 @@
         'journal.constant',
         'journal.shared.auth',
         'journal.shared.markdownConverter',
-        'journal.shared.growl',
+        'journal.shared.toastr',
         'ngFileUpload',
         'ngSanitize',
         'ui.bootstrap',
@@ -67,17 +67,17 @@
     angular.module('journal.component.installerDetails', [
         'journal.constant',
         'journal.shared.auth',
-        'journal.shared.growl',
+        'journal.shared.toastr',
         'ui.router']);
     angular.module('journal.component.installerSuccess', [
         'journal.shared.auth',
-        'journal.shared.growl']);
+        'journal.shared.toastr']);
 
     // post
     angular.module('journal.component.postLists', [
         'journal.constant',
         'journal.shared.auth',
-        'journal.shared.growl',
+        'journal.shared.toastr',
         'journal.shared.markdownConverter',
         'ui.router']);
 
@@ -85,7 +85,7 @@
     angular.module('journal.component.settings', [
         'journal.constant',
         'journal.shared.auth',
-        'journal.shared.growl',
+        'journal.shared.toastr',
         'ui.bootstrap',
         'ui.router']);
     angular.module('journal.component.settingsModal', [
@@ -93,7 +93,7 @@
         'journal.component.settings',
         'journal.shared.auth',
         'journal.shared.fileUploader',
-        'journal.shared.growl',
+        'journal.shared.toastr',
         'ngFileUpload',
         'ui.bootstrap',
         'ui.router']);
@@ -102,23 +102,23 @@
     angular.module('journal.component.userCreate', [
         'journal.constant',
         'journal.shared.auth',
-        'journal.shared.growl',
+        'journal.shared.toastr',
         'ui.router']);
     angular.module('journal.component.userLists', [
         'journal.constant',
         'journal.shared.auth',
-        'journal.shared.growl',
+        'journal.shared.toastr',
         'ui.router']);
     angular.module('journal.component.userProfile', [
         'journal.constant',
         'journal.shared.auth',
-        'journal.shared.growl',
+        'journal.shared.toastr',
         'ui.bootstrap',
         'ui.router']);
     angular.module('journal.component.userProfileModal', [
         'journal.component.userProfile',
         'journal.shared.fileUploader',
-        'journal.shared.growl',
+        'journal.shared.toastr',
         'ngFileUpload',
         'ui.bootstrap',
         'ui.router']);
@@ -129,7 +129,7 @@
         'journal.constant',
         'journal.shared.auth',
         'ngFileUpload']);
-    angular.module('journal.shared.growl', ['angular-growl']);
+    angular.module('journal.shared.toastr', ['ngAnimate', 'toastr']);
     angular.module('journal.shared.storage', ['LocalStorageModule']);
     angular.module('journal.shared.markdownConverter', ['ngSanitize']);
 })();

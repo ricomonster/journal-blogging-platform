@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('journal.component.settings')
-        .controller('SettingsController', ['$modal', 'GrowlService', 'SettingsService', SettingsController]);
+        .controller('SettingsController', ['$modal', 'ToastrService', 'SettingsService', SettingsController]);
 
-    function SettingsController($modal, GrowlService, SettingsService) {
+    function SettingsController($modal, ToastrService, SettingsService) {
         var vm = this;
         vm.settings = [];
 
@@ -27,7 +27,7 @@
                 .success(function(response) {
                     if (response.settings) {
                         // show success message
-                        GrowlService.growl('You have successfully updated the settings.', 'success');
+                        ToastrService.toast('You have successfully updated the settings.', 'success');
                     }
                 })
         };
