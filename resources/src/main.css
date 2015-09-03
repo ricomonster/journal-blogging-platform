@@ -54,10 +54,7 @@ textarea, input, select { border: 0; }
 .auto-height { height: auto; }
 
 .floating-header {
-    background: -webkit-linear-gradient(top,#fff 0,#fff 25%,rgba(255,255,255,.9) 100%);
-    background: -webkit-gradient(linear,left top,left bottom,from(white),color-stop(25%,#fff),to(rgba(255,255,255,.9)));
-    background: -o-linear-gradient(top,#fff 0,#fff 25%,rgba(255,255,255,.9) 100%);
-    background: linear-gradient(to bottom,#fff 0,#fff 25%,rgba(255,255,255,.9) 100%);
+    background: rgba(255, 255, 255, .8);
     color: #aaa9a2;
     font-size: 12px;
     height: 40px;

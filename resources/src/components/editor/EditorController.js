@@ -25,6 +25,7 @@
 
         // editor config
         vm.editor = {
+            activePane : 'markdown',
             // button status
             activeStatus : [],
             // base url of the application
@@ -173,6 +174,10 @@
 
             // set the status of the post
             vm.post.status = state.status;
+        };
+
+        vm.showPane = function(pane) {
+            vm.editor.activePane = pane;
         };
 
         /**
