@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('journal.component.userProfile')
-        .controller('UserProfileController', ['$modal', '$stateParams', 'AuthService', 'GrowlService', 'UserProfileService', 'CONFIG', UserProfileController]);
+        .controller('UserProfileController', ['$modal', '$stateParams', 'AuthService', 'ToastrService', 'UserProfileService', 'CONFIG', UserProfileController]);
 
-    function UserProfileController($modal, $stateParams, AuthService, GrowlService, UserProfileService, CONFIG) {
+    function UserProfileController($modal, $stateParams, AuthService, ToastrService, UserProfileService, CONFIG) {
         var vm = this;
 
         vm.current = false;
@@ -81,7 +81,7 @@
                 .success(function(response) {
                     if (response.user) {
                         // growl it!
-                        GrowlService.growl('You have successfully updated your profile.', 'success');
+                        ToastrService.toast('You have successfully updated your profile.', 'success');
                     }
                 })
                 .error(function(response) {

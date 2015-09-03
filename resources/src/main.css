@@ -1,6 +1,6 @@
 /* Google Font */
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
-@import url(http://fonts.googleapis.com/css?family=Noto+Serif:400,400italic);
+/*@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);*/
+/*@import url(http://fonts.googleapis.com/css?family=Noto+Serif:400,400italic);*/
 
 /* Initial styling */
 body {
@@ -54,10 +54,7 @@ textarea, input, select { border: 0; }
 .auto-height { height: auto; }
 
 .floating-header {
-    background: -webkit-linear-gradient(top,#fff 0,#fff 25%,rgba(255,255,255,.9) 100%);
-    background: -webkit-gradient(linear,left top,left bottom,from(white),color-stop(25%,#fff),to(rgba(255,255,255,.9)));
-    background: -o-linear-gradient(top,#fff 0,#fff 25%,rgba(255,255,255,.9) 100%);
-    background: linear-gradient(to bottom,#fff 0,#fff 25%,rgba(255,255,255,.9) 100%);
+    background: rgba(255, 255, 255, .8);
     color: #aaa9a2;
     font-size: 12px;
     height: 40px;
@@ -121,11 +118,13 @@ label.control-label { font-size: 18px; margin: 0; }
     box-shadow: 0 3px 9px rgba(0, 0, 0, 0);
 }
 
-/* Growl CSS Override */
-.growl-container.growl-fixed { max-width: 320px; width: 100%; }
-.growl-container.growl-fixed.top-right { top: 60px; }
+/* Toastr CSS Override */
+#toast-container { top: 60px; }
+#toast-container .toast { min-width: 320px; max-width: 480px; width: 100%; }
 
-.growl-container > div.growl-item { border-radius: 0; }
+@media only screen and (max-width : 768px) {
+    .hero-title { font-size: 40px; }
+}
 
 /*==================================================
 =            Bootstrap 3 Media Queries             =
@@ -134,55 +133,24 @@ label.control-label { font-size: 18px; margin: 0; }
 /*==========  Mobile First Method  ==========*/
 
 /* Custom, iPhone Retina */
-@media only screen and (min-width : 320px) {
+/*@media only screen and (min-width : 320px) {*/
 
-}
+/*}*/
 
-/* Extra Small Devices, Phones */
-@media only screen and (min-width : 480px) {
+/*/!* Extra Small Devices, Phones *!/*/
+/*@media only screen and (min-width : 480px) {*/
 
-}
+/*}*/
 
-/* Small Devices, Tablets */
-@media only screen and (min-width : 768px) {
-
-}
-
-/* Medium Devices, Desktops */
-@media only screen and (min-width : 992px) {
-
-}
-
-/* Large Devices, Wide Screens */
-@media only screen and (min-width : 1200px) {
-
-}
+/*/!* Small Devices, Tablets *!/*/
 
 
+/*/!* Medium Devices, Desktops *!/*/
+/*@media only screen and (min-width : 992px) {*/
 
-/*==========  Non-Mobile First Method  ==========*/
+/*}*/
 
-/* Large Devices, Wide Screens */
-@media only screen and (max-width : 1200px) {
-
-}
-
-/* Medium Devices, Desktops */
-@media only screen and (max-width : 992px) {
-
-}
-
-/* Small Devices, Tablets */
-@media only screen and (max-width : 768px) {
-
-}
-
-/* Extra Small Devices, Phones */
-@media only screen and (max-width : 480px) {
-
-}
-
-/* Custom, iPhone Retina */
-@media only screen and (max-width : 320px) {
-
-}
+/*/!* Large Devices, Wide Screens *!/*/
+/*@media only screen and (min-width : 1200px) {*/
+    /**/
+/*}*/

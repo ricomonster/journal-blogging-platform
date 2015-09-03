@@ -3,15 +3,21 @@
 
     angular.module('journal.config')
         .config(['$httpProvider', HttpProviderConfiguration])
-        .config(['growlProvider', GrowlConfiguration])
+        .config(['toastrConfig', ToastrConfiguration])
         .config(['localStorageServiceProvider', LocalStorageConfiguration]);
 
-    function GrowlConfiguration(growlProvider) {
-        growlProvider
-            // growl position on the screen
-            .globalPosition('top-right')
-            // will close after given number of ms
-            .globalTimeToLive(10000);
+    function ToastrConfiguration(toastrConfig) {
+        angular.extend(toastrConfig, {
+            autoDismiss: false,
+            containerId: 'toast-container',
+            maxOpened: 5,
+            newestOnTop: false,
+            positionClass: 'toast-top-right',
+            preventDuplicates: true,
+            preventOpenDuplicates: true,
+            target: 'body',
+            timeOut: 10000
+        });
     }
 
     function HttpProviderConfiguration($httpProvider) {
