@@ -5,7 +5,7 @@
             <a ui-sref="editor" class="pull-right btn btn-primary">Write a new Post</a>
         </header>
         <div class="content-wrapper">
-            <section class="list-of-posts" ng-class="{'active' : plc.activePane == 'lists'}">
+            <section class="list-of-posts">
                 <header class="floating-header">
                     <span class="header-title">All Posts</span>
                 </header>
@@ -24,12 +24,10 @@
                     </article>
                 </section>
             </section>
-            <section class="post-preview-wrapper" ng-class="{'active' : plc.activePane == 'preview'}">
+            <section class="post-preview-wrapper">
                 <article class="post-wrapper" ng-class="{'active' : plc.activePost}">
                     <header class="floating-header">
                         <div class="header-title">
-                            <a class="btn btn-info btn-xs back-button" ng-click="plc.goBack()">Back</a>
-
                             <span class="post-state" ng-if="plc.activePost.status == 1">Published by</span>
 						    <span class="post-state" ng-if="plc.activePost.status == 2">Written By</span>
                             <span class="post-author-name">{{plc.activePost.author.name}}</span>

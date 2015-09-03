@@ -46,20 +46,18 @@ gulp.task('build-bower-files', function() {
         // angular
         paths.bower + '/angular/angular.js',
         paths.bower + '/angular/angular.min.js',
-        // angular animate
-        paths.bower + '/angular-animate/*.js',
         // angular bootstrap
         paths.bower + '/angular-bootstrap/ui-bootstrap.js',
         paths.bower + '/angular-bootstrap/ui-bootstrap.min.js',
         paths.bower + '/angular-bootstrap/ui-bootstrap-tpls.js',
         paths.bower + '/angular-bootstrap/ui-bootstrap-tpls.min.js',
+        // angular growl v2
+        paths.bower + '/angular-growl-v2/build/*.js',
         // angular local storage
         paths.bower + '/angular-local-storage/dist/*',
         // angular sanitize
         paths.bower + '/angular-sanitize/angular-sanitize.js',
         paths.bower + '/angular-sanitize/angular-sanitize.min.js',
-        // angular toastr
-        paths.bower + '/angular-toastr/dist/*.js',
         // angular ui codemirror
         paths.bower + '/angular-ui-codemirror/*.js',
         // angular ui router
@@ -79,8 +77,8 @@ gulp.task('build-bower-files', function() {
 
     // stylesheets
     gulp.src([
-        // angular toastr
-        paths.bower + '/angular-toastr/dist/*.css',
+        // angular growl v2
+        paths.bower + '/angular-growl-v2/build/*.css',
         // bootstrap
         paths.bower + '/bootstrap/dist/css/*',
         // codemirror
@@ -241,7 +239,7 @@ gulp.task('inject-development-scripts', function() {
         .pipe(inject(gulp.src([
             paths.public + '/vendor/stylesheets/bootstrap.css',
             paths.public + '/vendor/stylesheets/font-awesome.css',
-            paths.public + '/vendor/stylesheets/angular-toastr.css',
+            paths.public + '/vendor/stylesheets/angular-growl.css',
             paths.public + '/vendor/stylesheets/codemirror.css',
             paths.public + '/vendor/stylesheets/ngprogress-lite.css',
             paths.public + '/assets/screen.css'
@@ -253,15 +251,13 @@ gulp.task('inject-development-scripts', function() {
             paths.public + '/vendor/javascript/codemirror.js',
             paths.public + '/vendor/javascript/showdown.js',
             paths.public + '/vendor/javascript/angular.js',
-            paths.public + '/vendor/javascript/angular-animate.js',
             paths.public + '/vendor/javascript/angular-sanitize.js',
             paths.public + '/vendor/javascript/angular-ui-router.js',
             paths.public + '/vendor/javascript/ui-bootstrap.js',
             paths.public + '/vendor/javascript/ui-bootstrap-tpls.js',
             paths.public + '/vendor/javascript/ui-codemirror.js',
             paths.public + '/vendor/javascript/angular-local-storage.js',
-            paths.public + '/vendor/javascript/angular-toastr.js',
-            paths.public + '/vendor/javascript/angular-toastr.tpls.js',
+            paths.public + '/vendor/javascript/angular-growl.js',
             paths.public + '/vendor/javascript/ng-file-upload-shim.js',
             paths.public + '/vendor/javascript/ng-file-upload.js',
             paths.public + '/vendor/javascript/ngprogress-lite.js',
@@ -281,7 +277,7 @@ gulp.task('inject-production-scripts', function() {
         .pipe(inject(gulp.src([
             paths.public + '/vendor/stylesheets/bootstrap.min.css',
             paths.public + '/vendor/stylesheets/font-awesome.min.css',
-            paths.public + '/vendor/stylesheets/angular-toastr.min.css',
+            paths.public + '/vendor/stylesheets/angular-growl.min.css',
             paths.public + '/vendor/stylesheets/codemirror.css',
             paths.public + '/vendor/stylesheets/ngprogress-lite.css',
             paths.public + '/assets/screen.css'
@@ -293,15 +289,13 @@ gulp.task('inject-production-scripts', function() {
             paths.public + '/vendor/javascript/codemirror.js',
             paths.public + '/vendor/javascript/showdown.min.js',
             paths.public + '/vendor/javascript/angular.min.js',
-            paths.public + '/vendor/javascript/angular-animate.min.js',
             paths.public + '/vendor/javascript/angular-sanitize.min.js',
             paths.public + '/vendor/javascript/angular-ui-router.min.js',
             paths.public + '/vendor/javascript/ui-bootstrap.min.js',
             paths.public + '/vendor/javascript/ui-bootstrap-tpls.min.js',
             paths.public + '/vendor/javascript/ui-codemirror.min.js',
             paths.public + '/vendor/javascript/angular-local-storage.min.js',
-            paths.public + '/vendor/javascript/angular-toastr.min.js',
-            paths.public + '/vendor/javascript/angular-toastr.tpls.min.js',
+            paths.public + '/vendor/javascript/angular-growl.min.js',
             paths.public + '/vendor/javascript/ng-file-upload-shim.min.js',
             paths.public + '/vendor/javascript/ng-file-upload.min.js',
             paths.public + '/vendor/javascript/ngprogress-lite.min.js',

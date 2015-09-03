@@ -3,13 +3,3 @@
 #user_create_page .page-header .hero-title { margin: 0; }
 
 #user_create_page .content { margin: auto; width: 50%; }
-
-@media only screen and (max-width : 768px) {
-    #user_create_page .page-header,
-    #user_create_page .content { width: 80%; }
-}
-
-@media only screen and (max-width: 480px) {
-    #user_create_page .page-header,
-    #user_create_page .content { width: 90%; }
-}

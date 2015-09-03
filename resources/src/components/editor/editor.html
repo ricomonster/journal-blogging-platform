@@ -6,18 +6,7 @@
                 placeholder="Your post title" autocomplete="off"
                 post-id="ec.post.id" check-post-slug slug="ec.post.slug"/>
             </header>
-            <nav class="mobile-editor-nav">
-                <a class="floating-header markdown" ng-click="ec.showPane('markdown')"
-                ng-class="{'active' : ec.editor.activePane == 'markdown'}">
-                    <span class="header-title">Markdown</span>
-                </a>
-                <a class="floating-header preview" ng-click="ec.showPane('preview')"
-                ng-class="{'active' : ec.editor.activePane == 'preview'}">
-                    <span class="header-title">Preview</span>
-                    <span class="word-count">{{ec.wordCounter()}}</span>
-                </a>
-            </nav>
-            <section class="editor-section entry-markdown" ng-class="{'active' : ec.editor.activePane == 'markdown'}">
+            <section class="editor-section entry-markdown">
                 <header class="floating-header">
                     <span class="header-title">Markdown</span>
                 </header>
@@ -25,7 +14,7 @@
                     <ui-codemirror ng-model="ec.post.markdown" ui-codemirror-opts="ec.editor.codemirror"></ui-codemirror>
                 </section>
             </section>
-            <section class="editor-section entry-preview" ng-class="{'active' : ec.editor.activePane == 'preview'}">
+            <section class="editor-section entry-preview">
                 <header class="floating-header">
                     <span class="header-title">Preview</span>
                     <span class="word-count">{{ec.wordCounter()}}</span>

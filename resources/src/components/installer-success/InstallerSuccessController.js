@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('journal.component.installerSuccess')
-        .controller('InstallerSuccessController', ['$rootScope', '$state', 'AuthService', 'ToastrService', InstallerSuccessController]);
+        .controller('InstallerSuccessController', ['$rootScope', '$state', 'AuthService', 'GrowlService', InstallerSuccessController]);
 
-    function InstallerSuccessController($rootScope, $state, AuthService, ToastrService) {
+    function InstallerSuccessController($rootScope, $state, AuthService, GrowlService) {
         // broadcast that this is now the active page
         $rootScope.$broadcast('installer-menu', 3);
 
@@ -17,7 +17,7 @@
             // check first if there's a logged in user and token
             if (!AuthService.user() && !AuthService.getToken()) {
                 // growl it first!
-                ToastrService.toast('Hey, something went wrong. Can you repeat again?', 'error');
+                GrowlService.growl('Hey, something went wrong. Can you repeat again?', 'error');
                 // redirect
                 $state.go('installer.start');
                 return;

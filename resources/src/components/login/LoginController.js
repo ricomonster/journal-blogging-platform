@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('journal.component.login')
-        .controller('LoginController', ['$state', 'AuthService', 'ToastrService', 'LoginService', LoginController]);
+        .controller('LoginController', ['$state', 'AuthService', 'GrowlService', 'LoginService', LoginController]);
 
-    function LoginController($state, AuthService, ToastrService, LoginService) {
+    function LoginController($state, AuthService, GrowlService, LoginService) {
         var vm = this;
 
         vm.login = [];
@@ -22,7 +22,7 @@
                         // save the token
                         AuthService.setToken(response.token);
 
-                        ToastrService.toast('Welcome, ' + response.user.name, 'success');
+                        GrowlService.growl('Welcome, ' + response.user.name, 'success');
 
                         // redirect
                         $state.go('post.lists');
@@ -32,7 +32,7 @@
                 .error(function(response) {
                     var message = response.errors.message;
                     // show message
-                    ToastrService.toast(message, 'error');
+                    GrowlService.growl(message, 'error');
                 });
         };
     }
