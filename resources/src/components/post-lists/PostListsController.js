@@ -30,7 +30,11 @@
                     var index = vm.posts.indexOf(post);
                     vm.posts.splice(index, 1);
 
+                    // get the current first post and make it active
                     vm.activePost = vm.posts[0];
+
+                    // set the active page
+                    vm.activePane = 'lists';
                 }
             });
         };
