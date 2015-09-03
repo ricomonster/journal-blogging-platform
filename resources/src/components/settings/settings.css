@@ -11,3 +11,13 @@
     height: auto;
     max-width: 100%;
 }
+
+@media only screen and (max-width : 768px) {
+    #settings_page .page-header,
+    #settings_page .content { width: 80%; }
+}
+
+@media only screen and (max-width : 480px) {
+    #settings_page .page-header,
+    #settings_page .content { width: 90%; }
+}
