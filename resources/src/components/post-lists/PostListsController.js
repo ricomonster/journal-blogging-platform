@@ -9,7 +9,6 @@
 
         vm.posts = [];
         vm.activePost = null;
-        vm.activePane = 'lists';
 
         vm.deletePost = function(post) {
             var modalInstance = $modal.open({
@@ -48,18 +47,11 @@
                 });
         };
 
-        vm.goBack = function() {
-            vm.activePane = 'lists';
-        };
-
         /**
          * Shows the selected post and preview its content
          */
         vm.previewThisPost = function(post) {
             vm.activePost = post;
-
-            // set the preview window to active
-            vm.activePane = 'preview';
         };
 
         // fire away!
