@@ -13,7 +13,7 @@
             maxOpened: 5,
             newestOnTop: false,
             positionClass: 'toast-top-right',
-            preventDuplicates: true,
+            preventDuplicates: false,
             preventOpenDuplicates: true,
             target: 'body',
             timeOut: 10000

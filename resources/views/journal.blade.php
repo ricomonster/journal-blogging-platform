@@ -40,7 +40,6 @@
 </head>
 
 <body ng-app="Journal">
-    <div ng-include="'/assets/templates/growl/growl.html'" class="auto-height"></div>
     <div ui-view="header_content" class="auto-height"></div>
     <div ui-view class="auto-height"></div>
 </body>
