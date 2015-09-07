@@ -93,7 +93,7 @@
 .post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown code { white-space: normal; }
 .post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown em { font-family: 'Noto Serif', serif; font-size: 16px; }
 
-@media only screen and (max-width : 480px) {
+@media only screen and (max-width : 768px) {
     #post_lists_page .content-wrapper .list-of-posts {
         left: -100%;
         right: 100%;

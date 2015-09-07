@@ -41,6 +41,7 @@
 
 <body ng-app="Journal">
     <div ui-view="header_content" class="auto-height"></div>
+    <div ui-view="sidebar_content" class="auto-height"></div>
     <div ui-view class="auto-height"></div>
 </body>
 </html>

@@ -24,6 +24,9 @@
                     },
                     'header_content': {
                         templateUrl: templatePath + '/header/header.html'
+                    },
+                    'sidebar_content' : {
+                        templateUrl : templatePath + '/sidebar/sidebar.html'
                     }
                 },
                 authenticate : true,
@@ -87,6 +90,9 @@
                     },
                     'header_content': {
                         templateUrl: templatePath + '/header/header.html'
+                    },
+                    'sidebar_content' : {
+                        templateUrl : templatePath + '/sidebar/sidebar.html'
                     }
                 },
                 authenticate : true,
@@ -111,6 +117,9 @@
                     },
                     'header_content': {
                         templateUrl: templatePath + '/header/header.html'
+                    },
+                    'sidebar_content' : {
+                        templateUrl : templatePath + '/sidebar/sidebar.html'
                     }
                 },
                 authenticate : true,
@@ -125,6 +134,9 @@
                     },
                     'header_content': {
                         templateUrl: templatePath + '/header/header.html'
+                    },
+                    'sidebar_content' : {
+                        templateUrl : templatePath + '/sidebar/sidebar.html'
                     }
                 },
                 authenticate : true,
@@ -139,6 +151,9 @@
                     },
                     'header_content': {
                         templateUrl: templatePath + '/header/header.html'
+                    },
+                    'sidebar_content' : {
+                        templateUrl : templatePath + '/sidebar/sidebar.html'
                     }
                 },
                 authenticate : true,
@@ -171,7 +186,9 @@
                     'user_content' : {
                         templateUrl : templatePath + '/user-profile/user-profile.html'
                     }
-                }
+                },
+                authenticate : true,
+                installer : false
             });
     }
 })();

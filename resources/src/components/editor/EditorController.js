@@ -45,8 +45,6 @@
             tags : []
         };
 
-
-
         /**
          * Initialize some functions to run
          */

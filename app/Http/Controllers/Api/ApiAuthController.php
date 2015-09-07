@@ -30,7 +30,7 @@ class ApiAuthController extends ApiController
 
             if (!$token) {
                 return $this->setStatusCode(self::UNAUTHORIZED)
-                    ->respondWithError(['message' => 'Invalid credentials']);
+                    ->respondWithError(['message' => 'Incorrect e-mail or password.']);
             }
         } catch (JWTException $e) {
             // something went wrong
