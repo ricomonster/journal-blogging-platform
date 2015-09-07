@@ -1,0 +1,119 @@
+<style type="text/css">
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1030;
+        background: rgba(255,255,255,.5);
+        display: none;
+    }
+
+    .sidebar-overlay.open { display: block; }
+
+    #sidebar {
+        background-color: #f6f6f7;
+        position: fixed;
+        bottom: 0;
+        top: 0;
+        left: -100%;
+        z-index: 1050;
+        transition: all 0.4s ease 0s;
+        width: 250px;
+    }
+
+    #sidebar.open { left: 0; }
+
+    #sidebar .content { padding: 10px; }
+    #sidebar .content .blog-details { padding: 0 10px 10px; }
+    #sidebar .content .blog-details .brand {
+        font-size: 22px;
+        letter-spacing: -1px;
+        padding: 10px 0;
+        margin: 0;
+    }
+
+    #sidebar .content .blog-details .blog-title {
+        color: #333;
+        display: block;
+        font-size: 16px;
+        font-weight: bold;
+        letter-spacing: -1px;
+        margin: 0 0 10px;
+        text-transform: uppercase;
+    }
+
+    #sidebar .content .blog-details .dropdown { padding: 0; }
+    #sidebar .content .blog-details .dropdown a.dropdown-toggle { color: #333; display: block; }
+    #sidebar .content .blog-details .dropdown a.dropdown-toggle .caret { float: right; }
+    #sidebar .content .blog-details .dropdown .dropdown-menu { width: 100%; }
+
+    #sidebar .content .site-directory { list-style: none; margin: 0; padding: 0; }
+    #sidebar .content .site-directory li { padding: 3px 15px; }
+    #sidebar .content .site-directory li.divider {
+        color: #999999;
+        font-size: 13px;
+        font-weight: bold;
+        padding: 10px 10px 5px;
+        text-transform: uppercase;
+    }
+
+    #sidebar .content .site-directory li a { color: #333; }
+    #sidebar .content .site-directory li a i.fa { margin-right: 5px; }
+</style>
+<div ng-controller="SidebarController as sc">
+    <div class="sidebar-overlay" ng-class="{ 'open' : sc.openSidebar }"
+    ng-click="sc.tapOverlay()"></div>
+    <aside id="sidebar" ng-class="{ 'open' : sc.openSidebar }">
+        <div class="content">
+            <header class="blog-details">
+                <h1 class="brand">Journal</h1>
+                <a href="/" class="blog-title">Blog title</a>
+                <div dropdown>
+                    <a dropdown-toggle>
+                        {{sc.user.name}}<br/>
+                        {{sc.user.email}}<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a ui-sref="user.profile({userId:sc.user.id})">Edit Profile</a></li>
+                        <li><a ng-click="sc.logout()">Log out</a></li>
+                    </ul>
+                </div>
+            </header>
+            <ul class="site-directory">
+                <li>
+                    <a ui-sref="post.lists" ng-click="sc.toggleSidebar()">
+                        <i class="fa fa-edit fa-fw"></i>
+                        Posts
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref="user.lists" ng-click="sc.toggleSidebar()">
+                        <i class="fa fa-user fa-fw"></i>
+                        Users
+                    </a>
+                </li>
+                <li>
+                    <a ng-click="sc.toggleSidebar()">
+                        <i class="fa fa-cog fa-fw"></i>
+                        Settings
+                    </a>
+                </li>
+                <li class="divider">Add new...</li>
+                <li>
+                    <a ui-sref="editor" ng-click="sc.toggleSidebar()">
+                        <i class="fa fa-pencil fa-fw"></i>
+                        Post
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref="user.create" ng-click="sc.toggleSidebar()">
+                        <i class="fa fa-plus fa-fw"></i>
+                        User
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+</div>

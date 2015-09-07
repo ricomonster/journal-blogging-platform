@@ -17,6 +17,7 @@
         'journal.component.postLists',
         'journal.component.settings',
         'journal.component.settingsModal',
+        'journal.component.sidebar',
         'journal.component.userCreate',
         'journal.component.userLists',
         'journal.component.userProfile',
@@ -95,6 +96,11 @@
         'journal.shared.fileUploader',
         'journal.shared.toastr',
         'ngFileUpload',
+        'ui.bootstrap',
+        'ui.router']);
+
+    angular.module('journal.component.sidebar', [
+        'journal.shared.auth',
         'ui.bootstrap',
         'ui.router']);
 
