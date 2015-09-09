@@ -16,7 +16,10 @@
                             <header class="post-title">{{post.title}}</header>
                             <section class="post-meta">
                                 <span class="post-status">
-                                    <time class="date-published text-muted" ng-if="post.status == 1">Published</time>
+                                    <time class="date-published text-muted" ng-if="post.status == 1">
+                                        Published
+                                        <span am-time-ago="post.published_at" am-preprocess="unix"></span>
+                                    </time>
                                     <span class="draft text-danger" ng-if="post.status == 2">Draft</span>
                                 </span>
                             </section>

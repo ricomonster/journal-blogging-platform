@@ -55,6 +55,9 @@ gulp.task('build-bower-files', function() {
         paths.bower + '/angular-bootstrap/ui-bootstrap-tpls.min.js',
         // angular local storage
         paths.bower + '/angular-local-storage/dist/*',
+        // angular moment
+        paths.bower + '/angular-moment/angular-moment.js',
+        paths.bower + '/angular-moment/angular-moment.min.js',
         // angular sanitize
         paths.bower + '/angular-sanitize/angular-sanitize.js',
         paths.bower + '/angular-sanitize/angular-sanitize.min.js',
@@ -66,6 +69,9 @@ gulp.task('build-bower-files', function() {
         paths.bower + '/angular-ui-router/release/*',
         // codemirror
         paths.bower + '/codemirror/lib/codemirror.js',
+        // moment
+        paths.bower + '/moment/moment.js',
+        paths.bower + '/moment/min/moment.min.js',
         // ng-file-upload
         paths.bower + '/ng-file-upload/ng-file-upload.js',
         paths.bower + '/ng-file-upload/ng-file-upload.min.js',
@@ -252,6 +258,7 @@ gulp.task('inject-development-scripts', function() {
         .pipe(inject(gulp.src([
             paths.public + '/vendor/javascript/codemirror.js',
             paths.public + '/vendor/javascript/showdown.js',
+            paths.public + '/vendor/javascript/moment.js',
             paths.public + '/vendor/javascript/angular.js',
             paths.public + '/vendor/javascript/angular-animate.js',
             paths.public + '/vendor/javascript/angular-sanitize.js',
@@ -262,6 +269,7 @@ gulp.task('inject-development-scripts', function() {
             paths.public + '/vendor/javascript/angular-local-storage.js',
             paths.public + '/vendor/javascript/angular-toastr.js',
             paths.public + '/vendor/javascript/angular-toastr.tpls.js',
+            paths.public + '/vendor/javascript/angular-moment.js',
             paths.public + '/vendor/javascript/ng-file-upload-shim.js',
             paths.public + '/vendor/javascript/ng-file-upload.js',
             paths.public + '/vendor/javascript/ngprogress-lite.js',
@@ -292,6 +300,7 @@ gulp.task('inject-production-scripts', function() {
         .pipe(inject(gulp.src([
             paths.public + '/vendor/javascript/codemirror.js',
             paths.public + '/vendor/javascript/showdown.min.js',
+            paths.public + '/vendor/javascript/moment.min.js',
             paths.public + '/vendor/javascript/angular.min.js',
             paths.public + '/vendor/javascript/angular-animate.min.js',
             paths.public + '/vendor/javascript/angular-sanitize.min.js',
@@ -302,6 +311,7 @@ gulp.task('inject-production-scripts', function() {
             paths.public + '/vendor/javascript/angular-local-storage.min.js',
             paths.public + '/vendor/javascript/angular-toastr.min.js',
             paths.public + '/vendor/javascript/angular-toastr.tpls.min.js',
+            paths.public + '/vendor/javascript/angular-moment.min.js',
             paths.public + '/vendor/javascript/ng-file-upload-shim.min.js',
             paths.public + '/vendor/javascript/ng-file-upload.min.js',
             paths.public + '/vendor/javascript/ngprogress-lite.min.js',

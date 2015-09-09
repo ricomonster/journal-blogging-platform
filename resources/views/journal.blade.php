@@ -18,6 +18,7 @@
     <!-- inject:js -->
     <script type="text/javascript" src="{{ asset('/vendor/javascript/codemirror.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/vendor/javascript/showdown.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/javascript/moment.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/vendor/javascript/angular.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/vendor/javascript/angular-animate.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/vendor/javascript/angular-sanitize.js') }}"></script>
@@ -28,6 +29,7 @@
     <script type="text/javascript" src="{{ asset('/vendor/javascript/angular-local-storage.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/vendor/javascript/angular-toastr.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/vendor/javascript/angular-toastr.tpls.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/javascript/angular-moment.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/vendor/javascript/ng-file-upload-shim.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/vendor/javascript/ng-file-upload.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/vendor/javascript/ngprogress-lite.js') }}"></script>
