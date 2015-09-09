@@ -80,6 +80,7 @@
         'journal.shared.auth',
         'journal.shared.toastr',
         'journal.shared.markdownConverter',
+        'angularMoment',
         'ui.router']);
 
     // settings
