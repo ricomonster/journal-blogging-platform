@@ -41,6 +41,8 @@ class ApiAuthController extends ApiController
 
         // get first user details
         $user = $this->users->findByEmail($request->input('email'));
+        // login the user and update its details
+        $user = $this->users->timeLogin($user->id, time());
 
         // return token
         return $this->respond([

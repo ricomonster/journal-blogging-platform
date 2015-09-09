@@ -16,6 +16,13 @@ interface UserRepositoryInterface
     public function create($name, $email, $password);
 
     /**
+     * @param $id
+     * @param $time
+     * @return \Journal\User
+     */
+    public function timeLogin($id, $time);
+
+    /**
      * @return \Journal\User
      */
     public function all();

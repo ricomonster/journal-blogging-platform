@@ -115,6 +115,7 @@
         'journal.constant',
         'journal.shared.auth',
         'journal.shared.toastr',
+        'angularMoment',
         'ui.router']);
     angular.module('journal.component.userProfile', [
         'journal.constant',
