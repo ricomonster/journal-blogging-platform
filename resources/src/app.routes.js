@@ -125,6 +125,25 @@
                 authenticate : true,
                 installer : false
             })
+            // services
+            .state('services', {
+                url : '/services',
+                views : {
+                    // default ui-view
+                    '' : {
+                        templateUrl : templatePath + '/services/services.html'
+                    },
+                    'header_content': {
+                        templateUrl: templatePath + '/header/header.html'
+                    },
+                    'sidebar_content' : {
+                        templateUrl : templatePath + '/sidebar/sidebar.html'
+                    }
+                },
+                authenticate : true,
+                installer : false
+            })
+            // settings
             .state('settings', {
                 url : '/settings',
                 views : {

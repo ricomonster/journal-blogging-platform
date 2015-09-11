@@ -10,6 +10,8 @@ use JWTAuth;
 class ApiSettingsController extends ApiController
 {
     protected $settings;
+    protected $allowedSettings = ['title', 'description', 'installed', 'post_per_page',
+        'cover_url', 'logo_url', 'google_analytics', 'disqus'];
 
     public function __construct(SettingRepositoryInterface $settings)
     {
@@ -53,6 +55,13 @@ class ApiSettingsController extends ApiController
                 // check first if there's a value
                 if ($field == 'token') {
                     continue;
+                }
+
+                // check if first if the given field is valid
+                if (!in_array($field, $this->allowedSettings)) {
+                    // stop this loop and return an error to the user
+                    return $this->setStatusCode(self::BAD_REQUEST)
+                        ->respondWithError(['message' => 'Field "'.$field.'" is invalid.']);
                 }
 
                 // save the settings

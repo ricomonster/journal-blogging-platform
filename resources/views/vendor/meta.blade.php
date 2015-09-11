@@ -11,3 +11,7 @@
 <link rel="{{$m['rel']}}" href="{{$m['href']}}">
 @endif
 @endforeach
+
+<!-- Google Analytic Code goes in here -->
+{!! $google_analytics !!}
+<!-- Google Analytic Code stops in here -->

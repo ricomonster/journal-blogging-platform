@@ -1,0 +1,28 @@
+<div ng-controller="ServicesController as sc">
+    <section id="services_page" class="main-container container-fluid">
+        <header class="page-header">
+            <h1 class="hero-title">Services</h1>
+        </header>
+        <section class="content">
+            <form class="blog-settings" ng-submit="sc.saveServices()">
+                <div class="form-group">
+                    <label class="control-label">Google Analytics</label>
+                    <textarea ng-model="sc.services.google_analytics" class="form-control"
+                    placeholder="Paste your code here..."></textarea>
+                    <span class="help-block">Paste your Google Analytics code to track page views.</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Disqus</label>
+                    <textarea ng-model="sc.services.disqus" class="form-control"
+                    placeholder="Paste your code here..."></textarea>
+                    <span class="help-block">
+                        Paste your Disqus code to so your readers can comment on your posts.
+                    </span>
+                </div>
+                <div class="form-action">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </section>
+    </section>
+</div>
