@@ -55,6 +55,19 @@ if ( ! function_exists('theme_assets')) {
 }
 
 /**
+ * Sets the script to be used for Disqus
+ */
+if ( ! function_exists('disqus')) {
+    function disqus()
+    {
+        $disqus = \DB::table('settings')->where('setting', '=', 'disqus')
+            ->first();
+
+        return $disqus->value;
+    }
+}
+
+/**
  * Converts a Markdown text to HTML
  *
  * @return string

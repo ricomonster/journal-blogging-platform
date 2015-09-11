@@ -15,6 +15,7 @@
         'journal.component.installerStart',
         'journal.component.installerSuccess',
         'journal.component.postLists',
+        'journal.component.services',
         'journal.component.settings',
         'journal.component.settingsModal',
         'journal.component.sidebar',
@@ -82,6 +83,12 @@
         'journal.shared.markdownConverter',
         'angularMoment',
         'ui.router']);
+
+    // services
+    angular.module('journal.component.services', [
+        'journal.constant',
+        'journal.shared.auth',
+        'journal.shared.toastr']);
 
     // settings
     angular.module('journal.component.settings', [
