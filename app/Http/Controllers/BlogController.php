@@ -156,7 +156,6 @@ class BlogController extends Controller
     {
         // get the settings of the blog
         $settings = $data = $this->settings;
-
         // set the default
         $meta = [
             'siteUrl'       => url(),

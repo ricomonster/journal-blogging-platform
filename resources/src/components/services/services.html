@@ -7,16 +7,16 @@
             <form class="blog-settings" ng-submit="sc.saveServices()">
                 <div class="form-group">
                     <label class="control-label">Google Analytics</label>
-                    <textarea ng-model="sc.services.google_analytics" class="form-control"
-                    placeholder="Paste your code here..."></textarea>
-                    <span class="help-block">Paste your Google Analytics code to track page views.</span>
+                    <input type="text" ng-model="sc.services.google_analytics" class="form-control"
+                    placeholder="Paste your code here..."/>
+                    <span class="help-block">Input your Tracking ID and we'll do the rest.</span>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="display: none;">
                     <label class="control-label">Disqus</label>
-                    <textarea ng-model="sc.services.disqus" class="form-control"
-                    placeholder="Paste your code here..."></textarea>
+                    <input type="text" ng-model="sc.services.disqus" class="form-control"
+                    placeholder="Paste your code here..."/>
                     <span class="help-block">
-                        Paste your Disqus code to so your readers can comment on your posts.
+                        Paste your Disqus username to so your readers can comment on your posts.
                     </span>
                 </div>
                 <div class="form-action">
