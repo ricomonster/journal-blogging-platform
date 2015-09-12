@@ -13,7 +13,7 @@
          */
         vm.initialize = function() {
             // get disqus and google analytics values via API
-            ServicesService.getServices('disqus,google_analytics')
+            ServicesService.getServices('google_analytics')
                 .success(function(response) {
                     if (response.settings) {
                         // assign it to our scope
@@ -31,6 +31,7 @@
          * @return {[type]} [description]
          */
         vm.saveServices = function() {
+            // prepare the data
             var services = vm.services;
 
             // trigger API call

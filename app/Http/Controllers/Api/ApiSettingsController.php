@@ -11,7 +11,7 @@ class ApiSettingsController extends ApiController
 {
     protected $settings;
     protected $allowedSettings = ['title', 'description', 'installed', 'post_per_page',
-        'cover_url', 'logo_url', 'google_analytics', 'disqus'];
+        'cover_url', 'logo_url', 'google_analytics'];
 
     public function __construct(SettingRepositoryInterface $settings)
     {

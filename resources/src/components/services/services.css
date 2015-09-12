@@ -3,7 +3,6 @@
 #services_page .page-header .hero-title { margin: 0; }
 
 #services_page .content { margin: auto; width: 50%; }
-#services_page .content form textarea.form-control { height: 80px; resize: none; }
 
 @media only screen and (max-width : 768px) {
     #services_page .page-header,
