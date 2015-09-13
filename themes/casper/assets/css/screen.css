@@ -412,6 +412,14 @@ pre code, tt {
     border-radius: 100%;
 }
 
+.pagination { padding: 20px 0; }
+.pagination .links { list-style: none; margin: 0; padding: 0; }
+.pagination .links li { display: inline-block; }
+.pagination .links li.previous { float: left; }
+.pagination .links li.next { float: right; }
+.pagination .links li.disabled a { color: #9EABB3; }
+.pagination .links li a { font-size: 18px; text-decoration: none; }
+
 .site-footer {
     border-top: 1px solid rgba(0,0,0,0.05);
     color: rgba(0,0,0,0.3);

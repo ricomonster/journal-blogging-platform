@@ -117,6 +117,7 @@ class DbPostRepository implements PostRepositoryInterface
      * @param $slug
      * @param $status
      * @param $publishedAt
+     * @param $tagIds
      * @return \Journal\Post
      */
     public function update($id, $authorId, $title, $markdown, $slug, $status, $publishedAt, $tagIds)
