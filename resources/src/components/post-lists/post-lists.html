@@ -47,10 +47,10 @@
                                         <a role="menuitem" tabindex="-1" ui-sref="postEditor({postId : plc.activePost.id})">Edit</a>
                                     </li>
                                     <li role="presentation">
-                                        <a role="menuitem" tabindex="-1" ng-if="plc.activePost.status == 1"
-                                        href="{{plc.activePost.slug}}">Preview</a>
-                                        <a role="menuitem" tabindex="-1" ng-if="plc.activePost.status == 2"
-                                        href="{{plc.activePost.slug}}?preview">Preview</a>
+                                        <a role="menuitem" tabindex="-1" href="/{{plc.activePost.slug}}"
+                                        ng-if="plc.activePost.status == 1" target="_blank">Preview</a>
+                                        <a role="menuitem" tabindex="-1" href="/{{plc.activePost.slug}}?preview"
+                                        ng-if="plc.activePost.status == 2" target="_blank">Preview</a>
                                     </li>
                                     <li role="presentation">
                                         <a role="menuitem" tabindex="-1" ng-click="plc.deletePost(plc.activePost)">Remove</a>

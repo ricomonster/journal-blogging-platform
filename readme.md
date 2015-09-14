@@ -17,6 +17,7 @@ First of all you need the following:
 - [Composer](https://getcomposer.org/)
 
 Once you have those things installed you're good to go!
+
 1. Download [Journal](https://github.com/ricomonster/journal-blogging-platform) from its Github repository.
 1. Unzip it in the location you want.
 1. Open up your terminal
