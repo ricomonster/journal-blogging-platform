@@ -47,7 +47,7 @@ composer install
 npm install 
 ```
 
-Install Gulp and Bower
+Install [Gulp](https://www.npmjs.com/package/gulp) and [Bower](https://www.npmjs.com/package/bower)
 ```bash
 npm install -g gulp bower
 ```
@@ -76,7 +76,7 @@ Yay, You're now good to go!
 Ghost is such a wonderful application and I followed it since their Kickstarter days. I believed in their goals so that created me an idea to create a another blogging platform. I also believed in this quote said by some guy that "Imitation is the sincerest form of flattery".
 
 ### The requested URL /themes/casper/assets/css/screen.css was not found on this server.
-The default theme is Casper, also imitated the default theme of Ghosts. If you encounter this problem, make sure to symlink the `themes` folder to the `public` folder.
+The default theme is Casper, also imitated the default theme of Ghosts. If you encounter this problem, first make sure that [Gulp](https://www.npmjs.com/package/gulp) is installed then fire up your terminal and run `gulp get-theme-assets`.
 
 ## License
 The Journal Blogging Platform is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
