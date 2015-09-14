@@ -50,7 +50,10 @@ if ( ! function_exists('theme_assets')) {
     function theme_assets($file = null)
     {
         // get the theme
-        return asset('themes/casper/' . $file);
+        $theme = \DB::table('settings')->where('setting', '=', 'theme')
+            ->first();
+
+        return asset('themes/'.$theme->value.'/' . $file);
     }
 }
 

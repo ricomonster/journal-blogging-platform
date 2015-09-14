@@ -11,7 +11,8 @@ var gulp        = require('gulp'),
 var paths = {
     src : './resources/src',
     public : './public',
-    bower : './bower_components'
+    bower : './bower_components',
+    themes : './themes'
 };
 
 // notify error handler
@@ -358,6 +359,14 @@ gulp.task('watch', function() {
 });
 
 /**
+ * Build Task: Copy the assets from the themes that are installed.
+ */
+gulp.task('get-theme-assets', function() {
+    return gulp.src(paths.themes + '/**/assets/**/*')
+        .pipe(gulp.dest(paths.public + '/themes'));
+});
+
+/**
  * More likely the build script for development environment
  */
 gulp.task('build', function(callback) {
@@ -371,6 +380,7 @@ gulp.task('build', function(callback) {
         'build-templates',
         'build-stylesheets',
         'inject-development-scripts',
+        'get-theme-assets',
         callback);
 });
 
@@ -388,6 +398,7 @@ gulp.task('build-prod', function(callback) {
         'build-templates',
         'build-stylesheets',
         'inject-production-scripts',
+        'get-theme-assets',
         callback);
 });
 
