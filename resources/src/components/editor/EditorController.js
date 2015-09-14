@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('journal.component.editor')
-        .controller('EditorController', ['$modal', '$state', '$stateParams', 'AuthService', 'EditorService', 'ToastrService', EditorController]);
+        .controller('EditorController', ['$modal', '$state', '$stateParams', 'AuthService', 'EditorService', 'GrowlService', EditorController]);
 
-    function EditorController($modal, $state, $stateParams, AuthService, EditorService, ToastrService) {
+    function EditorController($modal, $state, $stateParams, AuthService, EditorService, GrowlService) {
         var vm = this,
             // get current date in yyyy/mm/dd hh:ss format
             date = new Date(),
@@ -25,7 +25,6 @@
 
         // editor config
         vm.editor = {
-            activePane : 'markdown',
             // button status
             activeStatus : [],
             // base url of the application
@@ -131,8 +130,8 @@
 
                     // check if post is newly created
                     if (!vm.post.id) {
-                        ToastrService
-                            .toast('You have successfully created the post "'+post.title+'".', 'success');
+                        GrowlService
+                            .growl('You have successfully created the post "'+post.title+'".', 'success');
                         // redirect
                         $state.go('postEditor', { postId : post.id });
                         return;
@@ -151,8 +150,8 @@
                     }
 
                     // show message
-                    ToastrService
-                        .toast('You have successfully updated "'+post.title+'".', 'success');
+                    GrowlService
+                        .growl('You have successfully updated "'+post.title+'".', 'success');
 
                     // update the scope
                     vm.post = post;
@@ -172,10 +171,6 @@
 
             // set the status of the post
             vm.post.status = state.status;
-        };
-
-        vm.showPane = function(pane) {
-            vm.editor.activePane = pane;
         };
 
         /**
