@@ -6,6 +6,7 @@
 |--------------------------------------------------------------------------
 */
 Route::group(['prefix' => 'api/v1.0'], function() {
+    // Authentication Routes
     Route::group(['prefix' => 'auth'], function() {
         Route::get('check', 'Api\ApiAuthController@checkAuthentication');
         Route::get('check_installation', 'Api\ApiAuthController@checkInstallation');
@@ -23,8 +24,10 @@ Route::group(['prefix' => 'api/v1.0'], function() {
         Route::post('save', 'Api\ApiPostsController@save');
     });
 
+    // Setting Routes
     Route::group(['prefix' => 'settings'], function() {
         Route::get('get', 'Api\ApiSettingsController@getSettings');
+        Route::get('themes', 'Api\ApiSettingsController@themes');
 
         Route::post('save', 'Api\ApiSettingsController@saveSettings');
     });

@@ -5,7 +5,7 @@
             <a ui-sref="editor" class="pull-right btn btn-primary">Write a new Post</a>
         </header>
         <div class="content-wrapper">
-            <section class="list-of-posts">
+            <section class="list-of-posts" ng-class="{'active' : plc.activePane == 'lists'}">
                 <header class="floating-header">
                     <span class="header-title">All Posts</span>
                 </header>
@@ -16,7 +16,10 @@
                             <header class="post-title">{{post.title}}</header>
                             <section class="post-meta">
                                 <span class="post-status">
-                                    <time class="date-published text-muted" ng-if="post.status == 1">Published</time>
+                                    <time class="date-published text-muted" ng-if="post.status == 1">
+                                        Published
+                                        <span am-time-ago="post.published_at" am-preprocess="unix"></span>
+                                    </time>
                                     <span class="draft text-danger" ng-if="post.status == 2">Draft</span>
                                 </span>
                             </section>
@@ -24,10 +27,12 @@
                     </article>
                 </section>
             </section>
-            <section class="post-preview-wrapper">
+            <section class="post-preview-wrapper" ng-class="{'active' : plc.activePane == 'preview'}">
                 <article class="post-wrapper" ng-class="{'active' : plc.activePost}">
                     <header class="floating-header">
                         <div class="header-title">
+                            <a class="btn btn-info btn-xs back-button" ng-click="plc.goBack()">Back</a>
+
                             <span class="post-state" ng-if="plc.activePost.status == 1">Published by</span>
 						    <span class="post-state" ng-if="plc.activePost.status == 2">Written By</span>
                             <span class="post-author-name">{{plc.activePost.author.name}}</span>

@@ -50,7 +50,23 @@ if ( ! function_exists('theme_assets')) {
     function theme_assets($file = null)
     {
         // get the theme
-        return asset('themes/casper/' . $file);
+        $theme = \DB::table('settings')->where('setting', '=', 'theme')
+            ->first();
+
+        return asset('themes/'.$theme->value.'/' . $file);
+    }
+}
+
+/**
+ * Sets the script to be used for Disqus
+ */
+if ( ! function_exists('disqus')) {
+    function disqus()
+    {
+        $disqus = \DB::table('settings')->where('setting', '=', 'disqus')
+            ->first();
+
+        return $disqus->value;
     }
 }
 

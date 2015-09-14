@@ -9,6 +9,7 @@
 
         vm.posts = [];
         vm.activePost = null;
+        vm.activePane = 'lists';
 
         vm.deletePost = function(post) {
             var modalInstance = $modal.open({
@@ -29,7 +30,11 @@
                     var index = vm.posts.indexOf(post);
                     vm.posts.splice(index, 1);
 
+                    // get the current first post and make it active
                     vm.activePost = vm.posts[0];
+
+                    // set the active page
+                    vm.activePane = 'lists';
                 }
             });
         };
@@ -47,11 +52,18 @@
                 });
         };
 
+        vm.goBack = function() {
+            vm.activePane = 'lists';
+        };
+
         /**
          * Shows the selected post and preview its content
          */
         vm.previewThisPost = function(post) {
             vm.activePost = post;
+
+            // set the preview window to active
+            vm.activePane = 'preview';
         };
 
         // fire away!

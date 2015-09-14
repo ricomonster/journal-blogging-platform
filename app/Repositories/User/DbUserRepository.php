@@ -27,6 +27,23 @@ class DbUserRepository implements UserRepositoryInterface
     }
 
     /**
+     * @param $id
+     * @param $time
+     * @return \Journal\User
+     */
+    public function timeLogin($id, $time)
+    {
+        // get the user
+        $user = $this->findById($id);
+
+        // update the login_at field of the user
+        $user->login_at = $time;
+        $user->save();
+
+        return $user;
+    }
+
+    /**
      * @return \Journal\User
      */
     public function all()

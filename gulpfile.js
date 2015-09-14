@@ -11,7 +11,8 @@ var gulp        = require('gulp'),
 var paths = {
     src : './resources/src',
     public : './public',
-    bower : './bower_components'
+    bower : './bower_components',
+    themes : './themes'
 };
 
 // notify error handler
@@ -46,24 +47,32 @@ gulp.task('build-bower-files', function() {
         // angular
         paths.bower + '/angular/angular.js',
         paths.bower + '/angular/angular.min.js',
+        // angular animate
+        paths.bower + '/angular-animate/*.js',
         // angular bootstrap
         paths.bower + '/angular-bootstrap/ui-bootstrap.js',
         paths.bower + '/angular-bootstrap/ui-bootstrap.min.js',
         paths.bower + '/angular-bootstrap/ui-bootstrap-tpls.js',
         paths.bower + '/angular-bootstrap/ui-bootstrap-tpls.min.js',
-        // angular growl v2
-        paths.bower + '/angular-growl-v2/build/*.js',
         // angular local storage
         paths.bower + '/angular-local-storage/dist/*',
+        // angular moment
+        paths.bower + '/angular-moment/angular-moment.js',
+        paths.bower + '/angular-moment/angular-moment.min.js',
         // angular sanitize
         paths.bower + '/angular-sanitize/angular-sanitize.js',
         paths.bower + '/angular-sanitize/angular-sanitize.min.js',
+        // angular toastr
+        paths.bower + '/angular-toastr/dist/*.js',
         // angular ui codemirror
         paths.bower + '/angular-ui-codemirror/*.js',
         // angular ui router
         paths.bower + '/angular-ui-router/release/*',
         // codemirror
         paths.bower + '/codemirror/lib/codemirror.js',
+        // moment
+        paths.bower + '/moment/moment.js',
+        paths.bower + '/moment/min/moment.min.js',
         // ng-file-upload
         paths.bower + '/ng-file-upload/ng-file-upload.js',
         paths.bower + '/ng-file-upload/ng-file-upload.min.js',
@@ -77,8 +86,8 @@ gulp.task('build-bower-files', function() {
 
     // stylesheets
     gulp.src([
-        // angular growl v2
-        paths.bower + '/angular-growl-v2/build/*.css',
+        // angular toastr
+        paths.bower + '/angular-toastr/dist/*.css',
         // bootstrap
         paths.bower + '/bootstrap/dist/css/*',
         // codemirror
@@ -239,7 +248,7 @@ gulp.task('inject-development-scripts', function() {
         .pipe(inject(gulp.src([
             paths.public + '/vendor/stylesheets/bootstrap.css',
             paths.public + '/vendor/stylesheets/font-awesome.css',
-            paths.public + '/vendor/stylesheets/angular-growl.css',
+            paths.public + '/vendor/stylesheets/angular-toastr.css',
             paths.public + '/vendor/stylesheets/codemirror.css',
             paths.public + '/vendor/stylesheets/ngprogress-lite.css',
             paths.public + '/assets/screen.css'
@@ -250,14 +259,18 @@ gulp.task('inject-development-scripts', function() {
         .pipe(inject(gulp.src([
             paths.public + '/vendor/javascript/codemirror.js',
             paths.public + '/vendor/javascript/showdown.js',
+            paths.public + '/vendor/javascript/moment.js',
             paths.public + '/vendor/javascript/angular.js',
+            paths.public + '/vendor/javascript/angular-animate.js',
             paths.public + '/vendor/javascript/angular-sanitize.js',
             paths.public + '/vendor/javascript/angular-ui-router.js',
             paths.public + '/vendor/javascript/ui-bootstrap.js',
             paths.public + '/vendor/javascript/ui-bootstrap-tpls.js',
             paths.public + '/vendor/javascript/ui-codemirror.js',
             paths.public + '/vendor/javascript/angular-local-storage.js',
-            paths.public + '/vendor/javascript/angular-growl.js',
+            paths.public + '/vendor/javascript/angular-toastr.js',
+            paths.public + '/vendor/javascript/angular-toastr.tpls.js',
+            paths.public + '/vendor/javascript/angular-moment.js',
             paths.public + '/vendor/javascript/ng-file-upload-shim.js',
             paths.public + '/vendor/javascript/ng-file-upload.js',
             paths.public + '/vendor/javascript/ngprogress-lite.js',
@@ -277,7 +290,7 @@ gulp.task('inject-production-scripts', function() {
         .pipe(inject(gulp.src([
             paths.public + '/vendor/stylesheets/bootstrap.min.css',
             paths.public + '/vendor/stylesheets/font-awesome.min.css',
-            paths.public + '/vendor/stylesheets/angular-growl.min.css',
+            paths.public + '/vendor/stylesheets/angular-toastr.min.css',
             paths.public + '/vendor/stylesheets/codemirror.css',
             paths.public + '/vendor/stylesheets/ngprogress-lite.css',
             paths.public + '/assets/screen.css'
@@ -288,14 +301,18 @@ gulp.task('inject-production-scripts', function() {
         .pipe(inject(gulp.src([
             paths.public + '/vendor/javascript/codemirror.js',
             paths.public + '/vendor/javascript/showdown.min.js',
+            paths.public + '/vendor/javascript/moment.min.js',
             paths.public + '/vendor/javascript/angular.min.js',
+            paths.public + '/vendor/javascript/angular-animate.min.js',
             paths.public + '/vendor/javascript/angular-sanitize.min.js',
             paths.public + '/vendor/javascript/angular-ui-router.min.js',
             paths.public + '/vendor/javascript/ui-bootstrap.min.js',
             paths.public + '/vendor/javascript/ui-bootstrap-tpls.min.js',
             paths.public + '/vendor/javascript/ui-codemirror.min.js',
             paths.public + '/vendor/javascript/angular-local-storage.min.js',
-            paths.public + '/vendor/javascript/angular-growl.min.js',
+            paths.public + '/vendor/javascript/angular-toastr.min.js',
+            paths.public + '/vendor/javascript/angular-toastr.tpls.min.js',
+            paths.public + '/vendor/javascript/angular-moment.min.js',
             paths.public + '/vendor/javascript/ng-file-upload-shim.min.js',
             paths.public + '/vendor/javascript/ng-file-upload.min.js',
             paths.public + '/vendor/javascript/ngprogress-lite.min.js',
@@ -342,6 +359,14 @@ gulp.task('watch', function() {
 });
 
 /**
+ * Build Task: Copy the assets from the themes that are installed.
+ */
+gulp.task('get-theme-assets', function() {
+    return gulp.src(paths.themes + '/**/assets/**/*')
+        .pipe(gulp.dest(paths.public + '/themes'));
+});
+
+/**
  * More likely the build script for development environment
  */
 gulp.task('build', function(callback) {
@@ -355,6 +380,7 @@ gulp.task('build', function(callback) {
         'build-templates',
         'build-stylesheets',
         'inject-development-scripts',
+        'get-theme-assets',
         callback);
 });
 
@@ -372,6 +398,7 @@ gulp.task('build-prod', function(callback) {
         'build-templates',
         'build-stylesheets',
         'inject-production-scripts',
+        'get-theme-assets',
         callback);
 });
 

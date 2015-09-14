@@ -54,23 +54,24 @@
 </header>
 <main class="content">
     @foreach($posts as $post)
-        <article class="post">
-            <header class="post-header">
-                <h2 class="post-title">
-                    <a href="{{ $post->permalink }}">{{ $post->title }}</a>
-                </h2>
-            </header>
-            <section class="post-content">{!! markdown($post->markdown, true, 50) !!}</section>
-            <footer class="post-meta">
-                <a href="{{ $post->author->permalink }}">{{ $post->author->name }}</a>
-                @if($post->tags)
-                    on
-                @endif
-                {!! get_post_tags($post) !!}
-                <date class="post-date">{{ post_date_time($post) }}</date>
-            </footer>
-        </article>
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title">
+                <a href="{{ $post->permalink }}">{{ $post->title }}</a>
+            </h2>
+        </header>
+        <section class="post-content">{!! markdown($post->markdown, true, 50) !!}</section>
+        <footer class="post-meta">
+            <a href="{{ $post->author->permalink }}">{{ $post->author->name }}</a>
+            @if($post->tags)
+                on
+            @endif
+            {!! get_post_tags($post) !!}
+            <date class="post-date">{{ post_date_time($post) }}</date>
+        </footer>
+    </article>
     @endforeach
+    @include('casper.partials.pagination')
 </main>
 <footer class="site-footer clearfix">
     <section class="blog">

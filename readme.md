@@ -71,5 +71,12 @@ php -S <localhost or your public IP>:8080 -t /public
 
 Yay, You're now good to go!
 
-### License
+# FAQ
+### Why does it looks like Ghost?
+Ghost is such a wonderful application and I followed it since their Kickstarter days. I believed in their goals so that created me an idea to create a another blogging platform. I also believed in this quote said by some guy that "Imitation is the sincerest form of flattery".
+
+### The requested URL /themes/casper/assets/css/screen.css was not found on this server.
+The default theme is Casper, also imitated the default theme of Ghosts. If you encounter this problem, make sure to symlink the `themes` folder to the `public` folder.
+
+## License
 The Journal Blogging Platform is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)

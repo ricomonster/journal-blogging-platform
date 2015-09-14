@@ -13,7 +13,10 @@
                     </figure>
                     <div class="user-content">
                         <h3 class="user-name">{{user.name}}</h3>
-                        <!--<p class="text-muted last-login">Last login</p>-->
+                        <time class="text-muted last-login" ng-if="user.login_at">
+                            Last login
+                            <span am-time-ago="user.login_at" am-preprocess="unix"></span>
+                        </time>
                     </div>
                     <!--<span class="label label-success role">Administrator</span>-->
                     <!--<span class="label label-info role">Editor</span>-->

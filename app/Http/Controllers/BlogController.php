@@ -31,7 +31,9 @@ class BlogController extends Controller
         $this->users    = $users;
 
         // set the settings
-        $this->settings = $settings->get(['title', 'description', 'cover_url', 'logo_url']);
+        $this->settings = $settings->get(['title', 'description', 'cover_url', 'logo_url',
+            'google_analytics', 'theme']);
+        $this->theme = $this->settings['theme'];
     }
 
     public function author($slug)
@@ -151,13 +153,12 @@ class BlogController extends Controller
         return view('errors.404');
     }
 
-    protected function journalHeadMeta($type = null, $data = null)
+    protected function journalHeadMeta($type = null, $content = null)
     {
         // get the settings of the blog
-        $settings = $this->settings;
-
+        $settings = $data = $this->settings;
         // set the default
-        $content = [
+        $meta = [
             'siteUrl'       => url(),
             'title'         => $settings['title'],
             'type'          => 'website',
@@ -169,48 +170,48 @@ class BlogController extends Controller
         if (!is_null($type)) {
             if ($type == 'author') {
                 // override the default contents
-                $content['title'] = $data->name.' - '.$settings['title'];
-                $content['type'] = 'profile';
-                $content['description'] = null;
-                $content['url'] = url('author/'.$data->slug);
-                $content['imageUrl'] = (strpos($data->cover_url, 'http')) ?
-                    $data->cover_url : url($data->cover_url);
+                $meta['title'] = $content->name.' - '.$settings['title'];
+                $meta['type'] = 'profile';
+                $meta['description'] = null;
+                $meta['url'] = url('author/'.$content->slug);
+                $meta['imageUrl'] = (strpos($content->cover_url, 'http')) ?
+                    $content->cover_url : url($content->cover_url);
             }
 
             if ($type == 'post') {
                 // override default contents
-                $content['title'] = $data->title;
-                $content['type'] = 'article';
-                $content['description'] = markdown($data->markdown, true, 20);
-                $content['url'] = url('post/'.$data->slug);
-                $content['imageUrl'] = null;
+                $meta['title'] = $content->title;
+                $meta['type'] = 'article';
+                $meta['description'] = markdown($content->markdown, true, 20);
+                $meta['url'] = url($content->slug);
+                $meta['imageUrl'] = null;
             }
 
             if ($type == 'tag') {
                 // override the default contents
-                $content['title'] = $data->name.' - '.$settings['title'];
-                $content['type'] = 'website';
-                $content['description'] = null;
-                $content['url'] = url('tag/'.$data->slug);
+                $meta['title'] = $content->name.' - '.$settings['title'];
+                $meta['type'] = 'website';
+                $meta['description'] = null;
+                $meta['url'] = url('tag/'.$content->slug);
             }
         }
 
-        $meta = [
-            ['rel' => 'canonical', 'href' => $content['url']],
+        $data['meta'] = [
+            ['rel' => 'canonical', 'href' => $meta['url']],
             ['attribute' => 'name', 'value' => 'referrer', 'content' => 'origin'],
             ['attribute' => 'property', 'value' => 'og:site_name', 'content' => $settings['title']],
-            ['attribute' => 'property', 'value' => 'og:type', 'content' => $content['type']],
-            ['attribute' => 'property', 'value' => 'og:title', 'content' => $content['title']],
+            ['attribute' => 'property', 'value' => 'og:type', 'content' => $meta['type']],
+            ['attribute' => 'property', 'value' => 'og:title', 'content' => $meta['title']],
             ['attribute' => 'property', 'value' => 'og:description', 'content' => $content['description']],
-            ['attribute' => 'property', 'value' => 'og:url', 'content' => $content['url']],
-            ['attribute' => 'property', 'value' => 'og:image', 'content' => $content['imageUrl']],
+            ['attribute' => 'property', 'value' => 'og:url', 'content' => $meta['url']],
+            ['attribute' => 'property', 'value' => 'og:image', 'content' => $meta['imageUrl']],
             ['attribute' => 'name', 'value' => 'twitter:card', 'content' => 'summary'],
-            ['attribute' => 'name', 'value' => 'twitter:title', 'content' => $content['title']],
+            ['attribute' => 'name', 'value' => 'twitter:title', 'content' => $meta['title']],
             ['attribute' => 'name', 'value' => 'twitter:description', 'content' => $content['description']],
-            ['attribute' => 'name', 'value' => 'twitter:url', 'content' => $content['url']],
-            ['attribute' => 'name', 'value' => 'twitter:image:src', 'content' => $content['imageUrl']],
+            ['attribute' => 'name', 'value' => 'twitter:url', 'content' => $meta['url']],
+            ['attribute' => 'name', 'value' => 'twitter:image:src', 'content' => $meta['imageUrl']],
             ['attribute' => 'name', 'value' => 'generator', 'content' => 'Journal v1.0.0']];
 
-        return view('vendor.meta', ['meta' => $meta]);
+        return view('vendor.meta', $data);
     }
 }

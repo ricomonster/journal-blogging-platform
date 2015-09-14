@@ -25,7 +25,7 @@
     font-size: 20px;
     font-weight: normal;
     line-height: 24px;
-    margin: 0;
+    margin: 0 0 5px;
 }
 
 #user_list_page .user-details .user-hyperlink .user-content .last-login {
@@ -35,3 +35,16 @@
 }
 
 #user_list_page .user-details .user-hyperlink .role { float: right; }
+
+@media only screen and (max-width : 768px) {
+    #user_list_page .page-header,
+    #user_list_page .content { width: 80%; }
+}
+
+@media only screen and (max-width: 480px) {
+    #user_list_page .page-header,
+    #user_list_page .content { width: 90%; }
+
+    #user_list_page .user-details .user-hyperlink .avatar-wrapper .avatar { height: 100px; width: 100px; }
+    #user_list_page .user-details .user-hyperlink .user-content { padding: 10px 0 0 120px; }
+}

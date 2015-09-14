@@ -2,23 +2,31 @@
     'use strict';
 
     angular.module('journal.component.settings')
-        .controller('SettingsController', ['$modal', 'GrowlService', 'SettingsService', SettingsController]);
+        .controller('SettingsController', ['$modal', 'ToastrService', 'SettingsService', SettingsController]);
 
-    function SettingsController($modal, GrowlService, SettingsService) {
+    function SettingsController($modal, ToastrService, SettingsService) {
         var vm = this;
         vm.settings = [];
+        vm.themes = [];
 
         /**
          * Fetch the settings saved
          */
         vm.initialize = function() {
             // get settings
-            SettingsService.getSettings('title,description,post_per_page,cover_url,logo_url')
+            SettingsService.getSettings('title,description,post_per_page,cover_url,logo_url,theme')
                 .success(function(response) {
                     if (response.settings) {
                         vm.settings = response.settings;
                     }
                 });
+
+            // get the themes
+            SettingsService.themes().success(function(response) {
+                if (response.themes) {
+                    vm.themes = response.themes;
+                }
+            });
         };
 
         vm.saveSettings = function() {
@@ -27,9 +35,17 @@
                 .success(function(response) {
                     if (response.settings) {
                         // show success message
-                        GrowlService.growl('You have successfully updated the settings.', 'success');
+                        ToastrService.toast('You have successfully updated the settings.', 'success');
                     }
                 })
+        };
+
+        vm.selectedTheme = function(value) {
+            if (vm.settings.theme) {
+                return vm.settings.theme == value;
+            }
+
+            return false;
         };
 
         vm.showImageUploader = function(type) {

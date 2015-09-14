@@ -45,6 +45,7 @@
             </footer>
         </article>
         @endforeach
+        @include('casper.partials.pagination')
     </main>
     <footer class="site-footer clearfix">
         <section class="blog">
