@@ -45,6 +45,16 @@
                         </a>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="control-label">Theme</label>
+                    <select ng-model="sc.settings.theme" class="form-control">
+                        <option value="">-- Select theme --</option>
+                        <option ng-repeat="theme in sc.themes" value="{{theme.theme_name}}"
+                        ng-selected="sc.selectedTheme(theme.theme_name)">
+                            {{theme.name}} (v{{theme.version}})
+                        </option>
+                    </select>
+                </div>
                 <div class="form-action">
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                 </div>

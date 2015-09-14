@@ -27,6 +27,7 @@ Route::group(['prefix' => 'api/v1.0'], function() {
     // Setting Routes
     Route::group(['prefix' => 'settings'], function() {
         Route::get('get', 'Api\ApiSettingsController@getSettings');
+        Route::get('themes', 'Api\ApiSettingsController@themes');
 
         Route::post('save', 'Api\ApiSettingsController@saveSettings');
     });

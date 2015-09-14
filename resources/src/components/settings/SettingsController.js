@@ -7,18 +7,26 @@
     function SettingsController($modal, ToastrService, SettingsService) {
         var vm = this;
         vm.settings = [];
+        vm.themes = [];
 
         /**
          * Fetch the settings saved
          */
         vm.initialize = function() {
             // get settings
-            SettingsService.getSettings('title,description,post_per_page,cover_url,logo_url')
+            SettingsService.getSettings('title,description,post_per_page,cover_url,logo_url,theme')
                 .success(function(response) {
                     if (response.settings) {
                         vm.settings = response.settings;
                     }
                 });
+
+            // get the themes
+            SettingsService.themes().success(function(response) {
+                if (response.themes) {
+                    vm.themes = response.themes;
+                }
+            });
         };
 
         vm.saveSettings = function() {
@@ -30,6 +38,14 @@
                         ToastrService.toast('You have successfully updated the settings.', 'success');
                     }
                 })
+        };
+
+        vm.selectedTheme = function(value) {
+            if (vm.settings.theme) {
+                return vm.settings.theme == value;
+            }
+
+            return false;
         };
 
         vm.showImageUploader = function(type) {

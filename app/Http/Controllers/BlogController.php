@@ -32,7 +32,8 @@ class BlogController extends Controller
 
         // set the settings
         $this->settings = $settings->get(['title', 'description', 'cover_url', 'logo_url',
-            'google_analytics']);
+            'google_analytics', 'theme']);
+        $this->theme = $this->settings['theme'];
     }
 
     public function author($slug)
