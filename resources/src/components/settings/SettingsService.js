@@ -21,5 +21,9 @@
 
             return $http.post(this.apiUrl + '/settings/save?token=' + token, requests);
         };
+
+        this.themes = function() {
+            return $http.get(this.apiUrl + '/settings/themes');
+        };
     }
 })();

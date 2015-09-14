@@ -11,7 +11,7 @@ class ApiSettingsController extends ApiController
 {
     protected $settings;
     protected $allowedSettings = ['title', 'description', 'installed', 'post_per_page',
-        'cover_url', 'logo_url', 'google_analytics', 'disqus'];
+        'cover_url', 'logo_url', 'google_analytics', 'disqus', 'theme'];
 
     public function __construct(SettingRepositoryInterface $settings)
     {
@@ -82,5 +82,25 @@ class ApiSettingsController extends ApiController
         // no request, send an error message
         return $this->setStatusCode(self::BAD_REQUEST)
             ->respondWithError(['message' => 'No fields to fetch.']);
+    }
+
+    public function themes()
+    {
+        $themeLists = [];
+        $themesPath = base_path('themes');
+        $themes = array_diff(scandir($themesPath), array('..', '.'));
+
+        // check contents of the theme
+        foreach ($themes as $key => $theme) {
+            $themeDirectory = scandir($themesPath.'/'.$theme);
+            if (in_array('theme.json', $themeDirectory)) {
+                // get the contents of the theme.json
+                $content = json_decode(
+                    file_get_contents($themesPath.'/'.$theme.'/theme.json'), true);
+                array_push($themeLists, $content);
+            }
+        }
+
+        return $this->respond(['themes' => $themeLists]);
     }
 }
