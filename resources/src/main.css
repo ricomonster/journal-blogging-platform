@@ -120,7 +120,7 @@ label.control-label { font-size: 18px; margin: 0; }
 
 /* Toastr CSS Override */
 #toast-container { top: 60px; }
-#toast-container .toast { min-width: 320px; max-width: 480px; width: 100%; }
+#toast-container .toast { width: 350px; }
 
 @media only screen and (max-width : 768px) {
     .hero-title { font-size: 40px; }
@@ -132,7 +132,7 @@ label.control-label { font-size: 18px; margin: 0; }
         box-shadow: 0 0 0 #999999;
         border-radius: 0;
         margin-bottom: 0;
-        max-width: 100%;
+        width: 100%;
     }
 }
 

@@ -65,7 +65,6 @@
             .success(function(response) {
                 if (!response.installed) {
                     $state.transitionTo('installer');
-                    event.preventDefault();
                     return;
                 }
             });
@@ -75,7 +74,6 @@
             AuthService.logout();
             // redirect
             $state.transitionTo('login');
-            event.preventDefault();
             return;
         }
 
@@ -93,7 +91,7 @@
                     AuthService.logout();
                     // redirect
                     $state.transitionTo('login');
-                    event.preventDefault();
+                    return;
                 });
         }
     }
