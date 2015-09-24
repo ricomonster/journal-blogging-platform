@@ -86,11 +86,15 @@ interface UserRepositoryInterface
     public function validateUserUpdate($data, $id);
 
     /**
-     * @param $id
-     * @param $oldPassword
-     * @param $newPassword
-     * @param $repeatNewPassword
+     * @param $data
      * @return \Illuminate\Support\MessageBag
      */
-    public function validateChangePassword($id, $oldPassword, $newPassword, $repeatNewPassword);
+    public function validateChangePassword($data);
+
+    /**
+     * @param $id
+     * @param $password
+     * @return boolean
+     */
+    public function validateUserPassword($id, $password);
 }

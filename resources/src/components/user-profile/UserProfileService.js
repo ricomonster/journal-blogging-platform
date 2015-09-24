@@ -11,6 +11,10 @@
             return $http.get(this.apiUrl + '/users/get_user?user_id=' + userId);
         };
 
+        this.updatePassword = function(data) {
+            
+        };
+
         this.updateUserDetails = function(data) {
             var token = AuthService.getToken(),
                 userId = (data.id || '');
