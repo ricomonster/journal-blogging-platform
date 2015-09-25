@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Journal\Http\Requests;
 use Journal\Repositories\Post\PostRepositoryInterface;
 use Journal\Repositories\Setting\SettingRepositoryInterface;
+use Journal\Repositories\Tag\TagRepositoryInterface;
 use Journal\Repositories\User\UserRepositoryInterface;
 use JWTAuth;
 
@@ -12,14 +13,16 @@ class ApiInstallerController extends ApiController
 {
     protected $posts;
     protected $settings;
+    protected $tags;
     protected $users;
 
-    public function __construct(PostRepositoryInterface $posts, SettingRepositoryInterface $settings, UserRepositoryInterface $users)
+    public function __construct(PostRepositoryInterface $posts, SettingRepositoryInterface $settings, TagRepositoryInterface $tags, UserRepositoryInterface $users)
     {
         $this->middleware('installation.installed');
 
         $this->posts    = $posts;
         $this->settings = $settings;
+        $this->tags     = $tags;
         $this->users    = $users;
     }
 
@@ -44,10 +47,13 @@ class ApiInstallerController extends ApiController
         $title = (empty($request->input('title'))) ? 'Journal' : $request->input('title');
         $this->settings->save('title', $title);
 
+        // let's assume this setup has a Casper theme installed
+        $this->settings->save('theme', 'casper');
+
         // install this thang
         $this->settings->save('installed', 'true');
 
-        // TODO: Create first post
+        // Create first post
         $this->createFirstPost($user);
 
         // generate token
@@ -65,14 +71,35 @@ class ApiInstallerController extends ApiController
         // get readme file
         $content = file_get_contents(base_path('readme.md'));
 
+        $tagIds = $this->generateFirstPostTags();
+
         // create the post
-        $this->posts->create(
+        $post = $this->posts->create(
             $user->id,
             'Journal Blogging Platform',
             $content,
             'journal-blogging-platform',
             1,
             strtotime(date('Y-m-d h:i:s')),
-            []);
+            $tagIds);
+    }
+
+    protected function generateFirstPostTags()
+    {
+        $tags = ['Journal', 'Blogging Platform', 'Laravel', 'Angular JS'];
+        $tagIds = [];
+
+        // check if there are tags
+        if ($tags) {
+            // loop
+            foreach ($tags as $key => $tag) {
+
+                $result = $this->tags->create($tag);
+                // get the ID and push it to the array
+                array_push($tagIds, $result->id);
+            }
+        }
+
+        return $tagIds;
     }
 }

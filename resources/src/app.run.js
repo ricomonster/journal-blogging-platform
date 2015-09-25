@@ -6,7 +6,6 @@
         .run(['$state', 'AuthService', CheckAuthentication]);
 
     /**
-     *
      * @param $rootScope
      * @param $state
      * @param AuthService
@@ -64,7 +63,7 @@
         AuthService.checkInstallation()
             .success(function(response) {
                 if (!response.installed) {
-                    $state.transitionTo('installer');
+                    $state.transitionTo('installer.start');
                     return;
                 }
             });
