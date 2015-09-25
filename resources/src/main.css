@@ -1,6 +1,6 @@
 /* Google Font */
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
-@import url(http://fonts.googleapis.com/css?family=Noto+Serif:400,400italic);
+/*@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
+@import url(http://fonts.googleapis.com/css?family=Noto+Serif:400,400italic);*/
 
 /* Initial styling */
 body {
@@ -23,12 +23,12 @@ h1, h2, h3, h4, h5, h6 {
     text-rendering: optimizeLegibility;
 }
 
-h1 { font-size: 5rem; letter-spacing: -2px; text-indent: -3px; }
-h2 { font-size: 4.2rem; letter-spacing: -1px; }
-h3 { font-size: 3.8rem; }
-h4 { font-size: 3.1rem; }
-h5 { font-size: 2.8rem; }
-h6 { font-size: 2.2rem; }
+h1 { font-size: 5.0rem; letter-spacing: -2px; text-indent: -3px; }
+h2 { font-size: 4.0rem; letter-spacing: -1px; }
+h3 { font-size: 3.4rem; }
+h4 { font-size: 2.8rem; }
+h5 { font-size: 2.2rem; }
+h6 { font-size: 1.8rem; }
 
 a { cursor: pointer; -webkit-transition: color ease .3s; outline: none; transition: color ease .3s; }
 a:hover, a:active, a:focus { outline: none; text-decoration: none; }

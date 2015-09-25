@@ -161,13 +161,38 @@ class DbUserRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param $id
-     * @param $oldPassword
-     * @param $newPassword
-     * @param $repeatNewPassword
+     * @param $data
      * @return \Illuminate\Support\MessageBag
      */
-    public function validateChangePassword($id, $oldPassword, $newPassword, $repeatNewPassword)
+    public function validateChangePassword($data)
+    {
+        // prepare the rules
+        $rules = [
+            'old_password' => 'required',
+            'new_password' => 'required',
+            'repeat_password' => 'required|same:new_password'];
+
+        // prepare the messages
+        $messages = [
+            'old_password.required' => 'Current password is required.',
+            'new_password.required' => 'New password is required.',
+            'repeat_password.required' => 'Repeat your new password.',
+            'repeat_password.same' => 'Passwords are not the the same.'];
+
+        // validate
+        $validator = Validator::make($data, $rules, $messages);
+        $validator->passes();
+
+        // return errors
+        return $validator->errors();
+    }
+
+    /**
+     * @param $id
+     * @param $password
+     * @return boolean
+     */
+    public function validateUserPassword($id, $password)
     {
 
     }

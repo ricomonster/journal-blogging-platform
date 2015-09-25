@@ -69,7 +69,17 @@ class ApiUsersController extends ApiController
                 ->respondWithError(['message' => 'User not found.']);
         }
 
-        // validate passwords
+        // do basic validation
+        $messages = $this->users->validateChangePassword($request->all());
+        // check for errors
+        if (count($messages) > 0) {
+            return $this->setStatusCode(self::BAD_REQUEST)
+                ->respondWithError($messages);
+        }
+
+        // check if the user inputted its current password
+        // update
+        // return user details
     }
 
     public function getUser(Request $request)

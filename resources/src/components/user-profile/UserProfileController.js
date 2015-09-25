@@ -9,6 +9,7 @@
 
         vm.current = false;
         vm.user = [];
+        vm.password = [];
 
         vm.initialize = function() {
             // check if parameter is set
@@ -71,6 +72,14 @@
             modalInstance.result.then(function(results) {
                 vm.user = results;
             });
+        };
+
+        /**
+         * [function description]
+         * @return {[type]} [description]
+         */
+        vm.updatePassword = function() {
+            var passwords = vm.password;
         };
 
         vm.updateProfile = function() {

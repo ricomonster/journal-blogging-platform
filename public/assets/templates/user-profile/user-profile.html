@@ -69,26 +69,26 @@
                 </div>
             </form>
 
-            <!--<form method="post" id="user_password_form">-->
-                <!--<div class="form-group">-->
-                    <!--<label class="control-label" for="current_password">Current password</label>-->
-                    <!--<input type="password" name="current_password" class="form-control"/>-->
-                    <!--<span class="help-block">What's your current password?</span>-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                    <!--<label class="control-label" for="new_password">New password</label>-->
-                    <!--<input type="password" name="new_password" class="form-control"/>-->
-                    <!--<span class="help-block">Your new password?</span>-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                    <!--<label class="control-label" for="repeat_password">Repeat password</label>-->
-                    <!--<input type="password" name="repeat_password" class="form-control"/>-->
-                    <!--<span class="help-block">Now, repeat your password?</span>-->
-                <!--</div>-->
-                <!--<div class="form-action">-->
-                    <!--<button type="submit" class="btn btn-danger">Change password</button>-->
-                <!--</div>-->
-            <!--</form>-->
+            <form method="post" ng-submit="upc.updatePassword()" style="display: none;">
+                <div class="form-group">
+                    <label class="control-label">Current password</label>
+                    <input type="password" name="vm.password.current_password" class="form-control"/>
+                    <span class="help-block">What's your current password?</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">New password</label>
+                    <input type="password" name="vm.password.new_password" class="form-control"/>
+                    <span class="help-block">Your new password?</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Repeat password</label>
+                    <input type="password" name="vm.password.repeat_password" class="form-control"/>
+                    <span class="help-block">Now, repeat your password?</span>
+                </div>
+                <div class="form-action">
+                </div>
+                    <button type="submit" class="btn btn-danger">Change password</button>
+            </form>
         </section>
     </section>
 </div>
