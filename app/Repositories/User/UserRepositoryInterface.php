@@ -47,11 +47,10 @@ interface UserRepositoryInterface
 
     /**
      * @param $id
-     * @param $oldPassword
      * @param $newPassword
      * @return \Journal\User
      */
-    public function changePassword($id, $oldPassword, $newPassword);
+    public function changePassword($id, $newPassword);
 
     /**
      * @param $id

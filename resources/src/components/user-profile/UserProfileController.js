@@ -9,7 +9,9 @@
 
         vm.current = false;
         vm.user = [];
-        vm.password = [];
+        vm.password = {};
+
+        vm.passwordErrors = [];
 
         vm.initialize = function() {
             // check if parameter is set
@@ -80,6 +82,31 @@
          */
         vm.updatePassword = function() {
             var passwords = vm.password;
+
+            // do an API request to change the password
+            UserProfileService.updatePassword(passwords)
+                .success(function(response) {
+                    if (response.user) {
+                        // clear the fields
+                        ToastrService.toast('You have successfully updated your password.', 'success');
+                        // empty the variable scope
+                        vm.password = {};
+                    }
+                })
+                .error(function(response) {
+                    // show toastr
+                    ToastrService.toast('There are errors encountered.', 'error');
+                    if (response.errors) {
+                        if (response.message) {
+                            return;
+                        }
+
+                        // show the errors
+                        for (var e in response.errors) {
+                            ToastrService.toast(response.errors[e][0], 'error');
+                        }
+                    }
+                });
         };
 
         vm.updateProfile = function() {

@@ -71,6 +71,7 @@ class ApiUsersController extends ApiController
 
         // do basic validation
         $messages = $this->users->validateChangePassword($request->all());
+
         // check for errors
         if (count($messages) > 0) {
             return $this->setStatusCode(self::BAD_REQUEST)
@@ -78,8 +79,25 @@ class ApiUsersController extends ApiController
         }
 
         // check if the user inputted its current password
+        $error = $this->users->validateUserPassword(
+            $user->id,
+            $request->input('old_password'));
+
+        // check if there's an error
+        if (!$error) {
+            return $this->setStatusCode(self::BAD_REQUEST)
+                // fixed this so we can imitate how Laravel's validator return its requests
+                ->respondWithError(['current_password' => ['Current password is invalid.']]);
+        }
+
         // update
+        $user = $this->users->changePassword(
+            $user->id,
+            $request->input('new_password'));
+
         // return user details
+        return $this->respond([
+            'user' => $user->toArray()]);
     }
 
     public function getUser(Request $request)

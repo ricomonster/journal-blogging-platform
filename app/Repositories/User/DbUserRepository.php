@@ -3,7 +3,8 @@ namespace Journal\Repositories\User;
 
 use Illuminate\Support\Str;
 use Journal\User;
-use Hash, Validator;
+use Hash;
+use Validator;
 
 class DbUserRepository implements UserRepositoryInterface
 {
@@ -80,11 +81,10 @@ class DbUserRepository implements UserRepositoryInterface
 
     /**
      * @param $id
-     * @param $oldPassword
      * @param $newPassword
      * @return \Journal\User
      */
-    public function changePassword($id, $oldPassword, $newPassword)
+    public function changePassword($id, $newPassword)
     {
         // get user
         $user = $this->findById($id);
@@ -190,11 +190,15 @@ class DbUserRepository implements UserRepositoryInterface
     /**
      * @param $id
      * @param $password
-     * @return boolean
+     * @return boolean|array
      */
     public function validateUserPassword($id, $password)
     {
+        // get the user
+        $user = $this->findById($id);
 
+        // check if the password is the same
+        return Hash::check($password, $user->password);
     }
 
     /**

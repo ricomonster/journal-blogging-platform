@@ -69,25 +69,25 @@
                 </div>
             </form>
 
-            <form method="post" ng-submit="upc.updatePassword()" style="display: none;">
+            <form method="post" ng-submit="upc.updatePassword()" ng-if="upc.current">
                 <div class="form-group">
                     <label class="control-label">Current password</label>
-                    <input type="password" name="vm.password.current_password" class="form-control"/>
+                    <input type="password" ng-model="upc.password.old_password" class="form-control"/>
                     <span class="help-block">What's your current password?</span>
                 </div>
                 <div class="form-group">
                     <label class="control-label">New password</label>
-                    <input type="password" name="vm.password.new_password" class="form-control"/>
+                    <input type="password" ng-model="upc.password.new_password" class="form-control"/>
                     <span class="help-block">Your new password?</span>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Repeat password</label>
-                    <input type="password" name="vm.password.repeat_password" class="form-control"/>
+                    <input type="password" ng-model="upc.password.repeat_password" class="form-control"/>
                     <span class="help-block">Now, repeat your password?</span>
                 </div>
                 <div class="form-action">
-                </div>
                     <button type="submit" class="btn btn-danger">Change password</button>
+                </div>
             </form>
         </section>
     </section>
