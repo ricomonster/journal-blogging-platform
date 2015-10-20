@@ -12,7 +12,14 @@
         };
 
         this.updatePassword = function(data) {
-            
+            var token = AuthService.getToken(),
+                userId = AuthService.user().id;
+
+            return $http.post(this.apiUrl + '/users/change_password?token=' + token + '&user_id=' + userId, {
+                old_password    : data.old_password || '',
+                new_password    : data.new_password || '',
+                repeat_password : data.repeat_password || ''
+            });
         };
 
         this.updateUserDetails = function(data) {
