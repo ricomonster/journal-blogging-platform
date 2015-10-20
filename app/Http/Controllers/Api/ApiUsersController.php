@@ -19,6 +19,11 @@ class ApiUsersController extends ApiController
         $this->users = $user;
     }
 
+    /**
+     * Fetches all active users.
+     *
+     * @return mixed
+     */
     public function all()
     {
         // get all users
@@ -28,6 +33,12 @@ class ApiUsersController extends ApiController
             'users' => $users->toArray()]);
     }
 
+    /**
+     * Creates and validates new user based on the given data to the endpoint.
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function create(Request $request)
     {
         // validate first
@@ -50,6 +61,12 @@ class ApiUsersController extends ApiController
             'user' => $user->toArray()]);
     }
 
+    /**
+     * Performs request to change a users password.
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function changePassword(Request $request)
     {
         $id = $request->input('user_id');
@@ -100,6 +117,12 @@ class ApiUsersController extends ApiController
             'user' => $user->toArray()]);
     }
 
+    /**
+     * Gets user details based on the given ID.
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function getUser(Request $request)
     {
         $id = $request->input('user_id');
@@ -124,6 +147,12 @@ class ApiUsersController extends ApiController
             'user' => $user->toArray()]);
     }
 
+    /**
+     * Updates the details of the user.
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function updateDetails(Request $request)
     {
         $id = $request->input('user_id');
