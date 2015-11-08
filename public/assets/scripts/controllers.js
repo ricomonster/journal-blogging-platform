@@ -1,1 +1,1151 @@
-!function(){"use strict";function e(e,t,r,o,s){e.post=s,e.cancelPost=function(){t.dismiss("cancel")},e.deletePost=function(){r.deletePost(e.post.id).success(function(r){r.error||(o.toast('You have successfully deleted the post "'+e.post.title+'"',"success"),t.close({error:!1}))}).error(function(e){o.toast("Something went wrong. Please try again later.","error"),t.dismiss("cancel")})}}angular.module("journal.component.deletePostModal").controller("DeletePostModalController",["$scope","$modalInstance","DeletePostModalService","ToastrService","post",e])}(),function(){"use strict";function e(e,t,r,o,s,n){var i=this,a=new Date,u=new Date(a.getFullYear(),a.getMonth(),a.getDate(),a.getHours(),a.getMinutes());i.sidebar=!1,i.post={author_id:o.user().id,status:2,tags:[]},i.editor={activePane:"markdown",activeStatus:[],baseUrl:window.location.origin,codemirror:{mode:"markdown",tabMode:"indent",lineWrapping:!0},counter:0,dateNow:u,status:[{"class":"danger",group:1,status:1,text:"Publish Now"},{"class":"primary",group:1,status:2,text:"Save as Draft"},{"class":"danger",group:2,status:2,text:"Unpublish Post"},{"class":"info",group:2,status:1,text:"Update Post"}],tags:[]},i.initialize=function(){i.editor.activeStatus=i.editor.status[1],r.postId&&s.getPost(r.postId).success(function(e){e.post&&(i.post=e.post,1==e.post.status&&(i.editor.activeStatus=i.editor.status[3]),i.editor.dateNow=i.convertDate(e.post.published_at))}).error(function(e){})},i.convertDate=function(e){if(e){var t=new Date(1e3*e);return new Date(t.getFullYear(),t.getMonth(),t.getDate(),t.getHours(),t.getMinutes())}return u},i.deletePost=function(){var r=e.open({animation:!0,templateUrl:"/assets/templates/delete-post-modal/delete-post-modal.html",controller:"DeletePostModalController",resolve:{post:function(){return i.post}}});r.result.then(function(e){e.error||t.go("post.lists")})},i.savePost=function(){var e=i.post;s.save(e).success(function(e){var r=e.post;return i.post.id?(1==r.status&&(i.editor.activeStatus=i.editor.status[3]),2==r.status&&(i.editor.activeStatus=i.editor.status[1]),n.toast('You have successfully updated "'+r.title+'".',"success"),void(i.post=r)):(n.toast('You have successfully created the post "'+r.title+'".',"success"),void t.go("postEditor",{postId:r.id}))}).error(function(e){})},i.setPostStatus=function(e){i.editor.activeStatus=e,i.post.status=e.status},i.showPane=function(e){i.editor.activePane=e},i.toggleSidebar=function(){i.sidebar=!i.sidebar},i.wordCounter=function(){return i.editor.counter>0?i.editor.counter+" words":"0 words"},i.initialize()}angular.module("journal.component.editor").controller("EditorController",["$modal","$state","$stateParams","AuthService","EditorService","ToastrService",e])}(),function(){"use strict";function e(e,t,r){var o=this;o.user=r.user(),o.logout=function(){r.logout(),t.go("login")},o.setActiveMenu=function(e){var r=t.current.name;return r.indexOf(e)>-1},o.toggleSidebar=function(){e.$broadcast("toggle-sidebar")}}angular.module("journal.component.header").controller("HeaderController",["$rootScope","$state","AuthService",e])}(),function(){"use strict";function e(e){var t=this;e.$on("installer-menu",function(e,r){t.active=r||1})}angular.module("journal.component.installer").controller("InstallerController",["$rootScope",e])}(),function(){"use strict";function e(e,t,r,o,s){e.$broadcast("installer-menu",2);var n=this;n.account=[],n.errors=[],n.createAccount=function(){s.createAccount(n.account).success(function(e){e.token&&(r.login(e.user),r.setToken(e.token),t.go("installer.success"))}).error(function(e){o.toast("There are some errors encountered.","error"),e.errors&&(n.errors=e.errors)})}}angular.module("journal.component.installerDetails").controller("InstallerDetailsController",["$rootScope","$state","AuthService","ToastrService","InstallerDetailsService",e])}(),function(){"use strict";function e(e){e.$broadcast("installer-menu",1)}angular.module("journal.component.installerStart").controller("InstallerStartController",["$rootScope","$state",e])}(),function(){"use strict";function e(e,t,r,o){e.$broadcast("installer-menu",3);var s=this;s.initialize=function(){return r.user()||r.getToken()?void 0:(o.toast("Hey, something went wrong. Can you repeat again?","error"),void t.go("installer.start"))},s.go=function(){t.go("post.lists")},s.initialize()}angular.module("journal.component.installerSuccess").controller("InstallerSuccessController",["$rootScope","$state","AuthService","ToastrService",e])}(),function(){"use strict";function e(e,t,r,o){var s=this;s.login=[],s.authenticate=function(){var n=s.login;o.authenticate(n.email,n.password).success(function(o){return o.user&&o.token?(t.login(o.user),t.setToken(o.token),r.toast("Welcome, "+o.user.name,"success"),void e.go("post.lists")):void 0}).error(function(e){var t=e.errors.message;r.toast(t,"error")})}}angular.module("journal.component.login").controller("LoginController",["$state","AuthService","ToastrService","LoginService",e])}(),function(){"use strict";function e(e,t){var r=this;r.posts=[],r.activePost=null,r.activePane="lists",r.deletePost=function(t){var o=e.open({animation:!0,templateUrl:"/assets/templates/delete-post-modal/delete-post-modal.html",controller:"DeletePostModalController",resolve:{post:function(){return t}}});o.result.then(function(e){if(!e.error){var o=r.posts.indexOf(t);r.posts.splice(o,1),r.activePost=r.posts[0],r.activePane="lists"}})},r.initialize=function(){t.getPosts().success(function(e){e.posts&&(r.posts=e.posts,r.activePost=e.posts[0])})},r.goBack=function(){r.activePane="lists"},r.previewThisPost=function(e){r.activePost=e,r.activePane="preview"},r.initialize()}angular.module("journal.component.postLists").controller("PostListsController",["$modal","PostListService",e])}(),function(){"use strict";function e(e,t){var r=this;r.services=[],r.initialize=function(){e.getServices("google_analytics").success(function(e){e.settings&&(r.services=e.settings)}).error(function(){})},r.saveServices=function(){var o=r.services;e.saveServices(o).success(function(e){e.settings&&t.toast("You have successfully updated your services.","success")})},r.initialize()}angular.module("journal.component.services").controller("ServicesController",["ServicesService","ToastrService",e])}(),function(){"use strict";function e(e,t,r){var o=this;o.settings=[],o.themes=[],o.initialize=function(){r.getSettings("title,description,post_per_page,cover_url,logo_url,theme").success(function(e){e.settings&&(o.settings=e.settings)}),r.themes().success(function(e){e.themes&&(o.themes=e.themes)})},o.saveSettings=function(){r.saveSettings(o.settings).success(function(e){e.settings&&t.toast("You have successfully updated the settings.","success")})},o.selectedTheme=function(e){return o.settings.theme?o.settings.theme==e:!1},o.showImageUploader=function(t){var r=e.open({animation:!0,templateUrl:"/assets/templates/uploader-modal/uploader-modal.html",controller:"SettingsModalController",resolve:{settings:function(){return o.settings},type:function(){return t}}});r.result.then(function(e){o.settings=e})},o.initialize()}angular.module("journal.component.settings").controller("SettingsController",["$modal","ToastrService","SettingsService",e])}(),function(){"use strict";function e(e,t,r,o,s,n,i){e.activeOption="file",e.imageUrl=null,e.image={link:null,file:null},e.settings=n,e.upload={active:!1,percentage:0},e.$watch("image.file",function(){null!=e.image.file&&s.upload(e.image.file).progress(function(t){e.upload={active:!0,percentage:parseInt(100*t.loaded/t.total)}}).success(function(t){t.url&&(e.imageUrl=t.url,e.upload={active:!1,percentage:0})}).error(function(){r.toast("Something went wrong with the upload. Please try again later.","error"),e.upload={active:!1,percentage:0}})}),e.closeModal=function(){t.dismiss("cancel")},e.initialize=function(){"cover_url"==i&&e.settings.cover_url&&(e.imageUrl=e.settings.cover_url),"logo_url"==i&&e.settings.logo_url&&(e.imageUrl=e.settings.logo_url)},e.removeImage=function(){e.imageUrl=null,e.settings[i]=null},e.save=function(){e.settings[i]=e.imageUrl?e.imageUrl:e.image.link,o.saveSettings(e.settings).success(function(e){e.settings&&(r.toast("You have successfully updated the settings.","success"),t.close(e.settings))})},e.switchOption=function(){switch(e.activeOption){case"link":e.activeOption="file";break;case"file":e.activeOption="link";break;default:e.activeOption="file"}},e.initialize()}angular.module("journal.component.settingsModal").controller("SettingsModalController",["$scope","$modalInstance","ToastrService","SettingsService","FileUploaderService","settings","type",e])}(),function(){"use strict";function e(e,t,r,o){var s=this;s.openSidebar=!1,s.title="Journal",s.user=r.user(),t.$on("toggle-sidebar",function(){s.openSidebar=!s.openSidebar}),s.initialize=function(){o.getSettings("title").success(function(e){s.title=e.settings.title})},s.logout=function(){r.logout(),e.go("login")},s.tapOverlay=function(){s.toggleSidebar()},s.toggleSidebar=function(){s.openSidebar=!s.openSidebar},s.initialize()}angular.module("journal.component.sidebar").controller("SidebarController",["$state","$rootScope","AuthService","SidebarService",e])}(),function(){"use strict";function e(e,t){var r=this;r.user=[],r.errors=[],r.createUser=function(){r.errors=[],t.createUser(r.user).success(function(t){t.user&&(r.user=[],e.toast("You have successfully added "+t.user.name,"success"))}).error(function(t){if(t.errors){e.toast("There are errors encountered.","error"),r.errors=t.errors;for(var o in t.errors)e.toast(t.errors[o][0],"error")}})}}angular.module("journal.component.userCreate").controller("UserCreateController",["ToastrService","UserCreateService",e])}(),function(){"use strict";function e(e,t){var r=this;r.users=[],r.initialize=function(){e.getAllUsers().success(function(e){e.users&&(r.users=e.users)}).error(function(){})},r.setUserAvatarImage=function(e){return e.avatar_url?e.avatar_url:t.DEFAULT_AVATAR_URL},r.initialize()}angular.module("journal.component.userLists").controller("UserListsController",["UserListsService","CONFIG",e])}(),function(){"use strict";function e(e,t,r,o,s,n){var i=this;i.current=!1,i.user=[],i.password={},i.passwordErrors=[],i.initialize=function(){!t.userId,s.getUser(t.userId).success(function(e){e.user&&(i.current=r.user().id==e.user.id,i.user=e.user)}).error(function(e,t){})},i.setImage=function(e){var t=null;switch(e){case"cover_url":t=i.user.cover_url?i.user.cover_url:n.DEFAULT_COVER_URL;break;case"avatar_url":t=i.user.avatar_url?i.user.avatar_url:n.DEFAULT_AVATAR_URL}return"background-image: url('"+t+"')"},i.showImageUploader=function(t){if(i.current){var r=e.open({animation:!0,templateUrl:"/assets/templates/uploader-modal/uploader-modal.html",controller:"UserProfileModalController",resolve:{user:function(){return i.user},type:function(){return t}}});r.result.then(function(e){i.user=e})}},i.updatePassword=function(){var e=i.password;s.updatePassword(e).success(function(e){e.user&&(o.toast("You have successfully updated your password.","success"),i.password={})}).error(function(e){if(o.toast("There are errors encountered.","error"),e.errors){if(e.message)return;for(var t in e.errors)o.toast(e.errors[t][0],"error")}})},i.updateProfile=function(){var e=i.user;s.updateUserDetails(e).success(function(e){e.user&&o.toast("You have successfully updated your profile.","success")}).error(function(e){})},i.initialize()}angular.module("journal.component.userProfile").controller("UserProfileController",["$modal","$stateParams","AuthService","ToastrService","UserProfileService","CONFIG",e])}(),function(){"use strict";function e(e,t,r,o,s,n,i){e.activeOption="file",e.imageUrl=null,e.image={link:null,file:null},e.user=n,e.upload={active:!1,percentage:0},e.$watch("image.file",function(){null!=e.image.file&&s.upload(e.image.file).progress(function(t){e.upload={active:!0,percentage:parseInt(100*t.loaded/t.total)}}).success(function(t){t.url&&(e.imageUrl=t.url,e.upload={active:!1,percentage:0})}).error(function(){r.toast("Something went wrong with the upload. Please try again later.","error"),e.upload={active:!1,percentage:0}})}),e.closeModal=function(){t.dismiss("cancel")},e.initialize=function(){"cover_url"==i&&e.user.cover_url&&(e.imageUrl=e.user.cover_url),"avatar_url"==i&&e.user.avatar_url&&(e.imageUrl=e.user.avatar_url)},e.removeImage=function(){e.imageUrl=null,e.settings[i]=null},e.save=function(){e.user[i]=e.imageUrl?e.imageUrl:e.image.link,o.updateUserDetails(e.user).success(function(e){e.user&&(r.toast("You have successfully updated your profile.","success"),t.close(e.user))}).error(function(e){})},e.switchOption=function(){switch(e.activeOption){case"link":e.activeOption="file";break;case"file":e.activeOption="link";break;default:e.activeOption="file"}},e.initialize()}angular.module("journal.component.userProfileModal").controller("UserProfileModalController",["$scope","$modalInstance","ToastrService","UserProfileService","FileUploaderService","user","type",e])}();
+(function() {
+    'use strict';
+
+    angular.module('journal.component.deletePostModal')
+        .controller('DeletePostModalController', ['$scope', '$modalInstance', 'DeletePostModalService', 'ToastrService', 'post', DeletePostModalController]);
+
+    function DeletePostModalController($scope, $modalInstance, DeletePostModalService, ToastrService, post) {
+        $scope.post = post;
+
+        $scope.cancelPost = function() {
+            // just close the modal
+            $modalInstance.dismiss('cancel');
+        };
+
+        $scope.deletePost = function() {
+            // do an API request to delete the post
+            DeletePostModalService.deletePost($scope.post.id)
+                .success(function(response) {
+                    if (!response.error) {
+                        // growl
+                        ToastrService.toast(
+                            'You have successfully deleted the post "'+$scope.post.title+'"',
+                            'success');
+
+                        // return response
+                        $modalInstance.close({
+                            error : false
+                        });
+                    }
+                })
+                .error(function(response) {
+                    // tell there's a fucking error
+                    ToastrService.toast('Something went wrong. Please try again later.', 'error');
+                    // close the fucking modal
+                    $modalInstance.dismiss('cancel');
+                });
+        };
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.component.editor')
+        .controller('EditorController', ['$modal', '$state', '$stateParams', 'AuthService', 'EditorService', 'ToastrService', EditorController]);
+
+    function EditorController($modal, $state, $stateParams, AuthService, EditorService, ToastrService) {
+        var vm = this,
+            // get current date in yyyy/mm/dd hh:ss format
+            date = new Date(),
+            currentDate = new Date(
+                date.getFullYear(),
+                date.getMonth(),
+                date.getDate(),
+                date.getHours(),
+                date.getMinutes());
+
+
+        vm.sidebar = false;
+        vm.post = {
+            author_id : AuthService.user().id,
+            status : 2,
+            tags : []
+        };
+
+        // editor config
+        vm.editor = {
+            activePane : 'markdown',
+            // button status
+            activeStatus : [],
+            // base url of the application
+            baseUrl : window.location.origin,
+            // codemirror settings
+            codemirror : { mode : "markdown", tabMode : "indent", lineWrapping : !0},
+            // counter
+            counter : 0,
+            // sets the date
+            dateNow : currentDate,
+            // list of status
+            status : [
+                { class : 'danger', group : 1, status : 1, text : 'Publish Now' },
+                { class : 'primary', group : 1, status : 2, text : 'Save as Draft' },
+                { class : 'danger', group : 2, status : 2, text : 'Unpublish Post' },
+                { class : 'info', group : 2, status : 1, text : 'Update Post' }],
+            tags : []
+        };
+
+        /**
+         * Initialize some functions to run
+         */
+        vm.initialize = function() {
+            // set the default status of the post
+            vm.editor.activeStatus = vm.editor.status[1];
+
+            // check first if there's a parameter set
+            if ($stateParams.postId) {
+                // get the post
+                EditorService.getPost($stateParams.postId)
+                    .success(function(response) {
+                        if (response.post) {
+                            vm.post = response.post;
+
+                            // check if the post is published
+                            if (response.post.status == 1) {
+                                // published post
+                                vm.editor.activeStatus = vm.editor.status[3];
+                            }
+
+                            // we're gonna assume that there's a published_at field returned
+                            vm.editor.dateNow = vm.convertDate(response.post.published_at);
+                        }
+                    })
+                    .error(function(response) {
+                        // something went wrong, redirect to 400, 404 or 500 page
+                    });
+            }
+        };
+
+        /**
+         * @param timestamp
+         * @returns {Date}
+         */
+        vm.convertDate = function(timestamp) {
+            // check if there's a value
+            if (timestamp) {
+                // let's assume this is a unix timestamp
+                var publishDate = new Date(timestamp * 1000);
+                return new Date(
+                    publishDate.getFullYear(),
+                    publishDate.getMonth(),
+                    publishDate.getDate(),
+                    publishDate.getHours(),
+                    publishDate.getMinutes())
+            }
+
+            // return the current date
+            return currentDate;
+        };
+
+        vm.deletePost = function() {
+            var modalInstance = $modal.open({
+                animation : true,
+                templateUrl : '/assets/templates/delete-post-modal/delete-post-modal.html',
+                controller : 'DeletePostModalController',
+                resolve : {
+                    post : function() {
+                        return vm.post;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(results) {
+                if (!results.error) {
+                    // no error occurred and post is successfully deleted
+                    // redirect to list of posts
+                    $state.go('post.lists');
+                }
+            });
+        };
+
+        /**
+         * Trigger submit event and sends request to API
+         */
+        vm.savePost = function() {
+            var post = vm.post;
+
+            // do an API request to save the post
+            EditorService.save(post)
+                .success(function(response) {
+                    var post = response.post;
+
+                    // check if post is newly created
+                    if (!vm.post.id) {
+                        ToastrService
+                            .toast('You have successfully created the post "'+post.title+'".', 'success');
+                        // redirect
+                        $state.go('postEditor', { postId : post.id });
+                        return;
+                    }
+
+                    // check if the post is published
+                    if (post.status == 1) {
+                        // published post
+                        vm.editor.activeStatus = vm.editor.status[3];
+                    }
+
+                    // check if the post is saved as draft or unpublished
+                    if (post.status == 2) {
+                        // default to save as draft
+                        vm.editor.activeStatus = vm.editor.status[1];
+                    }
+
+                    // show message
+                    ToastrService
+                        .toast('You have successfully updated "'+post.title+'".', 'success');
+
+                    // update the scope
+                    vm.post = post;
+                })
+                .error(function(response) {
+
+                });
+        };
+
+        /**
+         * Sets the status of the post
+         * @param state
+         */
+        vm.setPostStatus = function(state) {
+            // set first the active status to the selected one
+            vm.editor.activeStatus = state;
+
+            // set the status of the post
+            vm.post.status = state.status;
+        };
+
+        vm.showPane = function(pane) {
+            vm.editor.activePane = pane;
+        };
+
+        /**
+         * Toggle to open or close the editor sidebar
+         */
+        vm.toggleSidebar = function() {
+            vm.sidebar = !vm.sidebar;
+        };
+
+        /**
+         * Append the word/words depending the number of words inputted in the editor
+         */
+        vm.wordCounter = function() {
+            return vm.editor.counter > 0 ? vm.editor.counter + ' words' : '0 words';
+        };
+
+        vm.initialize();
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.component.header')
+        .controller('HeaderController', ['$rootScope', '$state', 'AuthService', HeaderController]);
+
+    function HeaderController($rootScope, $state, AuthService) {
+        var vm = this;
+
+        // get user details
+        vm.user = AuthService.user();
+
+        vm.logout = function() {
+            // destroy token
+            AuthService.logout();
+
+            // redirect to login page
+            $state.go('login');
+            return;
+        };
+
+        vm.setActiveMenu = function(menu) {
+            // get the current state name
+            var state = $state.current.name;
+            return (state.indexOf(menu) > -1);
+        };
+
+        vm.toggleSidebar = function() {
+            $rootScope.$broadcast('toggle-sidebar');
+        };
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.component.installer')
+        .controller('InstallerController', ['$rootScope', InstallerController]);
+
+    function InstallerController($rootScope) {
+        var vm = this;
+
+        // listen for broadcast event
+        $rootScope.$on('installer-menu', function(response, data) {
+            vm.active = (data || 1);
+        });
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.component.installerDetails')
+        .controller('InstallerDetailsController', ['$rootScope', '$state', 'AuthService', 'ToastrService', 'InstallerDetailsService', InstallerDetailsController]);
+
+    function InstallerDetailsController($rootScope, $state, AuthService, ToastrService, InstallerDetailsService) {
+        // broadcast that this is now the active page
+        $rootScope.$broadcast('installer-menu', 2);
+
+        var vm = this;
+
+        vm.account = [];
+        vm.errors = [];
+
+        vm.createAccount = function() {
+            InstallerDetailsService.createAccount(vm.account)
+                .success(function(response) {
+                    if (response.token) {
+                        // login the user
+                        AuthService.login(response.user);
+                        // save the token
+                        AuthService.setToken(response.token);
+                        // redirect
+                        $state.go('installer.success');
+                    }
+                })
+                .error(function(response) {
+                    // tell that there's an error
+                    ToastrService.toast('There are some errors encountered.', 'error');
+
+                    if (response.errors) {
+                        // show the error in the template
+                        vm.errors = response.errors;
+                    }
+                });
+        };
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.component.installerStart')
+        .controller('InstallerStartController', ['$rootScope', '$state', InstallerStartController]);
+
+    function InstallerStartController($rootScope) {
+        // broadcast that this is now the active page
+        $rootScope.$broadcast('installer-menu', 1);
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.component.installerSuccess')
+        .controller('InstallerSuccessController', ['$rootScope', '$state', 'AuthService', 'ToastrService', InstallerSuccessController]);
+
+    function InstallerSuccessController($rootScope, $state, AuthService, ToastrService) {
+        // broadcast that this is now the active page
+        $rootScope.$broadcast('installer-menu', 3);
+
+        var vm = this;
+
+        /**
+         * Checks if there's a user logged in
+         */
+        vm.initialize = function() {
+            // check first if there's a logged in user and token
+            if (!AuthService.user() && !AuthService.getToken()) {
+                // growl it first!
+                ToastrService.toast('Hey, something went wrong. Can you repeat again?', 'error');
+                // redirect
+                $state.go('installer.start');
+                return;
+            }
+        };
+
+        vm.go = function() {
+            $state.go('post.lists');
+        };
+
+        // fire away!
+        vm.initialize();
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.component.login')
+        .controller('LoginController', ['$state', 'AuthService', 'ToastrService', 'LoginService', LoginController]);
+
+    function LoginController($state, AuthService, ToastrService, LoginService) {
+        var vm = this;
+
+        vm.login = [];
+
+        vm.authenticate = function() {
+            var login = vm.login;
+
+            // do an API request to authenticate inputted user credentials
+            LoginService.authenticate(login.email, login.password)
+                .success(function(response) {
+                    if (response.user && response.token) {
+                        // save the user details
+                        AuthService.login(response.user);
+
+                        // save the token
+                        AuthService.setToken(response.token);
+
+                        ToastrService.toast('Welcome, ' + response.user.name, 'success');
+
+                        // redirect
+                        $state.go('post.lists');
+                        return;
+                    }
+                })
+                .error(function(response) {
+                    var message = response.errors.message;
+                    // show message
+                    ToastrService.toast(message, 'error');
+                });
+        };
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.component.postLists')
+        .controller('PostListsController', ['$modal', 'PostListService', PostListsController]);
+
+    function PostListsController($modal, PostListService) {
+        var vm = this;
+
+        vm.posts = [];
+        vm.activePost = null;
+        vm.activePane = 'lists';
+
+        vm.deletePost = function(post) {
+            var modalInstance = $modal.open({
+                animation : true,
+                templateUrl : '/assets/templates/delete-post-modal/delete-post-modal.html',
+                controller : 'DeletePostModalController',
+                resolve : {
+                    post : function() {
+                        return post;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(results) {
+                if (!results.error) {
+                    // no error occurred and post is successfully deleted
+                    // remove the post
+                    var index = vm.posts.indexOf(post);
+                    vm.posts.splice(index, 1);
+
+                    // get the current first post and make it active
+                    vm.activePost = vm.posts[0];
+
+                    // set the active page
+                    vm.activePane = 'lists';
+                }
+            });
+        };
+
+        vm.initialize = function() {
+            // get all the posts
+            PostListService.getPosts()
+                .success(function(response) {
+                    if (response.posts) {
+                        // get the post and assign to the scope
+                        vm.posts = response.posts;
+                        // get the first post and make it active
+                        vm.activePost = response.posts[0];
+                    }
+                });
+        };
+
+        vm.goBack = function() {
+            vm.activePane = 'lists';
+        };
+
+        /**
+         * Shows the selected post and preview its content
+         */
+        vm.previewThisPost = function(post) {
+            vm.activePost = post;
+
+            // set the preview window to active
+            vm.activePane = 'preview';
+        };
+
+        // fire away!
+        vm.initialize();
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.component.services')
+        .controller('ServicesController', ['ServicesService', 'ToastrService', ServicesController]);
+
+    function ServicesController(ServicesService, ToastrService) {
+        var vm = this;
+        vm.services = [];
+
+        /**
+         * This will run once the page loads
+         */
+        vm.initialize = function() {
+            // get disqus and google analytics values via API
+            ServicesService.getServices('google_analytics')
+                .success(function(response) {
+                    if (response.settings) {
+                        // assign it to our scope
+                        vm.services = response.settings;
+                    }
+                }).error(function() {
+                    // something went wrong
+                    // TODO: Create a handler to handle server errors from the API.
+                });
+        };
+
+        /**
+         * Handles the submit event that will send a request to the API to save
+         * the given data by the user
+         * @return {[type]} [description]
+         */
+        vm.saveServices = function() {
+            // prepare the data
+            var services = vm.services;
+
+            // trigger API call
+            ServicesService.saveServices(services)
+                .success(function(response) {
+                    // check for the response
+                    if (response.settings) {
+                        // toast it
+                        ToastrService.toast('You have successfully updated your services.', 'success');
+                    }
+                });
+        };
+
+        // fire away
+        vm.initialize();
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.component.settings')
+        .controller('SettingsController', ['$modal', 'ToastrService', 'SettingsService', SettingsController]);
+
+    function SettingsController($modal, ToastrService, SettingsService) {
+        var vm = this;
+        vm.settings = [];
+        vm.themes = [];
+
+        /**
+         * Fetch the settings saved
+         */
+        vm.initialize = function() {
+            // get settings
+            SettingsService.getSettings('title,description,post_per_page,cover_url,logo_url,theme')
+                .success(function(response) {
+                    if (response.settings) {
+                        vm.settings = response.settings;
+                    }
+                });
+
+            // get the themes
+            SettingsService.themes().success(function(response) {
+                if (response.themes) {
+                    vm.themes = response.themes;
+                }
+            });
+        };
+
+        vm.saveSettings = function() {
+            // save the settings
+            SettingsService.saveSettings(vm.settings)
+                .success(function(response) {
+                    if (response.settings) {
+                        // show success message
+                        ToastrService.toast('You have successfully updated the settings.', 'success');
+                    }
+                })
+        };
+
+        vm.selectedTheme = function(value) {
+            if (vm.settings.theme) {
+                return vm.settings.theme == value;
+            }
+
+            return false;
+        };
+
+        vm.showImageUploader = function(type) {
+            var modalInstance = $modal.open({
+                animation : true,
+                templateUrl : '/assets/templates/uploader-modal/uploader-modal.html',
+                controller : 'SettingsModalController',
+                resolve : {
+                    settings : function() {
+                        return vm.settings;
+                    },
+                    type : function() {
+                        return type
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(results) {
+                vm.settings = results;
+            });
+        };
+
+        // fire
+        vm.initialize();
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.component.settingsModal')
+        .controller('SettingsModalController', ['$scope', '$modalInstance', 'ToastrService', 'SettingsService', 'FileUploaderService', 'settings', 'type', SettingsModalController]);
+
+    /**
+     * Fuck this shit. I hate using scope :( :( :(
+     *
+     * @param $scope
+     * @param $modalInstance
+     * @param FileUploaderService
+     * @constructor
+     */
+    function SettingsModalController($scope, $modalInstance, ToastrService, SettingsService, FileUploaderService, settings, type) {
+        $scope.activeOption = 'file';
+        $scope.imageUrl = null;
+        $scope.image = {
+            link : null,
+            file : null
+        };
+
+        $scope.settings = settings;
+
+        $scope.upload = {
+            active : false,
+            percentage : 0
+        };
+
+        /**
+         * Listen for changes on the scope
+         */
+        $scope.$watch('image.file', function() {
+            if ($scope.image.file != null) {
+                //$scope.uploadFile($scope.image.file);
+                FileUploaderService.upload($scope.image.file)
+                    .progress(function(event) {
+                        $scope.upload = {
+                            active : true,
+                            percentage : parseInt(100.0 * event.loaded / event.total)
+                        };
+                    })
+                    .success(function(response) {
+                        if (response.url) {
+                            // show image
+                            $scope.imageUrl = response.url;
+                            // hide the progress bar
+                            $scope.upload = {
+                                active : false,
+                                percentage : 0
+                            };
+                        }
+                    })
+                    .error(function() {
+                        // handle the error
+                        ToastrService
+                            .toast('Something went wrong with the upload. Please try again later.', 'error');
+
+                        // hide progress bar
+                        $scope.upload = {
+                            active : false,
+                            percentage : 0
+                        };
+                    });
+            }
+        });
+
+        /**
+         * Closes the modal, duh
+         */
+        $scope.closeModal = function() {
+            $modalInstance.dismiss('cancel');
+        };
+
+        $scope.initialize = function() {
+            if (type == 'cover_url' && $scope.settings.cover_url) {
+                $scope.imageUrl = $scope.settings.cover_url;
+            }
+
+            if (type == 'logo_url' && $scope.settings.logo_url) {
+                $scope.imageUrl = $scope.settings.logo_url;
+            }
+        };
+
+        /**
+         * Removes the currently shown image and it also set the setting field to null
+         * so when the user saves the setting, the image will also be removed from the
+         * database
+         */
+        $scope.removeImage = function() {
+            // empty the imageUrl scope
+            $scope.imageUrl = null;
+            // empty the setting scope
+            $scope.settings[type] = null;
+        };
+
+        /**
+         * Saves the settings and updates it in the database
+         */
+        $scope.save = function() {
+            $scope.settings[type] = ($scope.imageUrl) ? $scope.imageUrl : $scope.image.link;
+
+            // save the settings
+            SettingsService.saveSettings($scope.settings)
+                .success(function(response) {
+                    if (response.settings) {
+                        // show success message
+                        ToastrService.toast('You have successfully updated the settings.', 'success');
+                        // close the modal
+                        $modalInstance.close(response.settings);
+                    }
+                })
+        };
+
+        /**
+         * Switches the option on how the user will upload an image.
+         * By default, it is set to upload a file.
+         */
+        $scope.switchOption = function() {
+            switch($scope.activeOption) {
+                case 'link' :
+                    $scope.activeOption = 'file';
+                    break;
+                case 'file' :
+                    $scope.activeOption = 'link';
+                    break;
+                default :
+                    $scope.activeOption = 'file';
+                    break;
+            }
+        };
+
+        $scope.initialize();
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.component.sidebar')
+        .controller('SidebarController', ['$state', '$rootScope', 'AuthService', 'SidebarService', SidebarController]);
+
+    function SidebarController($state, $rootScope, AuthService, SidebarService) {
+        var vm = this;
+        vm.openSidebar = false;
+        vm.title = 'Journal';
+        vm.user = AuthService.user();
+
+        // listen for broadcast event
+        $rootScope.$on('toggle-sidebar', function() {
+            vm.openSidebar = !vm.openSidebar;
+        });
+
+        vm.initialize = function() {
+            // get the title of the blog
+            SidebarService.getSettings('title')
+                .success(function(response) {
+                    vm.title = response.settings.title;
+                });
+        };
+
+        /**
+         * Logs out the user from the admin.
+         */
+        vm.logout = function() {
+            // destroy token
+            AuthService.logout();
+
+            // redirect to login page
+            $state.go('login');
+            return;
+        };
+
+        /**
+         * Once the overlay is clicked, the sidebar closes.
+         */
+        vm.tapOverlay = function() {
+            vm.toggleSidebar();
+        };
+
+        /**
+         * Opens or closes the sidebar
+         */
+        vm.toggleSidebar = function() {
+            vm.openSidebar = !vm.openSidebar;
+        };
+
+        // fire away
+        vm.initialize();
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.component.userCreate')
+        .controller('UserCreateController', ['ToastrService', 'UserCreateService', UserCreateController]);
+
+    function UserCreateController(ToastrService, UserCreateService) {
+        var vm = this;
+        // variables needed
+        vm.user = [];
+        vm.errors = [];
+
+        vm.createUser = function() {
+            // clear the errors
+            vm.errors = [];
+
+            // send request
+            UserCreateService.createUser(vm.user)
+                .success(function(response) {
+                    // user successfully created
+                    if (response.user) {
+                        // clear the form
+                        vm.user = [];
+                        // show success message
+                        ToastrService
+                            .toast('You have successfully added ' + response.user.name, 'success');
+                    }
+                })
+                .error(function(response) {
+                    if (response.errors) {
+                        // tell there's an error
+                        ToastrService.toast('There are errors encountered.', 'error');
+
+                        vm.errors = response.errors;
+
+                        // show the errors
+                        for (var e in response.errors) {
+                            ToastrService.toast(response.errors[e][0], 'error');
+                        }
+                    }
+                });
+        };
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.component.userLists')
+        .controller('UserListsController', ['UserListsService', 'CONFIG', UserListsController]);
+
+    function UserListsController(UserListService, CONFIG) {
+        var vm = this;
+
+        // user list scope
+        vm.users = [];
+
+        /**
+         * This will run once page loads
+         */
+        vm.initialize = function() {
+            // get the users
+            UserListService.getAllUsers()
+                .success(function(response) {
+                    if (response.users) {
+                        vm.users = response.users;
+                    }
+                })
+                .error(function() {
+                    // determine what is the error
+                });
+        };
+
+        vm.setUserAvatarImage = function(user) {
+            return (user.avatar_url) ? user.avatar_url : CONFIG.DEFAULT_AVATAR_URL;
+        };
+
+        // fire away
+        vm.initialize();
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.component.userProfile')
+        .controller('UserProfileController', ['$modal', '$stateParams', 'AuthService', 'ToastrService', 'UserProfileService', 'CONFIG', UserProfileController]);
+
+    function UserProfileController($modal, $stateParams, AuthService, ToastrService, UserProfileService, CONFIG) {
+        var vm = this;
+
+        vm.current = false;
+        vm.user = [];
+        vm.password = {};
+
+        vm.passwordErrors = [];
+
+        vm.initialize = function() {
+            // check if parameter is set
+            if (!$stateParams.userId) {
+                // redirect to a 404 page
+            }
+
+            // do an API call to check and get the user details
+            UserProfileService.getUser($stateParams.userId)
+                .success(function(response) {
+                    if (response.user) {
+                        // check if the profile of the user is with the current user
+                        vm.current = (AuthService.user().id == response.user.id);
+                        vm.user = response.user;
+                    }
+                })
+                .error(function(response, status) {
+                    if (status == 404) {
+                        // redirect to 404 page
+                    }
+
+                    // return to previous page and show a growl error? not sure though
+                });
+        };
+
+        vm.setImage = function(type) {
+            var imageSrc = null;
+            switch (type) {
+                case 'cover_url' :
+                    imageSrc = (vm.user.cover_url) ? vm.user.cover_url : CONFIG.DEFAULT_COVER_URL;
+                    break;
+                case 'avatar_url' :
+                    imageSrc = (vm.user.avatar_url) ? vm.user.avatar_url : CONFIG.DEFAULT_AVATAR_URL;
+                    break;
+            }
+
+            return "background-image: url('"+imageSrc+"')";
+        };
+
+        vm.showImageUploader = function(type) {
+            // check if the user owns the profile
+            if (!vm.current) {
+                return;
+            }
+
+            var modalInstance = $modal.open({
+                animation : true,
+                templateUrl : '/assets/templates/uploader-modal/uploader-modal.html',
+                controller : 'UserProfileModalController',
+                resolve : {
+                    user : function() {
+                        return vm.user;
+                    },
+                    type : function() {
+                        return type
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(results) {
+                vm.user = results;
+            });
+        };
+
+        /**
+         * [function description]
+         * @return {[type]} [description]
+         */
+        vm.updatePassword = function() {
+            var passwords = vm.password;
+
+            // do an API request to change the password
+            UserProfileService.updatePassword(passwords)
+                .success(function(response) {
+                    if (response.user) {
+                        // clear the fields
+                        ToastrService.toast('You have successfully updated your password.', 'success');
+                        // empty the variable scope
+                        vm.password = {};
+                    }
+                })
+                .error(function(response) {
+                    // show toastr
+                    ToastrService.toast('There are errors encountered.', 'error');
+                    if (response.errors) {
+                        if (response.message) {
+                            return;
+                        }
+
+                        // show the errors
+                        for (var e in response.errors) {
+                            ToastrService.toast(response.errors[e][0], 'error');
+                        }
+                    }
+                });
+        };
+
+        vm.updateProfile = function() {
+            var user = vm.user;
+
+            // do an API request to update details of the user
+            UserProfileService.updateUserDetails(user)
+                .success(function(response) {
+                    if (response.user) {
+                        // growl it!
+                        ToastrService.toast('You have successfully updated your profile.', 'success');
+                    }
+                })
+                .error(function(response) {
+                    // handle the error
+                });
+        };
+
+        // fire away
+        vm.initialize();
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.component.userProfileModal')
+        .controller('UserProfileModalController', ['$scope', '$modalInstance', 'ToastrService', 'UserProfileService', 'FileUploaderService', 'user', 'type', UserProfileModalController]);
+
+    function UserProfileModalController($scope, $modalInstance, ToastrService, UserProfileService, FileUploaderService, user, type) {
+        $scope.activeOption = 'file';
+        $scope.imageUrl = null;
+        $scope.image = {
+            link : null,
+            file : null
+        };
+
+        $scope.user = user;
+
+        $scope.upload = {
+            active : false,
+            percentage : 0
+        };
+
+        /**
+         * Listen for changes on the scope
+         */
+        $scope.$watch('image.file', function() {
+            if ($scope.image.file != null) {
+                //$scope.uploadFile($scope.image.file);
+                FileUploaderService.upload($scope.image.file)
+                    .progress(function(event) {
+                        $scope.upload = {
+                            active : true,
+                            percentage : parseInt(100.0 * event.loaded / event.total)
+                        };
+                    })
+                    .success(function(response) {
+                        if (response.url) {
+                            // show image
+                            $scope.imageUrl = response.url;
+                            // hide the progress bar
+                            $scope.upload = {
+                                active : false,
+                                percentage : 0
+                            };
+                        }
+                    })
+                    .error(function() {
+                        // handle the error
+                        ToastrService
+                            .toast('Something went wrong with the upload. Please try again later.', 'error');
+
+                        // hide progress bar
+                        $scope.upload = {
+                            active : false,
+                            percentage : 0
+                        };
+                    });
+            }
+        });
+
+        /**
+         * Closes the modal, duh
+         */
+        $scope.closeModal = function() {
+            $modalInstance.dismiss('cancel');
+        };
+
+        $scope.initialize = function() {
+            if (type == 'cover_url' && $scope.user.cover_url) {
+                $scope.imageUrl = $scope.user.cover_url;
+            }
+
+            if (type == 'avatar_url' && $scope.user.avatar_url) {
+                $scope.imageUrl = $scope.user.avatar_url;
+            }
+        };
+
+        /**
+         * Removes the currently shown image and it also set the setting field to null
+         * so when the user saves the setting, the image will also be removed from the
+         * database
+         */
+        $scope.removeImage = function() {
+            // empty the imageUrl scope
+            $scope.imageUrl = null;
+            // empty the setting scope
+            $scope.settings[type] = null;
+        };
+
+        /**
+         * Saves the settings and updates it in the database
+         */
+        $scope.save = function() {
+            $scope.user[type] = ($scope.imageUrl) ? $scope.imageUrl : $scope.image.link;
+
+            // do an API request to update details of the user
+            UserProfileService.updateUserDetails($scope.user)
+                .success(function(response) {
+                    if (response.user) {
+                        // growl it!
+                        ToastrService.toast('You have successfully updated your profile.', 'success');
+
+                        // close the modal and returns the response from the server
+                        $modalInstance.close(response.user);
+                    }
+                })
+                .error(function(response) {
+                    // handle the error
+                });
+        };
+
+        /**
+         * Switches the option on how the user will upload an image.
+         * By default, it is set to upload a file.
+         */
+        $scope.switchOption = function() {
+            switch($scope.activeOption) {
+                case 'link' :
+                    $scope.activeOption = 'file';
+                    break;
+                case 'file' :
+                    $scope.activeOption = 'link';
+                    break;
+                default :
+                    $scope.activeOption = 'file';
+                    break;
+            }
+        };
+
+        $scope.initialize();
+    }
+})();

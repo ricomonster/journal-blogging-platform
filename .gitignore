@@ -7,3 +7,4 @@ Homestead.yaml
 .idea
 composer.lock
 /public/uploads
+/resources/build
