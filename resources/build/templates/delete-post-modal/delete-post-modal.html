@@ -1,0 +1,13 @@
+<article id="delete_post_modal">
+    <section class="modal-body">
+        <h3 class="hero-title">Delete post</h3>
+        <p>
+            Deleted posts are gone forever. Are you sure you wanted to delete the post
+            <span class="post-title">{{post.title}}</span>?
+        </p>
+    </section>
+    <footer class="modal-footer">
+        <button class="btn btn-danger" type="button" ng-click="deletePost()">Delete</button>
+        <button class="btn btn-default" type="button" ng-click="cancelPost()">Cancel</button>
+    </footer>
+</article>

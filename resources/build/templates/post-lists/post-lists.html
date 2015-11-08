@@ -1,0 +1,69 @@
+<div ng-controller="PostListsController as plc">
+    <section id="post_lists_page" class="main-container container-fluid">
+        <header class="page-header">
+            <h1 class="hero-title">Posts</h1>
+            <a ui-sref="editor" class="pull-right btn btn-primary">Write a new Post</a>
+        </header>
+        <div class="content-wrapper">
+            <section class="list-of-posts" ng-class="{'active' : plc.activePane == 'lists'}">
+                <header class="floating-header">
+                    <span class="header-title">All Posts</span>
+                </header>
+                <section class="post-lists-stream">
+                    <article class="post-wrapper auto-height" ng-repeat="post in plc.posts"
+                    ng-class="{ 'active' : post == plc.activePost }">
+                        <a class="post-hyperlink" ng-click="plc.previewThisPost(post)">
+                            <header class="post-title">{{post.title}}</header>
+                            <section class="post-meta">
+                                <span class="post-status">
+                                    <time class="date-published text-muted" ng-if="post.status == 1">
+                                        Published
+                                        <span am-time-ago="post.published_at" am-preprocess="unix"></span>
+                                    </time>
+                                    <span class="draft text-danger" ng-if="post.status == 2">Draft</span>
+                                </span>
+                            </section>
+                        </a>
+                    </article>
+                </section>
+            </section>
+            <section class="post-preview-wrapper" ng-class="{'active' : plc.activePane == 'preview'}">
+                <article class="post-wrapper" ng-class="{'active' : plc.activePost}">
+                    <header class="floating-header">
+                        <div class="header-title">
+                            <a class="btn btn-info btn-xs back-button" ng-click="plc.goBack()">Back</a>
+
+                            <span class="post-state" ng-if="plc.activePost.status == 1">Published by</span>
+						    <span class="post-state" ng-if="plc.activePost.status == 2">Written By</span>
+                            <span class="post-author-name">{{plc.activePost.author.name}}</span>
+                        </div>
+                        <div class="post-controls">
+                            <div dropdown>
+                                <a href="#" dropdown-toggle data-toggle="dropdown" aria-expanded="true">
+                                    <i class="fa fa-gear"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                    <li role="presentation">
+                                        <a role="menuitem" tabindex="-1" ui-sref="postEditor({postId : plc.activePost.id})">Edit</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a role="menuitem" tabindex="-1" href="/{{plc.activePost.slug}}"
+                                        ng-if="plc.activePost.status == 1" target="_blank">Preview</a>
+                                        <a role="menuitem" tabindex="-1" href="/{{plc.activePost.slug}}?preview"
+                                        ng-if="plc.activePost.status == 2" target="_blank">Preview</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a role="menuitem" tabindex="-1" ng-click="plc.deletePost(plc.activePost)">Remove</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </header>
+                    <section class="preview-wrapper">
+                        <div journal-markdown="plc.activePost.markdown" class="rendered-markdown"></div>
+                    </section>
+                </article>
+            </section>
+        </div>
+    </section>
+</div>

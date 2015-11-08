@@ -44,7 +44,7 @@ Install Journal/Laravel's dependency using Composer. If you don't have Composer,
 composer install
 
 # Node JS things
-npm install 
+npm install
 ```
 
 Install [Gulp](https://www.npmjs.com/package/gulp) and [Bower](https://www.npmjs.com/package/bower)
@@ -54,12 +54,12 @@ npm install -g gulp bower
 
 Build it!
 ```bash
-gulp build
+gulp dev
 ```
 
 Do you want this thing to run like in production?
 ```bash
-gulp build-prod
+gulp prod
 ```
 
 Fire it up!
