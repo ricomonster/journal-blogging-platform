@@ -358,7 +358,7 @@
             }
 
             // check if the next page is installer page
-            if (toState.name.indexOf('installer') == 'installer') {
+            if (toState.name.indexOf('installer') > 0) {
                 // check if journal is already installed
                 AuthService.checkInstallation()
                     .success(function(response) {
