@@ -10,8 +10,8 @@
         vm.current = false;
         vm.user = [];
         vm.password = {};
-
         vm.passwordErrors = [];
+        vm.processing = false;
 
         vm.initialize = function() {
             // check if parameter is set
@@ -83,10 +83,15 @@
         vm.updatePassword = function() {
             var passwords = vm.password;
 
+            // flag that we're processing a request
+            vm.processing = true;
+
             // do an API request to change the password
             UserProfileService.updatePassword(passwords)
                 .success(function(response) {
                     if (response.user) {
+                        vm.processing = false;
+
                         // clear the fields
                         ToastrService.toast('You have successfully updated your password.', 'success');
                         // empty the variable scope
@@ -94,6 +99,8 @@
                     }
                 })
                 .error(function(response) {
+                    vm.processing = false;
+
                     // show toastr
                     ToastrService.toast('There are errors encountered.', 'error');
                     if (response.errors) {
@@ -112,16 +119,21 @@
         vm.updateProfile = function() {
             var user = vm.user;
 
+            // flag that we're processing a request
+            vm.processing = true;
+
             // do an API request to update details of the user
             UserProfileService.updateUserDetails(user)
                 .success(function(response) {
                     if (response.user) {
+                        vm.processing = false;
+
                         // growl it!
                         ToastrService.toast('You have successfully updated your profile.', 'success');
                     }
                 })
                 .error(function(response) {
-                    // handle the error
+                    vm.processing = false;
                 });
         };
 

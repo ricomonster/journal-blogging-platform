@@ -937,6 +937,11 @@ tag-input .tags-wrapper .tag-suggestions .dropdown-menu {
     #user_profile_page .profile-content { width: 90%; }
 }
 
+.btn-loader p { margin: 0; }
+.btn-loader i.fa { display: none;}
+.btn-loader.btn-loading p { display: none; }
+.btn-loader.btn-loading i.fa { display: inline-block; }
+
 #uploader_modal .upload-wrapper {
     background: #f6f7f8;
     border-radius: 4px;

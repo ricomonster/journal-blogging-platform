@@ -6,6 +6,7 @@
 
     function ServicesController(ServicesService, ToastrService) {
         var vm = this;
+        vm.processing = false;
         vm.services = [];
 
         /**
@@ -34,11 +35,16 @@
             // prepare the data
             var services = vm.services;
 
+            // flag that a request is being processed
+            vm.processing = true;
+
             // trigger API call
             ServicesService.saveServices(services)
                 .success(function(response) {
                     // check for the response
                     if (response.settings) {
+                        vm.processing = false;
+
                         // toast it
                         ToastrService.toast('You have successfully updated your services.', 'success');
                     }

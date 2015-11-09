@@ -12,8 +12,8 @@
             file : null
         };
 
+        $scope.processing = false;
         $scope.user = user;
-
         $scope.upload = {
             active : false,
             percentage : 0
@@ -24,7 +24,9 @@
          */
         $scope.$watch('image.file', function() {
             if ($scope.image.file != null) {
-                //$scope.uploadFile($scope.image.file);
+                // flag that we're processing a request
+                $scope.processing = true;
+
                 FileUploaderService.upload($scope.image.file)
                     .progress(function(event) {
                         $scope.upload = {
@@ -34,6 +36,8 @@
                     })
                     .success(function(response) {
                         if (response.url) {
+                            $scope.processing = false;
+
                             // show image
                             $scope.imageUrl = response.url;
                             // hide the progress bar
@@ -44,6 +48,8 @@
                         }
                     })
                     .error(function() {
+                        $scope.processing = false;
+
                         // handle the error
                         ToastrService
                             .toast('Something went wrong with the upload. Please try again later.', 'error');
@@ -90,6 +96,9 @@
          * Saves the settings and updates it in the database
          */
         $scope.save = function() {
+            // flag that we're processing a request
+            $scope.processing = true;
+
             $scope.user[type] = ($scope.imageUrl) ? $scope.imageUrl : $scope.image.link;
 
             // do an API request to update details of the user
@@ -105,6 +114,7 @@
                 })
                 .error(function(response) {
                     // handle the error
+                    $scope.processing = false;
                 });
         };
 

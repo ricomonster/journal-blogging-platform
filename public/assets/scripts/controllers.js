@@ -6,6 +6,7 @@
 
     function DeletePostModalController($scope, $modalInstance, DeletePostModalService, ToastrService, post) {
         $scope.post = post;
+        $scope.processing = false;
 
         $scope.cancelPost = function() {
             // just close the modal
@@ -13,6 +14,9 @@
         };
 
         $scope.deletePost = function() {
+            // flag that we're processing
+            $scope.processing = true;
+
             // do an API request to delete the post
             DeletePostModalService.deletePost($scope.post.id)
                 .success(function(response) {
@@ -29,6 +33,8 @@
                     }
                 })
                 .error(function(response) {
+                    $scope.processing = false;
+
                     // tell there's a fucking error
                     ToastrService.toast('Something went wrong. Please try again later.', 'error');
                     // close the fucking modal
@@ -54,7 +60,6 @@
                 date.getDate(),
                 date.getHours(),
                 date.getMinutes());
-
 
         vm.sidebar = false;
         vm.post = {
@@ -84,6 +89,7 @@
                 { class : 'info', group : 2, status : 1, text : 'Update Post' }],
             tags : []
         };
+        vm.processing = false;
 
         /**
          * Initialize some functions to run
@@ -164,10 +170,16 @@
         vm.savePost = function() {
             var post = vm.post;
 
+            // flag that it is loading
+            vm.processing = true;
+
             // do an API request to save the post
             EditorService.save(post)
                 .success(function(response) {
                     var post = response.post;
+
+                    // unflag processing state
+                    vm.processing = false;
 
                     // check if post is newly created
                     if (!vm.post.id) {
@@ -198,7 +210,8 @@
                     vm.post = post;
                 })
                 .error(function(response) {
-
+                    // unflag processing state
+                    vm.processing = false;
                 });
         };
 
@@ -380,11 +393,14 @@
 
     function LoginController($state, AuthService, ToastrService, LoginService) {
         var vm = this;
-
+        vm.loading = false;
         vm.login = [];
 
         vm.authenticate = function() {
             var login = vm.login;
+
+            // set it to loading
+            vm.loading = true;
 
             // do an API request to authenticate inputted user credentials
             LoginService.authenticate(login.email, login.password)
@@ -404,6 +420,8 @@
                     }
                 })
                 .error(function(response) {
+                    vm.loading = false;
+
                     var message = response.errors.message;
                     // show message
                     ToastrService.toast(message, 'error');
@@ -493,6 +511,7 @@
 
     function ServicesController(ServicesService, ToastrService) {
         var vm = this;
+        vm.processing = false;
         vm.services = [];
 
         /**
@@ -521,11 +540,16 @@
             // prepare the data
             var services = vm.services;
 
+            // flag that a request is being processed
+            vm.processing = true;
+
             // trigger API call
             ServicesService.saveServices(services)
                 .success(function(response) {
                     // check for the response
                     if (response.settings) {
+                        vm.processing = false;
+
                         // toast it
                         ToastrService.toast('You have successfully updated your services.', 'success');
                     }
@@ -545,6 +569,7 @@
 
     function SettingsController($modal, ToastrService, SettingsService) {
         var vm = this;
+        vm.processing = false;
         vm.settings = [];
         vm.themes = [];
 
@@ -569,10 +594,15 @@
         };
 
         vm.saveSettings = function() {
+            // flag that we're processing a request
+            vm.processing = true;
+
             // save the settings
             SettingsService.saveSettings(vm.settings)
                 .success(function(response) {
                     if (response.settings) {
+                        vm.processing = false;
+
                         // show success message
                         ToastrService.toast('You have successfully updated the settings.', 'success');
                     }
@@ -634,8 +664,8 @@
             file : null
         };
 
+        $scope.processing = false;
         $scope.settings = settings;
-
         $scope.upload = {
             active : false,
             percentage : 0
@@ -646,7 +676,9 @@
          */
         $scope.$watch('image.file', function() {
             if ($scope.image.file != null) {
-                //$scope.uploadFile($scope.image.file);
+                // flag that we're processing
+                $scope.processing = true;
+
                 FileUploaderService.upload($scope.image.file)
                     .progress(function(event) {
                         $scope.upload = {
@@ -656,6 +688,7 @@
                     })
                     .success(function(response) {
                         if (response.url) {
+                            $scope.processing = false;
                             // show image
                             $scope.imageUrl = response.url;
                             // hide the progress bar
@@ -666,6 +699,7 @@
                         }
                     })
                     .error(function() {
+                        $scope.processing = false;
                         // handle the error
                         ToastrService
                             .toast('Something went wrong with the upload. Please try again later.', 'error');
@@ -712,6 +746,9 @@
          * Saves the settings and updates it in the database
          */
         $scope.save = function() {
+            // flag that we're processing
+            $scope.processing = true;
+
             $scope.settings[type] = ($scope.imageUrl) ? $scope.imageUrl : $scope.image.link;
 
             // save the settings
@@ -815,16 +852,22 @@
         // variables needed
         vm.user = [];
         vm.errors = [];
+        vm.processing = false;
 
         vm.createUser = function() {
             // clear the errors
             vm.errors = [];
+
+            // flag that a request is being processed
+            vm.processing = true;
 
             // send request
             UserCreateService.createUser(vm.user)
                 .success(function(response) {
                     // user successfully created
                     if (response.user) {
+                        vm.processing = false;
+
                         // clear the form
                         vm.user = [];
                         // show success message
@@ -834,6 +877,8 @@
                 })
                 .error(function(response) {
                     if (response.errors) {
+                        vm.processing = false;
+
                         // tell there's an error
                         ToastrService.toast('There are errors encountered.', 'error');
 
@@ -898,8 +943,8 @@
         vm.current = false;
         vm.user = [];
         vm.password = {};
-
         vm.passwordErrors = [];
+        vm.processing = false;
 
         vm.initialize = function() {
             // check if parameter is set
@@ -971,10 +1016,15 @@
         vm.updatePassword = function() {
             var passwords = vm.password;
 
+            // flag that we're processing a request
+            vm.processing = true;
+
             // do an API request to change the password
             UserProfileService.updatePassword(passwords)
                 .success(function(response) {
                     if (response.user) {
+                        vm.processing = false;
+
                         // clear the fields
                         ToastrService.toast('You have successfully updated your password.', 'success');
                         // empty the variable scope
@@ -982,6 +1032,8 @@
                     }
                 })
                 .error(function(response) {
+                    vm.processing = false;
+
                     // show toastr
                     ToastrService.toast('There are errors encountered.', 'error');
                     if (response.errors) {
@@ -1000,16 +1052,21 @@
         vm.updateProfile = function() {
             var user = vm.user;
 
+            // flag that we're processing a request
+            vm.processing = true;
+
             // do an API request to update details of the user
             UserProfileService.updateUserDetails(user)
                 .success(function(response) {
                     if (response.user) {
+                        vm.processing = false;
+
                         // growl it!
                         ToastrService.toast('You have successfully updated your profile.', 'success');
                     }
                 })
                 .error(function(response) {
-                    // handle the error
+                    vm.processing = false;
                 });
         };
 
@@ -1032,8 +1089,8 @@
             file : null
         };
 
+        $scope.processing = false;
         $scope.user = user;
-
         $scope.upload = {
             active : false,
             percentage : 0
@@ -1044,7 +1101,9 @@
          */
         $scope.$watch('image.file', function() {
             if ($scope.image.file != null) {
-                //$scope.uploadFile($scope.image.file);
+                // flag that we're processing a request
+                $scope.processing = true;
+
                 FileUploaderService.upload($scope.image.file)
                     .progress(function(event) {
                         $scope.upload = {
@@ -1054,6 +1113,8 @@
                     })
                     .success(function(response) {
                         if (response.url) {
+                            $scope.processing = false;
+
                             // show image
                             $scope.imageUrl = response.url;
                             // hide the progress bar
@@ -1064,6 +1125,8 @@
                         }
                     })
                     .error(function() {
+                        $scope.processing = false;
+
                         // handle the error
                         ToastrService
                             .toast('Something went wrong with the upload. Please try again later.', 'error');
@@ -1110,6 +1173,9 @@
          * Saves the settings and updates it in the database
          */
         $scope.save = function() {
+            // flag that we're processing a request
+            $scope.processing = true;
+
             $scope.user[type] = ($scope.imageUrl) ? $scope.imageUrl : $scope.image.link;
 
             // do an API request to update details of the user
@@ -1125,6 +1191,7 @@
                 })
                 .error(function(response) {
                     // handle the error
+                    $scope.processing = false;
                 });
         };
 

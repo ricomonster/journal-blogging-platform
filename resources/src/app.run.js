@@ -23,7 +23,7 @@
             }
 
             // check if the next page is installer page
-            if (toState.name == 'installer' || toState.name == 'installer.start') {
+            if (toState.name.indexOf('installer') == 'installer') {
                 // check if journal is already installed
                 AuthService.checkInstallation()
                     .success(function(response) {
@@ -49,7 +49,7 @@
             });
         });
     }
-
+    
     /**
      * Checks if the there's a provided token and checks if the token is valid.
      * This will run once the page loads.
