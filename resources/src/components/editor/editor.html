@@ -46,10 +46,11 @@
                             <i class="fa fa-gear"></i>
                         </a>
                         <div class="btn-group dropup" dropdown>
-                            <button type="submit" class="btn"
+                            <button type="submit" class="btn" button-loader="ec.processing"
                             ng-class="{'primary' : 'btn-primary', 'danger' : 'btn-danger', 'info' : 'btn-info'}[ec.editor.activeStatus.class]">{{ec.editor.activeStatus.text}}</button>
                             <button type="button" class="btn" dropdown-toggle
-                            ng-class="{'primary' : 'btn-primary', 'danger' : 'btn-danger', 'info' : 'btn-info'}[ec.editor.activeStatus.class]">
+                            ng-class="{'primary' : 'btn-primary', 'danger' : 'btn-danger', 'info' : 'btn-info'}[ec.editor.activeStatus.class]"
+                            button-loader="ec.processing">
                                 <span class="caret"></span>
                                 <span class="sr-only"></span>
                             </button>
@@ -78,10 +79,10 @@
                 <section class="sidebar-controls">
                     <div class="form-group">
                         <div ng-if="ec.post.id">
-                            <a href="/{{ec.post.slug}}" class="pull-right"
+                            <a href="/{{ec.post.slug}}" class="pull-right" target="_blank"
                             ng-if="ec.post.status == 1">View post</a>
                             <a href="/{{ec.post.slug}}?preview" class="pull-right"
-                            ng-if="ec.post.status == 2">View post</a>
+                            target="_blank" ng-if="ec.post.status == 2">View post</a>
                         </div>
                         <label class="control-label">Post URL</label>
                         <input type="text" ng-model="ec.post.slug" class="form-control"/>

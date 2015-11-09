@@ -15,7 +15,6 @@
                 date.getHours(),
                 date.getMinutes());
 
-
         vm.sidebar = false;
         vm.post = {
             author_id : AuthService.user().id,
@@ -44,6 +43,7 @@
                 { class : 'info', group : 2, status : 1, text : 'Update Post' }],
             tags : []
         };
+        vm.processing = false;
 
         /**
          * Initialize some functions to run
@@ -124,10 +124,16 @@
         vm.savePost = function() {
             var post = vm.post;
 
+            // flag that it is loading
+            vm.processing = true;
+
             // do an API request to save the post
             EditorService.save(post)
                 .success(function(response) {
                     var post = response.post;
+
+                    // unflag processing state
+                    vm.processing = false;
 
                     // check if post is newly created
                     if (!vm.post.id) {
@@ -158,7 +164,8 @@
                     vm.post = post;
                 })
                 .error(function(response) {
-
+                    // unflag processing state
+                    vm.processing = false;
                 });
         };
 

@@ -6,11 +6,14 @@
 
     function LoginController($state, AuthService, ToastrService, LoginService) {
         var vm = this;
-
+        vm.loading = false;
         vm.login = [];
 
         vm.authenticate = function() {
             var login = vm.login;
+
+            // set it to loading
+            vm.loading = true;
 
             // do an API request to authenticate inputted user credentials
             LoginService.authenticate(login.email, login.password)
@@ -30,6 +33,8 @@
                     }
                 })
                 .error(function(response) {
+                    vm.loading = false;
+
                     var message = response.errors.message;
                     // show message
                     ToastrService.toast(message, 'error');

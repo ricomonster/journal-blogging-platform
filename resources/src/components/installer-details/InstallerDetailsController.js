@@ -9,11 +9,14 @@
         $rootScope.$broadcast('installer-menu', 2);
 
         var vm = this;
-
-        vm.account = [];
-        vm.errors = [];
+        vm.account      = [];
+        vm.errors       = [];
+        vm.processing   = false;
 
         vm.createAccount = function() {
+            // flag that we're processing the request
+            vm.processing = true;
+            
             InstallerDetailsService.createAccount(vm.account)
                 .success(function(response) {
                     if (response.token) {
@@ -26,6 +29,8 @@
                     }
                 })
                 .error(function(response) {
+                    vm.processing = false;
+                    
                     // tell that there's an error
                     ToastrService.toast('There are some errors encountered.', 'error');
 
