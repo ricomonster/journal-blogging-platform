@@ -4,7 +4,8 @@
     angular.module('journal.component.editor')
         .directive('checkPostSlug', ['$timeout', 'EditorService', CheckPostSlug])
         .directive('tagInput', ['EditorService', TagInput])
-        .directive('editorScroll', [EditorScroll]);
+        .directive('editorScroll', [EditorScroll])
+        .directive('featuredImage', ['FileUploaderService', FeaturedImageDirective]);
 
     function CheckPostSlug($timeout, EditorService) {
         return {
@@ -200,6 +201,23 @@
 
                         previewContent[0].scrollTop = scroll;
                     });
+            }
+        }
+    }
+
+    function FeaturedImageDirective(FileUploaderService) {
+        return {
+            restrict : 'EA',
+            scope : {
+                featuredImage : '=ngModel'
+            },
+            controllerAs : 'fid',
+            controller : [function() {
+                
+            }],
+            templateUrl : '/assets/templates/editor/featured-image.html',
+            link : function(scope, element, attributes, controller) {
+                
             }
         }
     }
