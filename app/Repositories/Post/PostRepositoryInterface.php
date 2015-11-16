@@ -11,13 +11,15 @@ interface PostRepositoryInterface
      * @param $authorId
      * @param $title
      * @param $markdown
+     * @param $featuredImage
      * @param $slug
      * @param $status
      * @param $publishedAt
      * @param $tagIds
      * @return \Journal\Post
      */
-    public function create($authorId, $title, $markdown, $slug, $status, $publishedAt, $tagIds);
+    public function create($authorId, $title, $markdown, $featuredImage, $slug,
+        $status, $publishedAt, $tagIds);
 
     /**
      * @return \Journal\Post
@@ -54,13 +56,15 @@ interface PostRepositoryInterface
      * @param $authorId
      * @param $title
      * @param $markdown
+     * @param $featuredImage
      * @param $slug
      * @param $status
      * @param $publishedAt
      * @param $tagIds
      * @return \Journal\Post
      */
-    public function update($id, $authorId, $title, $markdown, $slug, $status, $publishedAt, $tagIds);
+    public function update($id, $authorId, $title, $markdown, $featuredImage,
+        $slug, $status, $publishedAt, $tagIds);
 
     /**
      * @param $id

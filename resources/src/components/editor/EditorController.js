@@ -97,6 +97,9 @@
             return currentDate;
         };
 
+        /**
+         * Shows the modal to confirm to delete the post
+         */
         vm.deletePost = function() {
             var modalInstance = $modal.open({
                 animation : true,
