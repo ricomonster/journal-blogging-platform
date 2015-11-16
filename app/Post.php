@@ -18,8 +18,8 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = ['author_id', 'title', 'markdown', 'slug', 'status',
-        'active', 'published_at'];
+    protected $fillable = ['author_id', 'title', 'markdown', 'featured_image',
+        'slug', 'status', 'active', 'published_at'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -77,6 +77,6 @@ class Post extends Model
      */
     public function tags()
     {
-        return $this->belongsToMany('Journal\Tag', 'posts_tags', 'post_id', 'tag_id');
+        return $this->belongsToMany('Journal\Tag', 'post_tags', 'post_id', 'tag_id');
     }
 }

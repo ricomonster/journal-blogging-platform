@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePostTagsTable extends Migration
+class AddFeaturedImageColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,9 @@ class CreatePostTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('post_tags', function (Blueprint $table) {
-            $table->integer('post_id')->unsigned();
-            $table->integer('tag_id')->unsigned();
+        Schema::table('posts', function (Blueprint $table) {
+            $table->string('featured_image')->nullable()
+                ->after('markdown');
         });
     }
 
@@ -25,6 +25,8 @@ class CreatePostTagsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('post_tags');
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropColumn('featured_image');
+        });
     }
 }

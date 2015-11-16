@@ -4,7 +4,8 @@
     angular.module('journal.component.editor')
         .directive('checkPostSlug', ['$timeout', 'EditorService', CheckPostSlug])
         .directive('tagInput', ['EditorService', TagInput])
-        .directive('editorScroll', [EditorScroll]);
+        .directive('editorScroll', [EditorScroll])
+        .directive('featuredImage', ['FileUploaderService', 'ToastrService', FeaturedImageDirective]);
 
     function CheckPostSlug($timeout, EditorService) {
         return {
@@ -200,6 +201,118 @@
 
                         previewContent[0].scrollTop = scroll;
                     });
+            }
+        }
+    }
+
+    function FeaturedImageDirective(FileUploaderService, ToastrService) {
+        return {
+            restrict : 'EA',
+            scope : {
+                featuredImage : '=ngModel'
+            },
+            controllerAs : 'fid',
+            controller : ['$scope', function($scope) {
+                var vm = this;
+                vm.activeOption = 'file';
+                vm.imageUrl = $scope.featuredImage || '';
+                vm.image = {
+                    link : null,
+                    file : null
+                };
+
+                vm.processing = false;
+                vm.upload = {
+                    active : false,
+                    percentage : 0
+                };
+
+                /**
+                 * Handles the blur event to get the image link
+                 */
+                vm.getImageLink = function() {
+                    vm.imageUrl = vm.image.link;
+                };
+
+                /**
+                 * Removes the featured image
+                 */
+                vm.removeImage = function() {
+                    vm.imageUrl = null;
+                    // empty the link, just in case
+                    vm.image.link = null;
+                };
+
+                /**
+                 * Handles changing of option on how to upload featured image.
+                 * @returns {*}
+                 */
+                vm.switchOption = function() {
+                    if (vm.activeOption == 'file') {
+                        return vm.activeOption = 'link';
+                    } else if (vm.activeOption == 'link') {
+                        return vm.activeOption = 'file';
+                    }
+                };
+
+                /**
+                 * Listens for changes in the file scope
+                 */
+                $scope.$watch(function() {
+                    return vm.image.file;
+                }, function(file) {
+                    // now let's processing the image to be uploaded
+                    if (file) {
+                        FileUploaderService.upload(file)
+                            .progress(function(event) {
+                                vm.upload = {
+                                    active : true,
+                                    percentage : parseInt(100.0 * event.loaded / event.total)
+                                };
+                            })
+                            .success(function(response) {
+                                if (response.url) {
+                                    //$scope.processing = false;
+
+                                    // show image
+                                    vm.imageUrl = response.url;
+                                    // hide the progress bar
+                                    vm.upload = {
+                                        active : false,
+                                        percentage : 0
+                                    };
+                                }
+                            })
+                            .error(function() {
+                                //$scope.processing = false;
+
+                                // handle the error
+                                ToastrService
+                                    .toast('Something went wrong with the upload. Please try again later.', 'error');
+
+                                // hide progress bar
+                                vm.upload = {
+                                    active : false,
+                                    percentage : 0
+                                };
+                            });
+                    }
+                });
+
+                /**
+                 * Listen for changes for the image url
+                 */
+                $scope.$watch(function() {
+                    return vm.imageUrl;
+                }, function(image) {
+                    // set the ng-model
+                    $scope.featuredImage = image;
+                });
+            }],
+            replace : true,
+            templateUrl : '/assets/templates/editor/featured-image.html',
+            link : function(scope, element, attributes, controller) {
+
             }
         }
     }

@@ -47,15 +47,16 @@
         };
 
         this.save = function(post) {
-            var token       = AuthService.getToken(),
-                url         = this.apiUrl + '/posts/save?token=' + token,
-                authorId    = (post.author_id || ''),
-                title       = (post.title || ''),
-                markdown    = (post.markdown || ''),
-                slug        = (post.slug || ''),
-                status      = (post.status || 2),
-                tags        = (post.tags || ''),
-                publishedAt = (post.published_at || Math.floor(Date.now() / 1000));
+            var token           = AuthService.getToken(),
+                url             = this.apiUrl + '/posts/save?token=' + token,
+                authorId        = post.author_id || '',
+                title           = post.title || '',
+                markdown        = post.markdown || '',
+                featuredImage   = post.featured_image || '',
+                slug            = post.slug || '',
+                status          = post.status || 2,
+                tags            = post.tags || [],
+                publishedAt     = post.published_at || Math.floor(Date.now() / 1000);
 
             // check if post_id is set
             if (post.id) {
@@ -64,13 +65,14 @@
 
             // send the request to the API
             return $http.post(url, {
-                author_id : authorId,
-                title : title,
-                markdown : markdown,
-                slug : slug,
-                status : status,
-                tags : tags,
-                published_at : publishedAt});
+                author_id       : authorId,
+                title           : title,
+                markdown        : markdown,
+                featured_image  : featuredImage,
+                slug            : slug,
+                status          : status,
+                tags            : tags,
+                published_at    : publishedAt});
         };
     }
 })();

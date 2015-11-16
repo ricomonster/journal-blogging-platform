@@ -15,20 +15,24 @@ class DbPostRepository implements PostRepositoryInterface
      * @param $authorId
      * @param $title
      * @param $markdown
+     * @param $featuredImage
      * @param $slug
      * @param $status
      * @param $publishedAt
+     * @param $tagIds
      * @return \Journal\Post
      */
-    public function create($authorId, $title, $markdown, $slug, $status, $publishedAt, $tagIds)
+    public function create($authorId, $title, $markdown, $featuredImage, $slug,
+        $status, $publishedAt, $tagIds)
     {
         $post = Post::create([
-            'author_id'     => $authorId,
-            'title'         => $title,
-            'markdown'      => $markdown,
-            'slug'          => $slug,
-            'status'        => $status,
-            'published_at'  => $publishedAt]);
+            'author_id'         => $authorId,
+            'title'             => $title,
+            'markdown'          => $markdown,
+            'featured_image'    => $featuredImage,
+            'slug'              => $slug,
+            'status'            => $status,
+            'published_at'      => $publishedAt]);
 
         // check if there tagIds set
         if ($tagIds) {
@@ -114,24 +118,27 @@ class DbPostRepository implements PostRepositoryInterface
      * @param $authorId
      * @param $title
      * @param $markdown
+     * @param $featuredImage
      * @param $slug
      * @param $status
      * @param $publishedAt
      * @param $tagIds
      * @return \Journal\Post
      */
-    public function update($id, $authorId, $title, $markdown, $slug, $status, $publishedAt, $tagIds)
+    public function update($id, $authorId, $title, $markdown, $featuredImage,
+        $slug, $status, $publishedAt, $tagIds)
     {
         // get post
         $post = $this->findById($id);
 
         // update post
-        $post->author_id = $authorId;
-        $post->title = $title;
-        $post->markdown = $markdown;
-        $post->slug = $slug;
-        $post->status = $status;
-        $post->published_at = $publishedAt;
+        $post->author_id        = $authorId;
+        $post->title            = $title;
+        $post->markdown         = $markdown;
+        $post->featured_image   = $featuredImage;
+        $post->slug             = $slug;
+        $post->status           = $status;
+        $post->published_at     = $publishedAt;
         $post->save();
 
         // remove all the tags
