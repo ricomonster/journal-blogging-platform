@@ -5,18 +5,13 @@
 #user_list_page .content { margin: auto; width: 50%; }
 #user_list_page .user-details { border-bottom: #f6f6f6 1px solid; padding: 10px 0; }
 #user_list_page .user-details .user-hyperlink { display: block; min-height: 120px; position: relative; }
-#user_list_page .user-details .user-hyperlink .avatar-wrapper { position: absolute; }
+#user_list_page .user-details .user-hyperlink .avatar-wrapper { float: left; }
 #user_list_page .user-details .user-hyperlink .avatar-wrapper .avatar {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    padding-bottom: 30%;
-    margin: 1.66% auto;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
     border-radius: 50%;
-    border: 3px solid #ddd;
+    border: 3px solid #dddddd;
+    height: 120px;
+    object-fit: cover;
+    width: 120px;
 }
 
 #user_list_page .user-details .user-hyperlink .user-content { padding: 10px 0 0 140px; word-wrap: break-word; }

@@ -9,7 +9,8 @@
             <article class="user-details" ng-repeat="user in ulc.users">
                 <a class="user-hyperlink clearfix" ui-sref="user.profile({ userId : user.id })">
                     <figure class="avatar-wrapper">
-                        <div class="avatar" style="background-image: url('{{ulc.setUserAvatarImage(user)}}');"></div>
+                        <!--<div class="avatar" style="background-image: url('{{}}');"></div>-->
+                        <img ng-src="{{ulc.setUserAvatarImage(user)}}" class="avatar"/>
                     </figure>
                     <div class="user-content">
                         <h3 class="user-name">{{user.name}}</h3>

@@ -19,15 +19,15 @@ h1, h2, h3, h4, h5, h6 {
     color: #242628;
     font-weight: 700;
     line-height: 1.15em;
-    margin: 0 0 15px 0;
+    margin: 0 0 20px 0;
     text-rendering: optimizeLegibility;
 }
 
 h1 { font-size: 5.0rem; letter-spacing: -2px; text-indent: -3px; }
 h2 { font-size: 4.0rem; letter-spacing: -1px; }
-h3 { font-size: 3.4rem; }
-h4 { font-size: 2.8rem; }
-h5 { font-size: 2.2rem; }
+h3 { font-size: 3.2rem; }
+h4 { font-size: 2.6rem; }
+h5 { font-size: 2.0rem; }
 h6 { font-size: 1.8rem; }
 
 a { cursor: pointer; -webkit-transition: color ease .3s; outline: none; transition: color ease .3s; }
@@ -262,6 +262,7 @@ label.control-label { font-size: 18px; margin: 0; }
 
 #editor_page .rendered-markdown code { white-space: normal; }
 #editor_page .rendered-markdown em { font-family: 'Noto Serif', serif; font-size: 16px; }
+#editor_page .rendered-markdown p { margin-bottom: 20px; }
 
 #editor_page .editor-publish-bar {
     -webkit-transform: translateZ(0);
@@ -635,6 +636,7 @@ tag-input .tags-wrapper .tag-suggestions .dropdown-menu {
 }
 .post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown code { white-space: normal; }
 .post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown em { font-family: 'Noto Serif', serif; font-size: 16px; }
+.post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown p { margin-bottom: 20px; }
 
 @media only screen and (max-width : 768px) {
     #post_lists_page .content-wrapper .list-of-posts {
@@ -819,18 +821,13 @@ tag-input .tags-wrapper .tag-suggestions .dropdown-menu {
 #user_list_page .content { margin: auto; width: 50%; }
 #user_list_page .user-details { border-bottom: #f6f6f6 1px solid; padding: 10px 0; }
 #user_list_page .user-details .user-hyperlink { display: block; min-height: 120px; position: relative; }
-#user_list_page .user-details .user-hyperlink .avatar-wrapper { position: absolute; }
+#user_list_page .user-details .user-hyperlink .avatar-wrapper { float: left; }
 #user_list_page .user-details .user-hyperlink .avatar-wrapper .avatar {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    padding-bottom: 30%;
-    margin: 1.66% auto;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
     border-radius: 50%;
-    border: 3px solid #ddd;
+    border: 3px solid #dddddd;
+    height: 120px;
+    object-fit: cover;
+    width: 120px;
 }
 
 #user_list_page .user-details .user-hyperlink .user-content { padding: 10px 0 0 140px; word-wrap: break-word; }
@@ -910,46 +907,42 @@ tag-input .tags-wrapper .tag-suggestions .dropdown-menu {
 }
 
 #user_profile_page .profile-content .avatar-wrapper {
+    border: 3px solid #ddd;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 150px;
     left: 50%;
-    margin-left: -60px;
+    margin-left: -75px;
+    overflow: hidden;
     position: absolute;
     top: -78px;
+    width: 150px;
 }
-
-#user_profile_page.active .profile-content .avatar-wrapper .avatar:hover { cursor: pointer; }
 
 #user_profile_page .profile-content .avatar-wrapper .avatar {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    padding-bottom: 30%;
-    margin: 1.66% auto;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: 50%;
-    border: 3px solid #ddd;
+    display: block;
+    object-fit: cover;
+    width: 100%;
 }
 
-#user_profile_page .profile-content .avatar-wrapper .avatar .overlay {
-    position: absolute;
-    text-align: center;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
+#user_profile_page .profile-content .avatar-wrapper .overlay {
     background: rgba(0,0,0,.6);
     border-radius: 50%;
-    padding: 46px 0;
+    bottom: 0;
+    left: 0;
     opacity:0;
+    padding: 60px 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
     transition:opacity 0.3s linear;
 }
 
-#user_profile_page.active .profile-content .avatar-wrapper .avatar:hover .overlay { opacity:1; }
+#user_profile_page .profile-content .avatar-wrapper .text { color: #fff; }
+#user_profile_page.active .profile-content .avatar-wrapper:hover .overlay { opacity:1; }
 
-#user_profile_page .profile-content .avatar-wrapper .avatar .overlay .text { color: #fff; }
-
-#user_profile_page .profile-content .user-profile-form { padding-top: 10px; }
+#user_profile_page .profile-content .user-profile-form { padding-top: 40px; }
 #user_profile_page .profile-content .name {
     border-bottom: none;
     margin-bottom: 5px;

@@ -9,15 +9,43 @@ use Journal\Repositories\User\UserRepositoryInterface;
 use Journal\Repositories\Tag\TagRepositoryInterface;
 use View;
 
+/**
+ * Class BlogController
+ * @package Journal\Http\Controllers
+ */
 class BlogController extends Controller
 {
+    /**
+     * @var int
+     */
     protected $postPerPage = 10;
+    /**
+     * @var PostRepositoryInterface
+     */
     protected $posts;
+    /**
+     * @var mixed
+     */
     protected $settings;
+    /**
+     * @var TagRepositoryInterface
+     */
     protected $tags;
+    /**
+     * @var string
+     */
     protected $theme = 'casper';
+    /**
+     * @var UserRepositoryInterface
+     */
     protected $users;
 
+    /**
+     * @param PostRepositoryInterface $posts
+     * @param SettingRepositoryInterface $settings
+     * @param TagRepositoryInterface $tags
+     * @param UserRepositoryInterface $users
+     */
     public function __construct(PostRepositoryInterface $posts, SettingRepositoryInterface $settings, TagRepositoryInterface $tags, UserRepositoryInterface $users)
     {
         $this->middleware('installation.not');
@@ -36,6 +64,10 @@ class BlogController extends Controller
         $this->theme = $this->settings['theme'];
     }
 
+    /**
+     * @param $slug
+     * @return View
+     */
     public function author($slug)
     {
         // check if the slug exists
@@ -67,6 +99,9 @@ class BlogController extends Controller
         return view($this->theme.'.author', $data);
     }
 
+    /**
+     * @return View
+     */
     public function index()
     {
         // attach the settings to the view
@@ -82,6 +117,11 @@ class BlogController extends Controller
         return view($this->theme.'.index', $data);
     }
 
+    /**
+     * @param $slug
+     * @param Request $request
+     * @return View
+     */
     public function post($slug, Request $request)
     {
         // check if the request is just to preview the post
@@ -111,6 +151,10 @@ class BlogController extends Controller
         return view($this->theme.'.post', $data);
     }
 
+    /**
+     * @param $slug
+     * @return View
+     */
     public function tags($slug)
     {
         // check if parameter is empty
@@ -141,6 +185,9 @@ class BlogController extends Controller
         return view($this->theme.'.tag', $data);
     }
 
+    /**
+     * @return View
+     */
     protected function fourOhFour()
     {
         // check if the theme provided a 404 page
@@ -153,10 +200,16 @@ class BlogController extends Controller
         return view('errors.404');
     }
 
+    /**
+     * @param null $type
+     * @param null $content
+     * @return View
+     */
     protected function journalHeadMeta($type = null, $content = null)
     {
         // get the settings of the blog
         $settings = $data = $this->settings;
+
         // set the default
         $meta = [
             'siteUrl'       => url(),
@@ -167,24 +220,33 @@ class BlogController extends Controller
             'imageUrl'      => (strpos($settings['cover_url'], 'http')) ?
                 $settings['cover_url'] : url($settings['cover_url'])];
 
+        // check first what type of page is being accessed
         if (!is_null($type)) {
             if ($type == 'author') {
                 // override the default contents
-                $meta['title'] = $content->name.' - '.$settings['title'];
-                $meta['type'] = 'profile';
-                $meta['description'] = null;
-                $meta['url'] = url('author/'.$content->slug);
-                $meta['imageUrl'] = (strpos($content->cover_url, 'http')) ?
+                $meta['title']          = $content->name.' - '.$settings['title'];
+                $meta['type']           = 'profile';
+                $meta['description']    = null;
+                $meta['url']            = url('author/'.$content->slug);
+                $meta['imageUrl']       = (strpos($content->cover_url, 'http')) ?
                     $content->cover_url : url($content->cover_url);
             }
 
             if ($type == 'post') {
                 // override default contents
-                $meta['title'] = $content->title;
-                $meta['type'] = 'article';
-                $meta['description'] = markdown($content->markdown, true, 20);
-                $meta['url'] = url($content->slug);
-                $meta['imageUrl'] = null;
+                $meta['title']          = $content->title;
+                $meta['type']           = 'article';
+                $meta['description']    = markdown($content->markdown, true, 20);
+                $meta['url']            = url($content->slug);
+                $meta['imageUrl']       = null;
+
+                // let's check first if there's a post featured image
+                if ($content->featured_image) {
+                    // check first if the featured image is a link else attach
+                    // the url of the site to the value
+                    $meta['imageUrl'] = (strpos($content->featured_image, 'http')) ?
+                        $content->featured_image : url($content->featured_image);
+                }
             }
 
             if ($type == 'tag') {

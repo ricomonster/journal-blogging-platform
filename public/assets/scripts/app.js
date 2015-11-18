@@ -398,6 +398,9 @@
         AuthService.checkInstallation()
             .success(function(response) {
                 if (!response.installed) {
+                    // do a force logout
+                    AuthService.logout();
+
                     $state.transitionTo('installer.start');
                     return;
                 }
