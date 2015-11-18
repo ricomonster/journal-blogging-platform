@@ -13,9 +13,8 @@
         </header>
         <section class="content profile-content">
             <figure class="avatar-wrapper" ng-click="upc.showImageUploader('avatar_url')">
-                <div class="avatar" style="{{upc.setImage('avatar_url')}}">
-                    <div class="overlay"><span class="text">Change avatar</span></div>
-                </div>
+                <img ng-src="{{upc.setImage('avatar_url')}}" class="avatar"/>
+                <div class="overlay"><span class="text">Change avatar</span></div>
             </figure>
             <form class="user-profile-form" ng-submit="upc.updateProfile()">
                 <div class="form-group name">

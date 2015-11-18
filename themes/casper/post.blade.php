@@ -40,7 +40,9 @@
             <footer class="post-footer clearfix">
                 @if($post->author->avatar_url)
                 <figure class="author-avatar">
-                    <a href="{{ $post->author->permalink }}" class="img" style="background-image: url('{{ $post->author->avatar_url }}')"></a>
+                    <a href="{{ $post->author->permalink }}" class="img-wrapper">
+                        <img src="{{$post->author->avatar_url}}"/>
+                    </a>
                 </figure>
                 @endif
                 <section class="author"

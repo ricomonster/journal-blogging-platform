@@ -19,15 +19,15 @@ h1, h2, h3, h4, h5, h6 {
     color: #242628;
     font-weight: 700;
     line-height: 1.15em;
-    margin: 0 0 15px 0;
+    margin: 0 0 20px 0;
     text-rendering: optimizeLegibility;
 }
 
 h1 { font-size: 5.0rem; letter-spacing: -2px; text-indent: -3px; }
 h2 { font-size: 4.0rem; letter-spacing: -1px; }
-h3 { font-size: 3.4rem; }
-h4 { font-size: 2.8rem; }
-h5 { font-size: 2.2rem; }
+h3 { font-size: 3.2rem; }
+h4 { font-size: 2.6rem; }
+h5 { font-size: 2.0rem; }
 h6 { font-size: 1.8rem; }
 
 a { cursor: pointer; -webkit-transition: color ease .3s; outline: none; transition: color ease .3s; }

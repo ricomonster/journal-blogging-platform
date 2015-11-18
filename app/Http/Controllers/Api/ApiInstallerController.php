@@ -78,6 +78,7 @@ class ApiInstallerController extends ApiController
             $user->id,
             'Journal Blogging Platform',
             $content,
+            '',
             'journal-blogging-platform',
             1,
             strtotime(date('Y-m-d h:i:s')),

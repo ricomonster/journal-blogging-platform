@@ -983,13 +983,14 @@
             switch (type) {
                 case 'cover_url' :
                     imageSrc = (vm.user.cover_url) ? vm.user.cover_url : CONFIG.DEFAULT_COVER_URL;
+                    imageSrc = "background-image: url('"+imageSrc+"')";
                     break;
                 case 'avatar_url' :
                     imageSrc = (vm.user.avatar_url) ? vm.user.avatar_url : CONFIG.DEFAULT_AVATAR_URL;
                     break;
             }
 
-            return "background-image: url('"+imageSrc+"')";
+            return imageSrc;
         };
 
         vm.showImageUploader = function(type) {

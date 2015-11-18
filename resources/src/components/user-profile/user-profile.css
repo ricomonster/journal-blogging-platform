@@ -45,46 +45,42 @@
 }
 
 #user_profile_page .profile-content .avatar-wrapper {
+    border: 3px solid #ddd;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 150px;
     left: 50%;
-    margin-left: -60px;
+    margin-left: -75px;
+    overflow: hidden;
     position: absolute;
     top: -78px;
+    width: 150px;
 }
-
-#user_profile_page.active .profile-content .avatar-wrapper .avatar:hover { cursor: pointer; }
 
 #user_profile_page .profile-content .avatar-wrapper .avatar {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    padding-bottom: 30%;
-    margin: 1.66% auto;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: 50%;
-    border: 3px solid #ddd;
+    display: block;
+    object-fit: cover;
+    width: 100%;
 }
 
-#user_profile_page .profile-content .avatar-wrapper .avatar .overlay {
-    position: absolute;
-    text-align: center;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
+#user_profile_page .profile-content .avatar-wrapper .overlay {
     background: rgba(0,0,0,.6);
     border-radius: 50%;
-    padding: 46px 0;
+    bottom: 0;
+    left: 0;
     opacity:0;
+    padding: 60px 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
     transition:opacity 0.3s linear;
 }
 
-#user_profile_page.active .profile-content .avatar-wrapper .avatar:hover .overlay { opacity:1; }
+#user_profile_page .profile-content .avatar-wrapper .text { color: #fff; }
+#user_profile_page.active .profile-content .avatar-wrapper:hover .overlay { opacity:1; }
 
-#user_profile_page .profile-content .avatar-wrapper .avatar .overlay .text { color: #fff; }
-
-#user_profile_page .profile-content .user-profile-form { padding-top: 10px; }
+#user_profile_page .profile-content .user-profile-form { padding-top: 40px; }
 #user_profile_page .profile-content .name {
     border-bottom: none;
     margin-bottom: 5px;
