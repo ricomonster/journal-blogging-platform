@@ -7,6 +7,7 @@ use Journal\Repositories\Post\PostRepositoryInterface;
 use Journal\Repositories\Setting\SettingRepositoryInterface;
 use Journal\Repositories\User\UserRepositoryInterface;
 use Journal\Repositories\Tag\TagRepositoryInterface;
+use Feed;
 use View;
 
 /**
@@ -149,6 +150,49 @@ class BlogController extends Controller
         $data['journal_head'] = $this->journalHeadMeta('post', $post);
 
         return view($this->theme.'.post', $data);
+    }
+
+    public function rss()
+    {
+        // attach the settings to the view
+        $settings   = $this->settings;
+
+        // create instance of the feed maker
+        $feed = Feed::make();
+
+        // set feed cache
+        $feed->setCache(60, env('APP_KEY', 'SomeRandomString'));
+
+        // check if there's a feed cache
+        if (!$feed->isCached()) {
+            // get the posts
+            $posts = $this->posts->getBlogPosts($this->postPerPage);
+
+            // set the feed
+            $feed->title = $settings['title'];
+            $feed->description = $settings['description'];
+            //$feed->logo = 'http://yoursite.tld/logo.jpg';
+            $feed->link = url('rss');
+            $feed->setDateFormat('timestamp');
+            $feed->pubdate = $posts[0]->published_at;
+            $feed->lang = 'en';
+            $feed->setShortening(true);
+            $feed->setTextLimit(100);
+
+            foreach ($posts as $post) {
+                // set the feed content
+                $feed->add(
+                    $post->title,
+                    $post->author->name,
+                    $post->permalink,
+                    $post->published_at,
+                    null,
+                    htmlentities(markdown($post->markdown)));
+            }
+        }
+
+        // render the rss
+        return $feed->render('atom');
     }
 
     /**
