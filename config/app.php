@@ -144,7 +144,8 @@ return [
         Journal\Providers\EventServiceProvider::class,
         Journal\Providers\RouteServiceProvider::class,
         Journal\Providers\JournalServiceProvider::class,
-        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        Roumen\Feed\FeedServiceProvider::class,
     ],
 
     /*
@@ -193,8 +194,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
         'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,
-        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class
-
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'Feed'      => Roumen\Feed\Facades\Feed::class
     ],
 
 ];

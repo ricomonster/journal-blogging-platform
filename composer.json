@@ -7,7 +7,8 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
-        "michelf/php-markdown": "^1.5"
+        "michelf/php-markdown": "^1.5",
+        "roumen/feed": "^2.9"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

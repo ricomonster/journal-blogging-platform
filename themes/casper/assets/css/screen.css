@@ -470,12 +470,14 @@ pre code, tt {
 .home-template .post-title a,
 .author-template .post-title a { text-decoration: none; }
 
-.post-template .main-header {
+.post-template .main-header.no-cover {
     height: 85px;
     min-height: 0;
     margin-bottom: 0;
     background: transparent;
 }
+
+.post-template .main-header { height: 60%; }
 
 .post-template .header { margin-bottom: 30px; }
 .post-template .post-date { border-left: 0; margin-left: 0; padding-left: 0; }
