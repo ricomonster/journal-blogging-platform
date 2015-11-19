@@ -12,13 +12,14 @@
     {!! $journal_head !!}
 </head>
 <body class="post-template">
-    <header class="main-header no-cover">
+    <header class="main-header {{ ($post->featured_image) ? null : 'no-cover' }}"
+    {!! ($post->featured_image) ? 'style="background-image: url('.$post->featured_image.')"' : null !!}>
         <nav class="site-nav clearfix">
             <a href="/" class="back-button">
                 <i class="fa fa-angle-left"></i>
                 Home
             </a>
-            <a href="#" class="rss-button">
+            <a href="{{url('rss')}}" class="rss-button">
                 <i class="fa fa-rss"></i>
                 Subscribe
             </a>

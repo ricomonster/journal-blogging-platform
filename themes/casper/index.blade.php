@@ -14,7 +14,7 @@
 <body class="home-template">
     <header class="main-header {{ ($cover_url) ? null : 'no-cover' }}" {!! ($cover_url) ? 'style="background-image: url('.$cover_url.')"' : null !!}>
         <nav class="site-nav clearfix">
-            <a href="#" class="rss-button">
+            <a href="{{url('rss')}}" class="rss-button">
                 <i class="fa fa-rss"></i>
                 Subscribe
             </a>

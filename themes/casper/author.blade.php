@@ -18,7 +18,7 @@
             <i class="fa fa-angle-left"></i>
             Home
         </a>
-        <a href="#" class="rss-button">
+        <a href="{{url('rss')}}" class="rss-button">
             <i class="fa fa-rss"></i>
             Subscribe
         </a>
