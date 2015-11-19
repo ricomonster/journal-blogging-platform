@@ -152,6 +152,10 @@ class BlogController extends Controller
         return view($this->theme.'.post', $data);
     }
 
+    /**
+     * Generates the RSS feed for the blog
+     * @return mixed
+     */
     public function rss()
     {
         // attach the settings to the view
@@ -171,7 +175,7 @@ class BlogController extends Controller
             // set the feed
             $feed->title = $settings['title'];
             $feed->description = $settings['description'];
-            //$feed->logo = 'http://yoursite.tld/logo.jpg';
+            //$feed->logo = null;
             $feed->link = url('rss');
             $feed->setDateFormat('timestamp');
             $feed->pubdate = $posts[0]->published_at;
