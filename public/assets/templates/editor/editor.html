@@ -10,6 +10,9 @@
                 <a class="floating-header markdown" ng-click="ec.showPane('markdown')"
                 ng-class="{'active' : ec.editor.activePane == 'markdown'}">
                     <span class="header-title">Markdown</span>
+                    <a ng-click="ec.showMarkdownHelper()" class="markdown-helper">
+                        <i class="fa fa-question-circle"></i>
+                    </a>
                 </a>
                 <a class="floating-header preview" ng-click="ec.showPane('preview')"
                 ng-class="{'active' : ec.editor.activePane == 'preview'}">
@@ -20,6 +23,9 @@
             <section class="editor-section entry-markdown" ng-class="{'active' : ec.editor.activePane == 'markdown'}">
                 <header class="floating-header">
                     <span class="header-title">Markdown</span>
+                    <a ng-click="ec.showMarkdownHelper()"  class="markdown-helper">
+                        <i class="fa fa-question-circle"></i>
+                    </a>
                 </header>
                 <section class="editor-content" editor-scroll="">
                     <ui-codemirror ng-model="ec.post.markdown" ui-codemirror-opts="ec.editor.codemirror"></ui-codemirror>

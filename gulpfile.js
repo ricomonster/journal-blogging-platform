@@ -114,7 +114,8 @@ gulp.task('build-bower-files', function() {
         paths.bower + '/angular/angular.js',
         paths.bower + '/angular/angular.min.js',
         // angular animate
-        paths.bower + '/angular-animate/*.js',
+        paths.bower + '/angular-animate/angular-animate.js',
+        paths.bower + '/angular-animate/angular-animate.min.js',
         // angular bootstrap
         paths.bower + '/angular-bootstrap/ui-bootstrap.js',
         paths.bower + '/angular-bootstrap/ui-bootstrap.min.js',

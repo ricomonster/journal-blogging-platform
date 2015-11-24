@@ -26,6 +26,7 @@
     "codemirror": "~5.5.0",
     "font-awesome": "~4.4.0",
     "ng-file-upload": "~7.0.1",
-    "showdown": "~1.2.2"
+    "showdown": "~1.2.2",
+    "ngprogress-lite": "~1.0.7"
   }
 }

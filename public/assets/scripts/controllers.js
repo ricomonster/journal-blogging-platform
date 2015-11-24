@@ -230,6 +230,16 @@
             vm.post.status = state.status;
         };
 
+        vm.showMarkdownHelper = function() {
+            $modal.open({
+                animation : true,
+                templateUrl : '/assets/templates/markdown-helper-modal/markdown-helper-modal.html',
+                controllerAs : 'mhm',
+                controller : 'MarkdownHelperModalController',
+                size: 'markdown'
+            });
+        };
+
         vm.showPane = function(pane) {
             vm.editor.activePane = pane;
         };
@@ -438,6 +448,23 @@
     }
 })();
 
+(function() {
+    'use strict';
+
+    angular.module('journal.component.markdownHelperModal')
+        .controller('MarkdownHelperModalController', ['$modalInstance', MarkdownHelperModalController]);
+
+    function MarkdownHelperModalController($modalInstance) {
+        var vm = this;
+
+        /**
+         * Closes the modal, duh
+         */
+        vm.closeModal = function() {
+            $modalInstance.dismiss('cancel');
+        };
+    }
+})();
 (function() {
     'use strict';
 

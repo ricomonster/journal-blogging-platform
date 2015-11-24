@@ -199,6 +199,8 @@ label.control-label { font-size: 18px; margin: 0; }
 #editor_page .editor-section.entry-preview { border-left: #f6f6f6 1px solid; right: 0; }
 
 #editor_page .editor-section .floating-header .header-title { float: left; }
+#editor_page .editor-section .floating-header .markdown-helper { float: right; text-decoration: none; }
+#editor_page .editor-section .floating-header .markdown-helper .fa { color: #aaa9a2; }
 #editor_page .floating-header .word-count { float: right; }
 
 #editor_page .entry-markdown .editor-content #the_editor { display: none; }
@@ -542,6 +544,15 @@ tag-input .tags-wrapper .tag-suggestions .dropdown-menu {
 #login_page .wrapper form .hero-title { text-align: center; }
 #login_page .wrapper form .form-group { border-bottom: 0; padding: 0; }
 
+#markdown_helper_modal {}
+#markdown_helper_modal .modal-header { border-bottom: 0; }
+#markdown_helper_modal .modal-footer { border-top: 0; padding: 0; text-align: left; }
+
+/* Let's remove the borders in our dear table */
+#markdown_helper_modal .modal-body .table > thead > tr > th,
+#markdown_helper_modal .modal-body .table > tbody > tr > td { border: 0; }
+
+.modal-markdown { margin: 30px auto; width: 480px; }
 #post_lists_page .page-header { border-bottom: 0; margin: 0; padding: 10px 20px 0 20px; }
 #post_lists_page .page-header .hero-title { float: left; }
 #post_lists_page .page-header .btn {  }
