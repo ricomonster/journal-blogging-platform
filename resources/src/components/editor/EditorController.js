@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('journal.component.editor')
-        .controller('EditorController', ['$modal', '$state', '$stateParams', 'AuthService', 'EditorService', 'GrowlService', EditorController]);
+        .controller('EditorController', ['$modal', '$state', '$stateParams', 'AuthService', 'EditorService', 'ToastrService', EditorController]);
 
-    function EditorController($modal, $state, $stateParams, AuthService, EditorService, GrowlService) {
+    function EditorController($modal, $state, $stateParams, AuthService, EditorService, ToastrService) {
         var vm = this,
             // get current date in yyyy/mm/dd hh:ss format
             date = new Date(),
@@ -139,8 +139,8 @@
 
                     // check if post is newly created
                     if (!vm.post.id) {
-                        GrowlService
-                            .growl('You have successfully created the post "'+post.title+'".', 'success');
+                        ToastrService
+                            .toast('You have successfully created the post "'+post.title+'".', 'success');
                         // redirect
                         $state.go('postEditor', { postId : post.id });
                         return;
@@ -159,8 +159,8 @@
                     }
 
                     // show message
-                    GrowlService
-                        .growl('You have successfully updated "'+post.title+'".', 'success');
+                    ToastrService
+                        .toast('You have successfully updated "'+post.title+'".', 'success');
 
                     // update the scope
                     vm.post = post;

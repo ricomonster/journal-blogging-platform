@@ -121,8 +121,6 @@ gulp.task('build-bower-files', function() {
         paths.bower + '/angular-bootstrap/ui-bootstrap.min.js',
         paths.bower + '/angular-bootstrap/ui-bootstrap-tpls.js',
         paths.bower + '/angular-bootstrap/ui-bootstrap-tpls.min.js',
-        // angular growl v2
-        paths.bower + '/angular-growl-v2/build/*.js',
         // angular local storage
         paths.bower + '/angular-local-storage/dist/*',
         // angular moment
@@ -158,8 +156,9 @@ gulp.task('build-bower-files', function() {
 
     // stylesheets
     gulp.src([
-        // angular growl v2
-        paths.bower + '/angular-growl-v2/build/*.css',
+        // angular toastr
+        paths.bower + '/angular-toastr/dist/angular-toastr.css',
+        paths.bower + '/angular-toastr/dist/angular-toastr.min.css',
         // bootstrap
         paths.bower + '/bootstrap/dist/css/*',
         // codemirror

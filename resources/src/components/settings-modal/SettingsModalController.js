@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('journal.component.settingsModal')
-        .controller('SettingsModalController', ['$scope', '$modalInstance', 'GrowlService', 'SettingsService', 'FileUploaderService', 'settings', 'type', SettingsModalController]);
+        .controller('SettingsModalController', ['$scope', '$modalInstance', 'ToastrService', 'SettingsService', 'FileUploaderService', 'settings', 'type', SettingsModalController]);
 
     /**
      * Fuck this shit. I hate using scope :( :( :(
@@ -12,7 +12,7 @@
      * @param FileUploaderService
      * @constructor
      */
-    function SettingsModalController($scope, $modalInstance, GrowlService, SettingsService, FileUploaderService, settings, type) {
+    function SettingsModalController($scope, $modalInstance, ToastrService, SettingsService, FileUploaderService, settings, type) {
         $scope.activeOption = 'file';
         $scope.imageUrl = null;
         $scope.image = {
@@ -57,8 +57,8 @@
                     .error(function() {
                         $scope.processing = false;
                         // handle the error
-                        GrowlService
-                            .growl('Something went wrong with the upload. Please try again later.', 'error');
+                        ToastrService
+                            .toast('Something went wrong with the upload. Please try again later.', 'error');
 
                         // hide progress bar
                         $scope.upload = {
@@ -112,7 +112,7 @@
                 .success(function(response) {
                     if (response.settings) {
                         // show success message
-                        GrowlService.growl('You have successfully updated the settings.', 'success');
+                        ToastrService.toast('You have successfully updated the settings.', 'success');
                         // close the modal
                         $modalInstance.close(response.settings);
                     }

@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('journal.component.deletePostModal')
-        .controller('DeletePostModalController', ['$scope', '$modalInstance', 'DeletePostModalService', 'GrowlService', 'post', DeletePostModalController]);
+        .controller('DeletePostModalController', ['$scope', '$modalInstance', 'DeletePostModalService', 'ToastrService', 'post', DeletePostModalController]);
 
-    function DeletePostModalController($scope, $modalInstance, DeletePostModalService, GrowlService, post) {
+    function DeletePostModalController($scope, $modalInstance, DeletePostModalService, ToastrService, post) {
         $scope.post = post;
         $scope.processing = false;
 
@@ -22,7 +22,7 @@
                 .success(function(response) {
                     if (!response.error) {
                         // growl
-                        GrowlService.growl(
+                        ToastrService.toast(
                             'You have successfully deleted the post "'+$scope.post.title+'"',
                             'success');
 
@@ -36,7 +36,7 @@
                     $scope.processing = false;
 
                     // tell there's a fucking error
-                    GrowlService.growl('Something went wrong. Please try again later.', 'error');
+                    ToastrService.toast('Something went wrong. Please try again later.', 'error');
                     // close the fucking modal
                     $modalInstance.dismiss('cancel');
                 });
