@@ -90,6 +90,7 @@
 }
 .post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown code { white-space: normal; }
 .post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown em { font-family: 'Noto Serif', serif; font-size: 16px; }
+.post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown p { margin-bottom: 20px; }
 
 @media only screen and (max-width : 768px) {
     #post_lists_page .content-wrapper .list-of-posts {

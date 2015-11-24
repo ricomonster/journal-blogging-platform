@@ -6,9 +6,26 @@
                 placeholder="Your post title" autocomplete="off"
                 post-id="ec.post.id" check-post-slug slug="ec.post.slug"/>
             </header>
-            <section class="editor-section entry-markdown">
+            <nav class="mobile-editor-nav">
+                <a class="floating-header markdown" ng-click="ec.showPane('markdown')"
+                ng-class="{'active' : ec.editor.activePane == 'markdown'}">
+                    <span class="header-title">Markdown</span>
+                    <a ng-click="ec.showMarkdownHelper()" class="markdown-helper">
+                        <i class="fa fa-question-circle"></i>
+                    </a>
+                </a>
+                <a class="floating-header preview" ng-click="ec.showPane('preview')"
+                ng-class="{'active' : ec.editor.activePane == 'preview'}">
+                    <span class="header-title">Preview</span>
+                    <span class="word-count">{{ec.wordCounter()}}</span>
+                </a>
+            </nav>
+            <section class="editor-section entry-markdown" ng-class="{'active' : ec.editor.activePane == 'markdown'}">
                 <header class="floating-header">
                     <span class="header-title">Markdown</span>
+                    <a ng-click="ec.showMarkdownHelper()"  class="markdown-helper">
+                        <i class="fa fa-question-circle"></i>
+                    </a>
                 </header>
                 <section class="editor-content" editor-scroll="">
                     <ui-codemirror ng-model="ec.post.markdown" ui-codemirror-opts="ec.editor.codemirror"></ui-codemirror>
@@ -35,10 +52,11 @@
                             <i class="fa fa-gear"></i>
                         </a>
                         <div class="btn-group dropup" dropdown>
-                            <button type="submit" class="btn"
+                            <button type="submit" class="btn" button-loader="ec.processing"
                             ng-class="{'primary' : 'btn-primary', 'danger' : 'btn-danger', 'info' : 'btn-info'}[ec.editor.activeStatus.class]">{{ec.editor.activeStatus.text}}</button>
                             <button type="button" class="btn" dropdown-toggle
-                            ng-class="{'primary' : 'btn-primary', 'danger' : 'btn-danger', 'info' : 'btn-info'}[ec.editor.activeStatus.class]">
+                            ng-class="{'primary' : 'btn-primary', 'danger' : 'btn-danger', 'info' : 'btn-info'}[ec.editor.activeStatus.class]"
+                            button-loader="ec.processing">
                                 <span class="caret"></span>
                                 <span class="sr-only"></span>
                             </button>
@@ -65,12 +83,13 @@
                     <h3>Settings</h3>
                 </header>
                 <section class="sidebar-controls">
+                    <featured-image ng-model="ec.post.featured_image"></featured-image>
                     <div class="form-group">
                         <div ng-if="ec.post.id">
-                            <a href="/{{ec.post.slug}}" class="pull-right"
+                            <a href="/{{ec.post.slug}}" class="pull-right" target="_blank"
                             ng-if="ec.post.status == 1">View post</a>
                             <a href="/{{ec.post.slug}}?preview" class="pull-right"
-                            ng-if="ec.post.status == 2">View post</a>
+                            target="_blank" ng-if="ec.post.status == 2">View post</a>
                         </div>
                         <label class="control-label">Post URL</label>
                         <input type="text" ng-model="ec.post.slug" class="form-control"/>

@@ -19,6 +19,11 @@ class ApiUsersController extends ApiController
         $this->users = $user;
     }
 
+    /**
+     * Fetches all active users.
+     *
+     * @return mixed
+     */
     public function all()
     {
         // get all users
@@ -28,6 +33,12 @@ class ApiUsersController extends ApiController
             'users' => $users->toArray()]);
     }
 
+    /**
+     * Creates and validates new user based on the given data to the endpoint.
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function create(Request $request)
     {
         // validate first
@@ -50,6 +61,12 @@ class ApiUsersController extends ApiController
             'user' => $user->toArray()]);
     }
 
+    /**
+     * Performs request to change a users password.
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function changePassword(Request $request)
     {
         $id = $request->input('user_id');
@@ -69,9 +86,43 @@ class ApiUsersController extends ApiController
                 ->respondWithError(['message' => 'User not found.']);
         }
 
-        // validate passwords
+        // do basic validation
+        $messages = $this->users->validateChangePassword($request->all());
+
+        // check for errors
+        if (count($messages) > 0) {
+            return $this->setStatusCode(self::BAD_REQUEST)
+                ->respondWithError($messages);
+        }
+
+        // check if the user inputted its current password
+        $error = $this->users->validateUserPassword(
+            $user->id,
+            $request->input('old_password'));
+
+        // check if there's an error
+        if (!$error) {
+            return $this->setStatusCode(self::BAD_REQUEST)
+                // fixed this so we can imitate how Laravel's validator return its requests
+                ->respondWithError(['current_password' => ['Current password is invalid.']]);
+        }
+
+        // update
+        $user = $this->users->changePassword(
+            $user->id,
+            $request->input('new_password'));
+
+        // return user details
+        return $this->respond([
+            'user' => $user->toArray()]);
     }
 
+    /**
+     * Gets user details based on the given ID.
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function getUser(Request $request)
     {
         $id = $request->input('user_id');
@@ -96,6 +147,12 @@ class ApiUsersController extends ApiController
             'user' => $user->toArray()]);
     }
 
+    /**
+     * Updates the details of the user.
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function updateDetails(Request $request)
     {
         $id = $request->input('user_id');

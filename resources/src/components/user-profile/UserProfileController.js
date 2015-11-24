@@ -9,6 +9,9 @@
 
         vm.current = false;
         vm.user = [];
+        vm.password = {};
+        vm.passwordErrors = [];
+        vm.processing = false;
 
         vm.initialize = function() {
             // check if parameter is set
@@ -39,13 +42,14 @@
             switch (type) {
                 case 'cover_url' :
                     imageSrc = (vm.user.cover_url) ? vm.user.cover_url : CONFIG.DEFAULT_COVER_URL;
+                    imageSrc = "background-image: url('"+imageSrc+"')";
                     break;
                 case 'avatar_url' :
                     imageSrc = (vm.user.avatar_url) ? vm.user.avatar_url : CONFIG.DEFAULT_AVATAR_URL;
                     break;
             }
 
-            return "background-image: url('"+imageSrc+"')";
+            return imageSrc;
         };
 
         vm.showImageUploader = function(type) {
@@ -73,19 +77,64 @@
             });
         };
 
+        /**
+         * [function description]
+         * @return {[type]} [description]
+         */
+        vm.updatePassword = function() {
+            var passwords = vm.password;
+
+            // flag that we're processing a request
+            vm.processing = true;
+
+            // do an API request to change the password
+            UserProfileService.updatePassword(passwords)
+                .success(function(response) {
+                    if (response.user) {
+                        vm.processing = false;
+
+                        // clear the fields
+                        ToastrService.toast('You have successfully updated your password.', 'success');
+                        // empty the variable scope
+                        vm.password = {};
+                    }
+                })
+                .error(function(response) {
+                    vm.processing = false;
+
+                    // show toastr
+                    ToastrService.toast('There are errors encountered.', 'error');
+                    if (response.errors) {
+                        if (response.message) {
+                            return;
+                        }
+
+                        // show the errors
+                        for (var e in response.errors) {
+                            ToastrService.toast(response.errors[e][0], 'error');
+                        }
+                    }
+                });
+        };
+
         vm.updateProfile = function() {
             var user = vm.user;
+
+            // flag that we're processing a request
+            vm.processing = true;
 
             // do an API request to update details of the user
             UserProfileService.updateUserDetails(user)
                 .success(function(response) {
                     if (response.user) {
+                        vm.processing = false;
+
                         // growl it!
                         GrowlService.growl('You have successfully updated your profile.', 'success');
                     }
                 })
                 .error(function(response) {
-                    // handle the error
+                    vm.processing = false;
                 });
         };
 

@@ -1,6 +1,6 @@
 /* Google Font */
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
-@import url(http://fonts.googleapis.com/css?family=Noto+Serif:400,400italic);
+/*@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
+@import url(http://fonts.googleapis.com/css?family=Noto+Serif:400,400italic);*/
 
 /* Initial styling */
 body {
@@ -19,16 +19,16 @@ h1, h2, h3, h4, h5, h6 {
     color: #242628;
     font-weight: 700;
     line-height: 1.15em;
-    margin: 0 0 15px 0;
+    margin: 0 0 20px 0;
     text-rendering: optimizeLegibility;
 }
 
-h1 { font-size: 5rem; letter-spacing: -2px; text-indent: -3px; }
-h2 { font-size: 4.2rem; letter-spacing: -1px; }
-h3 { font-size: 3.8rem; }
-h4 { font-size: 3.1rem; }
-h5 { font-size: 2.8rem; }
-h6 { font-size: 2.2rem; }
+h1 { font-size: 5.0rem; letter-spacing: -2px; text-indent: -3px; }
+h2 { font-size: 4.0rem; letter-spacing: -1px; }
+h3 { font-size: 3.2rem; }
+h4 { font-size: 2.6rem; }
+h5 { font-size: 2.0rem; }
+h6 { font-size: 1.8rem; }
 
 a { cursor: pointer; -webkit-transition: color ease .3s; outline: none; transition: color ease .3s; }
 a:hover, a:active, a:focus { outline: none; text-decoration: none; }
@@ -121,9 +121,15 @@ label.control-label { font-size: 18px; margin: 0; }
     box-shadow: 0 3px 9px rgba(0, 0, 0, 0);
 }
 
+<<<<<<< HEAD
+/* Toastr CSS Override */
+#toast-container { top: 60px; }
+#toast-container .toast { width: 350px; }
+=======
 /* Growl CSS Override */
 .growl-container.growl-fixed { max-width: 320px; width: 100%; }
 .growl-container.growl-fixed.top-right { top: 60px; }
+>>>>>>> master
 
 @media only screen and (max-width : 768px) {
     .hero-title { font-size: 40px; }
@@ -135,7 +141,7 @@ label.control-label { font-size: 18px; margin: 0; }
         box-shadow: 0 0 0 #999999;
         border-radius: 0;
         margin-bottom: 0;
-        max-width: 100%;
+        width: 100%;
     }
 }
 

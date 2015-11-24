@@ -9,10 +9,11 @@ var gulp        = require('gulp'),
 
 // paths
 var paths = {
-    src : './resources/src',
-    public : './public',
-    bower : './bower_components',
-    themes : './themes'
+    build   : './resources/build',
+    src     : './resources/src',
+    public  : './public',
+    bower   : './bower_components',
+    themes  : './themes'
 };
 
 // notify error handler
@@ -38,6 +39,71 @@ var transformAssetPath = function(filename) {
     return '<link rel="stylesheet" href="'+filename+'"/>';
 };
 
+var minifiedFiles = {
+    app : [
+        paths.public + '/vendor/vendor.js',
+        paths.public + '/vendor/journal.js'],
+    css : [
+        paths.public + '/vendor/stylesheets/bootstrap.min.css',
+        paths.public + '/vendor/stylesheets/font-awesome.min.css',
+        paths.public + '/vendor/stylesheets/angular-toastr.min.css',
+        paths.public + '/vendor/stylesheets/codemirror.css',
+        paths.public + '/vendor/stylesheets/ngprogress-lite.css',
+        paths.public + '/assets/screen.css'],
+    js : [
+        paths.public + '/vendor/javascript/codemirror.js',
+        paths.public + '/vendor/javascript/showdown.min.js',
+        paths.public + '/vendor/javascript/moment.min.js',
+        paths.public + '/vendor/javascript/angular.min.js',
+        paths.public + '/vendor/javascript/angular-animate.min.js',
+        paths.public + '/vendor/javascript/angular-sanitize.min.js',
+        paths.public + '/vendor/javascript/angular-ui-router.min.js',
+        paths.public + '/vendor/javascript/ui-bootstrap.min.js',
+        paths.public + '/vendor/javascript/ui-bootstrap-tpls.min.js',
+        paths.public + '/vendor/javascript/ui-codemirror.min.js',
+        paths.public + '/vendor/javascript/angular-local-storage.min.js',
+        paths.public + '/vendor/javascript/angular-toastr.min.js',
+        paths.public + '/vendor/javascript/angular-toastr.tpls.min.js',
+        paths.public + '/vendor/javascript/angular-moment.min.js',
+        paths.public + '/vendor/javascript/ng-file-upload-shim.min.js',
+        paths.public + '/vendor/javascript/ng-file-upload.min.js',
+        paths.public + '/vendor/javascript/ngprogress-lite.min.js']
+};
+
+var unminifiedFiles = {
+    app : [
+        paths.public + '/assets/scripts/app.js',
+        paths.public + '/assets/scripts/controllers.js',
+        paths.public + '/assets/scripts/directives.js',
+        paths.public + '/assets/scripts/providers.js',
+        paths.public + '/assets/scripts/services.js'],
+    css : [
+        paths.public + '/vendor/stylesheets/bootstrap.css',
+        paths.public + '/vendor/stylesheets/font-awesome.css',
+        paths.public + '/vendor/stylesheets/angular-toastr.css',
+        paths.public + '/vendor/stylesheets/codemirror.css',
+        paths.public + '/vendor/stylesheets/ngprogress-lite.css',
+        paths.public + '/assets/screen.css'],
+    js : [
+        paths.public + '/vendor/javascript/codemirror.js',
+        paths.public + '/vendor/javascript/showdown.js',
+        paths.public + '/vendor/javascript/moment.js',
+        paths.public + '/vendor/javascript/angular.js',
+        paths.public + '/vendor/javascript/angular-animate.js',
+        paths.public + '/vendor/javascript/angular-sanitize.js',
+        paths.public + '/vendor/javascript/angular-ui-router.js',
+        paths.public + '/vendor/javascript/ui-bootstrap.js',
+        paths.public + '/vendor/javascript/ui-bootstrap-tpls.js',
+        paths.public + '/vendor/javascript/ui-codemirror.js',
+        paths.public + '/vendor/javascript/angular-local-storage.js',
+        paths.public + '/vendor/javascript/angular-toastr.js',
+        paths.public + '/vendor/javascript/angular-toastr.tpls.js',
+        paths.public + '/vendor/javascript/angular-moment.js',
+        paths.public + '/vendor/javascript/ng-file-upload-shim.js',
+        paths.public + '/vendor/javascript/ng-file-upload.js',
+        paths.public + '/vendor/javascript/ngprogress-lite.js']
+};
+
 /**
  * Build Task: Fetch library files from the bower_components folder
  */
@@ -47,6 +113,9 @@ gulp.task('build-bower-files', function() {
         // angular
         paths.bower + '/angular/angular.js',
         paths.bower + '/angular/angular.min.js',
+        // angular animate
+        paths.bower + '/angular-animate/angular-animate.js',
+        paths.bower + '/angular-animate/angular-animate.min.js',
         // angular bootstrap
         paths.bower + '/angular-bootstrap/ui-bootstrap.js',
         paths.bower + '/angular-bootstrap/ui-bootstrap.min.js',
@@ -62,6 +131,11 @@ gulp.task('build-bower-files', function() {
         // angular sanitize
         paths.bower + '/angular-sanitize/angular-sanitize.js',
         paths.bower + '/angular-sanitize/angular-sanitize.min.js',
+        // angular toastr
+        paths.bower + '/angular-toastr/dist/angular-toastr.js',
+        paths.bower + '/angular-toastr/dist/angular-toastr.min.js',
+        paths.bower + '/angular-toastr/dist/angular-toastr.tpls.js',
+        paths.bower + '/angular-toastr/dist/angular-toastr.tpls.min.js',
         // angular ui codemirror
         paths.bower + '/angular-ui-codemirror/*.js',
         // angular ui router
@@ -106,7 +180,7 @@ gulp.task('build-bower-files', function() {
 });
 
 /**
- * Build Task: Concatenate and uglifies the main application file
+ * Build Task: Concatenate the main application file
  */
 gulp.task('build-app', function() {
     return gulp.src([
@@ -120,15 +194,12 @@ gulp.task('build-app', function() {
         .pipe(plumber({
             errorHandler : onError
         }))
-        .pipe(uglify())
-        .pipe(plumber({
-            errorHandler : onError
-        }))
+        .pipe(gulp.dest(paths.build + '/app'))
         .pipe(gulp.dest(paths.public + '/assets/scripts'));
 });
 
 /**
- * Build Task: Concatenate and uglifies controllers from components
+ * Build Task: Concatenate controllers from components
  */
 gulp.task('build-controllers', function() {
     return gulp.src([
@@ -138,36 +209,28 @@ gulp.task('build-controllers', function() {
         .pipe(plumber({
             errorHandler : onError
         }))
-        .pipe(uglify())
-        .pipe(plumber({
-            errorHandler : onError
-        }))
+        .pipe(gulp.dest(paths.build + '/app'))
         .pipe(gulp.dest(paths.public + '/assets/scripts'));
 });
 
 /**
- * Build Task: Concatenate and uglifies directives from components
- * and shared components
+ * Build Task: Concatenate directives from components and shared components
  */
 gulp.task('build-directives', function() {
     return gulp.src([
-        paths.src + '/components/**/*Directive.js',
-        paths.src + '/shared/**/*Directive.js'
-    ])
+            paths.src + '/components/**/*Directive.js',
+            paths.src + '/shared/**/*Directive.js'
+        ])
         .pipe(concat('directives.js'))
         .pipe(plumber({
             errorHandler : onError
         }))
-        .pipe(uglify())
-        .pipe(plumber({
-            errorHandler : onError
-        }))
+        .pipe(gulp.dest(paths.build + '/app'))
         .pipe(gulp.dest(paths.public + '/assets/scripts'));
 });
 
 /**
- * Build Task: Concatenate and uglifies services from components
- * and shared components
+ * Build Task: Concatenate services from components and shared components
  */
 gulp.task('build-services', function() {
     return gulp.src([
@@ -178,16 +241,12 @@ gulp.task('build-services', function() {
         .pipe(plumber({
             errorHandler : onError
         }))
-        .pipe(uglify())
-        .pipe(plumber({
-            errorHandler : onError
-        }))
+        .pipe(gulp.dest(paths.build + '/app'))
         .pipe(gulp.dest(paths.public + '/assets/scripts'));
 });
 
 /**
- * Build Task: Concatenate and uglifies providers from components
- * and shared components
+ * Build Task: Concatenates providers from components and shared components
  */
 gulp.task('build-providers', function() {
     return gulp.src([
@@ -197,10 +256,7 @@ gulp.task('build-providers', function() {
         .pipe(plumber({
             errorHandler : onError
         }))
-        .pipe(uglify())
-        .pipe(plumber({
-            errorHandler : onError
-        }))
+        .pipe(gulp.dest(paths.build + '/app'))
         .pipe(gulp.dest(paths.public + '/assets/scripts'));
 });
 
@@ -213,12 +269,13 @@ gulp.task('build-templates', function() {
             paths.src + '/components/**/*.html',
             paths.src + '/shared/**/*.html'
         ])
+        .pipe(gulp.dest(paths.build + '/templates'))
         .pipe(gulp.dest(paths.public + '/assets/templates'));
 });
 
 /**
- * Build Task: Concatenates and minifies the css files from global css,
- * components css and shared css
+ * Build Task: Concatenates the css files from global css components css and
+ * shared css
  */
 gulp.task('build-stylesheets', function() {
     return gulp.src([
@@ -230,49 +287,68 @@ gulp.task('build-stylesheets', function() {
         .pipe(plumber({
             errorHandler : onError
         }))
+        .pipe(gulp.dest(paths.build + '/css'))
+        .pipe(gulp.dest(paths.public + '/assets'));
+});
+
+/**
+ * Production Build Task: Minifies all libraries used.
+ */
+gulp.task('build-vendor', function() {
+    return gulp.src(minifiedFiles.js)
+        .pipe(concat('vendor.js'))
+        .pipe(plumber({
+            errorHandler : onError
+        }))
+        .pipe(uglify())
+        .pipe(plumber({
+            errorHandler : onError
+        }))
+        .pipe(gulp.dest(paths.public + '/vendor'));
+});
+
+gulp.task('build-journal', function() {
+    return gulp.src([
+            paths.build + '/app/app.js',
+            paths.build + '/app/controllers.js',
+            paths.build + '/app/directives.js',
+            paths.build + '/app/providers.js',
+            paths.build + '/app/services.js',
+        ])
+        .pipe(concat('journal.js'))
+        .pipe(plumber({
+            errorHandler : onError
+        }))
+        .pipe(uglify())
+        .pipe(plumber({
+            errorHandler : onError
+        }))
+        .pipe(gulp.dest(paths.public + '/vendor'));
+});
+
+gulp.task('minify-styles', function() {
+    return gulp.src(paths.build + 'css/*')
         .pipe(minifyCss())
         .pipe(plumber({
             errorHandler : onError
         }))
         .pipe(gulp.dest(paths.public + '/assets'));
+
 });
 
 /**
  * Inject Task: Development Environment
  */
 gulp.task('inject-development-scripts', function() {
+    var jsFiles = unminifiedFiles.js.concat(unminifiedFiles.app);
+
     return gulp.src('./resources/views/journal.blade.php')
         // insert css of the dependencies
-        .pipe(inject(gulp.src([
-            paths.public + '/vendor/stylesheets/bootstrap.css',
-            paths.public + '/vendor/stylesheets/font-awesome.css',
-            paths.public + '/vendor/stylesheets/angular-growl.css',
-            paths.public + '/vendor/stylesheets/codemirror.css',
-            paths.public + '/vendor/stylesheets/ngprogress-lite.css',
-            paths.public + '/assets/screen.css'
-        ]), {
+        .pipe(inject(gulp.src(unminifiedFiles.css), {
             transform : transformAssetPath
         }))
         // insert js dependencies
-        .pipe(inject(gulp.src([
-            paths.public + '/vendor/javascript/codemirror.js',
-            paths.public + '/vendor/javascript/showdown.js',
-            paths.public + '/vendor/javascript/moment.js',
-            paths.public + '/vendor/javascript/angular.js',
-            paths.public + '/vendor/javascript/angular-sanitize.js',
-            paths.public + '/vendor/javascript/angular-ui-router.js',
-            paths.public + '/vendor/javascript/ui-bootstrap.js',
-            paths.public + '/vendor/javascript/ui-bootstrap-tpls.js',
-            paths.public + '/vendor/javascript/ui-codemirror.js',
-            paths.public + '/vendor/javascript/angular-local-storage.js',
-            paths.public + '/vendor/javascript/angular-toastr.js',
-            paths.public + '/vendor/javascript/angular-toastr.tpls.js',
-            paths.public + '/vendor/javascript/angular-moment.js',
-            paths.public + '/vendor/javascript/ng-file-upload-shim.js',
-            paths.public + '/vendor/javascript/ng-file-upload.js',
-            paths.public + '/vendor/javascript/ngprogress-lite.js',
-            paths.public + '/assets/scripts/*.js'
-        ]), {
+        .pipe(inject(gulp.src(jsFiles), {
             transform : transformAssetPath
         }))
         .pipe(gulp.dest('./resources/views'));
@@ -284,36 +360,11 @@ gulp.task('inject-development-scripts', function() {
 gulp.task('inject-production-scripts', function() {
     return gulp.src('./resources/views/journal.blade.php')
         // insert css of the dependencies
-        .pipe(inject(gulp.src([
-            paths.public + '/vendor/stylesheets/bootstrap.min.css',
-            paths.public + '/vendor/stylesheets/font-awesome.min.css',
-            paths.public + '/vendor/stylesheets/angular-growl.min.css',
-            paths.public + '/vendor/stylesheets/codemirror.css',
-            paths.public + '/vendor/stylesheets/ngprogress-lite.css',
-            paths.public + '/assets/screen.css'
-        ]), {
+        .pipe(inject(gulp.src(minifiedFiles.css), {
             transform : transformAssetPath
         }))
         // insert js dependencies
-        .pipe(inject(gulp.src([
-            paths.public + '/vendor/javascript/codemirror.js',
-            paths.public + '/vendor/javascript/showdown.min.js',
-            paths.public + '/vendor/javascript/moment.min.js',
-            paths.public + '/vendor/javascript/angular.min.js',
-            paths.public + '/vendor/javascript/angular-sanitize.min.js',
-            paths.public + '/vendor/javascript/angular-ui-router.min.js',
-            paths.public + '/vendor/javascript/ui-bootstrap.min.js',
-            paths.public + '/vendor/javascript/ui-bootstrap-tpls.min.js',
-            paths.public + '/vendor/javascript/ui-codemirror.min.js',
-            paths.public + '/vendor/javascript/angular-local-storage.min.js',
-            paths.public + '/vendor/javascript/angular-toastr.min.js',
-            paths.public + '/vendor/javascript/angular-toastr.tpls.min.js',
-            paths.public + '/vendor/javascript/angular-moment.min.js',
-            paths.public + '/vendor/javascript/ng-file-upload-shim.min.js',
-            paths.public + '/vendor/javascript/ng-file-upload.min.js',
-            paths.public + '/vendor/javascript/ngprogress-lite.min.js',
-            paths.public + '/assets/scripts/*.js'
-        ]), {
+        .pipe(inject(gulp.src(minifiedFiles.app), {
             transform : transformAssetPath
         }))
         .pipe(gulp.dest('./resources/views'));
@@ -365,7 +416,7 @@ gulp.task('get-theme-assets', function() {
 /**
  * More likely the build script for development environment
  */
-gulp.task('build', function(callback) {
+gulp.task('dev', function(callback) {
     runSequence(
         'build-bower-files',
         'build-app',
@@ -383,7 +434,7 @@ gulp.task('build', function(callback) {
 /**
  * Build script for production environment
  */
-gulp.task('build-prod', function(callback) {
+gulp.task('prod', function(callback) {
     runSequence(
         'build-bower-files',
         'build-app',
@@ -393,6 +444,9 @@ gulp.task('build-prod', function(callback) {
         'build-services',
         'build-templates',
         'build-stylesheets',
+        'build-vendor',
+        'build-journal',
+        'minify-styles',
         'inject-production-scripts',
         'get-theme-assets',
         callback);
@@ -402,5 +456,5 @@ gulp.task('build-prod', function(callback) {
  * Default Task
  */
 gulp.task('default', function(callback) {
-    runSequence('build', 'watch', callback)
+    runSequence('dev', 'watch', callback)
 });

@@ -9,16 +9,22 @@
         // variables needed
         vm.user = [];
         vm.errors = [];
+        vm.processing = false;
 
         vm.createUser = function() {
             // clear the errors
             vm.errors = [];
+
+            // flag that a request is being processed
+            vm.processing = true;
 
             // send request
             UserCreateService.createUser(vm.user)
                 .success(function(response) {
                     // user successfully created
                     if (response.user) {
+                        vm.processing = false;
+
                         // clear the form
                         vm.user = [];
                         // show success message
@@ -28,6 +34,8 @@
                 })
                 .error(function(response) {
                     if (response.errors) {
+                        vm.processing = false;
+
                         // tell there's an error
                         GrowlService.growl('There are errors encountered.', 'error');
 

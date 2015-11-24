@@ -6,7 +6,6 @@
         .run(['$state', 'AuthService', CheckAuthentication]);
 
     /**
-     *
      * @param $rootScope
      * @param $state
      * @param AuthService
@@ -24,7 +23,7 @@
             }
 
             // check if the next page is installer page
-            if (toState.name == 'installer' || toState.name == 'installer.start') {
+            if (toState.name.indexOf('installer') > 0) {
                 // check if journal is already installed
                 AuthService.checkInstallation()
                     .success(function(response) {
@@ -50,7 +49,7 @@
             });
         });
     }
-
+    
     /**
      * Checks if the there's a provided token and checks if the token is valid.
      * This will run once the page loads.
@@ -64,8 +63,10 @@
         AuthService.checkInstallation()
             .success(function(response) {
                 if (!response.installed) {
-                    $state.transitionTo('installer');
-                    event.preventDefault();
+                    // do a force logout
+                    AuthService.logout();
+
+                    $state.transitionTo('installer.start');
                     return;
                 }
             });
@@ -75,7 +76,6 @@
             AuthService.logout();
             // redirect
             $state.transitionTo('login');
-            event.preventDefault();
             return;
         }
 
@@ -93,7 +93,7 @@
                     AuthService.logout();
                     // redirect
                     $state.transitionTo('login');
-                    event.preventDefault();
+                    return;
                 });
         }
     }

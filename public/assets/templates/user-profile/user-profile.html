@@ -13,9 +13,8 @@
         </header>
         <section class="content profile-content">
             <figure class="avatar-wrapper" ng-click="upc.showImageUploader('avatar_url')">
-                <div class="avatar" style="{{upc.setImage('avatar_url')}}">
-                    <div class="overlay"><span class="text">Change avatar</span></div>
-                </div>
+                <img ng-src="{{upc.setImage('avatar_url')}}" class="avatar"/>
+                <div class="overlay"><span class="text">Change avatar</span></div>
             </figure>
             <form class="user-profile-form" ng-submit="upc.updateProfile()">
                 <div class="form-group name">
@@ -65,30 +64,36 @@
                     </p>
                 </div>
                 <div class="form-action">
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary"
+                    button-loader="upc.processing">
+                        Save changes
+                    </button>
                 </div>
             </form>
 
-            <!--<form method="post" id="user_password_form">-->
-                <!--<div class="form-group">-->
-                    <!--<label class="control-label" for="current_password">Current password</label>-->
-                    <!--<input type="password" name="current_password" class="form-control"/>-->
-                    <!--<span class="help-block">What's your current password?</span>-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                    <!--<label class="control-label" for="new_password">New password</label>-->
-                    <!--<input type="password" name="new_password" class="form-control"/>-->
-                    <!--<span class="help-block">Your new password?</span>-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                    <!--<label class="control-label" for="repeat_password">Repeat password</label>-->
-                    <!--<input type="password" name="repeat_password" class="form-control"/>-->
-                    <!--<span class="help-block">Now, repeat your password?</span>-->
-                <!--</div>-->
-                <!--<div class="form-action">-->
-                    <!--<button type="submit" class="btn btn-danger">Change password</button>-->
-                <!--</div>-->
-            <!--</form>-->
+            <form method="post" ng-submit="upc.updatePassword()" ng-if="upc.current">
+                <div class="form-group">
+                    <label class="control-label">Current password</label>
+                    <input type="password" ng-model="upc.password.old_password" class="form-control"/>
+                    <span class="help-block">What's your current password?</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">New password</label>
+                    <input type="password" ng-model="upc.password.new_password" class="form-control"/>
+                    <span class="help-block">Your new password?</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Repeat password</label>
+                    <input type="password" ng-model="upc.password.repeat_password" class="form-control"/>
+                    <span class="help-block">Now, repeat your password?</span>
+                </div>
+                <div class="form-action">
+                    <button type="submit" class="btn btn-danger"
+                    button-loader="upc.processing">
+                        Change password
+                    </button>
+                </div>
+            </form>
         </section>
     </section>
 </div>

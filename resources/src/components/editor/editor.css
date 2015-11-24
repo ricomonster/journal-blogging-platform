@@ -22,6 +22,11 @@
 #editor_page .editor-section.entry-markdown { left: 0; }
 #editor_page .editor-section.entry-preview { border-left: #f6f6f6 1px solid; right: 0; }
 #editor_page .editor-section .floating-header .header-title { float: left; }
+
+#editor_page .editor-section .floating-header .markdown-helper { float: right; text-decoration: none; }
+#editor_page .editor-section .floating-header .markdown-helper .fa { color: #aaa9a2; }
+#editor_page .floating-header .word-count { float: right; }
+
 #editor_page .entry-markdown .editor-content #the_editor { display: none; }
 #editor_page .entry-markdown .editor-content .CodeMirror {
     bottom: 0;
@@ -84,6 +89,7 @@
 
 #editor_page .rendered-markdown code { white-space: normal; }
 #editor_page .rendered-markdown em { font-family: 'Noto Serif', serif; font-size: 16px; }
+#editor_page .rendered-markdown p { margin-bottom: 20px; }
 
 #editor_page .editor-publish-bar {
     -webkit-transform: translateZ(0);
@@ -142,7 +148,7 @@
     bottom: 0;
     left: 0;
     z-index: 1030;
-    background: rgba(255,255,255,.5);
+    background: transparent;
     display: none;
 }
 

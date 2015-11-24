@@ -15,7 +15,6 @@
                 date.getHours(),
                 date.getMinutes());
 
-
         vm.sidebar = false;
         vm.post = {
             author_id : AuthService.user().id,
@@ -43,6 +42,7 @@
                 { class : 'info', group : 2, status : 1, text : 'Update Post' }],
             tags : []
         };
+        vm.processing = false;
 
         /**
          * Initialize some functions to run
@@ -96,6 +96,9 @@
             return currentDate;
         };
 
+        /**
+         * Shows the modal to confirm to delete the post
+         */
         vm.deletePost = function() {
             var modalInstance = $modal.open({
                 animation : true,
@@ -123,10 +126,16 @@
         vm.savePost = function() {
             var post = vm.post;
 
+            // flag that it is loading
+            vm.processing = true;
+
             // do an API request to save the post
             EditorService.save(post)
                 .success(function(response) {
                     var post = response.post;
+
+                    // unflag processing state
+                    vm.processing = false;
 
                     // check if post is newly created
                     if (!vm.post.id) {
@@ -157,7 +166,8 @@
                     vm.post = post;
                 })
                 .error(function(response) {
-
+                    // unflag processing state
+                    vm.processing = false;
                 });
         };
 
@@ -171,6 +181,20 @@
 
             // set the status of the post
             vm.post.status = state.status;
+        };
+
+        vm.showMarkdownHelper = function() {
+            $modal.open({
+                animation : true,
+                templateUrl : '/assets/templates/markdown-helper-modal/markdown-helper-modal.html',
+                controllerAs : 'mhm',
+                controller : 'MarkdownHelperModalController',
+                size: 'markdown'
+            });
+        };
+
+        vm.showPane = function(pane) {
+            vm.editor.activePane = pane;
         };
 
         /**

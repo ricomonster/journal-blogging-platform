@@ -1,0 +1,4 @@
+.btn-loader p { margin: 0; }
+.btn-loader i.fa { display: none;}
+.btn-loader.btn-loading p { display: none; }
+.btn-loader.btn-loading i.fa { display: inline-block; }

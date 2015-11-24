@@ -6,6 +6,7 @@
 
     function DeletePostModalController($scope, $modalInstance, DeletePostModalService, GrowlService, post) {
         $scope.post = post;
+        $scope.processing = false;
 
         $scope.cancelPost = function() {
             // just close the modal
@@ -13,6 +14,9 @@
         };
 
         $scope.deletePost = function() {
+            // flag that we're processing
+            $scope.processing = true;
+
             // do an API request to delete the post
             DeletePostModalService.deletePost($scope.post.id)
                 .success(function(response) {
@@ -29,6 +33,8 @@
                     }
                 })
                 .error(function(response) {
+                    $scope.processing = false;
+
                     // tell there's a fucking error
                     GrowlService.growl('Something went wrong. Please try again later.', 'error');
                     // close the fucking modal

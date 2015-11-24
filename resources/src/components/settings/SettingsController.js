@@ -6,6 +6,7 @@
 
     function SettingsController($modal, GrowlService, SettingsService) {
         var vm = this;
+        vm.processing = false;
         vm.settings = [];
         vm.themes = [];
 
@@ -30,10 +31,15 @@
         };
 
         vm.saveSettings = function() {
+            // flag that we're processing a request
+            vm.processing = true;
+
             // save the settings
             SettingsService.saveSettings(vm.settings)
                 .success(function(response) {
                     if (response.settings) {
+                        vm.processing = false;
+
                         // show success message
                         GrowlService.growl('You have successfully updated the settings.', 'success');
                     }

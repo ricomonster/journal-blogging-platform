@@ -8,10 +8,21 @@ use Journal\Repositories\Tag\TagRepositoryInterface;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use JWTAuth;
 
+/**
+ * Class ApiPostsController
+ * @package Journal\Http\Controllers\Api
+ */
 class ApiPostsController extends ApiController
 {
+    /**
+     * @var PostRepositoryInterface
+     */
     protected $posts;
 
+    /**
+     * @param PostRepositoryInterface $posts
+     * @param TagRepositoryInterface $tags
+     */
     public function __construct(PostRepositoryInterface $posts, TagRepositoryInterface $tags)
     {
         // set the JWT middleware
@@ -22,6 +33,9 @@ class ApiPostsController extends ApiController
         $this->tags = $tags;
     }
 
+    /**
+     * @return mixed
+     */
     public function all()
     {
         // get all posts
@@ -32,6 +46,10 @@ class ApiPostsController extends ApiController
             'posts' => $posts->toArray()]);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function checkSlug(Request $request)
     {
         $slug   = $request->input('slug');
@@ -50,6 +68,10 @@ class ApiPostsController extends ApiController
         return $this->respond(['slug' => $slug]);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function deletePosts(Request $request)
     {
         $postId = $request->input('post_id');
@@ -76,6 +98,10 @@ class ApiPostsController extends ApiController
             'error' => false]);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function getPost(Request $request)
     {
         $id     = $request->input('post_id');
@@ -118,6 +144,10 @@ class ApiPostsController extends ApiController
             ->respondWithError(['message' => 'Post ID or slug is not set.']);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function save(Request $request)
     {
         // check first the slug
@@ -147,6 +177,7 @@ class ApiPostsController extends ApiController
                 $request->input('author_id'),
                 $title,
                 $request->input('markdown'),
+                $request->input('featured_image'),
                 $slug,
                 $request->input('status'),
                 $request->input('published_at'),
@@ -161,6 +192,7 @@ class ApiPostsController extends ApiController
             $request->input('author_id'),
             $title,
             $request->input('markdown'),
+            $request->input('featured_image'),
             $slug,
             $request->input('status'),
             $request->input('published_at'),
@@ -171,6 +203,10 @@ class ApiPostsController extends ApiController
             'post' => $post->toArray()]);
     }
 
+    /**
+     * @param $request
+     * @return string
+     */
     protected function generateSlug($request)
     {
         $postId = (isset($request['post_id'])) ? $request['post_id'] : null;
@@ -194,6 +230,10 @@ class ApiPostsController extends ApiController
         return $this->posts->validateSlug('Untitled');
     }
 
+    /**
+     * @param $tags
+     * @return array
+     */
     protected function generateTags($tags)
     {
         $tagIds = [];
