@@ -12,7 +12,6 @@
     <!-- inject:css -->
     <link rel="stylesheet" href="{{ asset('/vendor/stylesheets/bootstrap.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('/vendor/stylesheets/font-awesome.min.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('/vendor/stylesheets/angular-toastr.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('/vendor/stylesheets/codemirror.css') }}"/>
     <link rel="stylesheet" href="{{ asset('/vendor/stylesheets/ngprogress-lite.css') }}"/>
     <link rel="stylesheet" href="{{ asset('/assets/screen.css') }}"/>
