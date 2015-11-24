@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('journal.component.deletePostModal')
-        .controller('DeletePostModalController', ['$scope', '$modalInstance', 'DeletePostModalService', 'ToastrService', 'post', DeletePostModalController]);
+        .controller('DeletePostModalController', ['$scope', '$modalInstance', 'DeletePostModalService', 'GrowlService', 'post', DeletePostModalController]);
 
-    function DeletePostModalController($scope, $modalInstance, DeletePostModalService, ToastrService, post) {
+    function DeletePostModalController($scope, $modalInstance, DeletePostModalService, GrowlService, post) {
         $scope.post = post;
         $scope.processing = false;
 
@@ -22,7 +22,7 @@
                 .success(function(response) {
                     if (!response.error) {
                         // growl
-                        ToastrService.toast(
+                        GrowlService.growl(
                             'You have successfully deleted the post "'+$scope.post.title+'"',
                             'success');
 
@@ -36,7 +36,7 @@
                     $scope.processing = false;
 
                     // tell there's a fucking error
-                    ToastrService.toast('Something went wrong. Please try again later.', 'error');
+                    GrowlService.growl('Something went wrong. Please try again later.', 'error');
                     // close the fucking modal
                     $modalInstance.dismiss('cancel');
                 });
@@ -48,9 +48,9 @@
     'use strict';
 
     angular.module('journal.component.editor')
-        .controller('EditorController', ['$modal', '$state', '$stateParams', 'AuthService', 'EditorService', 'ToastrService', EditorController]);
+        .controller('EditorController', ['$modal', '$state', '$stateParams', 'AuthService', 'EditorService', 'GrowlService', EditorController]);
 
-    function EditorController($modal, $state, $stateParams, AuthService, EditorService, ToastrService) {
+    function EditorController($modal, $state, $stateParams, AuthService, EditorService, GrowlService) {
         var vm = this,
             // get current date in yyyy/mm/dd hh:ss format
             date = new Date(),
@@ -70,7 +70,6 @@
 
         // editor config
         vm.editor = {
-            activePane : 'markdown',
             // button status
             activeStatus : [],
             // base url of the application
@@ -186,8 +185,8 @@
 
                     // check if post is newly created
                     if (!vm.post.id) {
-                        ToastrService
-                            .toast('You have successfully created the post "'+post.title+'".', 'success');
+                        GrowlService
+                            .growl('You have successfully created the post "'+post.title+'".', 'success');
                         // redirect
                         $state.go('postEditor', { postId : post.id });
                         return;
@@ -206,8 +205,8 @@
                     }
 
                     // show message
-                    ToastrService
-                        .toast('You have successfully updated "'+post.title+'".', 'success');
+                    GrowlService
+                        .growl('You have successfully updated "'+post.title+'".', 'success');
 
                     // update the scope
                     vm.post = post;
@@ -315,9 +314,9 @@
     'use strict';
 
     angular.module('journal.component.installerDetails')
-        .controller('InstallerDetailsController', ['$rootScope', '$state', 'AuthService', 'ToastrService', 'InstallerDetailsService', InstallerDetailsController]);
+        .controller('InstallerDetailsController', ['$rootScope', '$state', 'AuthService', 'GrowlService', 'InstallerDetailsService', InstallerDetailsController]);
 
-    function InstallerDetailsController($rootScope, $state, AuthService, ToastrService, InstallerDetailsService) {
+    function InstallerDetailsController($rootScope, $state, AuthService, GrowlService, InstallerDetailsService) {
         // broadcast that this is now the active page
         $rootScope.$broadcast('installer-menu', 2);
 
@@ -345,7 +344,7 @@
                     vm.processing = false;
                     
                     // tell that there's an error
-                    ToastrService.toast('There are some errors encountered.', 'error');
+                    GrowlService.growl('There are some errors encountered.', 'error');
 
                     if (response.errors) {
                         // show the error in the template
@@ -372,9 +371,9 @@
     'use strict';
 
     angular.module('journal.component.installerSuccess')
-        .controller('InstallerSuccessController', ['$rootScope', '$state', 'AuthService', 'ToastrService', InstallerSuccessController]);
+        .controller('InstallerSuccessController', ['$rootScope', '$state', 'AuthService', 'GrowlService', InstallerSuccessController]);
 
-    function InstallerSuccessController($rootScope, $state, AuthService, ToastrService) {
+    function InstallerSuccessController($rootScope, $state, AuthService, GrowlService) {
         // broadcast that this is now the active page
         $rootScope.$broadcast('installer-menu', 3);
 
@@ -387,7 +386,7 @@
             // check first if there's a logged in user and token
             if (!AuthService.user() && !AuthService.getToken()) {
                 // growl it first!
-                ToastrService.toast('Hey, something went wrong. Can you repeat again?', 'error');
+                GrowlService.growl('Hey, something went wrong. Can you repeat again?', 'error');
                 // redirect
                 $state.go('installer.start');
                 return;
@@ -407,9 +406,9 @@
     'use strict';
 
     angular.module('journal.component.login')
-        .controller('LoginController', ['$state', 'AuthService', 'ToastrService', 'LoginService', LoginController]);
+        .controller('LoginController', ['$state', 'AuthService', 'GrowlService', 'LoginService', LoginController]);
 
-    function LoginController($state, AuthService, ToastrService, LoginService) {
+    function LoginController($state, AuthService, GrowlService, LoginService) {
         var vm = this;
         vm.loading = false;
         vm.login = [];
@@ -430,7 +429,7 @@
                         // save the token
                         AuthService.setToken(response.token);
 
-                        ToastrService.toast('Welcome, ' + response.user.name, 'success');
+                        GrowlService.growl('Welcome, ' + response.user.name, 'success');
 
                         // redirect
                         $state.go('post.lists');
@@ -442,7 +441,7 @@
 
                     var message = response.errors.message;
                     // show message
-                    ToastrService.toast(message, 'error');
+                    GrowlService.growl(message, 'error');
                 });
         };
     }
@@ -476,7 +475,6 @@
 
         vm.posts = [];
         vm.activePost = null;
-        vm.activePane = 'lists';
 
         vm.deletePost = function(post) {
             var modalInstance = $modal.open({
@@ -519,18 +517,11 @@
                 });
         };
 
-        vm.goBack = function() {
-            vm.activePane = 'lists';
-        };
-
         /**
          * Shows the selected post and preview its content
          */
         vm.previewThisPost = function(post) {
             vm.activePost = post;
-
-            // set the preview window to active
-            vm.activePane = 'preview';
         };
 
         // fire away!
@@ -600,9 +591,9 @@
     'use strict';
 
     angular.module('journal.component.settings')
-        .controller('SettingsController', ['$modal', 'ToastrService', 'SettingsService', SettingsController]);
+        .controller('SettingsController', ['$modal', 'GrowlService', 'SettingsService', SettingsController]);
 
-    function SettingsController($modal, ToastrService, SettingsService) {
+    function SettingsController($modal, GrowlService, SettingsService) {
         var vm = this;
         vm.processing = false;
         vm.settings = [];
@@ -639,7 +630,7 @@
                         vm.processing = false;
 
                         // show success message
-                        ToastrService.toast('You have successfully updated the settings.', 'success');
+                        GrowlService.growl('You have successfully updated the settings.', 'success');
                     }
                 })
         };
@@ -681,7 +672,7 @@
     'use strict';
 
     angular.module('journal.component.settingsModal')
-        .controller('SettingsModalController', ['$scope', '$modalInstance', 'ToastrService', 'SettingsService', 'FileUploaderService', 'settings', 'type', SettingsModalController]);
+        .controller('SettingsModalController', ['$scope', '$modalInstance', 'GrowlService', 'SettingsService', 'FileUploaderService', 'settings', 'type', SettingsModalController]);
 
     /**
      * Fuck this shit. I hate using scope :( :( :(
@@ -691,7 +682,7 @@
      * @param FileUploaderService
      * @constructor
      */
-    function SettingsModalController($scope, $modalInstance, ToastrService, SettingsService, FileUploaderService, settings, type) {
+    function SettingsModalController($scope, $modalInstance, GrowlService, SettingsService, FileUploaderService, settings, type) {
         $scope.activeOption = 'file';
         $scope.imageUrl = null;
         $scope.image = {
@@ -736,8 +727,8 @@
                     .error(function() {
                         $scope.processing = false;
                         // handle the error
-                        ToastrService
-                            .toast('Something went wrong with the upload. Please try again later.', 'error');
+                        GrowlService
+                            .growl('Something went wrong with the upload. Please try again later.', 'error');
 
                         // hide progress bar
                         $scope.upload = {
@@ -791,7 +782,7 @@
                 .success(function(response) {
                     if (response.settings) {
                         // show success message
-                        ToastrService.toast('You have successfully updated the settings.', 'success');
+                        GrowlService.growl('You have successfully updated the settings.', 'success');
                         // close the modal
                         $modalInstance.close(response.settings);
                     }
@@ -880,9 +871,9 @@
     'use strict';
 
     angular.module('journal.component.userCreate')
-        .controller('UserCreateController', ['ToastrService', 'UserCreateService', UserCreateController]);
+        .controller('UserCreateController', ['GrowlService', 'UserCreateService', UserCreateController]);
 
-    function UserCreateController(ToastrService, UserCreateService) {
+    function UserCreateController(GrowlService, UserCreateService) {
         var vm = this;
         // variables needed
         vm.user = [];
@@ -906,8 +897,8 @@
                         // clear the form
                         vm.user = [];
                         // show success message
-                        ToastrService
-                            .toast('You have successfully added ' + response.user.name, 'success');
+                        GrowlService
+                            .growl('You have successfully added ' + response.user.name, 'success');
                     }
                 })
                 .error(function(response) {
@@ -915,13 +906,13 @@
                         vm.processing = false;
 
                         // tell there's an error
-                        ToastrService.toast('There are errors encountered.', 'error');
+                        GrowlService.growl('There are errors encountered.', 'error');
 
                         vm.errors = response.errors;
 
                         // show the errors
                         for (var e in response.errors) {
-                            ToastrService.toast(response.errors[e][0], 'error');
+                            GrowlService.growl(response.errors[e][0], 'error');
                         }
                     }
                 });
@@ -970,9 +961,9 @@
     'use strict';
 
     angular.module('journal.component.userProfile')
-        .controller('UserProfileController', ['$modal', '$stateParams', 'AuthService', 'ToastrService', 'UserProfileService', 'CONFIG', UserProfileController]);
+        .controller('UserProfileController', ['$modal', '$stateParams', 'AuthService', 'GrowlService', 'UserProfileService', 'CONFIG', UserProfileController]);
 
-    function UserProfileController($modal, $stateParams, AuthService, ToastrService, UserProfileService, CONFIG) {
+    function UserProfileController($modal, $stateParams, AuthService, GrowlService, UserProfileService, CONFIG) {
         var vm = this;
 
         vm.current = false;
@@ -1098,7 +1089,7 @@
                         vm.processing = false;
 
                         // growl it!
-                        ToastrService.toast('You have successfully updated your profile.', 'success');
+                        GrowlService.growl('You have successfully updated your profile.', 'success');
                     }
                 })
                 .error(function(response) {
@@ -1115,9 +1106,9 @@
     'use strict';
 
     angular.module('journal.component.userProfileModal')
-        .controller('UserProfileModalController', ['$scope', '$modalInstance', 'ToastrService', 'UserProfileService', 'FileUploaderService', 'user', 'type', UserProfileModalController]);
+        .controller('UserProfileModalController', ['$scope', '$modalInstance', 'GrowlService', 'UserProfileService', 'FileUploaderService', 'user', 'type', UserProfileModalController]);
 
-    function UserProfileModalController($scope, $modalInstance, ToastrService, UserProfileService, FileUploaderService, user, type) {
+    function UserProfileModalController($scope, $modalInstance, GrowlService, UserProfileService, FileUploaderService, user, type) {
         $scope.activeOption = 'file';
         $scope.imageUrl = null;
         $scope.image = {
@@ -1164,8 +1155,8 @@
                         $scope.processing = false;
 
                         // handle the error
-                        ToastrService
-                            .toast('Something went wrong with the upload. Please try again later.', 'error');
+                        GrowlService
+                            .growl('Something went wrong with the upload. Please try again later.', 'error');
 
                         // hide progress bar
                         $scope.upload = {
@@ -1219,7 +1210,7 @@
                 .success(function(response) {
                     if (response.user) {
                         // growl it!
-                        ToastrService.toast('You have successfully updated your profile.', 'success');
+                        GrowlService.growl('You have successfully updated your profile.', 'success');
 
                         // close the modal and returns the response from the server
                         $modalInstance.close(response.user);

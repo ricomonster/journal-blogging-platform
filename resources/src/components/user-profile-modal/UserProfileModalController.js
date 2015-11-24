@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('journal.component.userProfileModal')
-        .controller('UserProfileModalController', ['$scope', '$modalInstance', 'ToastrService', 'UserProfileService', 'FileUploaderService', 'user', 'type', UserProfileModalController]);
+        .controller('UserProfileModalController', ['$scope', '$modalInstance', 'GrowlService', 'UserProfileService', 'FileUploaderService', 'user', 'type', UserProfileModalController]);
 
-    function UserProfileModalController($scope, $modalInstance, ToastrService, UserProfileService, FileUploaderService, user, type) {
+    function UserProfileModalController($scope, $modalInstance, GrowlService, UserProfileService, FileUploaderService, user, type) {
         $scope.activeOption = 'file';
         $scope.imageUrl = null;
         $scope.image = {
@@ -51,8 +51,8 @@
                         $scope.processing = false;
 
                         // handle the error
-                        ToastrService
-                            .toast('Something went wrong with the upload. Please try again later.', 'error');
+                        GrowlService
+                            .growl('Something went wrong with the upload. Please try again later.', 'error');
 
                         // hide progress bar
                         $scope.upload = {
@@ -106,7 +106,7 @@
                 .success(function(response) {
                     if (response.user) {
                         // growl it!
-                        ToastrService.toast('You have successfully updated your profile.', 'success');
+                        GrowlService.growl('You have successfully updated your profile.', 'success');
 
                         // close the modal and returns the response from the server
                         $modalInstance.close(response.user);

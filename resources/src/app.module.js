@@ -53,6 +53,7 @@
     // installer
     angular.module('journal.component.installer', ['ui.router']);
     angular.module('journal.component.installerStart', ['ui.router']);
+
     angular.module('journal.component.installerDetails', ['ui.router']);
     angular.module('journal.component.installerSuccess', []);
 
@@ -87,6 +88,7 @@
     angular.module('journal.shared.buttonLoader', []);
     angular.module('journal.shared.fileUploader', ['ngFileUpload']);
     angular.module('journal.shared.toastr', ['ngAnimate', 'toastr']);
+
     angular.module('journal.shared.storage', ['LocalStorageModule']);
     angular.module('journal.shared.markdownConverter', ['ngSanitize']);
 })();
