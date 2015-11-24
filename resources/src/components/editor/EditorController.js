@@ -184,6 +184,16 @@
             vm.post.status = state.status;
         };
 
+        vm.showMarkdownHelper = function() {
+            $modal.open({
+                animation : true,
+                templateUrl : '/assets/templates/markdown-helper-modal/markdown-helper-modal.html',
+                controllerAs : 'mhm',
+                controller : 'MarkdownHelperModalController',
+                size: 'markdown'
+            });
+        };
+
         vm.showPane = function(pane) {
             vm.editor.activePane = pane;
         };

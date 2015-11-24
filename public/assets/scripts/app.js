@@ -8,6 +8,7 @@
         'journal.constant',
         'journal.component.deletePostModal',
         'journal.component.login',
+        'journal.component.markdownHelperModal',
         'journal.component.header',
         'journal.component.editor',
         'journal.component.installer',
@@ -41,6 +42,9 @@
     angular.module('journal.component.deletePostModal', []);
 
     angular.module('journal.component.login', []);
+
+    angular.module('journal.component.markdownHelperModal', []);
+
     angular.module('journal.component.header', []);
 
     // editor

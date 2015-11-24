@@ -25,6 +25,8 @@
 #editor_page .editor-section.entry-preview { border-left: #f6f6f6 1px solid; right: 0; }
 
 #editor_page .editor-section .floating-header .header-title { float: left; }
+#editor_page .editor-section .floating-header .markdown-helper { float: right; text-decoration: none; }
+#editor_page .editor-section .floating-header .markdown-helper .fa { color: #aaa9a2; }
 #editor_page .floating-header .word-count { float: right; }
 
 #editor_page .entry-markdown .editor-content #the_editor { display: none; }
