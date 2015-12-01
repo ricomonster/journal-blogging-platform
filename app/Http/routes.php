@@ -14,6 +14,13 @@ Route::group(['prefix' => 'api/v1.0'], function() {
         Route::post('authenticate', 'Api\ApiAuthController@authenticate');
     });
 
+    // Installer Routes
+    Route::group(['prefix' => 'installer'], function() {
+        Route::get('install', 'Api\ApiInstallerController@install');
+
+        Route::post('create_account', 'Api\ApiInstallerController@createAccount');
+    });
+
     // Post Routes
     Route::group(['prefix' => 'posts'], function() {
         Route::get('all', 'Api\ApiPostsController@all');
@@ -49,7 +56,6 @@ Route::group(['prefix' => 'api/v1.0'], function() {
         Route::post('change_password', 'Api\ApiUsersController@changePassword');
     });
 
-    Route::post('installer/create_account', 'Api\ApiInstallerController@createAccount');
     Route::post('upload', 'Api\ApiUploadController@upload');
 });
 
@@ -62,8 +68,10 @@ Route::get('journal', function() {
 | Blog Routes
 |--------------------------------------------------------------------------
 */
-Route::get('/', 'BlogController@index');
-Route::get('author/{slug}', 'BlogController@author');
-Route::get('tag/{slug}', 'BlogController@tags');
-Route::get('rss', 'BlogController@rss');
-Route::get('{parameter}', 'BlogController@post');
+Route::group(['middleware' => 'installation.not'], function() {
+    Route::get('/', 'BlogController@index');
+    Route::get('author/{slug}', 'BlogController@author');
+    Route::get('tag/{slug}', 'BlogController@tags');
+    Route::get('rss', 'BlogController@rss');
+    Route::get('{parameter}', 'BlogController@post');
+});

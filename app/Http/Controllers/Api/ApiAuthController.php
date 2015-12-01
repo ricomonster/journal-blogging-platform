@@ -5,10 +5,11 @@ use Illuminate\Http\Request;
 use Journal\Http\Requests;
 use Journal\Repositories\User\UserRepositoryInterface;
 use Journal\Repositories\Setting\SettingRepositoryInterface;
-use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
+use JWTAuth;
+use Schema;
 
 class ApiAuthController extends ApiController
 {
@@ -17,7 +18,7 @@ class ApiAuthController extends ApiController
     public function __construct(SettingRepositoryInterface $settings, UserRepositoryInterface $users)
     {
         $this->settings = $settings;
-        $this->users = $users;
+        $this->users    = $users;
     }
 
     public function authenticate(Request $request)
@@ -74,6 +75,14 @@ class ApiAuthController extends ApiController
 
     public function checkInstallation()
     {
+        // check first if the table is installed
+        $tableInstalled = Schema::hasTable('settings');
+
+        if (!$tableInstalled) {
+            return $this->setStatusCode(self::INTERNAL_ERROR)
+                ->respondWithError(['message' => 'Journal is not yet installed.']);
+        }
+
         $installed = $this->settings->get('installed');
 
         return $this->respond([

@@ -7,7 +7,9 @@ use Journal\Repositories\Post\PostRepositoryInterface;
 use Journal\Repositories\Setting\SettingRepositoryInterface;
 use Journal\Repositories\Tag\TagRepositoryInterface;
 use Journal\Repositories\User\UserRepositoryInterface;
+use Artisan;
 use JWTAuth;
+use Schema;
 
 class ApiInstallerController extends ApiController
 {
@@ -18,7 +20,7 @@ class ApiInstallerController extends ApiController
 
     public function __construct(PostRepositoryInterface $posts, SettingRepositoryInterface $settings, TagRepositoryInterface $tags, UserRepositoryInterface $users)
     {
-        $this->middleware('installation.installed');
+        $this->middleware('installation.installed', ['only' => ['createAccount']]);
 
         $this->posts    = $posts;
         $this->settings = $settings;
@@ -61,9 +63,21 @@ class ApiInstallerController extends ApiController
 
         // return response
         return $this->respond([
-            'settings'  => $this->settings->get('title'),
             'token'     => $token,
             'user'      => $user->toArray()]);
+    }
+
+    public function install()
+    {
+        // check if the settings table exists
+        $tableExists = Schema::hasTable('settings');
+
+        if (!$tableExists) {
+            Artisan::call('migrate');
+        }
+
+        return $this->respond([
+            'installed' => true]);
     }
 
     protected function createFirstPost($user)
@@ -83,6 +97,8 @@ class ApiInstallerController extends ApiController
             1,
             strtotime(date('Y-m-d h:i:s')),
             $tagIds);
+
+        return $post;
     }
 
     protected function generateFirstPostTags()

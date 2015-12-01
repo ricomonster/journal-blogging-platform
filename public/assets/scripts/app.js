@@ -343,8 +343,8 @@
     'use strict';
 
     angular.module('journal.run')
-        .run(['$rootScope', '$state', '$timeout', 'AuthService', 'ngProgressLite', AuthenticatedRoutes])
-        .run(['$state', 'AuthService', CheckAuthentication]);
+        .run(['$state', 'AuthService', CheckAuthentication])
+        .run(['$rootScope', '$state', '$timeout', 'AuthService', 'ngProgressLite', AuthenticatedRoutes]);
 
     /**
      * @param $rootScope
@@ -364,7 +364,7 @@
             }
 
             // check if the next page is installer page
-            if (toState.name.indexOf('installer') > 0) {
+            if (toState.name.indexOf('installer') >= 0) {
                 // check if journal is already installed
                 AuthService.checkInstallation()
                     .success(function(response) {
@@ -410,6 +410,14 @@
                     $state.transitionTo('installer.start');
                     return;
                 }
+            })
+            .error(function(response) {
+                // we're going to assume that the API will return an error
+                // do a force logout
+                AuthService.logout();
+
+                $state.transitionTo('installer.start');
+                return;
             });
 
         if (!AuthService.getToken() && !AuthService.user()) {

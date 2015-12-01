@@ -49,10 +49,10 @@
     </main>
     <footer class="site-footer clearfix">
         <section class="blog">
-            <a href="#">{{ $title }}</a> &copy; {{ date('Y') }}
+            <a href="{{url('/')}}">{{ $title }}</a> &copy; {{ date('Y') }}
         </section>
         <section class="platform">
-            Proudly published with <a href="#" target="_blank">Journal</a>
+            Proudly published with <a href="https://github.com/ricomonster/journal-blogging-platform" target="_blank">Journal</a>
         </section>
     </footer>
 </body>
