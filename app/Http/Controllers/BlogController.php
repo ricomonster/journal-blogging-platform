@@ -49,8 +49,6 @@ class BlogController extends Controller
      */
     public function __construct(PostRepositoryInterface $posts, SettingRepositoryInterface $settings, TagRepositoryInterface $tags, UserRepositoryInterface $users)
     {
-        $this->middleware('installation.not');
-
         // setup the path of the where the themes are located
         View::addLocation(base_path('themes'));
 
