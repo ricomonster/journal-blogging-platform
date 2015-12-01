@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('journal.component.installerDetails')
-        .controller('InstallerDetailsController', ['$rootScope', '$state', 'AuthService', 'GrowlService', 'InstallerDetailsService', InstallerDetailsController]);
+        .controller('InstallerDetailsController', ['$rootScope', '$state', 'AuthService', 'ToastrService', 'InstallerDetailsService', InstallerDetailsController]);
 
-    function InstallerDetailsController($rootScope, $state, AuthService, GrowlService, InstallerDetailsService) {
+    function InstallerDetailsController($rootScope, $state, AuthService, ToastrService, InstallerDetailsService) {
         // broadcast that this is now the active page
         $rootScope.$broadcast('installer-menu', 2);
 
@@ -32,7 +32,7 @@
                     vm.processing = false;
                     
                     // tell that there's an error
-                    GrowlService.growl('There are some errors encountered.', 'error');
+                    ToastrService.toast('There are some errors encountered.', 'error');
 
                     if (response.errors) {
                         // show the error in the template
