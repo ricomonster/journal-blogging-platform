@@ -49,8 +49,6 @@ class BlogController extends Controller
      */
     public function __construct(PostRepositoryInterface $posts, SettingRepositoryInterface $settings, TagRepositoryInterface $tags, UserRepositoryInterface $users)
     {
-        $this->middleware('installation.not');
-
         // setup the path of the where the themes are located
         View::addLocation(base_path('themes'));
 
@@ -173,13 +171,13 @@ class BlogController extends Controller
             $posts = $this->posts->getBlogPosts($this->postPerPage);
 
             // set the feed
-            $feed->title = $settings['title'];
-            $feed->description = $settings['description'];
+            $feed->title        = $settings['title'];
+            $feed->description  = $settings['description'];
             //$feed->logo = null;
-            $feed->link = url('rss');
+            $feed->link     = url('rss');
+            $feed->pubdate  = $posts[0]->published_at;
+            $feed->lang     = 'en';
             $feed->setDateFormat('timestamp');
-            $feed->pubdate = $posts[0]->published_at;
-            $feed->lang = 'en';
             $feed->setShortening(true);
             $feed->setTextLimit(100);
 
@@ -320,7 +318,7 @@ class BlogController extends Controller
             ['attribute' => 'name', 'value' => 'twitter:description', 'content' => $content['description']],
             ['attribute' => 'name', 'value' => 'twitter:url', 'content' => $meta['url']],
             ['attribute' => 'name', 'value' => 'twitter:image:src', 'content' => $meta['imageUrl']],
-            ['attribute' => 'name', 'value' => 'generator', 'content' => 'Journal v1.0.0']];
+            ['attribute' => 'name', 'value' => 'generator', 'content' => 'Journal v1.5.3']];
 
         return view('vendor.meta', $data);
     }

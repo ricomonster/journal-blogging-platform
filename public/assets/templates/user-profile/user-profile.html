@@ -65,13 +65,14 @@
                 </div>
                 <div class="form-action">
                     <button type="submit" class="btn btn-primary"
-                    button-loader="upc.processing">
+                    button-loader="upc.processingUpdateProfile">
                         Save changes
                     </button>
                 </div>
             </form>
 
-            <form method="post" ng-submit="upc.updatePassword()" ng-if="upc.current">
+            <form class="change-password-form" ng-submit="upc.updatePassword()"
+            ng-if="upc.current">
                 <div class="form-group">
                     <label class="control-label">Current password</label>
                     <input type="password" ng-model="upc.password.old_password" class="form-control"/>
@@ -89,7 +90,7 @@
                 </div>
                 <div class="form-action">
                     <button type="submit" class="btn btn-danger"
-                    button-loader="upc.processing">
+                    button-loader="upc.processingChangePassword">
                         Change password
                     </button>
                 </div>

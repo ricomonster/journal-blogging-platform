@@ -118,8 +118,6 @@
                 scope.inputYourTag = function(event) {
                     scope.showSuggestions = true;
 
-                    console.log(scope.suggestedTags.length);
-
                     // user pressed the 'Enter' key and assuming that the user
                     // inputted something in the scope
                     if (event.which == 13) {
@@ -208,21 +206,22 @@
     function FeaturedImageDirective(FileUploaderService, ToastrService) {
         return {
             restrict : 'EA',
+            require : 'ngModel',
             scope : {
                 featuredImage : '=ngModel'
             },
-            controllerAs : 'fid',
-            controller : ['$scope', function($scope) {
-                var vm = this;
-                vm.activeOption = 'file';
-                vm.imageUrl = $scope.featuredImage || '';
-                vm.image = {
+            replace : true,
+            templateUrl : '/assets/templates/editor/featured-image.html',
+            link : function(scope, element, attributes, ngModel) {
+                scope.activeOption = 'file';
+                scope.imageUrl = null;
+                scope.image = {
                     link : null,
                     file : null
                 };
 
-                vm.processing = false;
-                vm.upload = {
+                scope.processing = false;
+                scope.upload = {
                     active : false,
                     percentage : 0
                 };
@@ -230,42 +229,46 @@
                 /**
                  * Handles the blur event to get the image link
                  */
-                vm.getImageLink = function() {
-                    vm.imageUrl = vm.image.link;
+                scope.getImageLink = function() {
+                    scope.imageUrl = scope.image.link;
+
+                    ngModel.$setViewValue(scope.imageUrl);
                 };
 
                 /**
                  * Removes the featured image
                  */
-                vm.removeImage = function() {
-                    vm.imageUrl = null;
+                scope.removeImage = function() {
+                    scope.imageUrl = null;
                     // empty the link, just in case
-                    vm.image.link = null;
+                    scope.image.link = null;
+
+                    ngModel.$setViewValue(scope.imageUrl);
                 };
 
                 /**
                  * Handles changing of option on how to upload featured image.
                  * @returns {*}
                  */
-                vm.switchOption = function() {
-                    if (vm.activeOption == 'file') {
-                        return vm.activeOption = 'link';
-                    } else if (vm.activeOption == 'link') {
-                        return vm.activeOption = 'file';
+                scope.switchOption = function() {
+                    if (scope.activeOption == 'file') {
+                        return scope.activeOption = 'link';
+                    } else if (scope.activeOption == 'link') {
+                        return scope.activeOption = 'file';
                     }
                 };
 
                 /**
                  * Listens for changes in the file scope
                  */
-                $scope.$watch(function() {
-                    return vm.image.file;
+                scope.$watch(function() {
+                    return scope.image.file;
                 }, function(file) {
                     // now let's processing the image to be uploaded
                     if (file) {
                         FileUploaderService.upload(file)
                             .progress(function(event) {
-                                vm.upload = {
+                                scope.upload = {
                                     active : true,
                                     percentage : parseInt(100.0 * event.loaded / event.total)
                                 };
@@ -275,9 +278,12 @@
                                     //$scope.processing = false;
 
                                     // show image
-                                    vm.imageUrl = response.url;
+                                    scope.imageUrl = response.url;
+
+                                    ngModel.$setViewValue(scope.imageUrl);
+
                                     // hide the progress bar
-                                    vm.upload = {
+                                    scope.upload = {
                                         active : false,
                                         percentage : 0
                                     };
@@ -291,7 +297,7 @@
                                     .toast('Something went wrong with the upload. Please try again later.', 'error');
 
                                 // hide progress bar
-                                vm.upload = {
+                                scope.upload = {
                                     active : false,
                                     percentage : 0
                                 };
@@ -299,20 +305,11 @@
                     }
                 });
 
-                /**
-                 * Listen for changes for the image url
-                 */
-                $scope.$watch(function() {
-                    return vm.imageUrl;
-                }, function(image) {
-                    // set the ng-model
-                    $scope.featuredImage = image;
+                scope.$watch(function(){
+                    return ngModel.$modelValue;
+                }, function(value){
+                    scope.imageUrl = value;
                 });
-            }],
-            replace : true,
-            templateUrl : '/assets/templates/editor/featured-image.html',
-            link : function(scope, element, attributes, controller) {
-
             }
         }
     }
@@ -322,20 +319,26 @@
     'use strict';
 
     angular.module('journal.shared.buttonLoader')
-        .directive('buttonLoader', [ButtonLoaderDirective]);
+        .directive('buttonLoader', ['$timeout', ButtonLoaderDirective]);
 
-    function ButtonLoaderDirective() {
+    function ButtonLoaderDirective($timeout) {
         return {
-            restrict : 'A',
+            restrict : 'EA',
             scope : {
                 buttonLoader : '='
             },
             link : function(scope, element, attributes) {
                 var generateButton = function() {
-                    var buttonContent = element.html();
+                    var buttonContent = element.text(),
+                        width = element[0].offsetWidth;
 
-                    // add class
-                    element.addClass('btn-loader');
+                    $timeout(function() {
+                        element.empty()
+                            .css({ width: width + 'px' })
+                            .addClass('btn-loader')
+                            .append('<p>'+buttonContent.toString()+'</p>')
+                            .append('<i class="fa fa-cog fa-spin"></i>');
+                    });
                 };
 
                 // check if the attribute exists

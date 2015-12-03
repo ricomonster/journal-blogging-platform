@@ -2,20 +2,26 @@
     'use strict';
 
     angular.module('journal.shared.buttonLoader')
-        .directive('buttonLoader', [ButtonLoaderDirective]);
+        .directive('buttonLoader', ['$timeout', ButtonLoaderDirective]);
 
-    function ButtonLoaderDirective() {
+    function ButtonLoaderDirective($timeout) {
         return {
-            restrict : 'A',
+            restrict : 'EA',
             scope : {
                 buttonLoader : '='
             },
             link : function(scope, element, attributes) {
                 var generateButton = function() {
-                    var buttonContent = element.html();
+                    var buttonContent = element.text(),
+                        width = element[0].offsetWidth;
 
-                    // add class
-                    element.addClass('btn-loader');
+                    $timeout(function() {
+                        element.empty()
+                            .css({ width: width + 'px' })
+                            .addClass('btn-loader')
+                            .append('<p>'+buttonContent.toString()+'</p>')
+                            .append('<i class="fa fa-cog fa-spin"></i>');
+                    });
                 };
 
                 // check if the attribute exists

@@ -139,66 +139,6 @@ label.control-label { font-size: 18px; margin: 0; }
     }
 }
 
-/*==================================================
-=            Bootstrap 3 Media Queries             =
-==================================================*/
-
-/*==========  Mobile First Method  ==========*/
-
-/* Custom, iPhone Retina */
-@media only screen and (min-width : 320px) {
-
-}
-
-/* Extra Small Devices, Phones */
-@media only screen and (min-width : 480px) {
-
-}
-
-/* Small Devices, Tablets */
-@media only screen and (min-width : 768px) {
-
-}
-
-/* Medium Devices, Desktops */
-@media only screen and (min-width : 992px) {
-
-}
-
-/* Large Devices, Wide Screens */
-@media only screen and (min-width : 1200px) {
-
-}
-
-
-
-/*==========  Non-Mobile First Method  ==========*/
-
-/* Large Devices, Wide Screens */
-@media only screen and (max-width : 1200px) {
-
-}
-
-/* Medium Devices, Desktops */
-@media only screen and (max-width : 992px) {
-
-}
-
-/* Small Devices, Tablets */
-@media only screen and (max-width : 768px) {
-
-}
-
-/* Extra Small Devices, Phones */
-@media only screen and (max-width : 480px) {
-
-}
-
-/* Custom, iPhone Retina */
-@media only screen and (max-width : 320px) {
-
-}
-
 #delete_post_modal {}
 #delete_post_modal .modal-body { text-align: center; }
 #delete_post_modal .modal-body .hero-title { font-size: 42px; }
@@ -347,6 +287,11 @@ label.control-label { font-size: 18px; margin: 0; }
 }
 
 #editor_page .editor-publish-bar .btn-group .btn:first-child { width: 136px; }
+#editor_page .editor-publish-bar .btn-group .btn:first-child p { margin: 0; }
+#editor_page .editor-publish-bar .btn-group .btn:first-child i.fa { display: none; }
+
+#editor_page .editor-publish-bar .btn-group .btn:first-child.processing p { display: none; }
+#editor_page .editor-publish-bar .btn-group .btn:first-child.processing i { display: inline-block; }
 
 /* Editor Sidebar */
 #editor_page .overlay {
@@ -856,7 +801,7 @@ tag-input .tags-wrapper .tag-suggestions .dropdown-menu {
 #user_profile_page.active .display { display: none; }
 #user_profile_page.active .form-control,
 #user_profile_page.active .help-block,
-#user_profile_page.active .form-action{ display: block; }
+#user_profile_page.active .form-action { display: block; }
 
 #user_profile_page .profile-header {
     width: auto;
@@ -905,6 +850,7 @@ tag-input .tags-wrapper .tag-suggestions .dropdown-menu {
 
 #user_profile_page .profile-content .avatar-wrapper .avatar {
     display: block;
+    height: 100%;
     object-fit: cover;
     width: 100%;
 }
@@ -951,6 +897,10 @@ tag-input .tags-wrapper .tag-suggestions .dropdown-menu {
 
 #user_profile_page .profile-content .biography textarea { resize: none; text-align: center; }
 
+#user_profile_page .profile-content .user-profile-form .form-action .btn-loader { min-width: 130px; }
+
+#user_profile_page .profile-content .change-password-form .form-action .btn-loader { min-width: 160px; }
+
 .btn-loader p { margin: 0; }
 .btn-loader i.fa { display: none;}
 .btn-loader.btn-loading p { display: none; }
@@ -987,3 +937,5 @@ tag-input .tags-wrapper .tag-suggestions .dropdown-menu {
 }
 
 #uploader_modal .upload-wrapper .via-file .drop-box { cursor: pointer; }
+
+#uploader_modal .btn-loader { min-width: 75px; }

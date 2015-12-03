@@ -171,6 +171,22 @@
                 });
         };
 
+        vm.setButtonClass = function() {
+            // initialize the button class
+            var buttonClass = 'btn-default';
+
+            switch (vm.editor.activeStatus.class) {
+                case 'danger' : buttonClass = 'btn-danger'; break;
+                case 'primary' : buttonClass = 'btn-primary'; break;
+                case 'info' : buttonClass = 'btn-info'; break;
+            }
+
+            // check if it's processing
+            buttonClass += (vm.processing) ? ' processing' : '';
+
+            return buttonClass;
+        };
+
         /**
          * Sets the status of the post
          * @param state
