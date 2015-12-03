@@ -29,3 +29,5 @@
 }
 
 #uploader_modal .upload-wrapper .via-file .drop-box { cursor: pointer; }
+
+#uploader_modal .btn-loader { min-width: 75px; }

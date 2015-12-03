@@ -56,6 +56,7 @@ Route::group(['prefix' => 'api/v1.0'], function() {
         Route::post('change_password', 'Api\ApiUsersController@changePassword');
     });
 
+    // Upload Endpoint
     Route::post('upload', 'Api\ApiUploadController@upload');
 });
 

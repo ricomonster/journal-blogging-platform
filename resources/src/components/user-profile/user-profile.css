@@ -10,7 +10,7 @@
 #user_profile_page.active .display { display: none; }
 #user_profile_page.active .form-control,
 #user_profile_page.active .help-block,
-#user_profile_page.active .form-action{ display: block; }
+#user_profile_page.active .form-action { display: block; }
 
 #user_profile_page .profile-header {
     width: auto;
@@ -59,6 +59,7 @@
 
 #user_profile_page .profile-content .avatar-wrapper .avatar {
     display: block;
+    height: 100%;
     object-fit: cover;
     width: 100%;
 }
@@ -104,3 +105,7 @@
 }
 
 #user_profile_page .profile-content .biography textarea { resize: none; text-align: center; }
+
+#user_profile_page .profile-content .user-profile-form .form-action .btn-loader { min-width: 130px; }
+
+#user_profile_page .profile-content .change-password-form .form-action .btn-loader { min-width: 160px; }

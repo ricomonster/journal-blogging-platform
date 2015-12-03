@@ -139,6 +139,11 @@
 }
 
 #editor_page .editor-publish-bar .btn-group .btn:first-child { width: 136px; }
+#editor_page .editor-publish-bar .btn-group .btn:first-child p { margin: 0; }
+#editor_page .editor-publish-bar .btn-group .btn:first-child i.fa { display: none; }
+
+#editor_page .editor-publish-bar .btn-group .btn:first-child.processing p { display: none; }
+#editor_page .editor-publish-bar .btn-group .btn:first-child.processing i { display: inline-block; }
 
 /* Editor Sidebar */
 #editor_page .overlay {

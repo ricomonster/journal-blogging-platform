@@ -52,11 +52,13 @@
                             <i class="fa fa-gear"></i>
                         </a>
                         <div class="btn-group dropup" dropdown>
-                            <button type="submit" class="btn" button-loader="ec.processing"
-                            ng-class="{'primary' : 'btn-primary', 'danger' : 'btn-danger', 'info' : 'btn-info'}[ec.editor.activeStatus.class]">{{ec.editor.activeStatus.text}}</button>
+                            <button type="submit" class="btn" ng-disabled="ec.processing"
+                            ng-class="ec.setButtonClass()">
+                                <p>{{ec.editor.activeStatus.text}}</p>
+                                <i class="fa fa-cog fa-spin"></i>
+                            </button>
                             <button type="button" class="btn" dropdown-toggle
-                            ng-class="{'primary' : 'btn-primary', 'danger' : 'btn-danger', 'info' : 'btn-info'}[ec.editor.activeStatus.class]"
-                            button-loader="ec.processing">
+                            ng-class="ec.setButtonClass()" ng-disabled="ec.processing">
                                 <span class="caret"></span>
                                 <span class="sr-only"></span>
                             </button>

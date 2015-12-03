@@ -217,6 +217,22 @@
                 });
         };
 
+        vm.setButtonClass = function() {
+            // initialize the button class
+            var buttonClass = 'btn-default';
+
+            switch (vm.editor.activeStatus.class) {
+                case 'danger' : buttonClass = 'btn-danger'; break;
+                case 'primary' : buttonClass = 'btn-primary'; break;
+                case 'info' : buttonClass = 'btn-info'; break;
+            }
+
+            // check if it's processing
+            buttonClass += (vm.processing) ? ' processing' : '';
+
+            return buttonClass;
+        };
+
         /**
          * Sets the status of the post
          * @param state
@@ -990,7 +1006,8 @@
         vm.user = [];
         vm.password = {};
         vm.passwordErrors = [];
-        vm.processing = false;
+        vm.processingChangePassword = false;
+        vm.processingUpdateProfile = false;
 
         vm.initialize = function() {
             // check if parameter is set
@@ -1064,13 +1081,13 @@
             var passwords = vm.password;
 
             // flag that we're processing a request
-            vm.processing = true;
+            vm.processingChangePassword = true;
 
             // do an API request to change the password
             UserProfileService.updatePassword(passwords)
                 .success(function(response) {
                     if (response.user) {
-                        vm.processing = false;
+                        vm.processingChangePassword = false;
 
                         // clear the fields
                         ToastrService.toast('You have successfully updated your password.', 'success');
@@ -1079,7 +1096,7 @@
                     }
                 })
                 .error(function(response) {
-                    vm.processing = false;
+                    vm.processingChangePassword = false;
 
                     // show toastr
                     ToastrService.toast('There are errors encountered.', 'error');
@@ -1100,20 +1117,20 @@
             var user = vm.user;
 
             // flag that we're processing a request
-            vm.processing = true;
+            vm.processingUpdateProfile = true;
 
             // do an API request to update details of the user
             UserProfileService.updateUserDetails(user)
                 .success(function(response) {
                     if (response.user) {
-                        vm.processing = false;
+                        vm.processingUpdateProfile = false;
 
                         // toast it!
                         ToastrService.toast('You have successfully updated your profile.', 'success');
                     }
                 })
                 .error(function(response) {
-                    vm.processing = false;
+                    vm.processingUpdateProfile = false;
                 });
         };
 
