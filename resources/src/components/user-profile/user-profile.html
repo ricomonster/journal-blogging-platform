@@ -29,7 +29,8 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">E-mail</label>
-                    <input type="email" class="form-control" ng-model="upc.user.email"/>
+                    <input type="email" class="form-control" ng-model="upc.user.email"
+                    placeholder="yourname@domain.com"/>
                     <p class="help-block">This will be used for logging in</p>
                     <p class="display">
                         <i class="fa fa-envelope"></i>
@@ -38,7 +39,8 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Slug</label>
-                    <input type="text" class="form-control" ng-model="upc.user.slug"/>
+                    <input type="text" class="form-control" ng-model="upc.user.slug"
+                    placeholder="your-name"/>
                     <p class="help-block">/author/<span class="slug">{{upc.user.slug}}</span></p>
                     <p class="display">
                         <i class="fa fa-user"></i>
@@ -47,7 +49,8 @@
                 </div>
                 <div class="form-group" ng-if="upc.current || upc.user.website.length > 0">
                     <label class="control-label">Website</label>
-                    <input type="text" class="form-control" ng-model="upc.user.website"/>
+                    <input type="text" class="form-control" ng-model="upc.user.website"
+                    placeholder="http://your-awesome-website.com"/>
                     <p class="help-block">Have a website or blog other than this one? Link it!</p>
                     <p class="display">
                         <i class="fa fa-link"></i>
@@ -56,7 +59,8 @@
                 </div>
                 <div class="form-group" ng-if="upc.current || upc.user.location.length > 0">
                     <label class="control-label">Location</label>
-                    <input type="text" class="form-control" ng-model="upc.user.location"/>
+                    <input type="text" class="form-control" ng-model="upc.user.location"
+                    placeholder="Manhattan, New York"/>
                     <p class="help-block">Where do you live?</p>
                     <p class="display">
                         <i class="fa fa-map-marker"></i>
@@ -75,17 +79,20 @@
             ng-if="upc.current">
                 <div class="form-group">
                     <label class="control-label">Current password</label>
-                    <input type="password" ng-model="upc.password.old_password" class="form-control"/>
+                    <input type="password" ng-model="upc.password.old_password"
+                    class="form-control" placeholder="******"/>
                     <span class="help-block">What's your current password?</span>
                 </div>
                 <div class="form-group">
                     <label class="control-label">New password</label>
-                    <input type="password" ng-model="upc.password.new_password" class="form-control"/>
+                    <input type="password" ng-model="upc.password.new_password"
+                    class="form-control" placeholder="******"/>
                     <span class="help-block">Your new password?</span>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Repeat password</label>
-                    <input type="password" ng-model="upc.password.repeat_password" class="form-control"/>
+                    <input type="password" ng-model="upc.password.repeat_password"
+                    class="form-control" placeholder="******"/>
                     <span class="help-block">Now, repeat your password?</span>
                 </div>
                 <div class="form-action">

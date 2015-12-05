@@ -56,7 +56,7 @@
                 slug            = post.slug || '',
                 status          = post.status || 2,
                 tags            = post.tags || [],
-                publishedAt     = post.published_at || Math.floor(Date.now() / 1000);
+                publishedAt     = post.published_at.getTime() / 1000 || Math.floor(Date.now() / 1000);
 
             // check if post_id is set
             if (post.id) {

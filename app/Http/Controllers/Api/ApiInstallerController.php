@@ -8,6 +8,7 @@ use Journal\Repositories\Setting\SettingRepositoryInterface;
 use Journal\Repositories\Tag\TagRepositoryInterface;
 use Journal\Repositories\User\UserRepositoryInterface;
 use Artisan;
+use File;
 use JWTAuth;
 use Schema;
 
@@ -17,6 +18,7 @@ class ApiInstallerController extends ApiController
     protected $settings;
     protected $tags;
     protected $users;
+    protected $uploadsFolder;
 
     public function __construct(PostRepositoryInterface $posts, SettingRepositoryInterface $settings, TagRepositoryInterface $tags, UserRepositoryInterface $users)
     {
@@ -26,6 +28,9 @@ class ApiInstallerController extends ApiController
         $this->settings = $settings;
         $this->tags     = $tags;
         $this->users    = $users;
+
+        // set the directory path of the uploads folder
+        $this->uploadsFolder = public_path('/uploads');
     }
 
     public function createAccount(Request $request)
@@ -74,6 +79,12 @@ class ApiInstallerController extends ApiController
 
         if (!$tableExists) {
             Artisan::call('migrate');
+        }
+
+        // check also if the `uploads` folder is exists or created
+        if (!File::exists($this->uploadsFolder)) {
+            // create the uploads folder
+            File::makeDirectory($this->uploadsFolder, 0777, true, true);
         }
 
         return $this->respond([

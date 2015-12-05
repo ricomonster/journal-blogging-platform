@@ -14,8 +14,8 @@ if ( ! function_exists('get_post_tags')) {
         if ($post->tags) {
             // loop the tags
             foreach ($post->tags as $key => $tag) {
-                $tags .= '<a href="/tag/'.$tag->slug.'">'.$tag->name.'</a>';
-                $tags .= ($key < count($post->tags) - 1) ? ',' : null;
+                $tags .= '<a href="'.url('/tag/'.$tag->slug).'">'.$tag->name.'</a>';
+                $tags .= ($key < count($post->tags) - 1) ? ', ' : null;
             }
         }
 

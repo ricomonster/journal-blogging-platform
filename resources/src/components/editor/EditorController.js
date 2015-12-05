@@ -5,15 +5,7 @@
         .controller('EditorController', ['$modal', '$state', '$stateParams', 'AuthService', 'EditorService', 'ToastrService', EditorController]);
 
     function EditorController($modal, $state, $stateParams, AuthService, EditorService, ToastrService) {
-        var vm = this,
-            // get current date in yyyy/mm/dd hh:ss format
-            date = new Date(),
-            currentDate = new Date(
-                date.getFullYear(),
-                date.getMonth(),
-                date.getDate(),
-                date.getHours(),
-                date.getMinutes());
+        var vm = this;
 
         vm.sidebar = false;
         vm.post = {
@@ -32,8 +24,6 @@
             codemirror : { mode : "markdown", tabMode : "indent", lineWrapping : !0},
             // counter
             counter : 0,
-            // sets the date
-            dateNow : currentDate,
             // list of status
             status : [
                 { class : 'danger', group : 1, status : 1, text : 'Publish Now' },
@@ -66,12 +56,18 @@
                             }
 
                             // we're gonna assume that there's a published_at field returned
-                            vm.editor.dateNow = vm.convertDate(response.post.published_at);
+                            vm.post.published_at = vm.convertTimestampToDate(response.post.published_at);
                         }
                     })
                     .error(function(response) {
                         // something went wrong, redirect to 400, 404 or 500 page
                     });
+            }
+
+            // check if there's no post ID
+            if (!$stateParams.postId) {
+                // set the datetime today
+                vm.post.published_at = vm.convertTimestampToDate();
             }
         };
 
@@ -79,7 +75,7 @@
          * @param timestamp
          * @returns {Date}
          */
-        vm.convertDate = function(timestamp) {
+        vm.convertTimestampToDate = function(timestamp) {
             // check if there's a value
             if (timestamp) {
                 // let's assume this is a unix timestamp
@@ -91,6 +87,15 @@
                     publishDate.getHours(),
                     publishDate.getMinutes())
             }
+
+            // get the datetime today
+            var date = new Date(),
+                currentDate = new Date(
+                    date.getFullYear(),
+                    date.getMonth(),
+                    date.getDate(),
+                    date.getHours(),
+                    date.getMinutes());
 
             // return the current date
             return currentDate;
@@ -132,7 +137,7 @@
             // do an API request to save the post
             EditorService.save(post)
                 .success(function(response) {
-                    var post = response.post;
+                    var responsePost = response.post;
 
                     // unflag processing state
                     vm.processing = false;
@@ -140,30 +145,33 @@
                     // check if post is newly created
                     if (!vm.post.id) {
                         ToastrService
-                            .toast('You have successfully created the post "'+post.title+'".', 'success');
+                            .toast('You have successfully created the post "'+responsePost.title+'".', 'success');
                         // redirect
-                        $state.go('postEditor', { postId : post.id });
+                        $state.go('postEditor', { postId : responsePost.id });
                         return;
                     }
 
                     // check if the post is published
-                    if (post.status == 1) {
+                    if (responsePost.status == 1) {
                         // published post
                         vm.editor.activeStatus = vm.editor.status[3];
                     }
 
                     // check if the post is saved as draft or unpublished
-                    if (post.status == 2) {
+                    if (responsePost.status == 2) {
                         // default to save as draft
                         vm.editor.activeStatus = vm.editor.status[1];
                     }
 
                     // show message
                     ToastrService
-                        .toast('You have successfully updated "'+post.title+'".', 'success');
+                        .toast('You have successfully updated "'+responsePost.title+'".', 'success');
+
+                    // convert the published_at datetime
+                    responsePost.published_at = vm.convertTimestampToDate(responsePost.published_at);
 
                     // update the scope
-                    vm.post = post;
+                    vm.post = responsePost;
                 })
                 .error(function(response) {
                     // unflag processing state
