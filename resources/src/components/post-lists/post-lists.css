@@ -45,6 +45,16 @@
     line-height: 24px;
     margin: 0 0 5px;
 }
+
+.list-of-posts .post-lists-stream .no-posts { height: auto; padding: 10px 0; text-align: center; }
+.list-of-posts .post-lists-stream .no-posts h3 {
+    color: rgba(0,0,0,0.8);
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1;
+    margin: 0 0 10px;
+}
+
 #post_lists_page .content-wrapper .post-preview-wrapper {
     background: #fff;
     bottom: 0;
@@ -84,13 +94,27 @@
     line-height: 1.5em;
 }
 .post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown img {
+    display: block;
+    height: auto;
     margin: 0 auto;
     max-width: 100%;
-    height: auto;
 }
 .post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown code { white-space: normal; }
 .post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown em { font-family: 'Noto Serif', serif; font-size: 16px; }
 .post-preview-wrapper .post-wrapper .preview-wrapper .rendered-markdown p { margin-bottom: 20px; }
+
+#post_lists_page .content-wrapper .post-preview-wrapper .no-post-preview {
+    display: table;
+    width: 100%;
+}
+
+#post_lists_page .content-wrapper .post-preview-wrapper .no-post-preview h2 {
+    color: #dddddd;
+    display: table-cell;
+    margin: 0;
+    text-align: center;
+    vertical-align: middle;
+}
 
 @media only screen and (max-width : 768px) {
     #post_lists_page .content-wrapper .list-of-posts {

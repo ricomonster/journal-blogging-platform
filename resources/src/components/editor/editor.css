@@ -71,9 +71,10 @@
 
 #editor_page .rendered-markdown { padding: 50px 0 40px; }
 #editor_page .rendered-markdown img {
+    display: block;
+    height: auto;
     margin: 0 auto;
     max-width: 100%;
-    height: auto;
 }
 
 #editor_page .rendered-markdown .embedded-javascript,

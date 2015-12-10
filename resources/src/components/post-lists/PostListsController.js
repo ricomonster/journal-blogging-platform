@@ -7,6 +7,7 @@
     function PostListsController($modal, PostListService) {
         var vm = this;
 
+        vm.loading = true;
         vm.posts = [];
         vm.activePost = null;
 
@@ -48,6 +49,11 @@
                         // get the first post and make it active
                         vm.activePost = response.posts[0];
                     }
+
+                    vm.loading = false;
+                })
+                .error(function() {
+                    vm.loading = false;
                 });
         };
 

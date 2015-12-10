@@ -11,7 +11,8 @@
                 </header>
                 <section class="post-lists-stream">
                     <article class="post-wrapper auto-height" ng-repeat="post in plc.posts"
-                    ng-class="{ 'active' : post == plc.activePost }">
+                    ng-class="{ 'active' : post == plc.activePost }"
+                    ng-if="!plc.loading && plc.posts.length">
                         <a class="post-hyperlink" ng-click="plc.previewThisPost(post)">
                             <header class="post-title">{{post.title}}</header>
                             <section class="post-meta">
@@ -25,10 +26,15 @@
                             </section>
                         </a>
                     </article>
+                    <article class="no-posts" ng-if="!plc.loading && !plc.posts.length">
+                        <h3>No posts!</h3>
+                        <p>How about you create now your <a ui-sref="editor">first post</a>?</p>
+                    </article>
                 </section>
             </section>
             <section class="post-preview-wrapper">
-                <article class="post-wrapper" ng-class="{'active' : plc.activePost}">
+                <article class="post-wrapper" ng-class="{'active' : plc.activePost}"
+                ng-if="!plc.loading && plc.activePost.id">
                     <header class="floating-header">
                         <div class="header-title">
                             <span class="post-state" ng-if="plc.activePost.status == 1">Published by</span>
@@ -60,6 +66,9 @@
                     <section class="preview-wrapper">
                         <div journal-markdown="plc.activePost.markdown" class="rendered-markdown"></div>
                     </section>
+                </article>
+                <article class="no-post-preview" ng-if="!plc.loading && !plc.activePost.id">
+                    <h2>No post to preview.</h2>
                 </article>
             </section>
         </div>
