@@ -58,7 +58,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getPermalinkAttribute()
     {
-        return '/author/'.$this->attributes['slug'];
+        return url('/author/'.$this->attributes['slug']);
     }
 
     /**

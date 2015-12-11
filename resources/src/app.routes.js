@@ -2,10 +2,12 @@
     'use strict';
 
     angular.module('journal.routes')
-        .config(['$stateProvider', '$urlRouterProvider', Routes]);
+        .config(['$stateProvider', '$urlRouterProvider', 'CONFIG', Routes]);
 
-    function Routes($stateProvider, $urlRouterProvider) {
-        var templatePath = '/assets/templates';
+    function Routes($stateProvider, $urlRouterProvider, CONFIG) {
+        var templatePath = (CONFIG.CDN_URL == '') ?
+            '/assets/templates' : CONFIG.CDN_URL + '/assets/templates';
+
         $urlRouterProvider.otherwise('/')
             .when('/', '/post/lists')
             .when('/post', '/post/lists')
