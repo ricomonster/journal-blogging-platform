@@ -37,7 +37,7 @@
             <section class="post-content">{!! markdown($post->markdown, true, 50) !!}</section>
             <footer class="post-meta">
                 <a href="{{ $post->author->permalink }}">{{ $post->author->name }}</a>
-                @if($post->tags)
+                @if($post->tags->count() > 0)
                 on
                 @endif
                 {!! get_post_tags($post) !!}

@@ -14,7 +14,7 @@
 <body class="author-template">
 <header class="main-header {{ ($author->cover_url) ? null : 'no-cover' }}" {!! ($author->cover_url) ? 'style="background-image: url('.$author->cover_url.')"' : null !!}>
     <nav class="site-nav clearfix">
-        <a href="/" class="back-button">
+        <a href="{{url('/')}}" class="back-button">
             <i class="fa fa-angle-left"></i>
             Home
         </a>
@@ -63,7 +63,7 @@
         <section class="post-content">{!! markdown($post->markdown, true, 50) !!}</section>
         <footer class="post-meta">
             <a href="{{ $post->author->permalink }}">{{ $post->author->name }}</a>
-            @if($post->tags)
+            @if($post->tags->count() > 0)
                 on
             @endif
             {!! get_post_tags($post) !!}

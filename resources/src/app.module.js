@@ -35,7 +35,7 @@
     // app files
     angular.module('journal.config', ['LocalStorageModule', 'toastr']);
     angular.module('journal.constant', []);
-    angular.module('journal.routes', ['ui.router']);
+    angular.module('journal.routes', ['ui.router', 'journal.constant']);
     angular.module('journal.run', ['journal.shared.auth', 'ngProgressLite']);
 
     // COMPONENTS

@@ -15,7 +15,7 @@
     <header class="main-header {{ ($post->featured_image) ? null : 'no-cover' }}"
     {!! ($post->featured_image) ? 'style="background-image: url('.$post->featured_image.')"' : null !!}>
         <nav class="site-nav clearfix">
-            <a href="/" class="back-button">
+            <a href="{{url('/')}}" class="back-button">
                 <i class="fa fa-angle-left"></i>
                 Home
             </a>
@@ -31,7 +31,7 @@
                 <h1 class="post-title">{{ $post->title }}</h1>
                 <section class="post-meta">
                     <date class="post-date">{{ post_date_time($post) }}</date>
-                    @if($post->tags)
+                    @if($post->tags->count() > 0)
                     on
                     @endif
                     {!! get_post_tags($post) !!}
