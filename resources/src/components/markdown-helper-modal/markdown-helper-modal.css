@@ -1,9 +1,0 @@
-#markdown_helper_modal {}
-#markdown_helper_modal .modal-header { border-bottom: 0; }
-#markdown_helper_modal .modal-footer { border-top: 0; padding: 0; text-align: left; }
-
-/* Let's remove the borders in our dear table */
-#markdown_helper_modal .modal-body .table > thead > tr > th,
-#markdown_helper_modal .modal-body .table > tbody > tr > td { border: 0; }
-
-.modal-markdown { margin: 30px auto; width: 480px; }
