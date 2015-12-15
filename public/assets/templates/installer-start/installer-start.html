@@ -1,0 +1,28 @@
+<style type="text/css">
+    #installer_start_page {
+        font-size: 16px;
+        margin: auto;
+        text-align: center;
+        width: 40%;
+    }
+
+    #installer_start_page .page-header { margin: 10px 0 0; }
+    #installer_start_page .content .message { padding: 15px 0 0; }
+    #installer_start_page .content .btn { margin-top: 15px; }
+</style>
+<div ng-controller="InstallerStartController as isc">
+    <section id="installer_start_page">
+        <header class="page-header">
+            <h2 class="page-title">Welcome to Journal</h2>
+        </header>
+        <section class="content">
+            <div class="message">
+                <p>It seems you didn't encountered any problems installing Journal in your server because if you have, you'll not see this page.</p>
+                <p>You're just a few steps away on starting new your blog using Journal.</p>
+
+                <a ng-click="isc.install()" button-loader="isc.processing"
+                class="btn btn-info">Click me so you can start!</a>
+            </div>
+        </section>
+    </section>
+</div>

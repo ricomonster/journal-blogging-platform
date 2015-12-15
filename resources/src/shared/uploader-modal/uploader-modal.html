@@ -1,0 +1,36 @@
+<article id="uploader_modal">
+    <section class="modal-body">
+        <div class="upload-wrapper">
+            <div class="image-wrapper" ng-if="imageUrl">
+                <a ng-click="removeImage()" class="btn btn-danger btn-sm remove-image">
+                    <i class="fa fa-trash-o"></i>
+                </a>
+                <img ng-src="{{imageUrl}}"/>
+            </div>
+            <div class="option via-file" ng-class="{'active' : activeOption == 'file' && !imageUrl}">
+                <div ngf-drop ngf-select ng-model="image.file" class="drop-box"
+                 ngf-drag-over-class="dragover" ngf-multiple="false" ngf-allow-dir="false"
+                 accept="image/*">
+                    <span class="add-image-text">Add Image</span>
+                </div>
+                <!-- Progress bar goes in here -->
+                <progressbar value="upload.percentage" type="success" ng-if="upload.percentage">
+                    <b>{{upload.percentage}}%</b>
+                </progressbar>
+            </div>
+            <div class="option via-link" ng-class="{'active' : activeOption == 'link' && !imageUrl}">
+                <input type="text" ng-model="image.link" class="form-control"
+                       placeholder="http://"/>
+                <span class="add-image-text">Add Image</span>
+            </div>
+            <a class="switch-option" ng-if="!imageUrl" ng-click="switchOption()">
+                <i class="fa" ng-class="{'fa-link' : activeOption == 'link', 'fa-image' : activeOption == 'file'}"></i>
+            </a>
+        </div>
+    </section>
+    <footer class="modal-footer">
+        <button class="btn btn-default" type="button" ng-click="closeModal()">Cancel</button>
+        <button class="btn btn-primary" type="button" ng-click="save()"
+        button-loader="processing">Save</button>
+    </footer>
+</article>

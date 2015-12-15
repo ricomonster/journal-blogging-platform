@@ -1,0 +1,61 @@
+<div ng-controller="SidebarController as sc">
+    <div class="sidebar-overlay" ng-class="{ 'open' : sc.openSidebar }"
+    ng-click="sc.tapOverlay()"></div>
+    <aside id="sidebar" ng-class="{ 'open' : sc.openSidebar }">
+        <div class="content">
+            <header class="blog-details">
+                <h1 class="brand">Journal</h1>
+                <a href="/" class="blog-title">{{sc.title}}</a>
+                <div dropdown>
+                    <a dropdown-toggle>
+                        {{sc.user.name}}<br/>
+                        {{sc.user.email}}<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a ui-sref="user.profile({userId:sc.user.id})">Edit Profile</a></li>
+                        <li><a ng-click="sc.logout()">Log out</a></li>
+                    </ul>
+                </div>
+            </header>
+            <ul class="site-directory">
+                <li>
+                    <a ui-sref="post.lists" ng-click="sc.toggleSidebar()">
+                        <i class="fa fa-edit fa-fw"></i>
+                        Posts
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref="user.lists" ng-click="sc.toggleSidebar()">
+                        <i class="fa fa-user fa-fw"></i>
+                        Users
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref="settings" ng-click="sc.toggleSidebar()">
+                        <i class="fa fa-cog fa-fw"></i>
+                        Settings
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref="services" ng-click="sc.toggleSidebar()">
+                        <i class="fa fa-wrench fa-fw"></i>
+                        Services
+                    </a>
+                </li>
+                <li class="divider">Add new...</li>
+                <li>
+                    <a ui-sref="editor" ng-click="sc.toggleSidebar()">
+                        <i class="fa fa-pencil fa-fw"></i>
+                        Post
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref="user.create" ng-click="sc.toggleSidebar()">
+                        <i class="fa fa-plus fa-fw"></i>
+                        User
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+</div>

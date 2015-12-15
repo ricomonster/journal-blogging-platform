@@ -1,0 +1,32 @@
+<div id="featured_image">
+    <label class="control-label">Featured Image</label>
+    <div class="wrapper">
+        <section class="image-wrapper" ng-if="imageUrl">
+            <a ng-click="removeImage()" class="btn btn-danger btn-sm remove-image">
+                <i class="fa fa-trash-o"></i>
+            </a>
+            <img ng-src="{{imageUrl}}"/>
+        </section>
+        <section class="uploader" ng-if="!imageUrl">
+            <div class="option file" ng-class="{'active' : activeOption == 'file' && !imageUrl}">
+                <div ngf-drop ngf-select ng-model="image.file" class="drop-box"
+                 ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
+                 accept="image/*">
+                    <span class="add-image-text">Add Image</span>
+                </div>
+                <!-- Progress bar goes in here -->
+                <progressbar value="upload.percentage" type="success" ng-if="upload.percentage">
+                    <b>{{upload.percentage}}%</b>
+                </progressbar>
+            </div>
+            <div class="option link" ng-class="{'active' : activeOption == 'link' && !imageUrl}">
+                <input type="text" ng-model="fid.image.link" class="form-control"
+                placeholder="http://" ng-blur="getImageLink()"/>
+                <span class="add-image-text">Add Image</span>
+            </div>
+            <a class="switch-option" ng-if="!imageUrl" ng-click="switchOption()">
+                <i class="fa" ng-class="{'fa-link' : activeOption == 'file', 'fa-image' : activeOption == 'link'}"></i>
+            </a>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+<div ng-controller="SettingsController as sc">
+    <section id="settings_page" class="main-container container-fluid">
+        <header class="page-header">
+            <h1 class="hero-title">Settings</h1>
+        </header>
+        <section class="content">
+            <form class="blog-settings" ng-submit="sc.saveSettings()">
+                <div class="form-group">
+                    <label class="control-label">Blog Title</label>
+                    <input type="text" ng-model="sc.settings.title"
+                    class="form-control" placeholder="Journal"/>
+                    <span class="help-block">The name of your blog</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Blog Description</label>
+                    <textarea class="form-control" ng-model="sc.settings.description"
+                    placeholder="Awesome blog"></textarea>
+                    <span class="help-block">Describe what your blog is all about.</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Post per page</label>
+                    <input type="text" ng-model="sc.settings.post_per_page"
+                    class="form-control" placeholder="5"/>
+                    <span class="help-block">Number of posts that a page will show</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Blog Logo</label>
+                    <div class="image-wrapper">
+                        <img ng-src="{{sc.settings.logo_url}}" ng-if="sc.settings.logo_url"
+                        ng-click="sc.showImageUploader('logo_url')"/>
+                        <a ng-click="sc.showImageUploader('logo_url')" class="btn btn-success"
+                        ng-if="!sc.settings.logo_url">
+                            Upload Image
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Blog Cover</label>
+                    <div class="image-wrapper">
+                        <img ng-src="{{sc.settings.cover_url}}" ng-if="sc.settings.cover_url"
+                        ng-click="sc.showImageUploader('cover_url')"/>
+                        <a ng-click="sc.showImageUploader('cover_url')" class="btn btn-success"
+                        ng-if="!sc.settings.cover_url">
+                            Upload Image
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Theme</label>
+                    <select ng-model="sc.settings.theme" class="form-control">
+                        <option value="">-- Select theme --</option>
+                        <option ng-repeat="theme in sc.themes" value="{{theme.theme_name}}"
+                        ng-selected="sc.selectedTheme(theme.theme_name)">
+                            {{theme.name}} (v{{theme.version}})
+                        </option>
+                    </select>
+                </div>
+                <div class="form-action">
+                    <button type="submit" class="btn btn-primary"
+                    button-loader="sc.processing">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </section>
+    </section>
+</div>

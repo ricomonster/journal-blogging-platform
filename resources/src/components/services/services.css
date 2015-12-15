@@ -1,0 +1,15 @@
+#services_page {}
+#services_page .page-header { margin: 30px auto 20px; width: 50%; }
+#services_page .page-header .hero-title { margin: 0; }
+
+#services_page .content { margin: auto; width: 50%; }
+
+@media only screen and (max-width : 768px) {
+    #services_page .page-header,
+    #services_page .content { width: 80%; }
+}
+
+@media only screen and (max-width : 480px) {
+    #services_page .page-header,
+    #services_page .content { width: 90%; }
+}
