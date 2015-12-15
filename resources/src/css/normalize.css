@@ -1,0 +1,10 @@
+body {
+    background-color: #ffffff;
+    color: rgba(0,0,0,0.8);
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    overflow-x: hidden;
+}
