@@ -53,7 +53,7 @@ module.exports = {
         // codemirror
         paths.base.bower + '/codemirror/lib/codemirror.js',
         // moment
-        paths.base.bower + '/moment/src/moment.js',
+        paths.base.bower + '/moment/moment.js',
         paths.base.bower + '/moment/min/moment.min.js',
         // ng file upload
         paths.base.bower + '/ng-file-upload/ng-file-upload.js',

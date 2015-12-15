@@ -43,7 +43,7 @@ module.exports = {
         }
     },
     destination : {
-        build : './resources/src/build',
+        build : './resources/build',
         templates : './public/assets/templates',
         vendor : {
             css : './public/vendor/css',
