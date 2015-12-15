@@ -1,4 +1,5 @@
 #login_page {}
+#login_page .page-content { margin: 0 !important; }
 #login_page #login_form {
     padding: 120px 0 0;
     margin: auto;
