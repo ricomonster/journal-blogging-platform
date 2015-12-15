@@ -139,7 +139,7 @@ gulp.task('build-stylesheets', function() {
             errorHandler : onError
         }))
         // uglify if it sets to production
-        .pipe(isProduction ? uglify() : util.noop())
+        .pipe(isProduction ? minifyCss() : util.noop())
         .pipe(plumber({
             errorHandler : onError
         }))
