@@ -1,0 +1,28 @@
+<div ng-controller="UserListsController as ulc">
+    <section id="user_list_page" class="main-container container-fluid">
+        <header class="page-header">
+            <h1 class="hero-title pull-left">Users</h1>
+            <a ui-sref="user.create" class="btn btn-primary pull-right">Add User</a>
+            <div class="clearfix"></div>
+        </header>
+        <section class="content">
+            <article class="user-details" ng-repeat="user in ulc.users">
+                <a class="user-hyperlink clearfix" ui-sref="user.profile({ userId : user.id })">
+                    <figure class="avatar-wrapper">
+                        <!--<div class="avatar" style="background-image: url('{{}}');"></div>-->
+                        <img ng-src="{{ulc.setUserAvatarImage(user)}}" class="avatar"/>
+                    </figure>
+                    <div class="user-content">
+                        <h3 class="user-name">{{user.name}}</h3>
+                        <time class="text-muted last-login" ng-if="user.login_at">
+                            Last login
+                            <span am-time-ago="user.login_at" am-preprocess="unix"></span>
+                        </time>
+                    </div>
+                    <!--<span class="label label-success role">Administrator</span>-->
+                    <!--<span class="label label-info role">Editor</span>-->
+                </a>
+            </article>
+        </section>
+    </section>
+</div>

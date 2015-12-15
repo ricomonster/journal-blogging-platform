@@ -1,0 +1,107 @@
+<div ng-controller="UserProfileController as upc">
+    <section id="user_profile_page" class="main-container container-fluid" ng-class="{'active' : upc.current}">
+        <header class="profile-header" style="{{upc.setImage('cover_url')}}">
+            <nav class="profile-nav">
+                <a ui-sref="user.lists" class="btn btn-default back-to-users">
+                    <i class="fa fa-chevron-left"></i> Users
+                </a>
+                <a class="btn btn-primary change-cover" ng-click="upc.showImageUploader('cover_url')">
+                    <i class="fa fa-camera"></i>
+                    Change cover
+                </a>
+            </nav>
+        </header>
+        <section class="content profile-content">
+            <figure class="avatar-wrapper" ng-click="upc.showImageUploader('avatar_url')">
+                <img ng-src="{{upc.setImage('avatar_url')}}" class="avatar"/>
+                <div class="overlay"><span class="text">Change avatar</span></div>
+            </figure>
+            <form class="user-profile-form" ng-submit="upc.updateProfile()">
+                <div class="form-group name">
+                    <input type="text" class="form-control" ng-model="upc.user.name"
+                    placeholder="What's your name?"/>
+                    <h1 class="display">{{upc.user.name}}</h1>
+                </div>
+                <div class="form-group biography">
+                    <textarea class="form-control" ng-model="upc.user.biography"
+                    placeholder="Tell something about yourself"></textarea>
+                    <p class="display">{{upc.user.biography}}</p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">E-mail</label>
+                    <input type="email" class="form-control" ng-model="upc.user.email"
+                    placeholder="yourname@domain.com"/>
+                    <p class="help-block">This will be used for logging in</p>
+                    <p class="display">
+                        <i class="fa fa-envelope"></i>
+                        <a href="mailto:{{upc.user.email}}">{{upc.user.email}}</a>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Slug</label>
+                    <input type="text" class="form-control" ng-model="upc.user.slug"
+                    placeholder="your-name"/>
+                    <p class="help-block">/author/<span class="slug">{{upc.user.slug}}</span></p>
+                    <p class="display">
+                        <i class="fa fa-user"></i>
+                        <a href="/author/{{upc.user.slug}}">/author/{{upc.user.slug}}</a>
+                    </p>
+                </div>
+                <div class="form-group" ng-if="upc.current || upc.user.website.length > 0">
+                    <label class="control-label">Website</label>
+                    <input type="text" class="form-control" ng-model="upc.user.website"
+                    placeholder="http://your-awesome-website.com"/>
+                    <p class="help-block">Have a website or blog other than this one? Link it!</p>
+                    <p class="display">
+                        <i class="fa fa-link"></i>
+                        {{upc.user.website}}
+                    </p>
+                </div>
+                <div class="form-group" ng-if="upc.current || upc.user.location.length > 0">
+                    <label class="control-label">Location</label>
+                    <input type="text" class="form-control" ng-model="upc.user.location"
+                    placeholder="Manhattan, New York"/>
+                    <p class="help-block">Where do you live?</p>
+                    <p class="display">
+                        <i class="fa fa-map-marker"></i>
+                        {{upc.user.location}}
+                    </p>
+                </div>
+                <div class="form-action">
+                    <button type="submit" class="btn btn-primary"
+                    button-loader="upc.processingUpdateProfile">
+                        Save changes
+                    </button>
+                </div>
+            </form>
+
+            <form class="change-password-form" ng-submit="upc.updatePassword()"
+            ng-if="upc.current">
+                <div class="form-group">
+                    <label class="control-label">Current password</label>
+                    <input type="password" ng-model="upc.password.old_password"
+                    class="form-control" placeholder="******"/>
+                    <span class="help-block">What's your current password?</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">New password</label>
+                    <input type="password" ng-model="upc.password.new_password"
+                    class="form-control" placeholder="******"/>
+                    <span class="help-block">Your new password?</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Repeat password</label>
+                    <input type="password" ng-model="upc.password.repeat_password"
+                    class="form-control" placeholder="******"/>
+                    <span class="help-block">Now, repeat your password?</span>
+                </div>
+                <div class="form-action">
+                    <button type="submit" class="btn btn-danger"
+                    button-loader="upc.processingChangePassword">
+                        Change password
+                    </button>
+                </div>
+            </form>
+        </section>
+    </section>
+</div>
