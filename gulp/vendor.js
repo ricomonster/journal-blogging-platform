@@ -11,7 +11,8 @@ module.exports = {
             paths.destination.vendor.css + '/font-awesome.min.css',
             paths.destination.vendor.css + '/angular-toastr.min.css',
             paths.destination.vendor.css + '/codemirror.css',
-            paths.destination.vendor.css + '/ngprogress-lite.css'
+            paths.destination.vendor.css + '/ngprogress-lite.css',
+            paths.destination.assets.css + '/screen.css'
         ],
         js : [
             paths.destination.vendor.js + '/codemirror.js',
@@ -45,7 +46,8 @@ module.exports = {
             paths.destination.vendor.css + '/font-awesome.css',
             paths.destination.vendor.css + '/angular-toastr.css',
             paths.destination.vendor.css + '/codemirror.css',
-            paths.destination.vendor.css + '/ngprogress-lite.css'
+            paths.destination.vendor.css + '/ngprogress-lite.css',
+            paths.destination.assets.css + '/screen.css'
         ],
         js : [
             paths.destination.vendor.js + '/codemirror.js',

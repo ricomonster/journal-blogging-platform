@@ -1,3 +1,4 @@
+html, body { height: 100%; }
 body {
     background-color: #ffffff;
     color: rgba(0,0,0,0.8);
@@ -8,9 +9,25 @@ body {
     letter-spacing: -0.02em;
     overflow-x: hidden;
 }
-.full-height { height: 100%; }
+
+.page-content {
+    margin: auto;
+    width: 100%;
+}
+.full-height, .ng-scope { height: 100%; }
 .auto-height { height: auto; }
 
+.form-control { border-width: 2px; height: 36px; }
+.input-group-addon { border-width: 2px; }
 
+.btn { padding: 7px 12px; }
 
+#login_page {}
+#login_page #login_form {
+    padding: 120px 0 0;
+    margin: auto;
+    width: 350px;
+}
 
+#login_page #login_form .form-actions .btn { margin-bottom: 20px; }
+#login_page #login_form .form-actions .forgot-password { text-align: center; }
