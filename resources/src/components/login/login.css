@@ -1,0 +1,9 @@
+#login_page {}
+#login_page #login_form {
+    padding: 120px 0 0;
+    margin: auto;
+    width: 350px;
+}
+
+#login_page #login_form .form-actions .btn { margin-bottom: 20px; }
+#login_page #login_form .form-actions .forgot-password { text-align: center; }

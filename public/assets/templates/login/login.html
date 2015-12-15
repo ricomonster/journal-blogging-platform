@@ -1,0 +1,33 @@
+<div id="login_page" ng-controller="LoginController as lc">
+    <section class="page-content">
+        <form id="login_form" ng-submit="lc.authenticateLogin()">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-at fa-fw"></i>
+                    </span>
+                    <input type="email" ng-model="lc.login.email" class="form-control"
+                    placeholder="Email">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-unlock-alt fa-fw"></i>
+                    </span>
+                    <input type="password" ng-model="lc.login.password" class="form-control"
+                    placeholder="Password"/>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-block">
+                    Login
+                </button>
+
+                <p class="forgot-password">
+                    <a>Forgot your Password?</a>
+                </p>
+            </div>
+        </form>
+    </section>
+</div>

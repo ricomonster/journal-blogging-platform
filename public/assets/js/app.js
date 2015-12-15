@@ -54,7 +54,7 @@
             containerId: 'toast-container',
             maxOpened: 5,
             newestOnTop: false,
-            positionClass: 'toast-top-right',
+            positionClass: 'toast-bottom-left',
             preventDuplicates: false,
             preventOpenDuplicates: true,
             target: 'body',
