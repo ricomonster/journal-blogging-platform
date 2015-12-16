@@ -1,12 +1,13 @@
-var gulp        = require('gulp'),
-    concat      = require('gulp-concat'),
-    minifyCss   = require('gulp-minify-css'),
-    plumber     = require('gulp-plumber'),
-    notify      = require('gulp-notify'),
-    uglify      = require('gulp-uglify'),
-    util        = require('gulp-util'),
-    inject      = require('gulp-inject'),
-    runSequence = require('run-sequence');
+var gulp            = require('gulp'),
+    autoprefixer    = require('gulp-autoprefixer'),
+    concat          = require('gulp-concat'),
+    minifyCss       = require('gulp-minify-css'),
+    plumber         = require('gulp-plumber'),
+    notify          = require('gulp-notify'),
+    uglify          = require('gulp-uglify'),
+    util            = require('gulp-util'),
+    inject          = require('gulp-inject'),
+    runSequence     = require('run-sequence');
 
 var paths       = require('./gulp/paths'),
     bowerFiles  = require('./gulp/bower'),
@@ -117,6 +118,22 @@ gulp.task('build-admin-services', function() {
 });
 
 /**
+ * Build: Build task for the admin providers.
+ */
+gulp.task('build-admin-providers', function() {
+    return gulp.src([
+            paths.sources.components.providers,
+            paths.sources.shared.providers
+        ])
+        .pipe(concat('providers.js'))
+        .pipe(plumber({
+            errorHandler : onError
+        }))
+        .pipe(gulp.dest(paths.destination.build))
+        .pipe(gulp.dest(paths.destination.assets.js));
+});
+
+/**
  * Build: Copies the templates.
  */
 gulp.task('build-admin-templates', function() {
@@ -133,6 +150,11 @@ gulp.task('build-admin-templates', function() {
  */
 gulp.task('build-stylesheets', function() {
     return gulp.src(paths.sources.css)
+        // autoprefixer
+        .pipe(autoprefixer('last 2 versions'))
+        .pipe(plumber({
+            errorHandler : onError
+        }))
         // concatenate
         .pipe(concat('screen.css'))
         .pipe(plumber({
@@ -258,6 +280,7 @@ gulp.task('default', function(callback) {
         'build-admin-controllers',
         'build-admin-directives',
         'build-admin-services',
+        'build-admin-providers',
         'build-admin-templates',
         'build-stylesheets',
         'inject-scripts',
