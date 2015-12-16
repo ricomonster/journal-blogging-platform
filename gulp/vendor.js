@@ -39,6 +39,7 @@ module.exports = {
             paths.destination.assets.js + '/app.js',
             paths.destination.assets.js + '/controllers.js',
             paths.destination.assets.js + '/directives.js',
+            paths.destination.assets.js + '/providers.js',
             paths.destination.assets.js + '/services.js'
         ],
         css : [

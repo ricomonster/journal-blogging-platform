@@ -16,6 +16,7 @@ module.exports = {
             './resources/build/app.js',
             './resources/build/controllers.js',
             './resources/build/directives.js',
+            './resources/build/providers.js',
             './resources/build/services.js'
         ],
         css : [
@@ -31,6 +32,7 @@ module.exports = {
             controllers : './resources/src/components/**/*Controller.js',
             services : './resources/src/components/**/*Service.js',
             directives : './resources/src/components/**/*Directive.js',
+            providers : './resources/src/components/**/*Provider.js',
             templates : './resources/src/components/**/*.html',
             css : './resources/src/components/**/*.css'
         },
@@ -38,6 +40,7 @@ module.exports = {
             controllers : './resources/src/shared/**/*Controller.js',
             services : './resources/src/shared/**/*Service.js',
             directives : './resources/src/shared/**/*Directive.js',
+            providers : './resources/src/shared/**/*Provider.js',
             templates : './resources/src/shared/**/*.html',
             css : './resources/src/shared/**/*.css'
         }
