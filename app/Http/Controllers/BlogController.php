@@ -318,7 +318,7 @@ class BlogController extends Controller
             ['attribute' => 'name', 'value' => 'twitter:description', 'content' => $content['description']],
             ['attribute' => 'name', 'value' => 'twitter:url', 'content' => $meta['url']],
             ['attribute' => 'name', 'value' => 'twitter:image:src', 'content' => $meta['imageUrl']],
-            ['attribute' => 'name', 'value' => 'generator', 'content' => 'Journal v1.5.5']];
+            ['attribute' => 'name', 'value' => 'generator', 'content' => 'Journal v1.6.0']];
 
         return view('vendor.meta', $data);
     }

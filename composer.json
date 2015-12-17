@@ -9,7 +9,8 @@
         "laravel/framework": "5.1.*",
         "michelf/php-markdown": "^1.5",
         "roumen/feed": "^2.9",
-        "tymon/jwt-auth": "0.5.*"
+        "tymon/jwt-auth": "0.5.*",
+        "barryvdh/laravel-cors": "0.7.x"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

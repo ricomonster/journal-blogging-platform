@@ -146,6 +146,7 @@ return [
         Journal\Providers\JournalServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         Roumen\Feed\FeedServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class
     ],
 
     /*
