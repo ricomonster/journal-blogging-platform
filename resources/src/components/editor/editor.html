@@ -1,0 +1,48 @@
+<div id="editor_page" ng-controller="EditorController as ec">
+    <section class="page-content">
+        <form>
+            <header class="page-header clearfix">
+                <input type="text" ng-model="ec.post.title" class="form-control input-lg"
+                placeholder="Title"/>
+                <div class="editor-controls">
+                    <div class="btn-group" uib-dropdown>
+                        <button id="split-button" type="button" class="btn btn-danger">Action</button>
+                        <button type="button" class="btn btn-danger" uib-dropdown-toggle>
+                            <span class="caret"></span>
+                            <span class="sr-only"></span>
+                        </button>
+                        <ul class="uib-dropdown-menu dropdown-menu-right" role="menu"
+                        aria-labelledby="split-button">
+                            <li role="menuitem"><a href="#">Action</a></li>
+                            <li role="menuitem"><a href="#">Another action</a></li>
+                            <li role="menuitem"><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li role="menuitem"><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+            <div class="editor">
+                <section class="markdown-editor window">
+                    <header class="floating-header">
+                        <span class="title">Markdown</span>
+                    </header>
+                    <section class="editor-wrapper editor-scroll">
+                        <ui-codemirror ng-model="ec.post.markdown"
+                        ui-codemirror-opts="ec.options.codemirror"></ui-codemirror>
+                    </section>
+                </section>
+                <section class="markdown-preview window">
+                    <header class="floating-header">
+                        <span class="title">Preview</span>
+                        <span class="word-counter">{{ec.options.counter}} words</span>
+                    </header>
+                    <section class="preview-wrapper">
+                        <div journal-markdown="ec.post.markdown" hide-script-iframe="true"
+                        counter="ec.options.counter" class="rendered-markdown"></div>
+                    </section>
+                </section>
+            </div>
+        </form>
+    </section>
+</div>

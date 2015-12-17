@@ -1,1 +1,6 @@
+/* New color schemes for the buttons */
+.btn.btn-primary { border-color: #529ecc; background: #529ecc; }
+.btn.btn-danger { background-color: #c74c4c; border-color: #c74c4c;}
+
+.btn { padding: 7px 12px; }
 .btn.btn-sm { padding: 4px 12px; }

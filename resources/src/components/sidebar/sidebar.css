@@ -5,7 +5,6 @@
     bottom: 0;
     left: 0;
     position: absolute;
-    overflow-y: auto;
     top: 0;
     width: 220px;
 }
@@ -19,7 +18,16 @@
 
 #sidebar .content .sidebar-header .user-name {}
 
-#sidebar .content .sidebar-content { padding: 10px 0; }
+#sidebar .content .sidebar-content {
+    padding: 10px 0;
+    position: absolute;
+    top: 82px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    overflow-y: auto
+}
+
 #sidebar .content .sidebar-content .menu-lists { margin: 0; padding: 0 10px; width: 100%; }
 #sidebar .content .sidebar-content .menu-lists li { padding: 2px 0; }
 #sidebar .content .sidebar-content .menu-lists li a { color: #4d4a4c; padding: 0 10px; text-decoration: none; }

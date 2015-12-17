@@ -8,6 +8,7 @@
         'journal.routes',
         'journal.run',
         // COMPONENTS
+        'journal.components.editor',
         'journal.components.login',
         'journal.components.post',
         'journal.components.postLists',
@@ -25,6 +26,9 @@
     angular.module('journal.run', []);
 
     // COMPONENTS
+    // Editor
+    angular.module('journal.components.editor', ['ui.bootstrap', 'ui.codemirror']);
+
     // Login
     angular.module('journal.components.login', []);
 
@@ -89,6 +93,31 @@
 
         // state configuration
         $stateProvider
+            // EDITOR
+            .state('editor', {
+                url : '/editor',
+                views : {
+                    // default ui-view
+                    '' : {
+                        templateUrl : templatePath('editor/editor.html')
+                    },
+                    'sidebar' : {
+                        templateUrl : templatePath('sidebar/sidebar.html')
+                    }
+                }
+            })
+            .state('editorPost', {
+                url : '/editor/:postId',
+                views : {
+                    // default ui-view
+                    '' : {
+                        templateUrl : templatePath('editor/editor.html')
+                    },
+                    'sidebar' : {
+                        templateUrl : templatePath('sidebar/sidebar.html')
+                    }
+                }
+            })
             // LOGIN
             .state('login', {
                 url : '/login',

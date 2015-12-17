@@ -1,4 +1,10 @@
 .form-control { border-width: 2px; height: 36px; }
 .input-group-addon { border-width: 2px; }
 
-.btn { padding: 7px 12px; }
+.form-control, .form-control:focus {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    border-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+}
