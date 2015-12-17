@@ -38,6 +38,10 @@
             }
         };
 
+        vm.savePost = function() {
+            console.log(vm.post);
+        };
+
         vm.initialize();
     }
 })();

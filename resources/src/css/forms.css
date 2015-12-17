@@ -4,7 +4,6 @@
 .form-control, .form-control:focus {
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
-    border-color: transparent;
     border-radius: 0;
     box-shadow: none;
 }

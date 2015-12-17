@@ -1,26 +1,10 @@
 <div id="editor_page" ng-controller="EditorController as ec">
     <section class="page-content">
-        <form>
+        <form ng-submit="ec.savePost()">
             <header class="page-header clearfix">
                 <input type="text" ng-model="ec.post.title" class="form-control input-lg"
                 placeholder="Title"/>
-                <div class="editor-controls">
-                    <div class="btn-group" uib-dropdown>
-                        <button id="split-button" type="button" class="btn btn-danger">Action</button>
-                        <button type="button" class="btn btn-danger" uib-dropdown-toggle>
-                            <span class="caret"></span>
-                            <span class="sr-only"></span>
-                        </button>
-                        <ul class="uib-dropdown-menu dropdown-menu-right" role="menu"
-                        aria-labelledby="split-button">
-                            <li role="menuitem"><a href="#">Action</a></li>
-                            <li role="menuitem"><a href="#">Another action</a></li>
-                            <li role="menuitem"><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li role="menuitem"><a href="#">Separated link</a></li>
-                        </ul>
-                    </div>
-                </div>
+                <editor-publish-buttons ng-model="ec.post.status"></editor-publish-buttons>
             </header>
             <div class="editor">
                 <section class="markdown-editor window">

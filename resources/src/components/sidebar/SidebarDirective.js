@@ -7,7 +7,7 @@
     function SidebarDirective() {
         return {
             restrict : 'E',
-            templateUrl : '/assets/templates/sidebar/sidebar-directive.html',
+            templateUrl : '/assets/templates/sidebar/_sidebar-directive.html',
             replace: true,
             link : function(scope, element, attributes) {
 
