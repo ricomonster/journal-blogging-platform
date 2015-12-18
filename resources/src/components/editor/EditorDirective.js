@@ -3,7 +3,8 @@
 
     angular.module('journal.components.editor')
         .directive('editorScroll', [EditorScroller])
-        .directive('editorPublishButtons', [EditorPublishButtons]);
+        .directive('editorPublishButtons', [EditorPublishButtons])
+        .directive('inputPostSlug', [InputPostSlug]);
 
     /**
      * Enables both editor windows to scroll in sync.
@@ -104,6 +105,61 @@
                     scope.epb.options.status = value;
                     // update the button
                     scope.epb.setButtons(value);
+                });
+            }
+        }
+    }
+
+    /**
+     * Generates slug based on the post title inputted.
+     *
+     * @returns {{require: string, restrict: string, scope: {title: string, postId: string, slug: string}, controllerAs: string, controller: *[], link: Function}}
+     * @constructor
+     */
+    function InputPostSlug() {
+        return {
+            require : 'ngModel',
+            restrict : 'C',
+            scope : {
+                title   : '=ngModel',
+                postId  : '=postId',
+                slug    : '=slug'
+            },
+            controllerAs : 'ips',
+            controller : ['$scope', 'EditorService', function($scope, EditorService) {
+                var vm = this;
+
+                /**
+                 * Sends a request to the API to generate the slug based on the
+                 * given title of the post.
+                 *
+                 * @param title
+                 * @param id
+                 */
+                vm.checkPostTitle = function(title, id) {
+                    EditorService.getSlug(title, id).then(function(response) {
+                        if (response.slug) {
+                            // update the slug scope
+                            $scope.slug = response.slug;
+                        }
+                    }, function(error) {
+                        // TODO: handle error
+                    });
+                };
+            }],
+            link : function(scope, element, attributes, ngModel) {
+                // check for if the element triggers a blur event
+                element.on('blur', function() {
+                    // get the value of the input
+                    var title = ngModel.$modelValue;
+
+                    // check first if title is set or not empty
+                    if (!title || title.length == 0) {
+                        return;
+                    }
+
+                    // generate slug
+                    scope.ips.checkPostTitle(title, scope.postId);
                 });
             }
         }

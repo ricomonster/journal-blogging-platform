@@ -19,7 +19,29 @@
                 });
 
             return deferred.promise;
-        }
+        };
+
+        this.getSlug = function(title, id) {
+            var deferred = $q.defer(),
+                parameters = 'slug='+(title || '');
+
+            // check if there's an ID given
+            if (id) {
+                // append post id to the parameter
+                parameters += '&post_id=' + id;
+            }
+
+            // perform request to the API
+            $http.get(this.apiUrl + '/posts/check_slug?' + parameters)
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
+        };
     }
 })();
 (function() {

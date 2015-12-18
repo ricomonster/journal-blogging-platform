@@ -2,8 +2,9 @@
     <section class="page-content">
         <form ng-submit="ec.savePost()">
             <header class="page-header clearfix">
-                <input type="text" ng-model="ec.post.title" class="form-control input-lg"
-                placeholder="Title"/>
+                <input type="text" ng-model="ec.post.title" post-id="ec.post.id"
+                slug="ec.post.slug" placeholder="Title"
+                class="form-control input-lg input-post-slug"/>
                 <editor-publish-buttons ng-model="ec.post.status"></editor-publish-buttons>
             </header>
             <div class="editor">
