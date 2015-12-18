@@ -167,6 +167,7 @@
 
     /**
      * Sidebar directive for the Editor.
+     *
      * @returns {{restrict: string, scope: {toggle: string, postData: string}, replace: boolean, templateUrl: string, controllerAs: string, controller: *[], link: Function}}
      * @constructor
      */
@@ -224,6 +225,12 @@
         }
     }
 
+    /**
+     * Featured image uploader or setter for the post.
+     *
+     * @returns {{restrict: string, require: string, scope: {featuredImage: string}, replace: boolean, templateUrl: string, controllerAs: string, controller: *[], link: Function}}
+     * @constructor
+     */
     function FeaturedImage() {
         return {
             restrict : 'EA',

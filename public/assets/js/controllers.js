@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('journal.components.editor')
-        .controller('EditorController', ['$stateParams', 'AuthService', 'EditorService', EditorController]);
+        .controller('EditorController', ['$stateParams', 'EditorService', 'ToastrService', EditorController]);
 
-    function EditorController($stateParams, AuthService, EditorService) {
+    function EditorController($stateParams, EditorService, ToastrService) {
         var vm = this;
 
         vm.options = {
@@ -76,7 +76,39 @@
 
         vm.savePost = function() {
             var post = vm.post;
-            console.log(post);
+
+            // flag that is being processed
+            vm.processing = true;
+
+            // send data to the API
+            EditorService.savePost(post)
+                .then(function(response) {
+                    if (response.post) {
+                        var responsePost = response.post;
+
+                        // check if this is newly created post by checking if
+                        // there's a post id in the post object
+                        if (!vm.post.id) {
+                            ToastrService
+                                .toast('You have successfully created the post"'+
+                                responsePost.title+'"', 'success');
+                            // TODO: update the URL
+                        } else {
+                            ToastrService
+                                .toast('You have successfully updated "'+
+                                responsePost.title+'".', 'success');
+                        }
+
+                        // update the published date to human readable form
+                        responsePost.published_at = vm.convertTimestamp(responsePost.published_at);
+                        // update the scope
+                        vm.post = responsePost;
+                    }
+
+                    vm.processing = false;
+                }, function(error) {
+                    vm.processing = false;
+                });
         };
 
         /**
