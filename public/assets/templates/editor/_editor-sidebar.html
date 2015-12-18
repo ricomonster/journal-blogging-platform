@@ -8,12 +8,13 @@
         <section class="post-settings">
             <div class="form-group">
                 <label class="control-label">Featured Image</label>
+                <featured-image ng-model="es.post.featured_image"></featured-image>
             </div>
             <div class="form-group">
                 <label class="control-label">Post URL</label>
                 <input type="text" ng-model="es.post.slug" class="form-control"
                 placeholder="post-url"/>
-                <span class="help-block">localhost:8000</span>
+                <span class="help-block">{{es.siteUrl}}/{{es.post.slug}}</span>
             </div>
             <div class="form-group">
                 <label class="control-label">Published Date/Time</label>

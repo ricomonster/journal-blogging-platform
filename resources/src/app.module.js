@@ -15,6 +15,7 @@
         'journal.components.sidebar',
         // SHARED
         'journal.shared.auth',
+        'journal.shared.fileUploader',
         'journal.shared.markdownReader',
         'journal.shared.storage',
         'journal.shared.toastr']);
@@ -27,7 +28,7 @@
 
     // COMPONENTS
     // Editor
-    angular.module('journal.components.editor', ['ui.bootstrap', 'ui.codemirror']);
+    angular.module('journal.components.editor', ['ngFileUpload', 'ui.bootstrap', 'ui.codemirror']);
 
     // Login
     angular.module('journal.components.login', []);
@@ -41,6 +42,7 @@
 
     // SHARED
     angular.module('journal.shared.auth', []);
+    angular.module('journal.shared.fileUploader', ['ngFileUpload']);
     angular.module('journal.shared.markdownReader', []);
     angular.module('journal.shared.storage', ['LocalStorageModule']);
     angular.module('journal.shared.toastr', ['ngAnimate', 'toastr']);

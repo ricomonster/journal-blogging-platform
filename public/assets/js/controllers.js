@@ -13,7 +13,7 @@
             // word counter
             counter : 0,
             // sidebar toggle
-            toggle : true
+            toggle : false
         };
 
         // initialize the post object

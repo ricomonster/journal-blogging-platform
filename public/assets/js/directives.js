@@ -5,7 +5,8 @@
         .directive('editorScroll', [EditorScroller])
         .directive('editorPublishButtons', [EditorPublishButtons])
         .directive('inputPostSlug', [InputPostSlug])
-        .directive('editorSidebar', [EditorSidebar]);
+        .directive('editorSidebar', [EditorSidebar])
+        .directive('featuredImage', [FeaturedImage]);
 
     /**
      * Enables both editor windows to scroll in sync.
@@ -164,6 +165,11 @@
         }
     }
 
+    /**
+     * Sidebar directive for the Editor.
+     * @returns {{restrict: string, scope: {toggle: string, postData: string}, replace: boolean, templateUrl: string, controllerAs: string, controller: *[], link: Function}}
+     * @constructor
+     */
     function EditorSidebar() {
         return {
             restrict : 'EA',
@@ -180,6 +186,7 @@
                 // scope variables
                 vm.toggle   = false;
                 vm.post     = [];
+                vm.siteUrl  = window.location.origin;
 
                 /**
                  * Closes the sidebar.
@@ -212,6 +219,127 @@
                 // check for the scope toggle
                 scope.$watch('toggle', function(toggle) {
                     scope.es.toggle = toggle;
+                });
+            }
+        }
+    }
+
+    function FeaturedImage() {
+        return {
+            restrict : 'EA',
+            require : 'ngModel',
+            scope : {
+                featuredImage : '=ngModel'
+            },
+            replace: true,
+            templateUrl : '/assets/templates/editor/_featured-image.html',
+            controllerAs : 'fi',
+            controller : ['$scope', '$timeout', 'FileUploaderService', 'ToastrService',
+                function($scope, $timeout, FileUploaderService, ToastrService) {
+                var vm = this;
+
+                // scope controller variables
+                vm.image = {
+                    link : null,
+                    file : null,
+                    option : 'file',
+                    url : ''
+                };
+
+                vm.processing = false;
+
+                // upload variables
+                vm.upload = {
+                    active : false,
+                    percentage : 0
+                };
+
+                /**
+                 * Fetches the value of the input and be used as image url.
+                 */
+                vm.getImageLink = function() {
+                    // delay it for a second
+                    $timeout(function() {
+                        vm.image.url = vm.image.link;
+                        // update the scope
+                        $scope.featuredImage = vm.image.url;
+
+                        // empty the image link
+                        vm.image.link = null;
+                    }, 1000);
+                };
+
+                /**
+                 * Removes the image.
+                 */
+                vm.removeImage = function() {
+                    // empty the image url
+                    vm.image.url = '';
+                };
+
+                /**
+                 * Switches the option to put a featured image.
+                 */
+                vm.switchOption = function() {
+                    if (vm.image.option == 'file') {
+                        vm.image.option = 'link';
+                        return;
+                    }
+
+                    if (vm.image.option == 'link') {
+                        vm.image.option = 'file';
+                        return;
+                    }
+                };
+
+                /**
+                 * Watches the change in the scope variable which will trigger
+                 * the upload to the server side.
+                 */
+                $scope.$watch(function() {
+                    return vm.image.file;
+                }, function(file) {
+                    if (file) {
+                        // upload
+                        FileUploaderService.upload(file)
+                            .progress(function(event) {
+                                vm.upload = {
+                                    active : true,
+                                    percentage : parseInt(100.0 * event.loaded / event.total)
+                                };
+                            })
+                            .success(function(response) {
+                                if (response.url) {
+                                    // show image
+                                    vm.image.url = response.url;
+
+                                    // attach to the ng-model
+                                    $scope.featuredImage = vm.image.url;
+
+                                    // hide the progress bar
+                                    vm.upload = {
+                                        active : false,
+                                        percentage : 0
+                                    };
+                                }
+                            })
+                            .error(function() {
+                                // handle the error
+                                ToastrService
+                                    .toast('Something went wrong with the upload. Please try again later.', 'error');
+
+                                // hide progress bar
+                                vm.upload = {
+                                    active : false,
+                                    percentage : 0
+                                };
+                            });
+                    }
+                });
+            }],
+            link : function(scope, element, attributes, ngModel) {
+                scope.$watch('featuredImage', function(imageUrl) {
+                    scope.fi.image.url = imageUrl;
                 });
             }
         }
