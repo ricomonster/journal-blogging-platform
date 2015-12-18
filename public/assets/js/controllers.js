@@ -11,12 +11,43 @@
             // codemirror
             codemirror : { mode : "markdown", tabMode : "indent", lineWrapping : !0},
             // word counter
-            counter : 0
+            counter : 0,
+            // sidebar toggle
+            toggle : true
         };
 
-        vm.post = {
-            status : 2,
-            tags : []
+        // initialize the post object
+        vm.post = { status : 2, tags : [] };
+
+        /**
+         * Converts timestamp to human readable date.
+         * @param timestamp
+         * @returns {Date}
+         */
+        vm.convertTimestamp = function(timestamp) {
+            // check if there's a value
+            if (timestamp) {
+                // let's assume this is a unix timestamp
+                var publishDate = new Date(timestamp * 1000);
+                return new Date(
+                    publishDate.getFullYear(),
+                    publishDate.getMonth(),
+                    publishDate.getDate(),
+                    publishDate.getHours(),
+                    publishDate.getMinutes())
+            }
+
+            // get the datetime today
+            var date = new Date(),
+                currentDate = new Date(
+                    date.getFullYear(),
+                    date.getMonth(),
+                    date.getDate(),
+                    date.getHours(),
+                    date.getMinutes());
+
+            // return the current date
+            return currentDate;
         };
 
         /**
@@ -24,24 +55,38 @@
          * parameter set and fetches the post based on the given parameter.
          */
         vm.initialize = function() {
+            // set the published date/time
+            vm.post.published_at = vm.convertTimestamp();
+
             if ($stateParams.postId) {
                 // get the post details
                 EditorService.getPost($stateParams.postId)
                     .then(function(response) {
                         if (response.post) {
+                            // convert the timestamp to human readable date
+                            response.post.published_at = vm.convertTimestamp(response.post.published_at);
                             vm.post = response.post;
                         }
                     },
-                    function() {
-
+                    function(error) {
+                        // most likely the post is not found, redirect to 404
                     });
             }
         };
 
         vm.savePost = function() {
-            console.log(vm.post);
+            var post = vm.post;
+            console.log(post);
         };
 
+        /**
+         * Toggles the sidebar to be opened/close.
+         */
+        vm.toggleSidebar = function() {
+            vm.options.toggle = !vm.options.toggle;
+        };
+
+        // run this shit!
         vm.initialize();
     }
 })();

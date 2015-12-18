@@ -16,6 +16,9 @@
     padding: 9px 16px;
 }
 
+#editor_page .page-content .page-header .editor-controls .sidebar-toggler .fa { margin: 0; }
+#editor_page .page-content .page-header .editor-controls .btn-group #split_button { width: 120px; }
+
 #editor_page .page-content .editor {
     position: absolute;
     top: 55px;
@@ -47,6 +50,8 @@
     font-size: 12px;
     text-transform:uppercase;
 }
+
+#editor_page .page-content .editor .window .floating-header span i { margin-right: 3px; }
 
 #editor_page .page-content .editor .window.markdown-editor { border-right: 1px solid #e4e4e4; left: 0; }
 #editor_page .markdown-editor .editor-wrapper {}

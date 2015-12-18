@@ -5,5 +5,5 @@
 .btn.btn-info { background-color: #2F96B4; border-color: #2F96B4; }
 .btn.btn-warning { background-color: #F89406; border-color: #F89406; }
 
-.btn { padding: 7px 12px; }
+.btn { border-radius: 2px; padding: 7px 12px; }
 .btn.btn-sm { padding: 4px 12px; }
