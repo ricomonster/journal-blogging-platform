@@ -19,7 +19,7 @@
         };
 
         this.token = function() {
-            return StorageService.get('user');
+            return StorageService.get('token');
         };
 
         this.user = function() {

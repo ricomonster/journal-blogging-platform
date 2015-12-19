@@ -8,12 +8,14 @@
         'journal.routes',
         'journal.run',
         // COMPONENTS
+        'journal.components.editor',
         'journal.components.login',
         'journal.components.post',
         'journal.components.postLists',
         'journal.components.sidebar',
         // SHARED
         'journal.shared.auth',
+        'journal.shared.fileUploader',
         'journal.shared.markdownReader',
         'journal.shared.storage',
         'journal.shared.toastr']);
@@ -25,6 +27,9 @@
     angular.module('journal.run', []);
 
     // COMPONENTS
+    // Editor
+    angular.module('journal.components.editor', ['ngFileUpload', 'ui.bootstrap', 'ui.codemirror']);
+
     // Login
     angular.module('journal.components.login', []);
 
@@ -37,6 +42,7 @@
 
     // SHARED
     angular.module('journal.shared.auth', []);
+    angular.module('journal.shared.fileUploader', ['ngFileUpload']);
     angular.module('journal.shared.markdownReader', []);
     angular.module('journal.shared.storage', ['LocalStorageModule']);
     angular.module('journal.shared.toastr', ['ngAnimate', 'toastr']);
@@ -89,6 +95,31 @@
 
         // state configuration
         $stateProvider
+            // EDITOR
+            .state('editor', {
+                url : '/editor',
+                views : {
+                    // default ui-view
+                    '' : {
+                        templateUrl : templatePath('editor/editor.html')
+                    },
+                    'sidebar' : {
+                        templateUrl : templatePath('sidebar/sidebar.html')
+                    }
+                }
+            })
+            .state('editorPost', {
+                url : '/editor/:postId',
+                views : {
+                    // default ui-view
+                    '' : {
+                        templateUrl : templatePath('editor/editor.html')
+                    },
+                    'sidebar' : {
+                        templateUrl : templatePath('sidebar/sidebar.html')
+                    }
+                }
+            })
             // LOGIN
             .state('login', {
                 url : '/login',

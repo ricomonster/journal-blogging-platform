@@ -11,6 +11,6 @@ body {
     position: relative;
 }
 
-a { color: #3187e1; }
+a { color: #3187e1; cursor: pointer; }
 
 .page-content { margin: 0 auto; }

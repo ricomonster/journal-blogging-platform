@@ -1,0 +1,43 @@
+<div id="editor_page" ng-controller="EditorController as ec">
+    <section class="page-content">
+        <form ng-submit="ec.savePost()">
+            <header class="page-header clearfix">
+                <input type="text" ng-model="ec.post.title" post-id="ec.post.id"
+                slug="ec.post.slug" placeholder="Title"
+                class="form-control input-lg input-post-slug"/>
+                <div class="editor-controls">
+                    <a ng-click="ec.toggleSidebar()" class="btn btn-default sidebar-toggler">
+                        <i class="fa fa-cog"></i>
+                    </a>
+                    <editor-publish-buttons ng-model="ec.post.status" post="ec.post"></editor-publish-buttons>
+                </div>
+            </header>
+            <div class="editor">
+                <section class="markdown-editor window">
+                    <header class="floating-header">
+                        <span class="title">
+                            <i class="fa fa-arrow-circle-o-down"></i> Markdown
+                        </span>
+                    </header>
+                    <section class="editor-wrapper editor-scroll">
+                        <ui-codemirror ng-model="ec.post.markdown"
+                        ui-codemirror-opts="ec.options.codemirror"></ui-codemirror>
+                    </section>
+                </section>
+                <section class="markdown-preview window">
+                    <header class="floating-header">
+                        <span class="title">
+                            <i class="fa fa-eye"></i> Preview
+                        </span>
+                        <span class="word-counter">{{ec.options.counter}} words</span>
+                    </header>
+                    <section class="preview-wrapper">
+                        <div journal-markdown="ec.post.markdown" hide-script-iframe="true"
+                        counter="ec.options.counter" class="rendered-markdown"></div>
+                    </section>
+                </section>
+            </div>
+            <editor-sidebar toggle="ec.options.toggle" post="ec.post"></editor-sidebar>
+        </form>
+    </section>
+</div>

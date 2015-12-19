@@ -14,6 +14,31 @@
 
         // state configuration
         $stateProvider
+            // EDITOR
+            .state('editor', {
+                url : '/editor',
+                views : {
+                    // default ui-view
+                    '' : {
+                        templateUrl : templatePath('editor/editor.html')
+                    },
+                    'sidebar' : {
+                        templateUrl : templatePath('sidebar/sidebar.html')
+                    }
+                }
+            })
+            .state('editorPost', {
+                url : '/editor/:postId',
+                views : {
+                    // default ui-view
+                    '' : {
+                        templateUrl : templatePath('editor/editor.html')
+                    },
+                    'sidebar' : {
+                        templateUrl : templatePath('sidebar/sidebar.html')
+                    }
+                }
+            })
             // LOGIN
             .state('login', {
                 url : '/login',

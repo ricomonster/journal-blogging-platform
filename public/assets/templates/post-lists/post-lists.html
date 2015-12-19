@@ -2,7 +2,7 @@
     <section class="page-content">
         <header class="page-header clearfix">
             <h1 class="page-title">Posts</h1>
-            <a class="btn btn-success new-post">
+            <a class="btn btn-success new-post" ui-sref="editor">
                 <i class="fa fa-plus"></i> New Post
             </a>
         </header>
@@ -42,7 +42,7 @@
                     <div class="post-controls">
                         <ul class="control-lists">
                             <li>
-                                <a class="btn btn-default btn-sm">
+                                <a class="btn btn-default btn-sm" ui-sref="editorPost({postId : plc.active.id})">
                                     <i class="fa fa-pencil"></i> Edit
                                 </a>
                             </li>
