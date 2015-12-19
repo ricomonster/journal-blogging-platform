@@ -364,9 +364,30 @@
             restrict : 'E',
             templateUrl : '/assets/templates/sidebar/_sidebar-directive.html',
             replace: true,
-            link : function(scope, element, attributes) {
+            controllerAs : 'sd',
+            controller : ['AuthService', 'SidebarService', function(AuthService, SidebarService) {
+                var vm = this;
 
-            }
+                // controller variables
+                vm.sidebar = {
+                    user : AuthService.user(),
+                    title : null
+                };
+
+                vm.initialize = function() {
+                    SidebarService.getBlogSettings()
+                        .then(function(response) {
+                            if (response.settings) {
+                                vm.sidebar.title = response.settings.title;
+                            }
+                        },
+                        function(error) {
+
+                        });
+                };
+
+                vm.initialize();
+            }]
         }
     }
 })();

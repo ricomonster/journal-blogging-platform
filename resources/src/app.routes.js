@@ -25,7 +25,8 @@
                     'sidebar' : {
                         templateUrl : templatePath('sidebar/sidebar.html')
                     }
-                }
+                },
+                authenticate : true
             })
             .state('editorPost', {
                 url : '/editor/:postId',
@@ -37,12 +38,14 @@
                     'sidebar' : {
                         templateUrl : templatePath('sidebar/sidebar.html')
                     }
-                }
+                },
+                authenticate : true
             })
             // LOGIN
             .state('login', {
                 url : '/login',
-                templateUrl : templatePath('login/login.html')
+                templateUrl : templatePath('login/login.html'),
+                authenticate : false
             })
             // POSTS
             .state('post', {
@@ -56,7 +59,8 @@
                     'sidebar' : {
                         templateUrl : templatePath('sidebar/sidebar.html')
                     }
-                }
+                },
+                authenticate : true
             })
             .state('post.lists', {
                 url : '/lists',
@@ -64,7 +68,8 @@
                     'post_content' : {
                         templateUrl : templatePath('post-lists/post-lists.html')
                     }
-                }
+                },
+                authenticate : true
             })
     }
 })();
