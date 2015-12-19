@@ -365,7 +365,7 @@
             templateUrl : '/assets/templates/sidebar/_sidebar-directive.html',
             replace: true,
             controllerAs : 'sd',
-            controller : ['AuthService', 'SidebarService', function(AuthService, SidebarService) {
+            controller : ['$state', 'AuthService', 'SidebarService', function($state, AuthService, SidebarService) {
                 var vm = this;
 
                 // controller variables
@@ -384,6 +384,14 @@
                         function(error) {
 
                         });
+                };
+
+                vm.logout = function() {
+                    // logout the user
+                    AuthService.logout();
+
+                    // redirect to login page
+                    $state.go('login');
                 };
 
                 vm.initialize();

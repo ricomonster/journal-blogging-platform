@@ -24,7 +24,7 @@
     angular.module('journal.config', ['LocalStorageModule', 'toastr']);
     angular.module('journal.constants', []);
     angular.module('journal.routes', ['ui.router', 'journal.constants']);
-    angular.module('journal.run', []);
+    angular.module('journal.run', ['ngProgressLite']);
 
     // COMPONENTS
     // Editor
