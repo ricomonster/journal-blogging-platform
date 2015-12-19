@@ -16,6 +16,8 @@
     font-weight: bold;
 }
 
+#sidebar .content .sidebar-header .blog-title a { color: #231f20; text-decoration: none; }
+
 #sidebar .content .sidebar-header .user-name {}
 
 #sidebar .content .sidebar-content {
