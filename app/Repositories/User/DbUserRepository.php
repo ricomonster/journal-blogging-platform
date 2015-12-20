@@ -12,16 +12,18 @@ class DbUserRepository implements UserRepositoryInterface
      * @param $name
      * @param $email
      * @param $password
+     * @param $role
      * @return \Journal\User
      */
-    public function create($name, $email, $password)
+    public function create($name, $email, $password, $role)
     {
         // insert data
         $user = User::create([
             'name'      => $name,
             'email'     => $email,
             'slug'      => $this->validateSlug($name),
-            'password'  => Hash::make($password)]);
+            'password'  => Hash::make($password),
+            'role'      => $role]);
 
         // get the full data of the user
         return $this->findById($user->id);
@@ -239,14 +241,16 @@ class DbUserRepository implements UserRepositoryInterface
         $rules = [
             'email'     => 'required|unique:users,email',
             'name'      => 'required',
-            'website'   => 'url'];
+            'website'   => 'url',
+            'role'      => 'required'];
 
         // prepare the messages
         $messages = [
             'email.required'    => 'An email is required.',
             'email.unique'      => 'Email is already taken.',
             'name.required'     => 'A name is required',
-            'website.url'       => 'Website is not a valid URL.'];
+            'website.url'       => 'Website is not a valid URL.',
+            'role.required'     => 'Role of the new user is required.'];
 
         // check if ID is set
         if ($id) {

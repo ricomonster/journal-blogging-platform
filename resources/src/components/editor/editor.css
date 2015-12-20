@@ -1,14 +1,13 @@
-#editor_page {}
-#editor_page .page-content { position: relative; height: 100%; }
-#editor_page .page-content .page-header { height: 55px; padding: 0; position: relative; }
-#editor_page .page-content .page-header input.form-control {
+#editor_page { position: relative; height: 100%; }
+#editor_page .page-header { height: 55px; padding: 0; position: relative; }
+#editor_page .page-header input.form-control {
     border: 0;
     font-size: 28px;
     height: 54px;
     padding-right: 220px;
 }
 
-#editor_page .page-content .page-header .editor-controls {
+#editor_page .page-header .editor-controls {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -16,10 +15,10 @@
     padding: 9px 16px;
 }
 
-#editor_page .page-content .page-header .editor-controls .sidebar-toggler .fa { margin: 0; }
-#editor_page .page-content .page-header .editor-controls .btn-group #split_button { width: 120px; }
+#editor_page .page-header .editor-controls .sidebar-toggler .fa { margin: 0; }
+#editor_page .page-header .editor-controls .btn-group #split_button { width: 120px; }
 
-#editor_page .page-content .editor {
+#editor_page .editor {
     position: absolute;
     top: 55px;
     right: 0;
@@ -27,14 +26,14 @@
     bottom: 0;
 }
 
-#editor_page .page-content .editor .window {
+#editor_page .editor .window {
     bottom: 0;
     position: absolute;
     top: 0;
     width: 50%;
 }
 
-#editor_page .page-content .editor .window .floating-header {
+#editor_page .editor .window .floating-header {
     background-color: rgba(255,255,255,.9);
     height: 40px;
     padding: 10px 20px;
@@ -45,15 +44,15 @@
     z-index: 100
 }
 
-#editor_page .page-content .editor .window .floating-header span {
+#editor_page .editor .window .floating-header span {
     color: rgba(35, 31, 32, 0.5);
     font-size: 12px;
     text-transform:uppercase;
 }
 
-#editor_page .page-content .editor .window .floating-header span i { margin-right: 3px; }
+#editor_page .editor .window .floating-header span i { margin-right: 3px; }
 
-#editor_page .page-content .editor .window.markdown-editor { border-right: 1px solid #e4e4e4; left: 0; }
+#editor_page .editor .window.markdown-editor { border-right: 1px solid #e4e4e4; left: 0; }
 #editor_page .markdown-editor .editor-wrapper {}
 #editor_page .markdown-editor .editor-wrapper .CodeMirror {
     bottom: 0;
@@ -72,7 +71,7 @@
     padding: 0 40px;
 }
 
-#editor_page .page-content .editor .window.markdown-preview { right: 0; }
+#editor_page .editor .window.markdown-preview { right: 0; }
 #editor_page .markdown-preview .floating-header .word-counter { float: right; }
 #editor_page .markdown-preview .preview-wrapper {
     -moz-hyphens: auto;

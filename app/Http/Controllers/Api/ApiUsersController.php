@@ -54,7 +54,8 @@ class ApiUsersController extends ApiController
         $user = $this->users->create(
             $request->input('name'),
             $request->input('email'),
-            $request->input('password'));
+            $request->input('password'),
+            $request->input('role'));
 
         // return
         return $this->respond([

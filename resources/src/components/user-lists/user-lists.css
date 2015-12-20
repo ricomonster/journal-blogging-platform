@@ -1,0 +1,25 @@
+#user_lists_page {}
+#user_lists_page .user-lists { padding: 15px 30px; }
+
+#user_lists_page .user-lists .user { border-bottom: 1px solid #e4e4e4; display: block; }
+#user_lists_page .user .user-menu-link { display: block; padding: 15px; text-decoration: none; }
+#user_lists_page .user .user-menu-link:hover { background-color: #f2f2f2; }
+
+#user_lists_page .user .user-menu-link .avatar-wrapper { float: left; height: 80px; width: 80px; }
+#user_lists_page .user .user-menu-link .avatar-wrapper img {
+    border-radius: 50%;
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+}
+
+#user_lists_page .user .user-menu-link .details { margin-left: 100px; }
+#user_lists_page .user .user-menu-link .details .user-name {
+    color: #231f20;
+    font-size: 18px;
+    margin: 0 0 5px;
+}
+
+#user_lists_page .user .user-menu-link .details .role { float: right; }
+/* TODO: Role Badges */

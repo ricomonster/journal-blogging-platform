@@ -1,0 +1,25 @@
+<div id="user_lists_page" ng-controller="UserListsController as ulc">
+    <header class="page-header clearfix">
+        <h1 class="page-title">Users</h1>
+        <a class="btn btn-success new-post" ui-sref="user.create">
+            <i class="fa fa-plus"></i> Invite New User
+        </a>
+    </header>
+    <section class="user-lists">
+        <article class="user" ng-repeat="user in ulc.users">
+            <a class="user-menu-link clearfix">
+                <figure class="avatar-wrapper">
+                    <img ng-src="{{ulc.setUserAvatar(user)}}" class="avatar"/>
+                </figure>
+                <div class="details">
+                    <h3 class="user-name">{{user.name}}</h3>
+                    <time class="text-muted last-login" ng-if="user.login_at">
+                        Last login
+                        <span am-time-ago="user.login_at" am-preprocess="unix"></span>
+                    </time>
+                    <span class="role">Owner</span>
+                </div>
+            </a>
+        </article>
+    </section>
+</div>

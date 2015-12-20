@@ -48,7 +48,8 @@ class ApiInstallerController extends ApiController
         $user = $this->users->create(
             $request->input('name'),
             $request->input('email'),
-            $request->input('password'));
+            $request->input('password'),
+            1);
 
         // create the blog details of the user
         $title = (empty($request->input('title'))) ? 'Journal' : $request->input('title');

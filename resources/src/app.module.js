@@ -10,9 +10,11 @@
         // COMPONENTS
         'journal.components.editor',
         'journal.components.login',
-        'journal.components.post',
+        //'journal.components.post',
         'journal.components.postLists',
         'journal.components.sidebar',
+        'journal.components.user',
+        'journal.components.userLists',
         // SHARED
         'journal.shared.auth',
         'journal.shared.fileUploader',
@@ -39,6 +41,10 @@
 
     // Sidebar
     angular.module('journal.components.sidebar', []);
+
+    // Users
+    angular.module('journal.components.user', []);
+    angular.module('journal.components.userLists', ['angularMoment']);
 
     // SHARED
     angular.module('journal.shared.auth', []);

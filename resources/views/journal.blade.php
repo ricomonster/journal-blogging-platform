@@ -44,8 +44,8 @@
     <!-- endinject -->
 </head>
 
-<body ng-app="Journal">
+<body ng-app="Journal" ng-class="{ 'sidebar' : loggedIn }">
     <div ui-view="sidebar" class="auto-height"></div>
-    <div ui-view></div>
+    <div ui-view class="main-content"></div>
 </body>
 </html>
