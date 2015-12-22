@@ -28,6 +28,16 @@ body.sidebar .main-content { margin-left: 220px; }
 .full-height, .ng-scope { height: 100%; }
 .auto-height { height: auto; }
 
+.scrollable-content {
+    bottom: 0;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: absolute;
+    right: 0;
+    top: 55px;
+}
+
 /* Markdown */
 .rendered-markdown img {
     display: block;
@@ -404,6 +414,9 @@ body.sidebar .main-content { margin-left: 220px; }
 }
 
 #sidebar .content .sidebar-content .menu-lists li.header:first-child { margin: 0; }
+#user_create_page {}
+#user_create_page .user-create-content { padding: 15px 30px; }
+#user_create_page .user-create-content .form-content { width: 40%; }
 #user_lists_page {}
 #user_lists_page .user-lists { padding: 15px 30px; }
 

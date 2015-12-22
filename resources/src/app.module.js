@@ -14,6 +14,7 @@
         'journal.components.postLists',
         'journal.components.sidebar',
         'journal.components.user',
+        'journal.components.userCreate',
         'journal.components.userLists',
         // SHARED
         'journal.shared.auth',
@@ -44,6 +45,7 @@
 
     // Users
     angular.module('journal.components.user', []);
+    angular.module('journal.components.userCreate', []);
     angular.module('journal.components.userLists', ['angularMoment']);
 
     // SHARED

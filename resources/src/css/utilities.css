@@ -8,6 +8,16 @@
 .full-height, .ng-scope { height: 100%; }
 .auto-height { height: auto; }
 
+.scrollable-content {
+    bottom: 0;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: absolute;
+    right: 0;
+    top: 55px;
+}
+
 /* Markdown */
 .rendered-markdown img {
     display: block;
