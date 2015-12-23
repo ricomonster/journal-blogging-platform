@@ -258,11 +258,11 @@ class BlogController extends Controller
 
         // set the default
         $meta = [
-            'siteUrl'       => url(),
+            'siteUrl'       => url('/'),
             'title'         => $settings['title'],
             'type'          => 'website',
             'description'   => $settings['description'],
-            'url'           => url(),
+            'url'           => url('/'),
             'imageUrl'      => (strpos($settings['cover_url'], 'http')) ?
                 $settings['cover_url'] : url($settings['cover_url'])];
 
