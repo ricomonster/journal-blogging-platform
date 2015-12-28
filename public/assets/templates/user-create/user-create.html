@@ -27,6 +27,9 @@
                     <label class="control-label">Role</label>
                     <select ng-model="ucc.user.role" class="form-control">
                         <option value="" selected>-- Select... --</option>
+                        <option ng-repeat="role in ucc.roles" ng-value="role.id">
+                            {{role.name}}
+                        </option>
                     </select>
                 </div>
             </div>

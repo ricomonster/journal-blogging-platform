@@ -200,8 +200,23 @@
 
             return deferred.promise;
         };
+
+        this.getRoles = function() {
+            var deferred = $q.defer();
+
+            $http.get(this.apiUrl + '/roles/all')
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
+        }
     }
 })();
+
 (function() {
     'use strict';
 

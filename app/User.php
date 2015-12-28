@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = ['name', 'email', 'password', 'biography', 'avatar_url', 'cover_url',
-        'location', 'website', 'slug', 'role', 'login_at', 'active'];
+        'location', 'website', 'slug', 'login_at', 'active'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -66,5 +66,15 @@ class User extends Authenticatable
     public function posts()
     {
         return $this->hasMany('Journal\Post');
+    }
+
+    /**
+     * User/Role Relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function role()
+    {
+        return $this->belongsToMany('Journal\Role', 'role_users', 'user_id', 'role_id');
     }
 }

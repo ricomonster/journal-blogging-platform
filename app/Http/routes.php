@@ -42,6 +42,11 @@ Route::group(['prefix' => 'api/v1.0'], function() {
         Route::post('save', 'Api\ApiPostsController@save');
     });
 
+    // Role Routes
+    Route::group(['prefix' => 'roles'], function() {
+        Route::get('all', 'Api\ApiRolesController@all');
+    });
+
     // Setting Routes
     Route::group(['prefix' => 'settings'], function() {
         Route::get('get', 'Api\ApiSettingsController@getSettings');

@@ -22,8 +22,9 @@ class DbUserRepository implements UserRepositoryInterface
             'name'      => $name,
             'email'     => $email,
             'slug'      => $this->validateSlug($name),
-            'password'  => Hash::make($password),
-            'role'      => $role]);
+            'password'  => Hash::make($password)]);
+
+        // add role
 
         // get the full data of the user
         return $this->findById($user->id);
