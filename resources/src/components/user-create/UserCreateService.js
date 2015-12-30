@@ -12,10 +12,10 @@
                 token = AuthService.token();
 
             $http.post(this.apiUrl + '/users/create?token=' + token, {
-                    name        : user.name || '',
-                    email       : user.email || '',
+                    name        : user.name     || '',
+                    email       : user.email    || '',
                     password    : user.password || '',
-                    role        : user.role || ''
+                    role        : user.role     || ''
                 })
                 .success(function(response) {
                     deferred.resolve(response);
@@ -39,6 +39,6 @@
                 });
 
             return deferred.promise;
-        }
+        };
     }
 })();

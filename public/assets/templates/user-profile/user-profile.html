@@ -1,0 +1,75 @@
+<div id="user_profile_page" ng-controller="UserProfileController as upc">
+    <button type="button" class="btn btn-success save-button" ng-click="upc.updateProfile()">
+         <i class="fa fa-floppy-o"></i> Update
+    </button>
+    <header class="profile-header" style="background-image: url('{{upc.user.cover_photo}}')">
+        <a class="btn btn-info change-cover">
+            <i class="fa fa-camera"></i> Change cover photo
+        </a>
+    </header>
+    <section class="profile-content" ng-class="{ 'current' : upc.current }">
+        <figure class="avatar-wrapper">
+            <img ng-src="{{upc.user.avatar_url}}" alt="{{upc.user.name}}"/>
+            <a class="overlay">
+                <span class="label">
+                    <i class="fa fa-camera"></i> Change avatar
+                </span>
+            </a>
+        </figure>
+        <div class="profile-details content">
+            <h3 class="user-name">{{upc.user.name}}</h3>
+            <p class="slug">({{upc.user.slug}})</p>
+            <div class="details biography">
+                {{upc.user.biography}}
+            </div>
+            <div class="details location">
+                <p class="detail-label">
+                    <i class="fa fa-map-marker fa-fw"></i> Location
+                </p>
+                <p class="value">{{upc.user.location}}</p>
+            </div>
+            <div class="details website">
+                <p class="detail-label">
+                    <i class="fa fa-link fa-fw"></i> Website
+                </p>
+                <p class="value">
+                    <a href="{{upc.user.website}}" target="_blank">{{upc.user.website}}</a>
+                </p>
+            </div>
+        </div>
+        <div class="profile-form content">
+            <div class="form-group user-name">
+                <input type="text" ng-model="upc.user.name" class="form-control"/>
+                <span class="help-block">What's your name?</span>
+            </div>
+            <div class="form-group slug">
+                <label class="control-label">
+                    <i class="fa fa-user fa-fw"></i> Slug
+                </label>
+                <input type="text" ng-model="upc.user.slug" class="form-control"/>
+                <span class="help-block">http://localhost:8000/author/{{upc.user.slug}}</span>
+            </div>
+            <div class="form-group biography">
+                <label class="control-label">
+                    <i class="fa fa-pencil fa-fw"></i> Biography
+                </label>
+                <textarea ng-model="upc.user.biography" class="form-control"></textarea>
+                <span class="help-block">Tell us something about yourself.</span>
+            </div>
+            <div class="form-group location">
+                <label class="control-label">
+                    <i class="fa fa-map-marker fa-fw"></i> Location
+                </label>
+                <input type="text" ng-model="upc.user.location" class="form-control"/>
+                <span class="help-block">Where do you live?</span>
+            </div>
+            <div class="form-group website">
+                <label class="control-label">
+                    <i class="fa fa-link fa-fw"></i> Website
+                </label>
+                <input type="text" ng-model="upc.user.website" class="form-control"/>
+                <span class="help-block">Any other websites?</span>
+            </div>
+        </div>
+    </section>
+</div>

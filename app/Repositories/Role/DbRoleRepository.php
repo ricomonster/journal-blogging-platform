@@ -24,7 +24,9 @@ class DbRoleRepository implements RoleRepositoryInterface
      */
     public function all()
     {
-        return Role::where('active', '=', 1)->get();
+        return Role::where('active', '=', 1)
+            ->where('slug', '!=', 'owner')
+            ->get();
     }
 
     /**

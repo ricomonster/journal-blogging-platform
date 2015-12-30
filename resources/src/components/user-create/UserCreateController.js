@@ -2,15 +2,16 @@
     'use strict';
 
     angular.module('journal.components.userCreate')
-        .controller('UserCreateController', ['UserCreateService', UserCreateController]);
+        .controller('UserCreateController', ['ToastrService', 'UserCreateService', UserCreateController]);
 
-    function UserCreateController(UserCreateService) {
+    function UserCreateController(ToastrService, UserCreateService) {
         var vm = this;
 
         // controller variables
-        vm.processing = false;
-        vm.roles = {};
-        vm.user = {};
+        vm.errors       = {};
+        vm.processing   = false;
+        vm.roles        = {};
+        vm.user         = {};
 
         vm.initialize = function() {
             // get the roles
@@ -28,6 +29,21 @@
 
             // flag that we're processing
             vm.processing = true;
+
+            UserCreateService.createUser(user).then(function(response) {
+                if (response.user) {
+                    // empty the fields
+                    vm.user = {};
+
+                    // show success message
+                }
+            }, function(error) {
+                if (error.errors) {
+                    ToastrService.toast('Oops, there some errors encountered.', 'error');
+
+                    vm.errors = error.errors;
+                }
+            });
         };
 
         vm.initialize();

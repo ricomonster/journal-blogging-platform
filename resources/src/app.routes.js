@@ -102,6 +102,14 @@
                     }
                 },
                 authenticate : true
+            })
+            .state('user.profile', {
+                url : '/profile/:userId',
+                views : {
+                    'user_content' : {
+                        templateUrl : templatePath('user-profile/user-profile.html')
+                    }
+                }
             });
     }
 })();

@@ -25,6 +25,7 @@ class DbUserRepository implements UserRepositoryInterface
             'password'  => Hash::make($password)]);
 
         // add role
+        $user->role()->sync([$role]);
 
         // get the full data of the user
         return $this->findById($user->id);

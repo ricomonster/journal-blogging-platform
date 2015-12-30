@@ -16,6 +16,7 @@
         'journal.components.user',
         'journal.components.userCreate',
         'journal.components.userLists',
+        'journal.components.userProfile',
         // SHARED
         'journal.shared.auth',
         'journal.shared.fileUploader',
@@ -47,6 +48,7 @@
     angular.module('journal.components.user', []);
     angular.module('journal.components.userCreate', []);
     angular.module('journal.components.userLists', ['angularMoment']);
+    angular.module('journal.components.userProfile', []);
 
     // SHARED
     angular.module('journal.shared.auth', []);
@@ -55,6 +57,7 @@
     angular.module('journal.shared.storage', ['LocalStorageModule']);
     angular.module('journal.shared.toastr', ['ngAnimate', 'toastr']);
 })();
+
 
 (function() {
     'use strict';
@@ -191,9 +194,18 @@
                     }
                 },
                 authenticate : true
+            })
+            .state('user.profile', {
+                url : '/profile/:userId',
+                views : {
+                    'user_content' : {
+                        templateUrl : templatePath('user-profile/user-profile.html')
+                    }
+                }
             });
     }
 })();
+
 (function() {
     'use strict';
 
