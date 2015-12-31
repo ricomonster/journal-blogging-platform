@@ -1,16 +1,17 @@
 <div id="user_profile_page" ng-controller="UserProfileController as upc">
-    <button type="button" class="btn btn-success save-button" ng-click="upc.updateProfile()">
+    <button type="button" class="btn btn-success save-button" ng-click="upc.updateProfile()"
+    ng-if="upc.current">
          <i class="fa fa-floppy-o"></i> Update
     </button>
-    <header class="profile-header" style="background-image: url('{{upc.user.cover_photo}}')">
-        <a class="btn btn-info change-cover">
+    <header class="profile-header" style="background-image: url('{{upc.setPhoto('cover')}}')">
+        <a class="btn btn-info change-cover" ng-if="upc.current">
             <i class="fa fa-camera"></i> Change cover photo
         </a>
     </header>
     <section class="profile-content" ng-class="{ 'current' : upc.current }">
         <figure class="avatar-wrapper">
-            <img ng-src="{{upc.user.avatar_url}}" alt="{{upc.user.name}}"/>
-            <a class="overlay">
+            <img ng-src="{{upc.setPhoto('avatar')}}" alt="{{upc.user.name}}"/>
+            <a class="overlay" ng-if="upc.current">
                 <span class="label">
                     <i class="fa fa-camera"></i> Change avatar
                 </span>
@@ -38,11 +39,18 @@
             </div>
         </div>
         <div class="profile-form content">
-            <div class="form-group user-name">
+            <div class="form-group user-name" ng-class="{ 'has-error' : upc.errors.name }">
                 <input type="text" ng-model="upc.user.name" class="form-control"/>
                 <span class="help-block">What's your name?</span>
             </div>
-            <div class="form-group slug">
+            <div class="form-group email" ng-class="{ 'has-error' : upc.errors.email }">
+                <label class="control-label">
+                    <i class="fa fa-envelope fa-fw"></i> Email
+                </label>
+                <input type="email" ng-model="upc.user.email" class="form-control"/>
+                <span class="help-block">For your login and sending some mails.</span>
+            </div>
+            <div class="form-group slug" ng-class="{ 'has-error' : upc.errors.slug }">
                 <label class="control-label">
                     <i class="fa fa-user fa-fw"></i> Slug
                 </label>
@@ -63,7 +71,7 @@
                 <input type="text" ng-model="upc.user.location" class="form-control"/>
                 <span class="help-block">Where do you live?</span>
             </div>
-            <div class="form-group website">
+            <div class="form-group website" ng-class="{ 'has-error' : upc.errors.website }">
                 <label class="control-label">
                     <i class="fa fa-link fa-fw"></i> Website
                 </label>

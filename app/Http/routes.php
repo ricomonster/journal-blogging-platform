@@ -68,7 +68,7 @@ Route::group(['prefix' => 'api/v1.0'], function() {
         Route::get('get_user', 'Api\ApiUsersController@getUser');
 
         Route::post('create', 'Api\ApiUsersController@create');
-        Route::post('update_details', 'Api\ApiUsersController@updateDetails');
+        Route::post('update_profile', 'Api\ApiUsersController@updateDetails');
         Route::post('change_password', 'Api\ApiUsersController@changePassword');
     });
 

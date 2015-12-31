@@ -243,16 +243,14 @@ class DbUserRepository implements UserRepositoryInterface
         $rules = [
             'email'     => 'required|unique:users,email',
             'name'      => 'required',
-            'website'   => 'url',
-            'role'      => 'required'];
+            'website'   => 'url'];
 
         // prepare the messages
         $messages = [
             'email.required'    => 'An email is required.',
             'email.unique'      => 'Email is already taken.',
             'name.required'     => 'A name is required',
-            'website.url'       => 'Website is not a valid URL.',
-            'role.required'     => 'Role of the new user is required.'];
+            'website.url'       => 'Website is not a valid URL.'];
 
         // check if ID is set
         if ($id) {
@@ -264,10 +262,13 @@ class DbUserRepository implements UserRepositoryInterface
         if (!$id) {
             // add password rules
             $rules['password'] = 'required|min:6';
+            // add role rules
+            $rules['role'] = 'required';
 
             // prepare the message
-            $messages['password.required'] = 'A password is required.';
-            $messages['password.min'] = 'Password should be :min+ characters.';
+            $messages['password.required']  = 'A password is required.';
+            $messages['password.min']       = 'Password should be :min+ characters.';
+            $messages['role.required']      = 'Role of the new user is required.';
         }
 
         // validate

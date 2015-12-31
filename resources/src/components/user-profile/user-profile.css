@@ -1,5 +1,12 @@
 #user_profile_page { bottom: 0; left: 0; position: absolute; overflow: auto; right: 0; top: 0; }
-#user_profile_page .save-button { position: fixed; right: 15px; top: 10px; z-index: 100; }
+#user_profile_page .save-button {
+    height: auto;
+    position: fixed;
+    right: 15px;
+    top: 10px;
+    z-index: 100;
+}
+
 #user_profile_page .profile-header {
     height: 320px;
     margin: 0;
@@ -12,6 +19,7 @@
 
 #user_profile_page .profile-header .change-cover {
     bottom: 10px;
+    height: auto;
     position: absolute;
     right: 15px;
 }
@@ -105,21 +113,9 @@
 }
 
 #user_profile_page .profile-content.current .profile-form { display: block; }
-#user_profile_page .profile-content .profile-form { display: none; }
+#user_profile_page .profile-content .profile-form { display: none; top: -70px; }
 #user_profile_page .profile-form .form-group { margin-bottom: 20px; }
-#user_profile_page .profile-form .user-name {}
-
-#user_profile_page .profile-form .user-name .form-control {
-    background: transparent;
-    border: 0;
-    color: #ffffff;
-    font-size: 32px;
-    height: 36px;
-    line-height: 1;
-    padding: 0;
-    margin: 0 0 5px;
-}
 
 #user_profile_page .profile-form .user-name .help-block { color: #fefefe; margin: 0; }
 
-#user_profile_page .profile-form .slug { margin-top: 30px; }
+#user_profile_page .profile-form .email { margin-top: 30px; }
