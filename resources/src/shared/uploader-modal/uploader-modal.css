@@ -1,0 +1,78 @@
+#uploader_modal .modal-body {
+    color: #555;
+    background-color: #ccc;
+    margin: 15px;
+    padding: 0;
+    position: relative;
+}
+
+#uploader_modal .image-wrapper {
+    display: block;
+    height: 300px;
+    position: relative;
+    width: 100%;
+}
+
+#uploader_modal .image-wrapper .remove-image { position: absolute; right: 5px; top: 5px; z-index: 100; }
+#uploader_modal .image-wrapper img {
+    display: block;
+    margin: auto;
+    max-height: 300px;
+    max-width: 100%;
+}
+
+#uploader_modal .wrapper { height: 300px; }
+#uploader_modal .wrapper .upload { position: relative; }
+#uploader_modal .wrapper .upload .drop-box {
+    cursor: pointer;
+    display: block;
+    height: 300px;
+    width: 100%;
+}
+
+#uploader_modal .wrapper .upload .drop-box .add-image-text {
+    bottom: 50%;
+    display: block;
+    font-size: 16px;
+    height: 22px;
+    left: 0;
+    margin: -11px 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 50%;
+    width: 100%;
+}
+
+#uploader_modal .wrapper .upload .drop-box .add-image-text i { margin-right: 3px; }
+
+#uploader_modal .wrapper .upload .progressbar-wrapper {
+    bottom: 50%;
+    height: 20px;
+    left: 15px;
+    margin: -10px 0;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+}
+
+#uploader_modal .wrapper .upload .progressbar-wrapper .progress { margin: 0; }
+
+#uploader_modal .wrapper .link { position: relative; }
+#uploader_modal .wrapper .link .form-group {
+    bottom: 50%;
+    left: 0;
+    margin: -18px 0;
+    padding: 0 50px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+}
+
+#uploader_modal .wrapper .image-option {
+    color: #555;
+    font-size: 18px;
+    left: 15px;
+    position: absolute;
+    bottom: 15px;
+}

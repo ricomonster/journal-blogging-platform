@@ -17,6 +17,7 @@
         'journal.components.userCreate',
         'journal.components.userLists',
         'journal.components.userProfile',
+        'journal.components.userProfileModal',
         // SHARED
         'journal.shared.auth',
         'journal.shared.fileUploader',
@@ -49,6 +50,7 @@
     angular.module('journal.components.userCreate', []);
     angular.module('journal.components.userLists', ['angularMoment']);
     angular.module('journal.components.userProfile', []);
+    angular.module('journal.components.userProfileModal', []);
 
     // SHARED
     angular.module('journal.shared.auth', []);

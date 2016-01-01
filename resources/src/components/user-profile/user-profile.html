@@ -4,14 +4,15 @@
          <i class="fa fa-floppy-o"></i> Update
     </button>
     <header class="profile-header" style="background-image: url('{{upc.setPhoto('cover')}}')">
-        <a class="btn btn-info change-cover" ng-if="upc.current">
+        <a class="btn btn-info change-cover" ng-if="upc.current"
+        ng-click="upc.openPhotoUploader('cover')">
             <i class="fa fa-camera"></i> Change cover photo
         </a>
     </header>
     <section class="profile-content" ng-class="{ 'current' : upc.current }">
         <figure class="avatar-wrapper">
             <img ng-src="{{upc.setPhoto('avatar')}}" alt="{{upc.user.name}}"/>
-            <a class="overlay" ng-if="upc.current">
+            <a class="overlay" ng-if="upc.current" ng-click="upc.openPhotoUploader('avatar')">
                 <span class="label">
                     <i class="fa fa-camera"></i> Change avatar
                 </span>

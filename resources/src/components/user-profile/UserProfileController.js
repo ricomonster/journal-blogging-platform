@@ -3,9 +3,9 @@
 
     angular.module('journal.components.userProfile')
         .controller('UserProfileController', [
-            '$stateParams', 'AuthService', 'ToastrService', 'UserProfileService', 'CONFIG', UserProfileController]);
+            '$stateParams', '$uibModal', 'AuthService', 'ToastrService', 'UserProfileService', 'CONFIG', UserProfileController]);
 
-    function UserProfileController($stateParams, AuthService, ToastrService, UserProfileService, CONFIG) {
+    function UserProfileController($stateParams, $uibModal, AuthService, ToastrService, UserProfileService, CONFIG) {
         var vm = this;
 
         // controller variables
@@ -45,6 +45,32 @@
             }
         };
 
+        vm.openPhotoUploader = function(type) {
+            // instantiate the modal
+            var modal = $uibModal.open({
+                animation: true,
+                controllerAs : 'um',
+                controller : 'UserProfileModalController',
+                templateUrl: CONFIG.TEMPLATE_PATH + 'uploader-modal/uploader-modal.html',
+                resolve: {
+                    user : function() {
+                        return angular.copy(vm.user);;
+                    },
+                    type : function() {
+                        return type;
+                    }
+                }
+            });
+
+            // once the modal is closed and there's a data returned, update
+            // the user scope.
+            modal.result.then(function(user) {
+                vm.user = user;
+            }, function () {
+
+            });
+        };
+
         /**
          * Sets the photo to be shown.
          * @param type
@@ -65,8 +91,8 @@
                         vm.user.avatar_url : CONFIG.DEFAULT_AVATAR_URL;
                     break;
                 case 'cover' :
-                    photoUrl = (vm.user.cover_photo) ?
-                        vm.user.cover_photo : CONFIG.DEFAULT_COVER_URL;
+                    photoUrl = (vm.user.cover_url) ?
+                        vm.user.cover_url : CONFIG.DEFAULT_COVER_URL;
                     break;
                 default:
                     break;

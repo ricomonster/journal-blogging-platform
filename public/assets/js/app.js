@@ -17,6 +17,7 @@
         'journal.components.userCreate',
         'journal.components.userLists',
         'journal.components.userProfile',
+        'journal.components.userProfileModal',
         // SHARED
         'journal.shared.auth',
         'journal.shared.fileUploader',
@@ -49,6 +50,7 @@
     angular.module('journal.components.userCreate', []);
     angular.module('journal.components.userLists', ['angularMoment']);
     angular.module('journal.components.userProfile', []);
+    angular.module('journal.components.userProfileModal', []);
 
     // SHARED
     angular.module('journal.shared.auth', []);
@@ -94,11 +96,11 @@
     'use strict';
 
     angular.module('journal.routes')
-        .config(['$stateProvider', '$urlRouterProvider', Routes]);
+        .config(['$stateProvider', '$urlRouterProvider', 'CONFIG', Routes]);
 
-    function Routes($stateProvider, $urlRouterProvider) {
+    function Routes($stateProvider, $urlRouterProvider, CONFIG) {
         var templatePath = function(filename) {
-            return '/assets/templates/' + filename;
+            return CONFIG.TEMPLATE_PATH + filename;
         };
 
         // default endpoint if page/state does not exists
@@ -260,6 +262,7 @@
             'DEFAULT_AVATAR_URL' : 'http://40.media.tumblr.com/7d65a925636d6e3df94e2ebe30667c29/tumblr_nq1zg0MEn51qg6rkio1_500.jpg',
             'DEFAULT_COVER_URL' : '/assets/images/wallpaper.jpg',
             'VERSION' : '2.0.0',
-            'CDN_URL' : 'http://localhost:8000'
+            'CDN_URL' : 'http://localhost:8000',
+            'TEMPLATE_PATH' : '/assets/templates/'
         });
 })();

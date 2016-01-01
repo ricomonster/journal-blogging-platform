@@ -2,11 +2,11 @@
     'use strict';
 
     angular.module('journal.routes')
-        .config(['$stateProvider', '$urlRouterProvider', Routes]);
+        .config(['$stateProvider', '$urlRouterProvider', 'CONFIG', Routes]);
 
-    function Routes($stateProvider, $urlRouterProvider) {
+    function Routes($stateProvider, $urlRouterProvider, CONFIG) {
         var templatePath = function(filename) {
-            return '/assets/templates/' + filename;
+            return CONFIG.TEMPLATE_PATH + filename;
         };
 
         // default endpoint if page/state does not exists
