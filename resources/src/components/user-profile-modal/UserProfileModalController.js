@@ -79,7 +79,7 @@
             var data = vm.currentUser;
 
             // flag that we're processing
-            vm.processing = false;
+            vm.processing = true;
 
             // send data to the API
             UserProfileModalService.updateUserDetails(data)
@@ -142,6 +142,8 @@
             return vm.image.file;
         }, function(file) {
             if (file) {
+                vm.processing = true;
+
                 // upload
                 FileUploaderService.upload(file)
                     .progress(function(event) {
@@ -164,6 +166,8 @@
                                 percentage : 0
                             };
                         }
+
+                        vm.processing = false;
                     })
                     .error(function() {
                         // handle the error
@@ -175,6 +179,8 @@
                             active : false,
                             percentage : 0
                         };
+
+                        vm.processing = false;
                     });
             }
         });

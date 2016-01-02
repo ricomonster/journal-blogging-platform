@@ -94,7 +94,7 @@ class BlogController extends Controller
         // get the posts of the author
         $data['posts'] = $this->posts->getPostsByAuthor($user->id, $this->postPerPage);
         // set the head
-        $data['journal_head'] = $this->journalHeadMeta('author', $user);
+        $data['journal_head'] = $this->meta('author', $user);
 
         return view($this->theme.'.author', $data);
     }

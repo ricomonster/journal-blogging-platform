@@ -208,6 +208,14 @@ gulp.task('build-admin', function() {
 });
 
 /**
+ * Build: Copy the theme assets from the themes folder to the public.
+ */
+gulp.task('get-theme-assets', function() {
+    return gulp.src([paths.base.themes + '/**/assets/**/*'])
+        .pipe(gulp.dest(paths.base.public + '/themes'));
+});
+
+/**
  * Inject: Inject needed scripts to the base file.
  */
 gulp.task('inject-scripts', function() {
@@ -269,6 +277,7 @@ gulp.task('default', function(callback) {
             'build-admin',
             'build-stylesheets',
             'inject-scripts',
+            'get-theme-assets',
             callback);
         return;
     }
@@ -284,6 +293,7 @@ gulp.task('default', function(callback) {
         'build-admin-templates',
         'build-stylesheets',
         'inject-scripts',
+        'get-theme-assets',
         'watch',
         callback);
     return;
