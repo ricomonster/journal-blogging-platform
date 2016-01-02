@@ -1,6 +1,7 @@
 <section id="featured_image">
     <figure class="image-wrapper" ng-if="fi.image.url">
-        <a class="btn btn-danger btn-sm remove-image" ng-click="fi.removeImage()">
+        <a class="btn btn-danger btn-sm remove-image" ng-click="fi.removeImage()"
+        uib-tooltip="Remove the featured image" tooltip-placement="left">
             <i class="fa fa-trash-o"></i>
         </a>
         <img ng-src="{{fi.image.url}}"/>
@@ -23,7 +24,7 @@
             ng-blur="fi.getImageLink()"/>
         </section>
         <a class="image-option auto-height" ng-click="fi.switchOption()"
-        ng-if="!fi.upload.percentage">
+        ng-if="!fi.upload.percentage" uib-tooltip="Click to select">
             <i ng-class="{'fa-link' : fi.image.option == 'file', 'fa-upload' : fi.image.option == 'link'}"
             class="fa" ></i>
         </a>

@@ -1,7 +1,8 @@
 <article id="uploader_modal">
     <section class="modal-body">
         <figure class="image-wrapper" ng-if="um.image.url">
-            <a class="btn btn-danger btn-sm remove-image" ng-click="um.removeImage()">
+            <a class="btn btn-danger btn-sm remove-image" ng-click="um.removeImage()"
+            uib-tooltip="Remove the image" tooltip-placement="left">
                 <i class="fa fa-trash-o"></i>
             </a>
             <img ng-src="{{um.image.url}}"/>
@@ -28,7 +29,7 @@
                 </div>
             </section>
             <a class="image-option auto-height" ng-click="um.switchOption()"
-               ng-if="!um.upload.percentage">
+            ng-if="!um.upload.percentage" uib-tooltip="Click to select">
                 <i ng-class="{'fa-link' : um.image.option == 'file', 'fa-upload' : um.image.option == 'link'}"
                    class="fa"></i>
             </a>

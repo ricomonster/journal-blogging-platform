@@ -5,7 +5,8 @@
             slug="ec.post.slug" placeholder="Title"
             class="form-control input-lg input-post-slug"/>
             <div class="editor-controls">
-                <a ng-click="ec.toggleSidebar()" class="btn btn-default sidebar-toggler">
+                <a ng-click="ec.toggleSidebar()" class="btn btn-default sidebar-toggler"
+                uib-tooltip="Open sidebar" tooltip-placement="bottom">
                     <i class="fa fa-cog"></i>
                 </a>
                 <editor-publish-buttons ng-model="ec.post.status" post="ec.post"
@@ -18,6 +19,10 @@
                     <span class="title">
                         <i class="fa fa-arrow-circle-o-down"></i> Markdown
                     </span>
+                    <a ng-click="ec.openMarkdownHelper()" class="markdown-helper"
+                    title="Open the markdown helper">
+                        <i class="fa fa-question-circle"></i>
+                    </a>
                 </header>
                 <section class="editor-wrapper editor-scroll">
                     <ui-codemirror ng-model="ec.post.markdown"

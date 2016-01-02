@@ -448,6 +448,9 @@ pre code, tt {
 }
 
 .no-cover .blog-description { color: rgba(0,0,0,0.5); }
+
+.blog-logo { max-width: 280px; }
+.no-cover .blog-logo { max-width: 250px; }
 /* End of Common styles */
 
 .home-template .site-nav,

@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('journal.components.editor')
-        .controller('EditorController', ['$stateParams', 'EditorService', 'ToastrService', EditorController]);
+        .controller('EditorController', ['$stateParams', '$uibModal', 'EditorService', 'ToastrService', 'CONFIG', EditorController]);
 
-    function EditorController($stateParams, EditorService, ToastrService) {
+    function EditorController($stateParams, $uibModal, EditorService, ToastrService, CONFIG) {
         var vm = this;
 
         vm.options = {
@@ -75,6 +75,29 @@
             }
         };
 
+        /**
+         * Opens the markdown helper.
+         */
+        vm.openMarkdownHelper = function() {
+            // instantiate the modal
+            $uibModal.open({
+                animation: true,
+                controllerAs : 'mdh',
+                controller : ['$uibModalInstance', function($uibModalInstance) {
+                    var vm = this;
+
+                    vm.closeModal = function() {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                }],
+                size: 'markdown',
+                templateUrl: CONFIG.TEMPLATE_PATH + 'editor/_markdown-helper.html'
+            });
+        };
+
+        /**
+         * Sends the data to the API to be saved.
+         */
         vm.savePost = function() {
             var post = vm.post;
 
@@ -237,6 +260,317 @@
 (function() {
     'use strict';
 
+    angular.module('journal.components.settingsGeneral')
+        .controller('SettingsGeneralController', ['$uibModal', 'SettingsGeneralService', 'ToastrService', 'CONFIG', SettingsGeneralController]);
+
+    function SettingsGeneralController($uibModal, SettingsGeneralService, ToastrService, CONFIG) {
+        var vm = this;
+
+        // controller variables
+        vm.loading = true;
+        vm.processing = false;
+        vm.settings = {};
+        vm.themes = {};
+
+        /**
+         * This will run once the page loads and fetches the needed settings
+         * from the API and be shown in the page.
+         */
+        vm.initialize = function() {
+            var fields = 'title,description,post_per_page,logo_url,cover_url,theme';
+
+            // get the settings from the API
+            SettingsGeneralService.getSettings(fields)
+                .then(function(response) {
+                    if (response.settings) {
+                        vm.settings = response.settings;
+
+                        // convert the post_per_page to integer
+                        if (vm.settings.post_per_page) {
+                            vm.settings.post_per_page = parseInt(vm.settings.post_per_page);
+                        }
+                    }
+
+
+                }, function(error) {
+                    vm.loading = false;
+                });
+
+            // get the installed themes
+            SettingsGeneralService.themes()
+                .then(function(response) {
+                    if (response.themes) {
+                        vm.themes = response.themes;
+                    }
+
+                    vm.loading = false;
+                });
+        };
+
+        /**
+         * Opens the uploader modal.
+         * @param type
+         */
+        vm.openUploaderModal = function(type) {
+            // instantiate the modal
+            var modal = $uibModal.open({
+                animation: true,
+                controllerAs : 'um',
+                controller : 'SettingsGeneralModalController',
+                templateUrl: CONFIG.TEMPLATE_PATH + 'uploader-modal/uploader-modal.html',
+                resolve: {
+                    settings : function() {
+                        return angular.copy(vm.settings);
+                    },
+                    type : function() {
+                        return type;
+                    }
+                }
+            });
+
+            // once the modal is closed and there's a data returned, update
+            // the settings scope.
+            modal.result.then(function(settings) {
+                vm.settings = settings;
+
+                // convert the post_per_page to integer
+                if (vm.settings.post_per_page) {
+                    vm.settings.post_per_page = parseInt(vm.settings.post_per_page);
+                }
+            });
+        };
+
+        /**
+         * Saves the settings in the API.
+         */
+        vm.saveSettings = function() {
+            var settings = vm.settings;
+
+            // flag that we're now processing
+            vm.processing = true;
+
+            // send to the API
+            SettingsGeneralService.saveSettings(settings)
+                .then(function(response) {
+                    if (response.settings) {
+                        // update the settings scope
+                        vm.settings = settings;
+
+                        // convert the post_per_page to integer
+                        if (vm.settings.post_per_page) {
+                            vm.settings.post_per_page = parseInt(vm.settings.post_per_page);
+                        }
+
+                        ToastrService.toast('You have successfully updated your blog settings.', 'success');
+                    }
+
+                    vm.processing = false;
+                }, function() {
+                    vm.processing = false;
+
+                    ToastrService
+                        .toast('Something went wrong while processing your request. Please try again later.', 'error');
+                })
+        };
+
+        vm.initialize();
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.components.settingsGeneralModal')
+        .controller('SettingsGeneralModalController', [
+            '$scope', '$timeout', '$uibModalInstance', 'FileUploaderService', 'ToastrService', 'SettingsGeneralModalService', 'settings', 'type', SettingsGeneralModalController]);
+
+    function SettingsGeneralModalController($scope, $timeout, $uibModalInstance, FileUploaderService, ToastrService, SettingsGeneralModalService, settings, type) {
+        var vm = this;
+
+        // controller variables
+        vm.settings = settings;
+        vm.image = {
+            link : null,
+            file : null,
+            option : 'file',
+            url : ''
+        };
+
+        vm.processing = false;
+
+        vm.type = type;
+        // upload variables
+        vm.upload = {
+            active : false,
+            percentage : 0
+        };
+
+        vm.closeModal = function() {
+            $uibModalInstance.dismiss('cancel');
+        };
+
+        /**
+         * Fetches the value of the input and be used as image url.
+         */
+        vm.getImageLink = function() {
+            // delay it for a second
+            $timeout(function() {
+                vm.image.url = vm.image.link;
+
+                // empty the image link
+                vm.image.link = null;
+
+                // update
+                vm.updatePhotoDetails(vm.image.url);
+            }, 1000);
+        };
+
+        vm.initialize = function() {
+            // check the type of the photo to be updated then update the
+            // image url scope
+            switch (vm.type) {
+                case 'cover' :
+                    vm.image.url = vm.settings.cover_url || '';
+                    break;
+                case 'logo' :
+                    vm.image.url = vm.settings.logo_url || '';
+                    break;
+                default:
+                    break;
+            }
+        };
+
+        /**
+         * Removes the image.
+         */
+        vm.removeImage = function() {
+            // empty the image url
+            vm.image.url = '';
+
+            // update
+            vm.updatePhotoDetails(vm.image.url);
+        };
+
+        /**
+         * Updates the details of the user.
+         */
+        vm.save = function() {
+            var data = vm.settings;
+
+            // flag that we're processing
+            vm.processing = true;
+
+            // update settings
+            SettingsGeneralModalService.saveSettings(data)
+                .then(function(response) {
+                    if (response.settings) {
+                        // show message
+                        ToastrService
+                            .toast('You have successfully updated your '+vm.type+' photo.');
+
+                        // close modal and send data back to the SettingsGeneralController
+                        $uibModalInstance.close(response.settings);
+                    }
+
+                    vm.processing = false;
+                }, function() {
+                    ToastrService
+                        .toast('Something went wrong while uploading the photo to the server.', 'error');
+                    vm.processing = false;
+                });
+        };
+
+        /**
+         * Switches the option to put a featured image.
+         */
+        vm.switchOption = function() {
+            if (vm.image.option == 'file') {
+                vm.image.option = 'link';
+                return;
+            }
+
+            if (vm.image.option == 'link') {
+                vm.image.option = 'file';
+                return;
+            }
+        };
+
+        /**
+         * Updates the value depending on the image being updated.
+         * @param url
+         */
+        vm.updatePhotoDetails = function(url) {
+            // check first the type of image being updated
+            switch (vm.type) {
+                case 'cover' :
+                    vm.settings.cover_url = url;
+                    break;
+                case 'logo' :
+                    vm.settings.logo_url = url;
+                    break;
+                default:
+                    break;
+            }
+        };
+
+        /**
+         * Listen for the changes to the image.file scope and trigger the file
+         * upload to the API.
+         */
+        $scope.$watch(function() {
+            return vm.image.file;
+        }, function(file) {
+            if (file) {
+                vm.processing = true;
+
+                // upload
+                FileUploaderService.upload(file)
+                    .progress(function(event) {
+                        vm.upload = {
+                            active : true,
+                            percentage : parseInt(100.0 * event.loaded / event.total)
+                        };
+                    })
+                    .success(function(response) {
+                        if (response.url) {
+                            // show image
+                            vm.image.url = response.url;
+
+                            // update
+                            vm.updatePhotoDetails(response.url);
+
+                            // hide the progress bar
+                            vm.upload = {
+                                active : false,
+                                percentage : 0
+                            };
+                        }
+
+                        vm.processing = false;
+                    })
+                    .error(function() {
+                        // handle the error
+                        ToastrService
+                            .toast('Something went wrong with the upload. Please try again later.', 'error');
+
+                        // hide progress bar
+                        vm.upload = {
+                            active : false,
+                            percentage : 0
+                        };
+
+                        vm.processing = false;
+                    });
+            }
+        });
+
+        vm.initialize();
+    }
+})();
+
+(function() {
+    'use strict';
+
     angular.module('journal.components.userCreate')
         .controller('UserCreateController', ['ToastrService', 'UserCreateService', UserCreateController]);
 
@@ -324,9 +658,9 @@
 
     angular.module('journal.components.userProfile')
         .controller('UserProfileController', [
-            '$stateParams', '$uibModal', 'AuthService', 'ToastrService', 'UserProfileService', 'CONFIG', UserProfileController]);
+            '$state', '$stateParams', '$uibModal', 'AuthService', 'ToastrService', 'UserProfileService', 'CONFIG', UserProfileController]);
 
-    function UserProfileController($stateParams, $uibModal, AuthService, ToastrService, UserProfileService, CONFIG) {
+    function UserProfileController($state, $stateParams, $uibModal, AuthService, ToastrService, UserProfileService, CONFIG) {
         var vm = this;
 
         // controller variables
@@ -363,6 +697,9 @@
                     }, function(error) {
                         // redirect to 404 page
                     });
+            } else {
+                // redirect to user lists
+                $state.transitionTo('user.lists');
             }
         };
 
@@ -375,7 +712,7 @@
                 templateUrl: CONFIG.TEMPLATE_PATH + 'uploader-modal/uploader-modal.html',
                 resolve: {
                     user : function() {
-                        return angular.copy(vm.user);;
+                        return angular.copy(vm.user);
                     },
                     type : function() {
                         return type;

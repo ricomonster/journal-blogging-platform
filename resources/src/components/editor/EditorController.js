@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('journal.components.editor')
-        .controller('EditorController', ['$stateParams', 'EditorService', 'ToastrService', EditorController]);
+        .controller('EditorController', ['$stateParams', '$uibModal', 'EditorService', 'ToastrService', 'CONFIG', EditorController]);
 
-    function EditorController($stateParams, EditorService, ToastrService) {
+    function EditorController($stateParams, $uibModal, EditorService, ToastrService, CONFIG) {
         var vm = this;
 
         vm.options = {
@@ -75,6 +75,29 @@
             }
         };
 
+        /**
+         * Opens the markdown helper.
+         */
+        vm.openMarkdownHelper = function() {
+            // instantiate the modal
+            $uibModal.open({
+                animation: true,
+                controllerAs : 'mdh',
+                controller : ['$uibModalInstance', function($uibModalInstance) {
+                    var vm = this;
+
+                    vm.closeModal = function() {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                }],
+                size: 'markdown',
+                templateUrl: CONFIG.TEMPLATE_PATH + 'editor/_markdown-helper.html'
+            });
+        };
+
+        /**
+         * Sends the data to the API to be saved.
+         */
         vm.savePost = function() {
             var post = vm.post;
 
