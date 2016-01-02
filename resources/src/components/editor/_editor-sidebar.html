@@ -11,6 +11,10 @@
                 <featured-image ng-model="es.post.featured_image"></featured-image>
             </div>
             <div class="form-group">
+                <label class="control-label">Tags</label>
+                <editor-tags ng-model="es.post.tags"></editor-tags>
+            </div>
+            <div class="form-group">
                 <label class="control-label">Post URL</label>
                 <input type="text" ng-model="es.post.slug" class="form-control"
                 placeholder="post-url"/>

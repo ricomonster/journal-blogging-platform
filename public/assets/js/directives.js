@@ -3,10 +3,11 @@
 
     angular.module('journal.components.editor')
         .directive('editorScroll', [EditorScroller])
-        .directive('editorPublishButtons', [EditorPublishButtons])
+        .directive('editorPublishButtons', ['CONFIG', EditorPublishButtons])
         .directive('inputPostSlug', [InputPostSlug])
-        .directive('editorSidebar', [EditorSidebar])
-        .directive('featuredImage', [FeaturedImage]);
+        .directive('editorSidebar', ['CONFIG', EditorSidebar])
+        .directive('featuredImage', ['CONFIG', FeaturedImage])
+        .directive('editorTags', ['CONFIG', EditorTags]);
 
     /**
      * Enables both editor windows to scroll in sync.
@@ -46,7 +47,7 @@
      * @returns {{require: string, restrict: string, replace: boolean, scope: {postStatus: string}, templateUrl: string, controllerAs: string, controller: *[], link: Function}}
      * @constructor
      */
-    function EditorPublishButtons() {
+    function EditorPublishButtons(CONFIG) {
         return {
             require : 'ngModel',
             restrict : 'EA',
@@ -56,7 +57,7 @@
                 post        : '=post',
                 processing  : '=processing'
             },
-            templateUrl : '/assets/templates/editor/_editor-publish-buttons.html',
+            templateUrl : CONFIG.TEMPLATE_PATH + 'editor/_editor-publish-buttons.html',
             controllerAs : 'epb',
             controller : ['$scope', function($scope) {
                 var vm = this;
@@ -178,7 +179,7 @@
      * @returns {{restrict: string, scope: {toggle: string, postData: string}, replace: boolean, templateUrl: string, controllerAs: string, controller: *[], link: Function}}
      * @constructor
      */
-    function EditorSidebar() {
+    function EditorSidebar(CONFIG) {
         return {
             restrict : 'EA',
             scope : {
@@ -186,7 +187,7 @@
                 postData    : '=post'
             },
             replace : true,
-            templateUrl : ' /assets/templates/editor/_editor-sidebar.html',
+            templateUrl : CONFIG.TEMPLATE_PATH + 'editor/_editor-sidebar.html',
             controllerAs : 'es',
             controller : ['$scope', function($scope) {
                 var vm = this;
@@ -238,7 +239,7 @@
      * @returns {{restrict: string, require: string, scope: {featuredImage: string}, replace: boolean, templateUrl: string, controllerAs: string, controller: *[], link: Function}}
      * @constructor
      */
-    function FeaturedImage() {
+    function FeaturedImage(CONFIG) {
         return {
             restrict : 'EA',
             require : 'ngModel',
@@ -246,7 +247,7 @@
                 featuredImage : '=ngModel'
             },
             replace: true,
-            templateUrl : '/assets/templates/editor/_featured-image.html',
+            templateUrl : CONFIG.TEMPLATE_PATH + 'editor/_featured-image.html',
             controllerAs : 'fi',
             controller : ['$scope', '$timeout', 'FileUploaderService', 'ToastrService',
                 function($scope, $timeout, FileUploaderService, ToastrService) {
@@ -354,6 +355,125 @@
             link : function(scope, element, attributes, ngModel) {
                 scope.$watch('featuredImage', function(imageUrl) {
                     scope.fi.image.url = imageUrl;
+                });
+            }
+        }
+    }
+
+    function EditorTags(CONFIG) {
+        return {
+            restrict : 'EA',
+            require : 'ngModel',
+            scope : {
+                tags : '=ngModel'
+            },
+            replace : true,
+            controllerAs : 'et',
+            controller : ['$scope', 'EditorService', function($scope, EditorService) {
+                var vm = this;
+
+                // controller variables
+                vm.removingLastTag  = false;
+                vm.postTags         = {};
+                vm.query            = null;
+
+                /**
+                 * Validates the typed/selected tag if it already exists as
+                 * one of the post tags but if the tag doesn't exists, it will
+                 * be added as one of the post tags.
+                 */
+                vm.addToPostTags = function() {
+                    var tag = vm.query;
+
+                    // check if there's a tag
+                    if (!tag || tag.length === 0) { return; }
+
+                    // check first if tag already exists
+                    for (var t in vm.postTags) {
+                        // tag already exists
+                        if (vm.postTags[t].name == tag) {
+                            return;
+                        }
+                    }
+
+                    // add the tag
+                    vm.postTags.push({ name : tag });
+
+                    // empty the input
+                    vm.query = null;
+
+                    // update the ng-model
+                    $scope.tags = vm.postTags;
+                };
+
+                vm.initialize = function() {
+
+                };
+
+                vm.removeLastTag = function() {
+                    // check first if the query scope is not empty
+                    if ((vm.query && vm.query.length !== 0) || vm.postTags.length === 0) {
+                        return;
+                    }
+
+                    // check first if the tag is ready to be removed
+                    if (vm.removingLastTag) {
+                        // get the index of the last
+                        var index = vm.postTags.length - 1;
+
+                        // remove it from the array
+                        vm.postTags.splice(index, 1);
+
+                        // update the ng-model
+                        $scope.tags = vm.postTags;
+
+                        // reset
+                        vm.removingLastTag = false;
+                        return;
+                    }
+
+                    // prepare
+                    vm.removingLastTag = true;
+                };
+
+                vm.initialize();
+            }],
+            templateUrl : CONFIG.TEMPLATE_PATH + 'editor/_editor-tags.html',
+            link : function(scope, element, attributes, ngModel) {
+                scope.$watch('tags', function(tags) {
+                    scope.et.postTags = tags;
+                });
+
+                var input = angular.element(element)
+                    .find('input');
+
+                // bind some key events
+                input.bind('keyup', function(e) {
+                    // check if the user pressed enter key
+                    if (e.keyCode === 9 || e.keyCode === 13) {
+                        // submit the tag or whatever the content of the input
+                        scope.$apply(function() {
+                            scope.et.addToPostTags();
+                        });
+                    }
+                })
+                .bind('keydown', function(e) {
+                    // make sure that we're not going to submit the form
+                    if (e.keyCode === 9 || e.keyCode === 13 || e.keyCode === 27) {
+                        e.preventDefault();
+                    }
+
+                    // check if the user pressed the backspace
+                    if (e.keyCode === 8) {
+                        scope.$apply(function() {
+                            // delete the last tag
+                            scope.et.removeLastTag();
+                        });
+                    }
+
+                    if (e.keyCode !== 8) {
+                        scope.et.removingLastTag = false;
+                    }
                 });
             }
         }
