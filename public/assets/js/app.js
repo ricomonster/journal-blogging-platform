@@ -12,8 +12,11 @@
         'journal.components.login',
         //'journal.components.post',
         'journal.components.postLists',
+        //'journal.components.settings',
+        'journal.components.settingsGeneral',
+        'journal.components.settingsGeneralModal',
         'journal.components.sidebar',
-        'journal.components.user',
+        //'journal.components.user',
         'journal.components.userCreate',
         'journal.components.userLists',
         'journal.components.userProfile',
@@ -43,6 +46,11 @@
     // Posts
     angular.module('journal.components.post', []);
     angular.module('journal.components.postLists', []);
+
+    // Settings
+    angular.module('journal.components.settings', []);
+    angular.module('journal.components.settingsGeneral', []);
+    angular.module('journal.components.settingsGeneralModal', []);
 
     // Sidebar
     angular.module('journal.components.sidebar', []);
@@ -107,7 +115,8 @@
 
         // default endpoint if page/state does not exists
         $urlRouterProvider.otherwise('/')
-            .when('/', '/post/lists');
+            .when('/', '/post/lists')
+            .when('/post', '/post/lists');
 
         // state configuration
         $stateProvider
@@ -168,6 +177,28 @@
                 },
                 authenticate : true
             })
+            // SETTINGS
+            .state('settings', {
+                url : '/settings',
+                views : {
+                    '' : {
+                        templateUrl : templatePath('settings/settings.html')
+                    },
+                    'sidebar' : {
+                        templateUrl : templatePath('sidebar/sidebar.html')
+                    }
+                },
+                abstract : true,
+                authenticate : true
+            })
+            .state('settings.general', {
+                url : '/general',
+                views : {
+                    'settings_content' : {
+                        templateUrl : templatePath('settings-general/settings-general.html')
+                    }
+                }
+            })
             // USER
             .state('user', {
                 url : '/user',
@@ -179,6 +210,7 @@
                         templateUrl : templatePath('sidebar/sidebar.html')
                     }
                 },
+                abstract : true,
                 authenticate : true
             })
             .state('user.create', {

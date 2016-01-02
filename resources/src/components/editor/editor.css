@@ -53,6 +53,13 @@
 #editor_page .editor .window .floating-header span i { margin-right: 3px; }
 
 #editor_page .editor .window.markdown-editor { border-right: 1px solid #e4e4e4; left: 0; }
+#editor_page .editor .markdown-editor .markdown-helper {
+    color: rgba(35, 31, 32, 0.5);
+    font-size: 12px;
+    float: right;
+    text-decoration: none;
+}
+
 #editor_page .markdown-editor .editor-wrapper {}
 #editor_page .markdown-editor .editor-wrapper .CodeMirror {
     bottom: 0;

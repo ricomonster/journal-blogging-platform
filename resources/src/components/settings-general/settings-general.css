@@ -1,0 +1,16 @@
+#settings_general_page {}
+#settings_general_page .general-settings .form-wrapper { padding: 15px 30px; width: 50%; }
+
+#settings_general_page .form-wrapper .image-wrapper .btn i { margin-right: 3px; }
+
+#settings_general_page .form-wrapper .image-wrapper .open-modal {
+    display: block;
+    padding: 5px 10px;
+    width: 100%;
+}
+
+#settings_general_page .form-wrapper .image-wrapper .open-modal img {
+    display: block;
+    margin: auto;
+    max-width: 100%;
+}

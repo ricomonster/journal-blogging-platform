@@ -3,9 +3,9 @@
 
     angular.module('journal.components.userProfile')
         .controller('UserProfileController', [
-            '$stateParams', '$uibModal', 'AuthService', 'ToastrService', 'UserProfileService', 'CONFIG', UserProfileController]);
+            '$state', '$stateParams', '$uibModal', 'AuthService', 'ToastrService', 'UserProfileService', 'CONFIG', UserProfileController]);
 
-    function UserProfileController($stateParams, $uibModal, AuthService, ToastrService, UserProfileService, CONFIG) {
+    function UserProfileController($state, $stateParams, $uibModal, AuthService, ToastrService, UserProfileService, CONFIG) {
         var vm = this;
 
         // controller variables
@@ -42,6 +42,9 @@
                     }, function(error) {
                         // redirect to 404 page
                     });
+            } else {
+                // redirect to user lists
+                $state.transitionTo('user.lists');
             }
         };
 
@@ -54,7 +57,7 @@
                 templateUrl: CONFIG.TEMPLATE_PATH + 'uploader-modal/uploader-modal.html',
                 resolve: {
                     user : function() {
-                        return angular.copy(vm.user);;
+                        return angular.copy(vm.user);
                     },
                     type : function() {
                         return type;

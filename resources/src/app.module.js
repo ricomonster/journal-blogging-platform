@@ -12,8 +12,11 @@
         'journal.components.login',
         //'journal.components.post',
         'journal.components.postLists',
+        //'journal.components.settings',
+        'journal.components.settingsGeneral',
+        'journal.components.settingsGeneralModal',
         'journal.components.sidebar',
-        'journal.components.user',
+        //'journal.components.user',
         'journal.components.userCreate',
         'journal.components.userLists',
         'journal.components.userProfile',
@@ -43,6 +46,11 @@
     // Posts
     angular.module('journal.components.post', []);
     angular.module('journal.components.postLists', []);
+
+    // Settings
+    angular.module('journal.components.settings', []);
+    angular.module('journal.components.settingsGeneral', []);
+    angular.module('journal.components.settingsGeneralModal', []);
 
     // Sidebar
     angular.module('journal.components.sidebar', []);
