@@ -493,3 +493,5 @@ pre code, tt {
 
 .author-template .author-meta { color: #ffffff; font-size: 1.7rem; letter-spacing: 0.01rem; }
 .author-template .no-cover .author-meta { color: rgba(0,0,0,0.5); }
+
+.author-template .author-avatar { float: none; }

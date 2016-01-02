@@ -2,7 +2,8 @@ module.exports = {
     base : {
         bower : './bower_components',
         public : './public',
-        src : './resources/src'
+        src : './resources/src',
+        themes : './themes'
     },
     sources : {
         app : [

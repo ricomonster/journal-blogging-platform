@@ -2,6 +2,17 @@
 
 /*
 |--------------------------------------------------------------------------
+| Routes File
+|--------------------------------------------------------------------------
+|
+| Here is where you will register all of the routes in an application.
+| It's a breeze. Simply tell Laravel the URIs it should respond to
+| and give it the controller to call when that URI is requested.
+|
+*/
+
+/*
+|--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
 */
@@ -31,6 +42,11 @@ Route::group(['prefix' => 'api/v1.0'], function() {
         Route::post('save', 'Api\ApiPostsController@save');
     });
 
+    // Role Routes
+    Route::group(['prefix' => 'roles'], function() {
+        Route::get('all', 'Api\ApiRolesController@all');
+    });
+
     // Setting Routes
     Route::group(['prefix' => 'settings'], function() {
         Route::get('get', 'Api\ApiSettingsController@getSettings');
@@ -52,7 +68,7 @@ Route::group(['prefix' => 'api/v1.0'], function() {
         Route::get('get_user', 'Api\ApiUsersController@getUser');
 
         Route::post('create', 'Api\ApiUsersController@create');
-        Route::post('update_details', 'Api\ApiUsersController@updateDetails');
+        Route::post('update_profile', 'Api\ApiUsersController@updateDetails');
         Route::post('change_password', 'Api\ApiUsersController@changePassword');
     });
 

@@ -14,8 +14,8 @@
                         <i class="fa fa-plus-circle fa-fw"></i> Post
                     </a>
                 </li>
-                <li>
-                    <a>
+                <li style="display: none;">
+                    <a ui-sref="user.create">
                         <i class="fa fa-user-plus fa-fw"></i> User
                     </a>
                 </li>
@@ -28,7 +28,7 @@
                     </a>
                 </li>
                 <li>
-                    <a>
+                    <a ui-sref="user.lists">
                         <i class="fa fa-users fa-fw"></i> Users
                     </a>
                 </li>
@@ -45,7 +45,7 @@
                 </li>
                 <li class="header">Account</li>
                 <li>
-                    <a>
+                    <a ui-sref="user.profile({ userId : sd.sidebar.user.id })">
                         <i class="fa fa-user fa-fw"></i> Edit Profile
                     </a>
                 </li>

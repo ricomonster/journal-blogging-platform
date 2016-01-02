@@ -3,19 +3,22 @@ namespace Journal\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Journal\Http\Requests;
+use Journal\Repositories\Role\RoleRepositoryInterface;
 use Journal\Repositories\User\UserRepositoryInterface;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use JWTAuth;
 
 class ApiUsersController extends ApiController
 {
+    protected $roles;
     protected $users;
 
-    public function __construct(UserRepositoryInterface $user)
+    public function __construct(RoleRepositoryInterface $role, UserRepositoryInterface $user)
     {
         // set the JWT middleware
         $this->middleware('jwt.auth', ['except' => ['all', 'getUser']]);
 
+        $this->roles = $role;
         $this->users = $user;
     }
 
@@ -50,11 +53,21 @@ class ApiUsersController extends ApiController
                 ->respondWithError($messages);
         }
 
+        // check if the role_id exists
+        $role = $this->roles->findById($request->input('role'));
+
+        if (empty($role)) {
+            // send an error
+            return $this->setStatusCode(self::NOT_FOUND)
+                ->respondWithError(['role' => ['Role not found.']]);
+        }
+
         // create the user
         $user = $this->users->create(
             $request->input('name'),
             $request->input('email'),
-            $request->input('password'));
+            $request->input('password'),
+            $request->input('role'));
 
         // return
         return $this->respond([

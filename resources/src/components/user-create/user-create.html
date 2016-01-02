@@ -1,0 +1,50 @@
+<div id="user_create_page" ng-controller="UserCreateController as ucc">
+    <form ng-submit="ucc.createUser()">
+        <header class="page-header clearfix">
+            <h1 class="page-title">Add new user</h1>
+            <button type="submit" class="btn btn-success new-post">
+                Create
+            </button>
+        </header>
+        <section class="user-create-content scrollable-content">
+            <div class="form-content">
+                <div class="form-group" ng-class="{'has-error' : ucc.errors.name}">
+                    <label class="control-label">Name</label>
+                    <input type="text" ng-model="ucc.user.name" class="form-control"
+                    placeholder="John Doe"/>
+                    <span class="help-block" ng-if="ucc.errors.name">
+                        {{ucc.errors.name[0]}}
+                    </span>
+                </div>
+                <div class="form-group" ng-class="{'has-error' : ucc.errors.email}">
+                    <label class="control-label">E-mail</label>
+                    <input type="email" ng-model="ucc.user.email" class="form-control"
+                    placeholder="johndoe@mail.com"/>
+                    <span class="help-block" ng-if="ucc.errors.email">
+                        {{ucc.errors.email[0]}}
+                    </span>
+                </div>
+                <div class="form-group" ng-class="{'has-error' : ucc.errors.password}">
+                    <label class="control-label">Password</label>
+                    <input type="password" ng-model="ucc.user.password" class="form-control"
+                    placeholder="******"/>
+                    <span class="help-block" ng-if="ucc.errors.password">
+                        {{ucc.errors.password[0]}}
+                    </span>
+                </div>
+                <div class="form-group" ng-class="{'has-error' : ucc.errors.role}">
+                    <label class="control-label">Role</label>
+                    <select ng-model="ucc.user.role" class="form-control">
+                        <option value="" selected>-- Select... --</option>
+                        <option ng-repeat="role in ucc.roles" ng-value="role.id">
+                            {{role.name}}
+                        </option>
+                    </select>
+                    <span class="help-block" ng-if="ucc.errors.role">
+                        {{ucc.errors.role[0]}}
+                    </span>
+                </div>
+            </div>
+        </section>
+    </form>
+</div>

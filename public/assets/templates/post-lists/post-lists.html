@@ -1,69 +1,67 @@
 <div id="post_lists_page" ng-controller="PostListsController as plc">
-    <section class="page-content">
-        <header class="page-header clearfix">
-            <h1 class="page-title">Posts</h1>
-            <a class="btn btn-success new-post" ui-sref="editor">
-                <i class="fa fa-plus"></i> New Post
-            </a>
+    <header class="page-header clearfix">
+        <h1 class="page-title">Posts</h1>
+        <a class="btn btn-success new-post" ui-sref="editor">
+            <i class="fa fa-plus"></i> New Post
+        </a>
+    </header>
+    <section class="post-lists">
+        <header class="post-lists-header">
+            <input type="text" class="form-control" placeholder="Search..."/>
         </header>
-        <div class="post-lists">
-            <header class="post-lists-header">
-                <input type="text" class="form-control" placeholder="Search..."/>
+        <section class="lists-wrapper">
+            <article class="post auto-height" ng-repeat="post in plc.posts"
+            ng-class="{ 'active' : post == plc.active }">
+                <a class="hyperlink" ng-click="plc.selectThisPost(post)">
+                    <header class="post-title">{{post.title}}</header>
+                    <section class="post-meta">
+                        <time class="post-timestamp published" ng-if="post.status == 1">
+                            Published 8 days ago
+                        </time>
+                        <span class="post-status draft" ng-if="post.status == 2">Draft</span>
+                    </section>
+                </a>
+            </article>
+        </section>
+    </section>
+    <section class="post-preview">
+        <div ng-if="plc.active">
+            <header class="preview-header clearfix">
+                <div class="post-meta">
+                    <span class="post-status published" ng-if="plc.active.status == 1">
+                        Published by
+                    </span>
+                    <span class="post-status draft" ng-if="plc.active.status == 2">
+                        Written by
+                    </span>
+                    <span class="author-name">
+                        {{plc.active.author.name}}
+                    </span>
+                </div>
+                <div class="post-controls">
+                    <ul class="control-lists">
+                        <li>
+                            <a class="btn btn-default btn-sm" ui-sref="editorPost({postId : plc.active.id})">
+                                <i class="fa fa-pencil"></i> Edit
+                            </a>
+                        </li>
+                        <li>
+                            <a class="btn btn-default btn-sm">
+                                <i class="fa fa-search"></i> Preview
+                            </a>
+                        </li>
+                        <li>
+                            <a class="btn btn-danger btn-sm">
+                                <i class="fa fa-trash-o"></i> Delete
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </header>
-            <section class="lists-wrapper">
-                <article class="post auto-height" ng-repeat="post in plc.posts"
-                ng-class="{ 'active' : post == plc.active }">
-                    <a class="hyperlink" ng-click="plc.selectThisPost(post)">
-                        <header class="post-title">{{post.title}}</header>
-                        <section class="post-meta">
-                            <time class="post-timestamp published" ng-if="post.status == 1">
-                                Published 8 days ago
-                            </time>
-                            <span class="post-status draft" ng-if="post.status == 2">Draft</span>
-                        </section>
-                    </a>
-                </article>
+            <section class="preview-content">
+                <!-- Markdown Preview Directive goes here -->
+                <div journal-markdown="plc.active.markdown" class="rendered-markdown"></div>
             </section>
-        </div>
-        <div class="post-preview">
-            <div ng-if="plc.active">
-                <header class="preview-header clearfix">
-                    <div class="post-meta">
-                        <span class="post-status published" ng-if="plc.active.status == 1">
-                            Published by
-                        </span>
-                        <span class="post-status draft" ng-if="plc.active.status == 2">
-                            Written by
-                        </span>
-                        <span class="author-name">
-                            {{plc.active.author.name}}
-                        </span>
-                    </div>
-                    <div class="post-controls">
-                        <ul class="control-lists">
-                            <li>
-                                <a class="btn btn-default btn-sm" ui-sref="editorPost({postId : plc.active.id})">
-                                    <i class="fa fa-pencil"></i> Edit
-                                </a>
-                            </li>
-                            <li>
-                                <a class="btn btn-default btn-sm">
-                                    <i class="fa fa-search"></i> Preview
-                                </a>
-                            </li>
-                            <li>
-                                <a class="btn btn-danger btn-sm">
-                                    <i class="fa fa-trash-o"></i> Delete
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </header>
-                <section class="preview-content">
-                    <!-- Markdown Preview Directive goes here -->
-                    <div journal-markdown="plc.active.markdown" class="rendered-markdown"></div>
-                </section>
-            </div>
         </div>
     </section>
 </div>

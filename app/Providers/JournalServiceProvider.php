@@ -28,6 +28,10 @@ class JournalServiceProvider extends ServiceProvider
             'Journal\Repositories\Post\DbPostRepository');
 
         $this->app->bind(
+            'Journal\Repositories\Role\RoleRepositoryInterface',
+            'Journal\Repositories\Role\DbRoleRepository');
+
+        $this->app->bind(
             'Journal\Repositories\Setting\SettingRepositoryInterface',
             'Journal\Repositories\Setting\DbSettingRepository');
 

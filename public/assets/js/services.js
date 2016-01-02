@@ -1,6 +1,90 @@
 (function() {
     'use strict';
 
+    angular.module('journal.components.editor')
+        .service('EditorService', ['$http', '$q', 'AuthService', 'CONFIG', EditorService]);
+
+    function EditorService($http, $q, AuthService, CONFIG) {
+        this.apiUrl = CONFIG.API_URL;
+
+        this.getPost = function(postId) {
+            var deferred = $q.defer();
+
+            $http.get(this.apiUrl + '/posts/get_post?post_id=' + postId)
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
+        };
+
+        this.getSlug = function(title, id) {
+            var deferred = $q.defer(),
+                parameters = 'slug='+(title || '');
+
+            // check if there's an ID given
+            if (id) {
+                // append post id to the parameter
+                parameters += '&post_id=' + id;
+            }
+
+            // perform request to the API
+            $http.get(this.apiUrl + '/posts/check_slug?' + parameters)
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
+        };
+
+        this.savePost = function(post) {
+            var deferred = $q.defer(),
+                token = AuthService.token(),
+                url = this.apiUrl + '/posts/save?token=' + token,
+                authorId        = post.author_id || '',
+                title           = post.title || '',
+                markdown        = post.markdown || '',
+                featuredImage   = post.featured_image || '',
+                slug            = post.slug || '',
+                status          = post.status || 2,
+                tags            = post.tags || [],
+                publishedAt     = post.published_at.getTime() / 1000 || Math.floor(Date.now() / 1000);
+
+            // check if post_id is set
+            if (post.id) {
+                url += '&post_id=' + post.id;
+            }
+
+            // send request to the API
+            $http.post(url, {
+                    author_id       : authorId,
+                    title           : title,
+                    markdown        : markdown,
+                    featured_image  : featuredImage,
+                    slug            : slug,
+                    status          : status,
+                    tags            : tags,
+                    published_at    : publishedAt})
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
+        };
+    }
+})();
+(function() {
+    'use strict';
+
     angular.module('journal.components.login')
         .service('LoginService', ['$http', '$q', 'CONFIG', LoginService]);
 
@@ -91,76 +175,36 @@
 (function() {
     'use strict';
 
-    angular.module('journal.components.editor')
-        .service('EditorService', ['$http', '$q', 'AuthService', 'CONFIG', EditorService]);
+    angular.module('journal.components.userCreate')
+        .service('UserCreateService', ['$http', '$q', 'AuthService', 'CONFIG', UserCreateService]);
 
-    function EditorService($http, $q, AuthService, CONFIG) {
+    function UserCreateService($http, $q, AuthService, CONFIG) {
         this.apiUrl = CONFIG.API_URL;
 
-        this.getPost = function(postId) {
+        this.createUser = function(user) {
+            var deferred = $q.defer(),
+                token = AuthService.token();
+
+            $http.post(this.apiUrl + '/users/create?token=' + token, {
+                    name        : user.name     || '',
+                    email       : user.email    || '',
+                    password    : user.password || '',
+                    role        : user.role     || ''
+                })
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
+        };
+
+        this.getRoles = function() {
             var deferred = $q.defer();
 
-            $http.get(this.apiUrl + '/posts/get_post?post_id=' + postId)
-                .success(function(response) {
-                    deferred.resolve(response);
-                })
-                .error(function(error) {
-                    deferred.reject(error);
-                });
-
-            return deferred.promise;
-        };
-
-        this.getSlug = function(title, id) {
-            var deferred = $q.defer(),
-                parameters = 'slug='+(title || '');
-
-            // check if there's an ID given
-            if (id) {
-                // append post id to the parameter
-                parameters += '&post_id=' + id;
-            }
-
-            // perform request to the API
-            $http.get(this.apiUrl + '/posts/check_slug?' + parameters)
-                .success(function(response) {
-                    deferred.resolve(response);
-                })
-                .error(function(error) {
-                    deferred.reject(error);
-                });
-
-            return deferred.promise;
-        };
-
-        this.savePost = function(post) {
-            var deferred = $q.defer(),
-                token = AuthService.token(),
-                url = this.apiUrl + '/posts/save?token=' + token,
-                authorId        = post.author_id || '',
-                title           = post.title || '',
-                markdown        = post.markdown || '',
-                featuredImage   = post.featured_image || '',
-                slug            = post.slug || '',
-                status          = post.status || 2,
-                tags            = post.tags || [],
-                publishedAt     = post.published_at.getTime() / 1000 || Math.floor(Date.now() / 1000);
-
-            // check if post_id is set
-            if (post.id) {
-                url += '&post_id=' + post.id;
-            }
-
-            // send request to the API
-            $http.post(url, {
-                    author_id       : authorId,
-                    title           : title,
-                    markdown        : markdown,
-                    featured_image  : featuredImage,
-                    slug            : slug,
-                    status          : status,
-                    tags            : tags,
-                    published_at    : publishedAt})
+            $http.get(this.apiUrl + '/roles/all')
                 .success(function(response) {
                     deferred.resolve(response);
                 })
@@ -172,6 +216,117 @@
         };
     }
 })();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.components.userLists')
+        .service('UserListsService', ['$http', '$q', 'CONFIG', UserListsService]);
+
+    function UserListsService($http, $q, CONFIG) {
+        this.apiUrl = CONFIG.API_URL;
+
+        this.getUsers = function() {
+            var deferred = $q.defer();
+
+            $http.get(this.apiUrl + '/users/all')
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
+        };
+    }
+})();
+(function() {
+    'use strict';
+
+    angular.module('journal.components.userProfile')
+        .service('UserProfileService', [
+            '$http', '$q', 'AuthService', 'CONFIG', UserProfileService]);
+
+    function UserProfileService($http, $q, AuthService, CONFIG) {
+        this.apiUrl = CONFIG.API_URL;
+
+        this.getUser = function(id) {
+            var deferred = $q.defer();
+
+            $http.get(this.apiUrl + '/users/get_user?user_id=' + id || '')
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
+        };
+
+        this.updateProfileDetails = function(user) {
+            var deferred    = $q.defer(),
+                token       = AuthService.token(),
+                userId      = user.id || '';
+
+            $http.post(this.apiUrl + '/users/update_profile?user_id='+userId+'&token='+token, {
+                    name        : user.name         || '',
+                    email       : user.email        || '',
+                    biography   : user.biography    || '',
+                    location    : user.location     || '',
+                    website     : user.website      || '',
+                    avatar_url  : user.avatar_url   || '',
+                    cover_url   : user.cover_url    || ''
+                })
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
+        };
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.components.userProfileModal')
+        .service('UserProfileModalService', [
+            '$http', '$q', 'AuthService', 'CONFIG', UserProfileModalService]);
+
+    function UserProfileModalService($http, $q, AuthService, CONFIG) {
+        this.apiUrl = CONFIG.API_URL;
+
+        this.updateUserDetails = function(user) {
+            var deferred    = $q.defer(),
+                token       = AuthService.token(),
+                userId      = user.id || '';
+
+            $http.post(this.apiUrl + '/users/update_profile?user_id='+userId+'&token='+token, {
+                name        : user.name         || '',
+                email       : user.email        || '',
+                biography   : user.biography    || '',
+                location    : user.location     || '',
+                website     : user.website      || '',
+                avatar_url  : user.avatar_url   || '',
+                cover_url   : user.cover_url    || ''
+            })
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
+        };
+    }
+})();
+
 (function() {
     'use strict';
 

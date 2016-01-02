@@ -2,15 +2,16 @@
     'use strict';
 
     angular.module('journal.routes')
-        .config(['$stateProvider', '$urlRouterProvider', Routes]);
+        .config(['$stateProvider', '$urlRouterProvider', 'CONFIG', Routes]);
 
-    function Routes($stateProvider, $urlRouterProvider) {
+    function Routes($stateProvider, $urlRouterProvider, CONFIG) {
         var templatePath = function(filename) {
-            return '/assets/templates/' + filename;
+            return CONFIG.TEMPLATE_PATH + filename;
         };
 
         // default endpoint if page/state does not exists
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/')
+            .when('/', '/post/lists');
 
         // state configuration
         $stateProvider
@@ -71,5 +72,44 @@
                 },
                 authenticate : true
             })
+            // USER
+            .state('user', {
+                url : '/user',
+                views : {
+                    '' : {
+                        templateUrl : templatePath('user/user.html')
+                    },
+                    'sidebar' : {
+                        templateUrl : templatePath('sidebar/sidebar.html')
+                    }
+                },
+                authenticate : true
+            })
+            .state('user.create', {
+                url : '/create',
+                views : {
+                    'user_content' : {
+                        templateUrl : templatePath('user-create/user-create.html')
+                    }
+                },
+                authenticate : true
+            })
+            .state('user.lists', {
+                url : '/lists',
+                views : {
+                    'user_content' : {
+                        templateUrl : templatePath('user-lists/user-lists.html')
+                    }
+                },
+                authenticate : true
+            })
+            .state('user.profile', {
+                url : '/profile/:userId',
+                views : {
+                    'user_content' : {
+                        templateUrl : templatePath('user-profile/user-profile.html')
+                    }
+                }
+            });
     }
 })();

@@ -10,9 +10,14 @@
         // COMPONENTS
         'journal.components.editor',
         'journal.components.login',
-        'journal.components.post',
+        //'journal.components.post',
         'journal.components.postLists',
         'journal.components.sidebar',
+        'journal.components.user',
+        'journal.components.userCreate',
+        'journal.components.userLists',
+        'journal.components.userProfile',
+        'journal.components.userProfileModal',
         // SHARED
         'journal.shared.auth',
         'journal.shared.fileUploader',
@@ -40,6 +45,13 @@
     // Sidebar
     angular.module('journal.components.sidebar', []);
 
+    // Users
+    angular.module('journal.components.user', []);
+    angular.module('journal.components.userCreate', []);
+    angular.module('journal.components.userLists', ['angularMoment']);
+    angular.module('journal.components.userProfile', []);
+    angular.module('journal.components.userProfileModal', []);
+
     // SHARED
     angular.module('journal.shared.auth', []);
     angular.module('journal.shared.fileUploader', ['ngFileUpload']);
@@ -47,6 +59,7 @@
     angular.module('journal.shared.storage', ['LocalStorageModule']);
     angular.module('journal.shared.toastr', ['ngAnimate', 'toastr']);
 })();
+
 
 (function() {
     'use strict';
@@ -83,15 +96,16 @@
     'use strict';
 
     angular.module('journal.routes')
-        .config(['$stateProvider', '$urlRouterProvider', Routes]);
+        .config(['$stateProvider', '$urlRouterProvider', 'CONFIG', Routes]);
 
-    function Routes($stateProvider, $urlRouterProvider) {
+    function Routes($stateProvider, $urlRouterProvider, CONFIG) {
         var templatePath = function(filename) {
-            return '/assets/templates/' + filename;
+            return CONFIG.TEMPLATE_PATH + filename;
         };
 
         // default endpoint if page/state does not exists
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/')
+            .when('/', '/post/lists');
 
         // state configuration
         $stateProvider
@@ -152,8 +166,48 @@
                 },
                 authenticate : true
             })
+            // USER
+            .state('user', {
+                url : '/user',
+                views : {
+                    '' : {
+                        templateUrl : templatePath('user/user.html')
+                    },
+                    'sidebar' : {
+                        templateUrl : templatePath('sidebar/sidebar.html')
+                    }
+                },
+                authenticate : true
+            })
+            .state('user.create', {
+                url : '/create',
+                views : {
+                    'user_content' : {
+                        templateUrl : templatePath('user-create/user-create.html')
+                    }
+                },
+                authenticate : true
+            })
+            .state('user.lists', {
+                url : '/lists',
+                views : {
+                    'user_content' : {
+                        templateUrl : templatePath('user-lists/user-lists.html')
+                    }
+                },
+                authenticate : true
+            })
+            .state('user.profile', {
+                url : '/profile/:userId',
+                views : {
+                    'user_content' : {
+                        templateUrl : templatePath('user-profile/user-profile.html')
+                    }
+                }
+            });
     }
 })();
+
 (function() {
     'use strict';
 
@@ -165,18 +219,30 @@
             // start ngprogress
             ngProgressLite.start();
 
+            $rootScope.loggedIn = true;
+
             // check if the next route needs to be authenticated
             if (toState.authenticate && !AuthService.user()) {
                 // redirect to login page
                 $state.transitionTo('login');
+                $rootScope.loggedIn = false;
                 event.preventDefault();
             }
 
             // check if the next page is the login page
-            if (toState.name == 'login' && AuthService.user()) {
-                // user is logged in, redirect to post lists
-                $state.transitionTo('post.lists');
-                event.preventDefault();
+            if (toState.name == 'login') {
+                // login page? set the body class
+                $rootScope.loggedIn = false;
+
+                // check if the user is logged in
+                if (AuthService.user()) {
+                    // update the body class
+                    $rootScope.loggedIn = true;
+
+                    // user is logged in, redirect to post lists
+                    $state.transitionTo('post.lists');
+                    event.preventDefault();
+                }
             }
         });
 
@@ -196,6 +262,7 @@
             'DEFAULT_AVATAR_URL' : 'http://40.media.tumblr.com/7d65a925636d6e3df94e2ebe30667c29/tumblr_nq1zg0MEn51qg6rkio1_500.jpg',
             'DEFAULT_COVER_URL' : '/assets/images/wallpaper.jpg',
             'VERSION' : '2.0.0',
-            'CDN_URL' : 'http://localhost:8000'
+            'CDN_URL' : 'http://localhost:8000',
+            'TEMPLATE_PATH' : '/assets/templates/'
         });
 })();

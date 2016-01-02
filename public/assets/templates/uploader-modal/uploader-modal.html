@@ -1,0 +1,43 @@
+<article id="uploader_modal">
+    <section class="modal-body">
+        <figure class="image-wrapper" ng-if="um.image.url">
+            <a class="btn btn-danger btn-sm remove-image" ng-click="um.removeImage()">
+                <i class="fa fa-trash-o"></i>
+            </a>
+            <img ng-src="{{um.image.url}}"/>
+        </figure>
+        <div class="wrapper" ng-if="!um.image.url">
+            <section class="upload" ng-if="um.image.option == 'file'">
+                <div ngf-drop ngf-select ng-model="um.image.file" class="drop-box"
+                 ngf-drag-over-class="dragover" ngf-multiple="false" ngf-allow-dir="true"
+                 accept="image/*" ng-if="!um.upload.percentage">
+                    <span class="add-image-text">
+                        <i class="fa fa-camera"></i> Add Image
+                    </span>
+                </div>
+                <div class="progressbar-wrapper" ng-if="um.upload.percentage">
+                    <uib-progressbar value="um.upload.percentage" type="success">
+                        <span>{{um.upload.percentage}}%</span>
+                    </uib-progressbar>
+                </div>
+            </section>
+            <section class="link" ng-if="um.image.option == 'link'">
+                <div class="form-group">
+                    <input type="text" ng-model="um.image.link" class="form-control" placeholder="http://"
+                    ng-blur="um.getImageLink()"/>
+                </div>
+            </section>
+            <a class="image-option auto-height" ng-click="um.switchOption()"
+               ng-if="!um.upload.percentage">
+                <i ng-class="{'fa-link' : um.image.option == 'file', 'fa-upload' : um.image.option == 'link'}"
+                   class="fa"></i>
+            </a>
+        </div>
+    </section>
+    <footer class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="um.save()"
+        ng-disabled="um.processing">Save</button>
+        <button class="btn btn-default" type="button" ng-click="um.closeModal()"
+        ng-disabled="um.processing">Cancel</button>
+    </footer>
+</article>

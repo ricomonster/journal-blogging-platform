@@ -11,6 +11,10 @@ body {
     position: relative;
 }
 
+h1, h2, h3, h4, h5, h6 { color: #434648; }
+
 a { color: #3187e1; cursor: pointer; }
 
-.page-content { margin: 0 auto; }
+/* Sidebar */
+.main-content { margin-left: 0; position: relative; }
+body.sidebar .main-content { margin-left: 220px; }

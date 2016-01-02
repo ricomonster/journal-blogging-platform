@@ -1,6 +1,5 @@
-#post_lists_page {}
-#post_lists_page .page-content { height: 100%; position: relative; }
-#post_lists_page .page-content .post-lists {
+#post_lists_page { height: 100%; position: relative;  }
+#post_lists_page .post-lists {
     bottom: 0;
     border-right: 1px solid #dddddd;
     left: 0;
