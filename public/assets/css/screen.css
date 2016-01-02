@@ -69,6 +69,201 @@ body.sidebar .main-content { margin-left: 220px; }
 }
 
 
+#editor_sidebar {}
+#editor_sidebar .sidebar-overlay { position: absolute; z-index: 200; }
+
+#editor_sidebar .content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -100%;
+    width: 300px;
+    background-color: #f6f7f8;
+    border-left: 1px solid #dddddd;
+    z-index: 300;
+    transition: all 0.4s ease 0s;
+}
+
+#editor_sidebar .content .sidebar-header { border-bottom: 1px solid #dddddd; padding: 14px 10px; }
+#editor_sidebar .content .sidebar-header h3 { float: left; margin: 0; }
+#editor_sidebar .content .sidebar-header .close-sidebar { font-size: 24px; float: right; }
+
+#editor_sidebar .content .post-settings {
+    padding: 15px 10px;
+    position: absolute;
+    top: 55px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#editor_sidebar .content .post-settings .delete-post-zone {
+    border-top: 1px solid #dddddd;
+    margin: 0 -15px;
+    padding: 15px;
+}
+
+#editor_sidebar .content .post-settings .delete-post-zone .message {
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Opened sidebar */
+#editor_sidebar.active .sidebar-overlay {
+    top: 0;
+    left: -220px;
+    right: 0;
+    bottom: 0;
+}
+
+#editor_sidebar.active .content {
+    right: 0;
+}
+#editor_page { position: relative; height: 100%; }
+#editor_page .page-header { height: 55px; padding: 0; position: relative; }
+#editor_page .page-header input.form-control {
+    border: 0;
+    font-size: 28px;
+    height: 54px;
+    padding-right: 220px;
+}
+
+#editor_page .page-header .editor-controls {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    padding: 9px 16px;
+}
+
+#editor_page .page-header .editor-controls .sidebar-toggler .fa { margin: 0; }
+#editor_page .page-header .editor-controls .btn-group #split_button { width: 120px; }
+
+#editor_page .editor {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+
+#editor_page .editor .window {
+    bottom: 0;
+    position: absolute;
+    top: 0;
+    width: 50%;
+}
+
+#editor_page .editor .window .floating-header {
+    background-color: rgba(255,255,255,.9);
+    height: 40px;
+    padding: 10px 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 100
+}
+
+#editor_page .editor .window .floating-header span {
+    color: rgba(35, 31, 32, 0.5);
+    font-size: 12px;
+    text-transform:uppercase;
+}
+
+#editor_page .editor .window .floating-header span i { margin-right: 3px; }
+
+#editor_page .editor .window.markdown-editor { border-right: 1px solid #e4e4e4; left: 0; }
+#editor_page .markdown-editor .editor-wrapper {}
+#editor_page .markdown-editor .editor-wrapper .CodeMirror {
+    bottom: 0;
+    color: #3c4043;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+#editor_page .markdown-editor .editor-wrapper .CodeMirror .CodeMirror-lines { padding: 55px 0 40px; }
+#editor_page .markdown-editor .editor-wrapper .CodeMirror pre {
+    font-family: Inconsolata, monospace;
+    font-size: 1.6rem;
+    padding: 0 40px;
+}
+
+#editor_page .editor .window.markdown-preview { right: 0; }
+#editor_page .markdown-preview .floating-header .word-counter { float: right; }
+#editor_page .markdown-preview .preview-wrapper {
+    -moz-hyphens: auto;
+    -moz-user-select: none;
+    -ms-hyphens: auto;
+    -ms-user-select: none;
+    -webkit-hyphens: auto;
+    -webkit-user-select: none;
+    bottom: 0;
+    cursor: default;
+    font-size: 1.8rem;
+    -webkit-hyphens: auto;
+       -moz-hyphens: auto;
+        -ms-hyphens: auto;
+            hyphens: auto;
+    left: 0;
+    line-height: 1.5em;
+    overflow: auto;
+    padding: 0 40px 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    word-wrap: break-word;
+    word-break: normal;
+}
+
+#editor_page .markdown-preview .preview-wrapper .rendered-markdown { padding: 50px 0 40px; }
+#featured_image { color: #555; background-color: #ccc; position: relative; }
+#featured_image .image-wrapper { display: block; height: 150px; position: relative; width: 100%; }
+#featured_image .image-wrapper .remove-image { position: absolute; right: 5px; top: 5px; z-index: 100; }
+#featured_image .image-wrapper img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+}
+
+#featured_image .wrapper { height: 150px; }
+#featured_image .wrapper .upload {}
+#featured_image .wrapper .upload .drop-box {
+    cursor: pointer;
+    display: block;
+    height: 150px;
+    width: 100%;
+}
+
+#featured_image .wrapper .upload .drop-box .add-image-text {
+    display: block;
+    padding: 65px 0;
+    text-align: center;
+    width: 100%;
+}
+
+#featured_image .wrapper .upload .progressbar-wrapper { padding: 65px 10px; }
+#featured_image .wrapper .upload .progressbar-wrapper .progress { margin: 0; }
+
+#featured_image .wrapper .link { padding: 57px 10px; }
+
+#featured_image .wrapper .image-option {
+    color: #555;
+    font-size: 18px;
+    left: 5px;
+    position: absolute;
+    bottom: 5px;
+}
 #login_page {}
 #login_page .page-content { margin: 0 !important; }
 #login_page #login_form {
@@ -370,201 +565,6 @@ body.sidebar .main-content { margin-left: 220px; }
 
 #user_profile_page .profile-form .email { margin-top: 30px; }
 
-#editor_sidebar {}
-#editor_sidebar .sidebar-overlay { position: absolute; z-index: 200; }
-
-#editor_sidebar .content {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: -100%;
-    width: 300px;
-    background-color: #f6f7f8;
-    border-left: 1px solid #dddddd;
-    z-index: 300;
-    transition: all 0.4s ease 0s;
-}
-
-#editor_sidebar .content .sidebar-header { border-bottom: 1px solid #dddddd; padding: 14px 10px; }
-#editor_sidebar .content .sidebar-header h3 { float: left; margin: 0; }
-#editor_sidebar .content .sidebar-header .close-sidebar { font-size: 24px; float: right; }
-
-#editor_sidebar .content .post-settings {
-    padding: 15px 10px;
-    position: absolute;
-    top: 55px;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-#editor_sidebar .content .post-settings .delete-post-zone {
-    border-top: 1px solid #dddddd;
-    margin: 0 -15px;
-    padding: 15px;
-}
-
-#editor_sidebar .content .post-settings .delete-post-zone .message {
-    text-align: center;
-    font-weight: bold;
-}
-
-/* Opened sidebar */
-#editor_sidebar.active .sidebar-overlay {
-    top: 0;
-    left: -220px;
-    right: 0;
-    bottom: 0;
-}
-
-#editor_sidebar.active .content {
-    right: 0;
-}
-#editor_page { position: relative; height: 100%; }
-#editor_page .page-header { height: 55px; padding: 0; position: relative; }
-#editor_page .page-header input.form-control {
-    border: 0;
-    font-size: 28px;
-    height: 54px;
-    padding-right: 220px;
-}
-
-#editor_page .page-header .editor-controls {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    padding: 9px 16px;
-}
-
-#editor_page .page-header .editor-controls .sidebar-toggler .fa { margin: 0; }
-#editor_page .page-header .editor-controls .btn-group #split_button { width: 120px; }
-
-#editor_page .editor {
-    position: absolute;
-    top: 55px;
-    right: 0;
-    left: 0;
-    bottom: 0;
-}
-
-#editor_page .editor .window {
-    bottom: 0;
-    position: absolute;
-    top: 0;
-    width: 50%;
-}
-
-#editor_page .editor .window .floating-header {
-    background-color: rgba(255,255,255,.9);
-    height: 40px;
-    padding: 10px 20px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 100
-}
-
-#editor_page .editor .window .floating-header span {
-    color: rgba(35, 31, 32, 0.5);
-    font-size: 12px;
-    text-transform:uppercase;
-}
-
-#editor_page .editor .window .floating-header span i { margin-right: 3px; }
-
-#editor_page .editor .window.markdown-editor { border-right: 1px solid #e4e4e4; left: 0; }
-#editor_page .markdown-editor .editor-wrapper {}
-#editor_page .markdown-editor .editor-wrapper .CodeMirror {
-    bottom: 0;
-    color: #3c4043;
-    height: auto;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-}
-
-#editor_page .markdown-editor .editor-wrapper .CodeMirror .CodeMirror-lines { padding: 55px 0 40px; }
-#editor_page .markdown-editor .editor-wrapper .CodeMirror pre {
-    font-family: Inconsolata, monospace;
-    font-size: 1.6rem;
-    padding: 0 40px;
-}
-
-#editor_page .editor .window.markdown-preview { right: 0; }
-#editor_page .markdown-preview .floating-header .word-counter { float: right; }
-#editor_page .markdown-preview .preview-wrapper {
-    -moz-hyphens: auto;
-    -moz-user-select: none;
-    -ms-hyphens: auto;
-    -ms-user-select: none;
-    -webkit-hyphens: auto;
-    -webkit-user-select: none;
-    bottom: 0;
-    cursor: default;
-    font-size: 1.8rem;
-    -webkit-hyphens: auto;
-       -moz-hyphens: auto;
-        -ms-hyphens: auto;
-            hyphens: auto;
-    left: 0;
-    line-height: 1.5em;
-    overflow: auto;
-    padding: 0 40px 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    -webkit-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
-    word-wrap: break-word;
-    word-break: normal;
-}
-
-#editor_page .markdown-preview .preview-wrapper .rendered-markdown { padding: 50px 0 40px; }
-#featured_image { color: #555; background-color: #ccc; position: relative; }
-#featured_image .image-wrapper { display: block; height: 150px; position: relative; width: 100%; }
-#featured_image .image-wrapper .remove-image { position: absolute; right: 5px; top: 5px; z-index: 100; }
-#featured_image .image-wrapper img {
-    display: block;
-    height: 100%;
-    object-fit: cover;
-    width: 100%;
-}
-
-#featured_image .wrapper { height: 150px; }
-#featured_image .wrapper .upload {}
-#featured_image .wrapper .upload .drop-box {
-    cursor: pointer;
-    display: block;
-    height: 150px;
-    width: 100%;
-}
-
-#featured_image .wrapper .upload .drop-box .add-image-text {
-    display: block;
-    padding: 65px 0;
-    text-align: center;
-    width: 100%;
-}
-
-#featured_image .wrapper .upload .progressbar-wrapper { padding: 65px 10px; }
-#featured_image .wrapper .upload .progressbar-wrapper .progress { margin: 0; }
-
-#featured_image .wrapper .link { padding: 57px 10px; }
-
-#featured_image .wrapper .image-option {
-    color: #555;
-    font-size: 18px;
-    left: 5px;
-    position: absolute;
-    bottom: 5px;
-}
 #uploader_modal .modal-body {
     color: #555;
     background-color: #ccc;

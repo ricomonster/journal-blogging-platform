@@ -25,13 +25,16 @@
             var login = vm.login;
 
             // flag to be processed
-            vm.processing = false;
+            vm.processing = true;
 
             // perform API request
             LoginService.authenticate(login.email, login.password)
                 .then(function(response) {
                     // save user and token
                     if (response.user && response.token) {
+                        // greet the user
+                        ToastrService.toast('Welcome back, ' + response.user.name);
+
                         // save
                         AuthService.login(response.user, response.token);
 
@@ -39,6 +42,8 @@
                         $state.go('post.lists');
                         return;
                     }
+
+                    vm.processing = false;
                 },
                 function(error) {
                     // catch and show the errors
