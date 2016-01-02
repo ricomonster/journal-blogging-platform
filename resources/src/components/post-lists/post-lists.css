@@ -89,4 +89,8 @@
 #post_lists_page .post-preview .preview-header .post-controls .control-lists li a {}
 #post_lists_page .post-preview .preview-header .post-controls .control-lists li a i { margin-right: 3px; }
 
-#post_lists_page .post-preview .preview-content { padding: 40px; }
+#post_lists_page .post-preview .preview-content {
+    font-size: 1.6rem;
+    line-height: 1.5em;
+    padding: 40px;
+}
