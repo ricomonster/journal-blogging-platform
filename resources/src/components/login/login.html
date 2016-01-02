@@ -7,7 +7,7 @@
                         <i class="fa fa-at fa-fw"></i>
                     </span>
                     <input type="email" ng-model="lc.login.email" class="form-control"
-                    placeholder="Email">
+                    placeholder="Email" ng-disabled="lc.processing">
                 </div>
             </div>
             <div class="form-group">
@@ -16,11 +16,11 @@
                         <i class="fa fa-unlock-alt fa-fw"></i>
                     </span>
                     <input type="password" ng-model="lc.login.password" class="form-control"
-                    placeholder="Password"/>
+                    placeholder="Password" ng-disabled="lc.processing"/>
                 </div>
             </div>
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary btn-block">
+                <button type="submit" class="btn btn-primary btn-block" ladda="lc.processing">
                     Login
                 </button>
 

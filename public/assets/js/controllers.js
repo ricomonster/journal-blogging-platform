@@ -18,6 +18,7 @@
 
         // initialize the post object
         vm.post = { status : 2, tags : [] };
+        vm.processing = false;
 
         /**
          * Converts timestamp to human readable date.
@@ -122,6 +123,7 @@
         vm.initialize();
     }
 })();
+
 (function() {
     'use strict';
 
@@ -170,6 +172,8 @@
                     vm.processing = false;
                 },
                 function(error) {
+                    vm.processing = false;
+
                     // catch and show the errors
                     var messages = error.errors.message;
 
@@ -383,8 +387,6 @@
             // the user scope.
             modal.result.then(function(user) {
                 vm.user = user;
-            }, function () {
-
             });
         };
 

@@ -23,7 +23,9 @@
         'journal.shared.fileUploader',
         'journal.shared.markdownReader',
         'journal.shared.storage',
-        'journal.shared.toastr']);
+        'journal.shared.toastr',
+        // DEPENDENCIES
+        'angular-ladda']);
 
     // APP
     angular.module('journal.config', ['LocalStorageModule', 'toastr']);
@@ -227,8 +229,15 @@
                     $rootScope.bootFinish = true;
                     // login the user, again
                     AuthService.login(response.user, auth.token());
+
+                    // assign it to a variable
+                    var nextPage = $rootScope.nextPage;
+
+                    // delete it from the rootscope
+                    delete $rootScope.nextPage;
+
                     // continue loading the page
-                    $state.transitionTo($rootScope.nextPage.name);
+                    $state.transitionTo(nextPage.name, nextPage.params);
                 }
             }, function() {
                 // tell that we're finish booting up
@@ -256,6 +265,8 @@
             if (!$rootScope.bootFinish) {
                 // get the next page details and save to the rootscope
                 $rootScope.nextPage = toState;
+                // save the parameters
+                $rootScope.nextPage.params = toParams;
 
                 ngProgressLite.done();
                 event.preventDefault();

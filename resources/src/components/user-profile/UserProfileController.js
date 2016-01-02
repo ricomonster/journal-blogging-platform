@@ -66,8 +66,6 @@
             // the user scope.
             modal.result.then(function(user) {
                 vm.user = user;
-            }, function () {
-
             });
         };
 

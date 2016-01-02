@@ -11,6 +11,8 @@ module.exports = {
         paths.base.bower + '/codemirror/lib/codemirror.css',
         // font awesome
         paths.base.bower + '/font-awesome/css/*',
+        // ladda
+        paths.base.bower + '/ladda/dist/*.css',
         // ngprogress lite
         paths.base.bower + '/ngprogress-lite/ngprogress-lite.css'
     ],
@@ -32,6 +34,8 @@ module.exports = {
         paths.base.bower + '/angular-bootstrap/ui-bootstrap.min.js',
         paths.base.bower + '/angular-bootstrap/ui-bootstrap-tpls.js',
         paths.base.bower + '/angular-bootstrap/ui-bootstrap-tpls.min.js',
+        // angular ladda
+        paths.base.bower + '/angular-ladda/dist/*.js',
         // angular local storage
         paths.base.bower + '/angular-local-storage/dist/*',
         // angular moment
@@ -52,6 +56,9 @@ module.exports = {
         paths.base.bower + '/angular-ui-router/release/*',
         // codemirror
         paths.base.bower + '/codemirror/lib/codemirror.js',
+        // ladda
+        paths.base.bower + '/ladda/dist/ladda.min.js',
+        paths.base.bower + '/ladda/dist/spin.min.js',
         // moment
         paths.base.bower + '/moment/moment.js',
         paths.base.bower + '/moment/min/moment.min.js',

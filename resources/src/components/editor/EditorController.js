@@ -18,6 +18,7 @@
 
         // initialize the post object
         vm.post = { status : 2, tags : [] };
+        vm.processing = false;
 
         /**
          * Converts timestamp to human readable date.

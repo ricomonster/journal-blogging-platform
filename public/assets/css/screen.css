@@ -58,6 +58,10 @@ body.sidebar .main-content { margin-left: 220px; }
 
 .btn { border-radius: 2px; padding: 7px 12px; }
 .btn.btn-sm { padding: 4px 12px; }
+
+/* Override Ladda */
+.ladda-button { font-size: inherit; }
+
 .form-control { border-width: 1px; height: 36px; }
 .input-group-addon { border-radius: 2px; border-width: 1px; }
 

@@ -46,6 +46,8 @@
                     vm.processing = false;
                 },
                 function(error) {
+                    vm.processing = false;
+
                     // catch and show the errors
                     var messages = error.errors.message;
 
