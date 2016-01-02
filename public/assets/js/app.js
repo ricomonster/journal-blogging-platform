@@ -23,7 +23,9 @@
         'journal.shared.fileUploader',
         'journal.shared.markdownReader',
         'journal.shared.storage',
-        'journal.shared.toastr']);
+        'journal.shared.toastr',
+        // DEPENDENCIES
+        'angular-ladda']);
 
     // APP
     angular.module('journal.config', ['LocalStorageModule', 'toastr']);
@@ -212,13 +214,69 @@
     'use strict';
 
     angular.module('journal.run')
+        .run(['$rootScope', '$state', 'AuthService', RunOnBoot])
         .run(['$rootScope', '$state', '$timeout', 'AuthService', 'ngProgressLite', AuthenticateRoutes]);
+
+    function RunOnBoot($rootScope, $state, AuthService) {
+        var auth = AuthService;
+
+        // check if the token is still valid
+        if (auth.token()) {
+            // send request to check validity of the token
+            auth.validateToken().then(function(response) {
+                if (response.user) {
+                    // tell that we're finish booting up
+                    $rootScope.bootFinish = true;
+                    // login the user, again
+                    AuthService.login(response.user, auth.token());
+
+                    // assign it to a variable
+                    var nextPage = $rootScope.nextPage;
+
+                    // delete it from the rootscope
+                    delete $rootScope.nextPage;
+
+                    // continue loading the page
+                    $state.transitionTo(nextPage.name, nextPage.params);
+                }
+            }, function() {
+                // tell that we're finish booting up
+                $rootScope.bootFinish = true;
+                // logout the user and redirect to login page
+                auth.logout();
+                // redirect
+                $state.transitionTo('login');
+            });
+        }
+
+        // there's no token, force logout the user and redirect to login page
+        if (!auth.token()) {
+            $rootScope.bootFinish = true;
+            // logout
+            auth.logout();
+            // redirect
+            $state.transitionTo('login');
+        }
+    }
 
     function AuthenticateRoutes($rootScope, $state, $timeout, AuthService, ngProgressLite) {
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+            // make sure that the booting functions are done
+            if (!$rootScope.bootFinish) {
+                // get the next page details and save to the rootscope
+                $rootScope.nextPage = toState;
+                // save the parameters
+                $rootScope.nextPage.params = toParams;
+
+                ngProgressLite.done();
+                event.preventDefault();
+                return;
+            }
+
             // start ngprogress
             ngProgressLite.start();
 
+            // flag by default that we're logged in
             $rootScope.loggedIn = true;
 
             // check if the next route needs to be authenticated
@@ -227,6 +285,9 @@
                 $state.transitionTo('login');
                 $rootScope.loggedIn = false;
                 event.preventDefault();
+
+                // finish ngprogress
+                ngProgressLite.done();
             }
 
             // check if the next page is the login page
@@ -253,6 +314,7 @@
         });
     }
 })();
+
 (function() {
     'use strict';
 

@@ -1,12 +1,13 @@
 <div class="btn-group" uib-dropdown>
-    <button id="split_button" type="submit" class="btn"
+    <button id="split_button" type="submit" class="btn" ladda="epb.processing"
     ng-class="epb.options.active.class">{{epb.options.active.text}}</button>
-    <button type="button" class="btn" ng-class="epb.options.active.class" uib-dropdown-toggle>
+    <button type="button" class="btn" ng-class="epb.options.active.class" uib-dropdown-toggle
+    ng-disabled="epb.processing">
         <span class="caret"></span>
         <span class="sr-only"></span>
     </button>
     <ul class="uib-dropdown-menu dropdown-menu-right" role="menu"
-        aria-labelledby="split-button">
+    aria-labelledby="split-button">
         <li role="menuitem" ng-repeat="option in epb.options.buttons"
         ng-if="option.group == epb.options.active.group"
         ng-class="{'active' : option === epb.options.active}">

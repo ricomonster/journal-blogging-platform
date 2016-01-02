@@ -18,6 +18,7 @@
 
         // initialize the post object
         vm.post = { status : 2, tags : [] };
+        vm.processing = false;
 
         /**
          * Converts timestamp to human readable date.
@@ -122,6 +123,7 @@
         vm.initialize();
     }
 })();
+
 (function() {
     'use strict';
 
@@ -149,13 +151,16 @@
             var login = vm.login;
 
             // flag to be processed
-            vm.processing = false;
+            vm.processing = true;
 
             // perform API request
             LoginService.authenticate(login.email, login.password)
                 .then(function(response) {
                     // save user and token
                     if (response.user && response.token) {
+                        // greet the user
+                        ToastrService.toast('Welcome back, ' + response.user.name);
+
                         // save
                         AuthService.login(response.user, response.token);
 
@@ -163,8 +168,12 @@
                         $state.go('post.lists');
                         return;
                     }
+
+                    vm.processing = false;
                 },
                 function(error) {
+                    vm.processing = false;
+
                     // catch and show the errors
                     var messages = error.errors.message;
 
@@ -179,6 +188,7 @@
         };
     }
 })();
+
 (function() {
     'use strict';
 
@@ -377,8 +387,6 @@
             // the user scope.
             modal.result.then(function(user) {
                 vm.user = user;
-            }, function () {
-
             });
         };
 

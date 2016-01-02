@@ -23,7 +23,9 @@
         'journal.shared.fileUploader',
         'journal.shared.markdownReader',
         'journal.shared.storage',
-        'journal.shared.toastr']);
+        'journal.shared.toastr',
+        // DEPENDENCIES
+        'angular-ladda']);
 
     // APP
     angular.module('journal.config', ['LocalStorageModule', 'toastr']);

@@ -52,8 +52,9 @@
             restrict : 'EA',
             replace : true,
             scope : {
-                ngModel : '=ngModel',
-                post : '=post'
+                ngModel     : '=ngModel',
+                post        : '=post',
+                processing  : '=processing'
             },
             templateUrl : '/assets/templates/editor/_editor-publish-buttons.html',
             controllerAs : 'epb',
@@ -70,6 +71,8 @@
                         { class : 'btn-danger', group : 2, status : 2, text : 'Unpublish Post' },
                         { class : 'btn-info', group : 2, status : 1, text : 'Update Post' }]
                 };
+
+                vm.processing = false;
 
                 /**
                  * Set the status of the post.
@@ -105,6 +108,10 @@
                 scope.$watch('post', function(post) {
                     // set button
                     scope.epb.setButtons(post.status);
+                });
+
+                scope.$watch('processing', function(processing) {
+                    scope.epb.processing = processing;
                 });
             }
         }

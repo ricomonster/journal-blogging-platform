@@ -1,6 +1,6 @@
 <div id="user_profile_page" ng-controller="UserProfileController as upc">
     <button type="button" class="btn btn-success save-button" ng-click="upc.updateProfile()"
-    ng-if="upc.current">
+    ng-if="upc.current" ladda="upc.processing">
          <i class="fa fa-floppy-o"></i> Update
     </button>
     <header class="profile-header" style="background-image: url('{{upc.setPhoto('cover')}}')">

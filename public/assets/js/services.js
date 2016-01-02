@@ -331,9 +331,11 @@
     'use strict';
 
     angular.module('journal.shared.auth')
-        .service('AuthService', ['StorageService', AuthService]);
+        .service('AuthService', ['$http', '$q', 'StorageService', 'CONFIG', AuthService]);
 
-    function AuthService(StorageService) {
+    function AuthService($http, $q, StorageService, CONFIG) {
+        this.apiUrl = CONFIG.API_URL;
+
         this.login = function(user, token) {
             // save the user details
             StorageService.set('user', user);
@@ -354,8 +356,27 @@
         this.user = function() {
             return StorageService.get('user');
         };
+
+        this.validateInstallation = function() {
+
+        };
+
+        this.validateToken = function() {
+            var deferred = $q.defer();
+
+            $http.get(this.apiUrl + '/auth/check?token=' + this.token())
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
+        };
     }
 })();
+
 (function() {
     'use strict';
 
