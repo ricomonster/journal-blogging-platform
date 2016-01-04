@@ -16,7 +16,7 @@
 | API Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['prefix' => 'api/v1.0'], function() {
+Route::group(['prefix' => 'api/v1.0', 'middleware' => 'cors'], function() {
     // Authentication Routes
     Route::group(['prefix' => 'auth'], function() {
         Route::get('check', 'Api\ApiAuthController@checkAuthentication');

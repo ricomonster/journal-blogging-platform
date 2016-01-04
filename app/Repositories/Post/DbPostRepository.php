@@ -89,7 +89,7 @@ class DbPostRepository implements PostRepositoryInterface
             ->where('active', '=', 1)
             // published post only
             ->where('status', '=', 1)
-            // show posts before the current timestamp
+            // show posts that are beyond the current timestamp
             ->where('published_at', '<=', time())
             // order by timestamp of publish
             ->orderBy('published_at', 'DESC')
