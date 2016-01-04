@@ -1,7 +1,7 @@
 <section id="editor_tags">
     <div class="tags-wrapper">
         <ul class="post-tags">
-            <li ng-repeat="tag in et.postTags"
+            <li ng-repeat="tag in et.tags.posts"
             ng-class="{ 'for-removal' : $last && et.removingLastTag }">
                 <a>&num;{{tag.name}}</a>
             </li>
@@ -9,5 +9,15 @@
         <div class="input-tag">
             <input type="text" ng-model="et.query" class="form-control" placeholder="Add a tag..."/>
         </div>
+    </div>
+    <div class="suggestions" ng-if="et.tags.showSuggestions">
+        <ul class="suggested-tags">
+            <li ng-show="(et.tags.suggestions | filter:et.query).length == 0">
+                <a ng-click="et.addToPostTags(et.query)">Add <strong>{{et.query}}</strong></a>
+            </li>
+            <li ng-repeat="suggestedTag in (et.tags.filtered = (et.tags.suggestions | orderBy:'name' | filter:et.query | limitTo:8))">
+                <a ng-click="et.addTag(suggestedTag)">{{suggestedTag.name}}</a>
+            </li>
+        </ul>
     </div>
 </section>

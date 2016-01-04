@@ -13,7 +13,7 @@
             // word counter
             counter : 0,
             // sidebar toggle
-            toggle : true
+            toggle : false
         };
 
         // initialize the post object
@@ -100,9 +100,6 @@
          */
         vm.savePost = function() {
             var post = vm.post;
-
-            console.log(post);
-            return;
 
             // flag that is being processed
             vm.processing = true;

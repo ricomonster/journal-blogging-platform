@@ -43,6 +43,21 @@
             return deferred.promise;
         };
 
+        this.getTags = function() {
+            var deferred = $q.defer();
+
+            // perform request to the API
+            $http.get(this.apiUrl + '/tags/all')
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
+        };
+
         this.savePost = function(post) {
             var deferred = $q.defer(),
                 token = AuthService.token(),
@@ -82,6 +97,7 @@
         };
     }
 })();
+
 (function() {
     'use strict';
 
