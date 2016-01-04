@@ -38,7 +38,10 @@
 
     // COMPONENTS
     // Editor
-    angular.module('journal.components.editor', ['ngFileUpload', 'ui.bootstrap', 'ui.codemirror']);
+    angular.module('journal.components.editor', [
+        'ngFileUpload',
+        'ui.bootstrap',
+        'ui.codemirror']);
 
     // Login
     angular.module('journal.components.login', []);

@@ -3,10 +3,11 @@
 
     angular.module('journal.components.editor')
         .directive('editorScroll', [EditorScroller])
-        .directive('editorPublishButtons', [EditorPublishButtons])
+        .directive('editorPublishButtons', ['CONFIG', EditorPublishButtons])
         .directive('inputPostSlug', [InputPostSlug])
-        .directive('editorSidebar', [EditorSidebar])
-        .directive('featuredImage', [FeaturedImage]);
+        .directive('editorSidebar', ['CONFIG', EditorSidebar])
+        .directive('featuredImage', ['CONFIG', FeaturedImage])
+        .directive('editorTags', ['CONFIG', EditorTags]);
 
     /**
      * Enables both editor windows to scroll in sync.
@@ -46,7 +47,7 @@
      * @returns {{require: string, restrict: string, replace: boolean, scope: {postStatus: string}, templateUrl: string, controllerAs: string, controller: *[], link: Function}}
      * @constructor
      */
-    function EditorPublishButtons() {
+    function EditorPublishButtons(CONFIG) {
         return {
             require : 'ngModel',
             restrict : 'EA',
@@ -56,7 +57,7 @@
                 post        : '=post',
                 processing  : '=processing'
             },
-            templateUrl : '/assets/templates/editor/_editor-publish-buttons.html',
+            templateUrl : CONFIG.TEMPLATE_PATH + 'editor/_editor-publish-buttons.html',
             controllerAs : 'epb',
             controller : ['$scope', function($scope) {
                 var vm = this;
@@ -178,7 +179,7 @@
      * @returns {{restrict: string, scope: {toggle: string, postData: string}, replace: boolean, templateUrl: string, controllerAs: string, controller: *[], link: Function}}
      * @constructor
      */
-    function EditorSidebar() {
+    function EditorSidebar(CONFIG) {
         return {
             restrict : 'EA',
             scope : {
@@ -186,7 +187,7 @@
                 postData    : '=post'
             },
             replace : true,
-            templateUrl : ' /assets/templates/editor/_editor-sidebar.html',
+            templateUrl : CONFIG.TEMPLATE_PATH + 'editor/_editor-sidebar.html',
             controllerAs : 'es',
             controller : ['$scope', function($scope) {
                 var vm = this;
@@ -238,7 +239,7 @@
      * @returns {{restrict: string, require: string, scope: {featuredImage: string}, replace: boolean, templateUrl: string, controllerAs: string, controller: *[], link: Function}}
      * @constructor
      */
-    function FeaturedImage() {
+    function FeaturedImage(CONFIG) {
         return {
             restrict : 'EA',
             require : 'ngModel',
@@ -246,7 +247,7 @@
                 featuredImage : '=ngModel'
             },
             replace: true,
-            templateUrl : '/assets/templates/editor/_featured-image.html',
+            templateUrl : CONFIG.TEMPLATE_PATH + 'editor/_featured-image.html',
             controllerAs : 'fi',
             controller : ['$scope', '$timeout', 'FileUploaderService', 'ToastrService',
                 function($scope, $timeout, FileUploaderService, ToastrService) {
@@ -355,6 +356,228 @@
                 scope.$watch('featuredImage', function(imageUrl) {
                     scope.fi.image.url = imageUrl;
                 });
+            }
+        }
+    }
+
+    function EditorTags(CONFIG) {
+        return {
+            restrict : 'EA',
+            require : 'ngModel',
+            scope : {
+                tags : '=ngModel'
+            },
+            replace : true,
+            controllerAs : 'et',
+            controller : ['$scope', 'EditorService', function($scope, EditorService) {
+                var vm = this;
+
+                // controller variables
+                vm.removingLastTag  = false;
+                vm.query            = null;
+                vm.tags = {
+                    all : {},
+                    posts : {},
+                    filtered : {},
+                    showSuggestions : false,
+                    suggestions : {}
+                };
+
+                vm.addTag = function(tag) {
+                    // check first if the tag already exists
+                    for (var t in vm.tags.posts) {
+                        // tag already exists
+                        if (vm.tags.posts[t].slug == tag.slug) {
+                            return;
+                        }
+                    }
+
+                    // remove it first from the suggestions
+                    var index = vm.tags.suggestions.indexOf(tag);
+                    vm.tags.suggestions.splice(index, 1);
+
+                    // push the tag
+                    vm.tags.posts.push(tag);
+
+                    // close
+                    vm.tags.showSuggestions = false;
+
+                    // empty the query
+                    vm.query = null;
+                };
+
+                /**
+                 * Validates the typed/selected tag if it already exists as
+                 * one of the post tags but if the tag doesn't exists, it will
+                 * be added as one of the post tags.
+                 */
+                vm.addToPostTags = function(tag) {
+                    // check if there's a tag
+                    if (!tag || tag.length === 0) { return; }
+
+                    // check first if tag already exists
+                    for (var t in vm.tags.posts) {
+                        // tag already exists
+                        if (vm.tags.posts[t].name == tag) {
+                            return;
+                        }
+                    }
+
+                    // check if tag exists in the suggestions
+                    // if it exists, remove it
+                    for (var s in vm.tags.suggestions) {
+                        if (vm.tags.suggestions[s].name == tag) {
+                            vm.tags.suggestions.splice(s, 1);
+                        }
+                    }
+
+                    // add the tag
+                    vm.tags.posts.push({ name : tag });
+
+                    // empty the input
+                    vm.query = null;
+
+                    // hide the suggestions if it's shown
+                    vm.tags.showSuggestions = false;
+
+                    // update the ng-model
+                    $scope.tags = vm.tags.posts;
+                };
+
+                /**
+                 * Fetches the all of the that are saved in the API.
+                 */
+                vm.initialize = function() {
+                    // get the all the saved tags from the API
+                    EditorService.getTags()
+                        .then(function(response) {
+                            if (response.tags) {
+                                vm.tags.all = response.tags;
+
+                                // setup the suggestion tags
+                                vm.setSuggestionTags()
+                            }
+                        });
+                };
+
+                /**
+                 * Removes the last inputted/saved post tag.
+                 */
+                vm.removeLastTag = function() {
+                    // check first if the query scope is not empty
+                    if ((vm.query && vm.query.length !== 0) || vm.tags.posts.length === 0) {
+                        return;
+                    }
+
+                    // check first if the tag is ready to be removed
+                    if (vm.removingLastTag) {
+                        // get the index of the last
+                        var index = vm.tags.posts.length - 1;
+
+                        // put it in the suggestions
+                        vm.tags.suggestions.push(vm.tags.posts[index]);
+
+                        // remove it from the array
+                        vm.tags.posts.splice(index, 1);
+
+                        // update the ng-model
+                        $scope.tags = vm.tags.posts;
+
+                        // reset
+                        vm.removingLastTag = false;
+                        return;
+                    }
+
+                    // prepare
+                    vm.removingLastTag = true;
+                };
+
+                /**
+                 * Prepares the list of tags to be suggested for the
+                 * auto complete input.
+                 */
+                vm.setSuggestionTags = function() {
+                    vm.tags.suggestions = vm.tags.all;
+
+                    if (!vm.tags.posts) {
+                        return;
+                    }
+
+                    // loop the post tags
+                    for (var p in vm.tags.posts) {
+                        // loop the suggested tags
+                        for (var s in vm.tags.suggestions) {
+                            // check the tags in they are the same
+                            if (vm.tags.posts[p].name == vm.tags.suggestions[s].name) {
+                                // remove it from the array
+                                vm.tags.suggestions.splice(s, 1);
+                            }
+                        }
+                    }
+                };
+
+                vm.showTagSuggestions = function() {
+                    // make sure that the input query is not empty
+                    if (!vm.query || vm.query.length == 0) {
+                        // hide the suggestions
+                        vm.tags.showSuggestions = false;
+                        return;
+                    }
+
+                    // show it
+                    vm.tags.showSuggestions = true;
+                };
+
+                vm.initialize();
+            }],
+            templateUrl : CONFIG.TEMPLATE_PATH + 'editor/_editor-tags.html',
+            link : function(scope, element, attributes, ngModel) {
+                scope.$watch('tags', function(tags) {
+                    scope.et.tags.posts = tags;
+                });
+
+                var input = angular.element(element).find('input');
+
+                // bind some key events
+                input.bind('keyup', function(e) {
+                    // check if the user pressed enter key
+                    if ( e.keyCode === 13) {
+                        // submit the tag or whatever the content of the input
+                        scope.$apply(function() {
+                            var tag = scope.et.query;
+                            scope.et.addToPostTags(tag);
+                        });
+                    }
+
+                    scope.$apply(function() {
+                        // run this to check if we're going to show tag suggestions
+                        scope.et.showTagSuggestions();
+                    });
+                })
+                .bind('keydown', function(e) {
+                    switch (e.keyCode) {
+                        case 9:
+                        case 13:
+                        case 27:
+                            e.preventDefault();
+                            break;
+                        case 8:
+                            scope.$apply(function() {
+                                // delete the last tag
+                                scope.et.removeLastTag();
+                            });
+                            break;
+                        case 40:
+                            // down button
+                            break;
+                        case 38:
+                            // up button
+                            break;
+                        default:
+                            scope.et.removingLastTag = false;
+                            break;
+                    }
+                })
             }
         }
     }
