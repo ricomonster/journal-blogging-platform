@@ -21,6 +21,9 @@
         </nav>
         <div class="vertical">
             <div class="header-content">
+                @if($logo_url)
+                <img src="{{ $logo_url }}" class="blog-logo" alt="{{ $title }}"/>
+                @endif
                 <h1 class="blog-title">{{ $title }}</h1>
                 <h2 class="blog-description">{{ $description }}</h2>
             </div>

@@ -2,23 +2,10 @@
 
 namespace Journal;
 
-use Illuminate\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Auth\Passwords\CanResetPassword;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract
+class User extends Authenticatable
 {
-    use Authenticatable, CanResetPassword;
-
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
-    protected $table = 'users';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -79,5 +66,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function posts()
     {
         return $this->hasMany('Journal\Post');
+    }
+
+    /**
+     * User/Role Relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function role()
+    {
+        return $this->belongsToMany('Journal\Role', 'role_users', 'user_id', 'role_id');
     }
 }

@@ -1,17 +1,41 @@
 (function() {
     'use strict';
 
-    angular.module('journal.component.login')
-        .service('LoginService', ['$http', 'CONFIG', LoginService]);
+    angular.module('journal.components.login')
+        .service('LoginService', ['$http', '$q', 'CONFIG', LoginService]);
 
-    function LoginService($http, CONFIG) {
+    /**
+     *
+     * @param $http
+     * @param $q
+     * @param CONFIG
+     * @constructor
+     */
+    function LoginService($http, $q, CONFIG) {
         this.apiUrl = CONFIG.API_URL;
 
+        /**
+         *
+         * @param email
+         * @param password
+         * @returns {*}
+         */
         this.authenticate = function(email, password) {
-            return $http.post(this.apiUrl + '/auth/authenticate', {
-                email : (email || ''),
-                password : (password || '')
-            });
+            var deferred = $q.defer(),
+                parameters = {
+                    email       : email,
+                    password    : password
+                };
+
+            $http.post(this.apiUrl + '/auth/authenticate', parameters)
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
         };
     }
 })();

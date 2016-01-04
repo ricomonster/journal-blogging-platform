@@ -1,44 +1,38 @@
-#featured_image { margin-bottom: 20px; }
-#featured_image .control-label { margin-bottom: 5px; }
-#featured_image .wrapper {
-    background: #f6f7f8;
-    border-radius: 4px;
-    color: #808284;
-    position: relative;
-    text-align: center;
-}
-
-#featured_image .wrapper .image-wrapper { position: relative; min-height: 130px; }
-#featured_image .image-wrapper .remove-image { position: absolute; right: 5px; top: 5px;  }
-#featured_image .image-wrapper img { display: block; width: 100%; }
-
-#featured_image .wrapper .uploader {
-    display: table;
-    min-height: 130px;
-    position: relative;
+#featured_image { color: #555; background-color: #ccc; position: relative; }
+#featured_image .image-wrapper { display: block; height: 150px; position: relative; width: 100%; }
+#featured_image .image-wrapper .remove-image { position: absolute; right: 5px; top: 5px; z-index: 100; }
+#featured_image .image-wrapper img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
     width: 100%;
 }
 
-#featured_image .wrapper .uploader .option { display: none; padding: 0; }
-#featured_image .wrapper .uploader .option.active { display: table-cell; vertical-align: middle; }
-
-#featured_image .wrapper .uploader .option.file .add-image-text { cursor: pointer; }
-
-#featured_image .wrapper .uploader .option.link { padding: 0 15px; }
-#featured_image .wrapper .uploader .option.link .form-control { font-size: 14px; }
-
-#featured_image .wrapper .uploader .switch-option {
-    bottom: 5px;
-    color: #808284;
-    font-size: 18px;
-    height: auto;
-    position: absolute;
-    left: 5px;
+#featured_image .wrapper { height: 150px; }
+#featured_image .wrapper .upload {}
+#featured_image .wrapper .upload .drop-box {
+    cursor: pointer;
+    display: block;
+    height: 150px;
+    width: 100%;
 }
 
-#featured_image .wrapper .uploader .add-image-text {
-    color: #808284;
+#featured_image .wrapper .upload .drop-box .add-image-text {
     display: block;
-    font-size: 16px;
-    margin: 10px 0;
+    padding: 65px 0;
+    text-align: center;
+    width: 100%;
+}
+
+#featured_image .wrapper .upload .progressbar-wrapper { padding: 65px 10px; }
+#featured_image .wrapper .upload .progressbar-wrapper .progress { margin: 0; }
+
+#featured_image .wrapper .link { padding: 57px 10px; }
+
+#featured_image .wrapper .image-option {
+    color: #555;
+    font-size: 18px;
+    left: 5px;
+    position: absolute;
+    bottom: 5px;
 }

@@ -1,23 +1,33 @@
-<div ng-controller="LoginController as lc">
-    <section id="login_page" class="main-container container-fluid">
-        <div class="wrapper">
-            <form ng-submit="lc.authenticate()" autocomplete="off">
-                <h1 class="hero-title">Journal</h1>
-
-                <div class="form-group">
+<div id="login_page" ng-controller="LoginController as lc">
+    <section class="page-content">
+        <form id="login_form" ng-submit="lc.authenticateLogin()">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-envelope fa-fw"></i>
+                    </span>
                     <input type="email" ng-model="lc.login.email" class="form-control"
-                    placeholder="Email">
+                    placeholder="Email" ng-disabled="lc.processing">
                 </div>
-                <div class="form-group">
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-unlock-alt fa-fw"></i>
+                    </span>
                     <input type="password" ng-model="lc.login.password" class="form-control"
-                    placeholder="Password">
+                    placeholder="Password" ng-disabled="lc.processing"/>
                 </div>
-                <span class="spinner"></span>
-                <button type="submit" button-loader="lc.loading"
-                class="btn btn-primary btn-block">
-                    Log in
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-block" ladda="lc.processing">
+                    Login
                 </button>
-            </form>
-        </div>
+
+                <p class="forgot-password">
+                    <a>Forgot your Password?</a>
+                </p>
+            </div>
+        </form>
     </section>
 </div>

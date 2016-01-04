@@ -1,0 +1,32 @@
+<section id="featured_image">
+    <figure class="image-wrapper" ng-if="fi.image.url">
+        <a class="btn btn-danger btn-sm remove-image" ng-click="fi.removeImage()"
+        uib-tooltip="Remove the featured image" tooltip-placement="left">
+            <i class="fa fa-trash-o"></i>
+        </a>
+        <img ng-src="{{fi.image.url}}"/>
+    </figure>
+    <div class="wrapper" ng-if="!fi.image.url">
+        <section class="upload" ng-if="fi.image.option == 'file'">
+            <div ngf-drop ngf-select ng-model="fi.image.file" class="drop-box"
+            ngf-drag-over-class="dragover" ngf-multiple="false" ngf-allow-dir="true"
+            accept="image/*" ng-if="!fi.upload.percentage">
+                <span class="add-image-text">Add Image</span>
+            </div>
+            <div class="progressbar-wrapper" ng-if="fi.upload.percentage">
+                <uib-progressbar value="fi.upload.percentage" type="success">
+                    <span>{{fi.upload.percentage}}%</span>
+                </uib-progressbar>
+            </div>
+        </section>
+        <section class="link" ng-if="fi.image.option == 'link'">
+            <input type="text" ng-model="fi.image.link" class="form-control" placeholder="http://"
+            ng-blur="fi.getImageLink()"/>
+        </section>
+        <a class="image-option auto-height" ng-click="fi.switchOption()"
+        ng-if="!fi.upload.percentage" uib-tooltip="Click to select">
+            <i ng-class="{'fa-link' : fi.image.option == 'file', 'fa-upload' : fi.image.option == 'link'}"
+            class="fa" ></i>
+        </a>
+    </div>
+</section>

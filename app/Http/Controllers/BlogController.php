@@ -60,6 +60,7 @@ class BlogController extends Controller
         // set the settings
         $this->settings = $settings->get(['title', 'description', 'cover_url', 'logo_url',
             'google_analytics', 'theme']);
+        // set the theme to be loaded
         $this->theme = $this->settings['theme'];
     }
 
@@ -93,7 +94,7 @@ class BlogController extends Controller
         // get the posts of the author
         $data['posts'] = $this->posts->getPostsByAuthor($user->id, $this->postPerPage);
         // set the head
-        $data['journal_head'] = $this->journalHeadMeta('author', $user);
+        $data['journal_head'] = $this->meta('author', $user);
 
         return view($this->theme.'.author', $data);
     }
@@ -111,7 +112,7 @@ class BlogController extends Controller
         // temporary list of posts
         $data['posts'] = $this->posts->getBlogPosts($this->postPerPage);
         // set the head
-        $data['journal_head'] = $this->journalHeadMeta();
+        $data['journal_head'] = $this->meta();
 
         return view($this->theme.'.index', $data);
     }
@@ -145,7 +146,7 @@ class BlogController extends Controller
         // set the post
         $data['post'] = $post;
         // set the head
-        $data['journal_head'] = $this->journalHeadMeta('post', $post);
+        $data['journal_head'] = $this->meta('post', $post);
 
         return view($this->theme.'.post', $data);
     }
@@ -226,7 +227,7 @@ class BlogController extends Controller
         // get the posts under this tag
         $data['posts'] = $this->tags->getPosts($tag->id, $this->postPerPage);
         // set the head
-        $data['journal_head'] = $this->journalHeadMeta('tag', $tag);
+        $data['journal_head'] = $this->meta('tag', $tag);
 
         return view($this->theme.'.tag', $data);
     }
@@ -251,18 +252,18 @@ class BlogController extends Controller
      * @param null $content
      * @return View
      */
-    protected function journalHeadMeta($type = null, $content = null)
+    protected function meta($type = null, $content = null)
     {
         // get the settings of the blog
         $settings = $data = $this->settings;
 
         // set the default
         $meta = [
-            'siteUrl'       => url(),
+            'siteUrl'       => url('/'),
             'title'         => $settings['title'],
             'type'          => 'website',
             'description'   => $settings['description'],
-            'url'           => url(),
+            'url'           => url('/'),
             'imageUrl'      => (strpos($settings['cover_url'], 'http')) ?
                 $settings['cover_url'] : url($settings['cover_url'])];
 

@@ -1,0 +1,26 @@
+html, body { height: 100%; }
+body {
+    background-color: #ffffff;
+    color: #231f20;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    overflow-x: hidden;
+    position: relative;
+}
+
+h1, h2, h3, h4, h5, h6 { color: #434648; }
+
+a { color: #3187e1; cursor: pointer; }
+
+/* Sidebar */
+.main-content { margin-left: 0; position: relative; }
+body.sidebar .main-content { margin-left: 220px; }
+
+/* Toastr */
+.toast-success { background-color: #67c295; }
+.toast-error { background-color: #dc6e53; }
+.toast-info { background-color: #63a7d1; }
+.toast-warning { background-color: #f3a343; }

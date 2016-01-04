@@ -1,0 +1,36 @@
+<aside id="editor_sidebar" ng-class="{'active' : es.toggle}">
+    <div class="sidebar-overlay" ng-click="es.closeSidebar()"></div>
+    <div class="content">
+        <header class="sidebar-header clearfix">
+            <h3>Settings</h3>
+            <a class="close close-sidebar" ng-click="es.closeSidebar()">&times;</a>
+        </header>
+        <section class="post-settings">
+            <div class="form-group">
+                <label class="control-label">Featured Image</label>
+                <featured-image ng-model="es.post.featured_image"></featured-image>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Tags</label>
+                <editor-tags ng-model="es.post.tags"></editor-tags>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Post URL</label>
+                <input type="text" ng-model="es.post.slug" class="form-control"
+                placeholder="post-url"/>
+                <span class="help-block">{{es.siteUrl}}/{{es.post.slug}}</span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Published Date/Time</label>
+                <input type="datetime-local" ng-model="es.post.published_at" class="form-control"
+                placeholder="yyyy-MM-dd HH:mm:ss"/>
+            </div>
+            <div class="delete-post-zone auto-height" ng-if="es.post.id">
+                <p class="message">Are you you wanted to do this?</p>
+                <a class="btn btn-danger btn-block" ng-click="es.openDeletePostModal()">
+                    <i class="fa fa-trash-o"></i> Delete this post?
+                </a>
+            </div>
+        </section>
+    </div>
+</aside>

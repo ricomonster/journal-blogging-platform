@@ -1,52 +1,51 @@
 (function() {
     'use strict';
 
-    angular.module('journal.component.userCreate')
+    angular.module('journal.components.userCreate')
         .controller('UserCreateController', ['ToastrService', 'UserCreateService', UserCreateController]);
 
     function UserCreateController(ToastrService, UserCreateService) {
         var vm = this;
-        // variables needed
-        vm.user = [];
-        vm.errors = [];
-        vm.processing = false;
+
+        // controller variables
+        vm.errors       = {};
+        vm.processing   = false;
+        vm.roles        = {};
+        vm.user         = {};
+
+        vm.initialize = function() {
+            // get the roles
+            UserCreateService.getRoles().then(function(response) {
+                if (response.roles) {
+                    vm.roles = response.roles;
+                }
+            }, function(error) {
+                // error handling
+            })
+        };
 
         vm.createUser = function() {
-            // clear the errors
-            vm.errors = [];
+            var user = vm.user;
 
-            // flag that a request is being processed
+            // flag that we're processing
             vm.processing = true;
 
-            // send request
-            UserCreateService.createUser(vm.user)
-                .success(function(response) {
-                    // user successfully created
-                    if (response.user) {
-                        vm.processing = false;
+            UserCreateService.createUser(user).then(function(response) {
+                if (response.user) {
+                    // empty the fields
+                    vm.user = {};
 
-                        // clear the form
-                        vm.user = [];
-                        // show success message
-                        ToastrService
-                            .toast('You have successfully added ' + response.user.name, 'success');
-                    }
-                })
-                .error(function(response) {
-                    if (response.errors) {
-                        vm.processing = false;
+                    // show success message
+                }
+            }, function(error) {
+                if (error.errors) {
+                    ToastrService.toast('Oops, there some errors encountered.', 'error');
 
-                        // tell there's an error
-                        ToastrService.toast('There are errors encountered.', 'error');
-
-                        vm.errors = response.errors;
-
-                        // show the errors
-                        for (var e in response.errors) {
-                            ToastrService.toast(response.errors[e][0], 'error');
-                        }
-                    }
-                });
+                    vm.errors = error.errors;
+                }
+            });
         };
+
+        vm.initialize();
     }
 })();

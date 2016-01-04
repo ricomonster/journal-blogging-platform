@@ -1,14 +1,25 @@
 (function() {
     'use strict';
 
-    angular.module('journal.component.sidebar')
-        .service('SidebarService', ['$http', 'CONFIG', SidebarService]);
+    angular.module('journal.components.sidebar')
+        .service('SidebarService', ['$http', '$q', 'CONFIG', SidebarService]);
 
-    function SidebarService($http, CONFIG) {
+    function SidebarService($http, $q, CONFIG) {
         this.apiUrl = CONFIG.API_URL;
 
-        this.getSettings = function(fields) {
-            return $http.get(this.apiUrl + '/settings/get?fields=' + fields);
+        this.getBlogSettings = function() {
+            var deferred = $q.defer(),
+                fields = 'title';
+
+            $http.get(this.apiUrl + '/settings/get?fields=' + fields)
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
         };
     }
 })();

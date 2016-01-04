@@ -1,32 +1,25 @@
-#user_list_page {}
-#user_list_page .page-header { margin: 30px auto 20px; width: 50%; }
-#user_list_page .page-header .hero-title { margin: 0; }
+#user_lists_page {}
+#user_lists_page .user-lists { padding: 15px 30px; }
 
-#user_list_page .content { margin: auto; width: 50%; }
-#user_list_page .user-details { border-bottom: #f6f6f6 1px solid; padding: 10px 0; }
-#user_list_page .user-details .user-hyperlink { display: block; min-height: 120px; position: relative; }
-#user_list_page .user-details .user-hyperlink .avatar-wrapper { float: left; }
-#user_list_page .user-details .user-hyperlink .avatar-wrapper .avatar {
+#user_lists_page .user-lists .user { border-bottom: 1px solid #e4e4e4; display: block; }
+#user_lists_page .user .user-menu-link { display: block; padding: 15px; text-decoration: none; }
+#user_lists_page .user .user-menu-link:hover { background-color: #f2f2f2; }
+
+#user_lists_page .user .user-menu-link .avatar-wrapper { float: left; height: 80px; width: 80px; }
+#user_lists_page .user .user-menu-link .avatar-wrapper img {
     border-radius: 50%;
-    border: 3px solid #dddddd;
-    height: 120px;
+    display: block;
+    height: 100%;
     object-fit: cover;
-    width: 120px;
+    width: 100%;
 }
 
-#user_list_page .user-details .user-hyperlink .user-content { padding: 10px 0 0 140px; word-wrap: break-word; }
-#user_list_page .user-details .user-hyperlink .user-content .user-name {
-    color: rgba(0,0,0,0.8);
-    font-size: 20px;
-    font-weight: normal;
-    line-height: 24px;
+#user_lists_page .user .user-menu-link .details { margin-left: 100px; }
+#user_lists_page .user .user-menu-link .details .user-name {
+    color: #231f20;
+    font-size: 18px;
     margin: 0 0 5px;
 }
 
-#user_list_page .user-details .user-hyperlink .user-content .last-login {
-    font-family: 'Noto Serif', serif;
-    font-size: 14px;
-    font-style: italic;
-}
-
-#user_list_page .user-details .user-hyperlink .role { float: right; }
+#user_lists_page .user .user-menu-link .details .role { float: right; }
+/* TODO: Role Badges */

@@ -1,43 +1,63 @@
 (function() {
     'use strict';
 
-    angular.module('journal.component.login')
-        .controller('LoginController', ['$state', 'AuthService', 'ToastrService', 'LoginService', LoginController]);
+    angular.module('journal.components.login')
+        .controller('LoginController', ['$state', 'AuthService', 'LoginService', 'ToastrService', LoginController]);
 
-    function LoginController($state, AuthService, ToastrService, LoginService) {
+    /**
+     *
+     * @param $state
+     * @param AuthService
+     * @param LoginService
+     * @param ToastrService
+     * @constructor
+     */
+    function LoginController($state, AuthService, LoginService, ToastrService) {
         var vm = this;
-        vm.loading = false;
-        vm.login = [];
+        // scope variables
+        vm.login        = {};
+        vm.processing   = false;
 
-        vm.authenticate = function() {
+        /**
+         * Authenticate the login credentials to gain access to the app.
+         */
+        vm.authenticateLogin = function() {
             var login = vm.login;
 
-            // set it to loading
-            vm.loading = true;
+            // flag to be processed
+            vm.processing = true;
 
-            // do an API request to authenticate inputted user credentials
+            // perform API request
             LoginService.authenticate(login.email, login.password)
-                .success(function(response) {
+                .then(function(response) {
+                    // save user and token
                     if (response.user && response.token) {
-                        // save the user details
-                        AuthService.login(response.user);
+                        // greet the user
+                        ToastrService.toast('Welcome back, ' + response.user.name);
 
-                        // save the token
-                        AuthService.setToken(response.token);
-
-                        ToastrService.toast('Welcome, ' + response.user.name, 'success');
+                        // save
+                        AuthService.login(response.user, response.token);
 
                         // redirect
                         $state.go('post.lists');
                         return;
                     }
-                })
-                .error(function(response) {
-                    vm.loading = false;
 
-                    var message = response.errors.message;
-                    // show message
-                    ToastrService.toast(message, 'error');
+                    vm.processing = false;
+                },
+                function(error) {
+                    vm.processing = false;
+
+                    // catch and show the errors
+                    var messages = error.errors.message;
+
+                    if (messages) {
+                        // show error
+                        ToastrService.toast(messages, 'error');
+                        return;
+                    }
+
+                    // 500/server error?
                 });
         };
     }

@@ -1,20 +1,44 @@
 (function() {
     'use strict';
 
-    angular.module('journal.component.userCreate')
-        .service('UserCreateService', ['$http', 'AuthService', 'CONFIG', UserCreateService]);
+    angular.module('journal.components.userCreate')
+        .service('UserCreateService', ['$http', '$q', 'AuthService', 'CONFIG', UserCreateService]);
 
-    function UserCreateService($http, AuthService, CONFIG) {
+    function UserCreateService($http, $q, AuthService, CONFIG) {
         this.apiUrl = CONFIG.API_URL;
 
         this.createUser = function(user) {
-            var token = AuthService.getToken();
+            var deferred = $q.defer(),
+                token = AuthService.token();
 
-            return $http.post(this.apiUrl + '/users/create?token=' + token, {
-                email       : (user.email || ''),
-                password    : (user.password || ''),
-                name        : (user.name || '')
-            });
+            $http.post(this.apiUrl + '/users/create?token=' + token, {
+                    name        : user.name     || '',
+                    email       : user.email    || '',
+                    password    : user.password || '',
+                    role        : user.role     || ''
+                })
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
+        };
+
+        this.getRoles = function() {
+            var deferred = $q.defer();
+
+            $http.get(this.apiUrl + '/roles/all')
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
         };
     }
 })();

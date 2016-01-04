@@ -1,14 +1,24 @@
 (function() {
     'use strict';
 
-    angular.module('journal.component.userLists')
-        .service('UserListsService', ['$http', 'CONFIG', UserListsService]);
+    angular.module('journal.components.userLists')
+        .service('UserListsService', ['$http', '$q', 'CONFIG', UserListsService]);
 
-    function UserListsService($http, CONFIG) {
+    function UserListsService($http, $q, CONFIG) {
         this.apiUrl = CONFIG.API_URL;
 
-        this.getAllUsers = function() {
-            return $http.get(this.apiUrl + '/users/all');
+        this.getUsers = function() {
+            var deferred = $q.defer();
+
+            $http.get(this.apiUrl + '/users/all')
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
         };
     }
 })();

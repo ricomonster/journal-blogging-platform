@@ -61,6 +61,7 @@ class DbPostRepository implements PostRepositoryInterface
     public function findById($id)
     {
         return Post::with(['author', 'tags'])
+            ->where('active', '=', 1)
             ->where('id', '=', $id)
             ->first();
     }
@@ -72,6 +73,7 @@ class DbPostRepository implements PostRepositoryInterface
     public function findBySlug($slug)
     {
         return Post::with(['author', 'tags'])
+            ->where('active', '=', 1)
             ->where('slug', '=', $slug)
             ->first();
     }

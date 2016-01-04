@@ -1,145 +1,136 @@
 (function() {
     'use strict';
 
-    angular.module('journal.component.userProfile')
-        .controller('UserProfileController', ['$modal', '$stateParams', 'AuthService', 'ToastrService', 'UserProfileService', 'CONFIG', UserProfileController]);
+    angular.module('journal.components.userProfile')
+        .controller('UserProfileController', [
+            '$state', '$stateParams', '$uibModal', 'AuthService', 'ToastrService', 'UserProfileService', 'CONFIG', UserProfileController]);
 
-    function UserProfileController($modal, $stateParams, AuthService, ToastrService, UserProfileService, CONFIG) {
+    function UserProfileController($state, $stateParams, $uibModal, AuthService, ToastrService, UserProfileService, CONFIG) {
         var vm = this;
 
-        vm.current = false;
-        vm.user = [];
-        vm.password = {};
-        vm.passwordErrors = [];
-        vm.processingChangePassword = false;
-        vm.processingUpdateProfile = false;
+        // controller variables
+        vm.current      = false;
+        vm.errors       = {};
+        vm.loading      = true;
+        vm.loggedInUser = AuthService.user();
+        vm.processing   = false;
+        vm.user         = {};
 
+        /**
+         * Will run once the page loads. Checks if the page has the user id
+         * parameter and will send a request to the API to fetch the details
+         * of the user based on the given user id.
+         */
         vm.initialize = function() {
-            // check if parameter is set
-            if (!$stateParams.userId) {
-                // redirect to a 404 page
-            }
+            // check if there's a userId parameter
+            if ($stateParams.userId) {
+                // get user details
+                UserProfileService.getUser($stateParams.userId)
+                    .then(function(response) {
+                        if (response.user) {
+                            var user = response.user;
 
-            // do an API call to check and get the user details
-            UserProfileService.getUser($stateParams.userId)
-                .success(function(response) {
-                    if (response.user) {
-                        // check if the profile of the user is with the current user
-                        vm.current = (AuthService.user().id == response.user.id);
-                        vm.user = response.user;
-                    }
-                })
-                .error(function(response, status) {
-                    if (status == 404) {
+                            // assign to the variable scope
+                            vm.user = user;
+
+                            // determine if the current user is the one who is
+                            // being viewed in the profile
+                            vm.current = (vm.loggedInUser.id == user.id);
+
+                            vm.loading = false;
+                        }
+                    }, function(error) {
                         // redirect to 404 page
-                    }
-
-                    // return to previous page and show a growl error? not sure though
-                });
+                    });
+            } else {
+                // redirect to user lists
+                $state.transitionTo('user.lists');
+            }
         };
 
-        vm.setImage = function(type) {
-            var imageSrc = null;
-            switch (type) {
-                case 'cover_url' :
-                    imageSrc = (vm.user.cover_url) ? vm.user.cover_url : CONFIG.DEFAULT_COVER_URL;
-                    imageSrc = "background-image: url('"+imageSrc+"')";
-                    break;
-                case 'avatar_url' :
-                    imageSrc = (vm.user.avatar_url) ? vm.user.avatar_url : CONFIG.DEFAULT_AVATAR_URL;
-                    break;
-            }
-
-            return imageSrc;
-        };
-
-        vm.showImageUploader = function(type) {
-            // check if the user owns the profile
-            if (!vm.current) {
-                return;
-            }
-
-            var modalInstance = $modal.open({
-                animation : true,
-                templateUrl : '/assets/templates/uploader-modal/uploader-modal.html',
+        vm.openPhotoUploader = function(type) {
+            // instantiate the modal
+            var modal = $uibModal.open({
+                animation: true,
+                controllerAs : 'um',
                 controller : 'UserProfileModalController',
-                resolve : {
+                templateUrl: CONFIG.TEMPLATE_PATH + 'uploader-modal/uploader-modal.html',
+                resolve: {
                     user : function() {
-                        return vm.user;
+                        return angular.copy(vm.user);
                     },
                     type : function() {
-                        return type
+                        return type;
                     }
                 }
             });
 
-            modalInstance.result.then(function(results) {
-                vm.user = results;
+            // once the modal is closed and there's a data returned, update
+            // the user scope.
+            modal.result.then(function(user) {
+                vm.user = user;
             });
         };
 
         /**
-         * [function description]
-         * @return {[type]} [description]
+         * Sets the photo to be shown.
+         * @param type
+         * @returns {*}
          */
-        vm.updatePassword = function() {
-            var passwords = vm.password;
+        vm.setPhoto = function(type) {
+            var photoUrl;
 
-            // flag that we're processing a request
-            vm.processingChangePassword = true;
+            // check first if the page is still loading to prevent showing
+            // the default avatar/cover photo
+            if (vm.loading) {
+                return;
+            }
 
-            // do an API request to change the password
-            UserProfileService.updatePassword(passwords)
-                .success(function(response) {
-                    if (response.user) {
-                        vm.processingChangePassword = false;
+            switch (type) {
+                case 'avatar':
+                    photoUrl = (vm.user.avatar_url) ?
+                        vm.user.avatar_url : CONFIG.DEFAULT_AVATAR_URL;
+                    break;
+                case 'cover' :
+                    photoUrl = (vm.user.cover_url) ?
+                        vm.user.cover_url : CONFIG.DEFAULT_COVER_URL;
+                    break;
+                default:
+                    break;
+            }
 
-                        // clear the fields
-                        ToastrService.toast('You have successfully updated your password.', 'success');
-                        // empty the variable scope
-                        vm.password = {};
-                    }
-                })
-                .error(function(response) {
-                    vm.processingChangePassword = false;
-
-                    // show toastr
-                    ToastrService.toast('There are errors encountered.', 'error');
-                    if (response.errors) {
-                        if (response.message) {
-                            return;
-                        }
-
-                        // show the errors
-                        for (var e in response.errors) {
-                            ToastrService.toast(response.errors[e][0], 'error');
-                        }
-                    }
-                });
+            return photoUrl;
         };
 
         vm.updateProfile = function() {
             var user = vm.user;
 
             // flag that we're processing a request
-            vm.processingUpdateProfile = true;
+            vm.processing = true;
 
-            // do an API request to update details of the user
-            UserProfileService.updateUserDetails(user)
-                .success(function(response) {
+            UserProfileService.updateProfileDetails(user)
+                .then(function(response) {
                     if (response.user) {
-                        vm.processingUpdateProfile = false;
-
-                        // toast it!
+                        // show success message
                         ToastrService.toast('You have successfully updated your profile.', 'success');
+
+                        // update scope
+                        vm.user = response.user;
                     }
-                })
-                .error(function(response) {
-                    vm.processingUpdateProfile = false;
+
+                    vm.processing = false;
+                }, function(error) {
+                    if (error.errors) {
+                        // show message
+                        ToastrService.toast('There are some errors encountered.', 'error');
+
+                        vm.errors = error.errors;
+                    }
+
+                    vm.processing = false;
                 });
         };
 
-        // fire away
         vm.initialize();
     }
 })();

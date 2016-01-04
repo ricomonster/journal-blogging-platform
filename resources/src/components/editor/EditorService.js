@@ -1,35 +1,67 @@
 (function() {
     'use strict';
 
-    angular.module('journal.component.editor')
-        .service('EditorService', ['$http', 'AuthService', 'CONFIG', EditorService]);
+    angular.module('journal.components.editor')
+        .service('EditorService', ['$http', '$q', 'AuthService', 'CONFIG', EditorService]);
 
-    function EditorService($http, AuthService, CONFIG) {
+    function EditorService($http, $q, AuthService, CONFIG) {
         this.apiUrl = CONFIG.API_URL;
 
-        this.checkSlug = function(title, id) {
-            var url = this.apiUrl + '/posts/check_slug?slug=' + (title || '');
+        this.getPost = function(postId) {
+            var deferred = $q.defer();
 
-            // check if id is set
-            if (id) {
-                url += '&post_id=' + id;
-            }
+            $http.get(this.apiUrl + '/posts/get_post?post_id=' + postId)
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
 
-            // do an API request
-            return $http.get(url);
+            return deferred.promise;
         };
 
-        this.getPost = function(id) {
-            return $http.get(this.apiUrl + '/posts/get_post?post_id=' + id);
+        this.getSlug = function(title, id) {
+            var deferred = $q.defer(),
+                parameters = 'slug='+(title || '');
+
+            // check if there's an ID given
+            if (id) {
+                // append post id to the parameter
+                parameters += '&post_id=' + id;
+            }
+
+            // perform request to the API
+            $http.get(this.apiUrl + '/posts/check_slug?' + parameters)
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
         };
 
         this.getTags = function() {
-            return $http.get(this.apiUrl + '/tags/all');
+            var deferred = $q.defer();
+
+            // perform request to the API
+            $http.get(this.apiUrl + '/tags/all')
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
         };
 
-        this.save = function(post) {
-            var token           = AuthService.getToken(),
-                url             = this.apiUrl + '/posts/save?token=' + token,
+        this.savePost = function(post) {
+            var deferred = $q.defer(),
+                token = AuthService.token(),
+                url = this.apiUrl + '/posts/save?token=' + token,
                 authorId        = post.author_id || '',
                 title           = post.title || '',
                 markdown        = post.markdown || '',
@@ -44,16 +76,24 @@
                 url += '&post_id=' + post.id;
             }
 
-            // send the request to the API
-            return $http.post(url, {
-                author_id       : authorId,
-                title           : title,
-                markdown        : markdown,
-                featured_image  : featuredImage,
-                slug            : slug,
-                status          : status,
-                tags            : tags,
-                published_at    : publishedAt});
+            // send request to the API
+            $http.post(url, {
+                    author_id       : authorId,
+                    title           : title,
+                    markdown        : markdown,
+                    featured_image  : featuredImage,
+                    slug            : slug,
+                    status          : status,
+                    tags            : tags,
+                    published_at    : publishedAt})
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
         };
     }
 })();

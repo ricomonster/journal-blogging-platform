@@ -11,9 +11,10 @@ interface UserRepositoryInterface
      * @param $name
      * @param $email
      * @param $password
+     * @param $role
      * @return \Journal\User
      */
-    public function create($name, $email, $password);
+    public function create($name, $email, $password, $role);
 
     /**
      * @param $id

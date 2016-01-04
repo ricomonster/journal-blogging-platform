@@ -1,75 +1,67 @@
-<div ng-controller="PostListsController as plc">
-    <section id="post_lists_page" class="main-container container-fluid">
-        <header class="page-header">
-            <h1 class="hero-title">Posts</h1>
-            <a ui-sref="editor" class="pull-right btn btn-primary">Write a new Post</a>
+<div id="post_lists_page" ng-controller="PostListsController as plc">
+    <header class="page-header clearfix">
+        <h1 class="page-title">Posts</h1>
+        <a class="btn btn-default new-post" ui-sref="editor">
+            <i class="fa fa-pencil-square-o"></i> New Post
+        </a>
+    </header>
+    <section class="post-lists">
+        <header class="post-lists-header">
+            <input type="text" class="form-control" placeholder="Search..."/>
         </header>
-        <div class="content-wrapper">
-            <section class="list-of-posts">
-                <header class="floating-header">
-                    <span class="header-title">All Posts</span>
-                </header>
-                <section class="post-lists-stream">
-                    <article class="post-wrapper auto-height" ng-repeat="post in plc.posts"
-                    ng-class="{ 'active' : post == plc.activePost }"
-                    ng-if="!plc.loading && plc.posts.length">
-                        <a class="post-hyperlink" ng-click="plc.previewThisPost(post)">
-                            <header class="post-title">{{post.title}}</header>
-                            <section class="post-meta">
-                                <span class="post-status">
-                                    <time class="date-published text-muted" ng-if="post.status == 1">
-                                        Published
-                                        <span am-time-ago="post.published_at" am-preprocess="unix"></span>
-                                    </time>
-                                    <span class="draft text-danger" ng-if="post.status == 2">Draft</span>
-                                </span>
-                            </section>
-                        </a>
-                    </article>
-                    <article class="no-posts" ng-if="!plc.loading && !plc.posts.length">
-                        <h3>No posts!</h3>
-                        <p>How about you create now your <a ui-sref="editor">first post</a>?</p>
-                    </article>
-                </section>
-            </section>
-            <section class="post-preview-wrapper">
-                <article class="post-wrapper" ng-class="{'active' : plc.activePost}"
-                ng-if="!plc.loading && plc.activePost.id">
-                    <header class="floating-header">
-                        <div class="header-title">
-                            <span class="post-state" ng-if="plc.activePost.status == 1">Published by</span>
-						    <span class="post-state" ng-if="plc.activePost.status == 2">Written By</span>
-                            <span class="post-author-name">{{plc.activePost.author.name}}</span>
-                        </div>
-                        <div class="post-controls">
-                            <div dropdown>
-                                <a href="#" dropdown-toggle data-toggle="dropdown" aria-expanded="true">
-                                    <i class="fa fa-gear"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <li role="presentation">
-                                        <a role="menuitem" tabindex="-1" ui-sref="postEditor({postId : plc.activePost.id})">Edit</a>
-                                    </li>
-                                    <li role="presentation">
-                                        <a role="menuitem" tabindex="-1" href="/{{plc.activePost.slug}}"
-                                        ng-if="plc.activePost.status == 1" target="_blank">Preview</a>
-                                        <a role="menuitem" tabindex="-1" href="/{{plc.activePost.slug}}?preview"
-                                        ng-if="plc.activePost.status == 2" target="_blank">Preview</a>
-                                    </li>
-                                    <li role="presentation">
-                                        <a role="menuitem" tabindex="-1" ng-click="plc.deletePost(plc.activePost)">Remove</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </header>
-                    <section class="preview-wrapper">
-                        <div journal-markdown="plc.activePost.markdown" class="rendered-markdown"></div>
+        <section class="lists-wrapper">
+            <article class="post auto-height" ng-repeat="post in plc.posts"
+            ng-class="{ 'active' : post == plc.active }">
+                <a class="hyperlink" ng-click="plc.selectThisPost(post)">
+                    <header class="post-title">{{post.title}}</header>
+                    <section class="post-meta">
+                        <time class="post-timestamp published" ng-if="post.status == 1">
+                            <span publish-indicator="post.published_at"></span>
+                            <span am-time-ago="post.published_at" am-preprocess="unix"></span>
+                        </time>
+                        <span class="post-status draft" ng-if="post.status == 2">Draft</span>
                     </section>
-                </article>
-                <article class="no-post-preview" ng-if="!plc.loading && !plc.activePost.id">
-                    <h2>No post to preview.</h2>
-                </article>
+                </a>
+            </article>
+        </section>
+    </section>
+    <section class="post-preview">
+        <div ng-if="plc.active">
+            <header class="preview-header clearfix">
+                <div class="post-meta">
+                    <span class="post-status published" ng-if="plc.active.status == 1">
+                        Published by
+                    </span>
+                    <span class="post-status draft" ng-if="plc.active.status == 2">
+                        Written by
+                    </span>
+                    <span class="author-name">
+                        {{plc.active.author.name}}
+                    </span>
+                </div>
+                <div class="post-controls">
+                    <ul class="control-lists">
+                        <li>
+                            <a class="btn btn-success btn-sm" ui-sref="editorPost({postId : plc.active.id})">
+                                <i class="fa fa-pencil"></i> Edit
+                            </a>
+                        </li>
+                        <li>
+                            <a class="btn btn-warning btn-sm">
+                                <i class="fa fa-search"></i> Preview
+                            </a>
+                        </li>
+                        <li>
+                            <a class="btn btn-danger btn-sm" ng-click="plc.openDeletePostModal()">
+                                <i class="fa fa-trash-o"></i> Delete
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </header>
+            <section class="preview-content">
+                <!-- Markdown Preview Directive goes here -->
+                <div journal-markdown="plc.active.markdown" class="rendered-markdown"></div>
             </section>
         </div>
     </section>

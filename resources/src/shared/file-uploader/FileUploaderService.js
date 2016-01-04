@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('journal.shared.fileUploader')
-        .service('FileUploaderService', ['AuthService', 'Upload', 'CONFIG', FileUploaderService]);
+        .service('FileUploaderService', ['Upload', 'CONFIG', FileUploaderService]);
 
-    function FileUploaderService(AuthService, Upload, CONFIG) {
+    function FileUploaderService(Upload, CONFIG) {
         this.apiUrl = CONFIG.API_URL;
 
         this.upload = function(file) {

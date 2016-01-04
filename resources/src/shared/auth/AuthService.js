@@ -2,40 +2,48 @@
     'use strict';
 
     angular.module('journal.shared.auth')
-        .service('AuthService', ['$http', 'StorageService', 'CONFIG', AuthService]);
+        .service('AuthService', ['$http', '$q', 'StorageService', 'CONFIG', AuthService]);
 
-    function AuthService($http, StorageService, CONFIG) {
+    function AuthService($http, $q, StorageService, CONFIG) {
         this.apiUrl = CONFIG.API_URL;
 
-        this.checkInstallation = function() {
-            return $http.get(this.apiUrl + '/auth/check_installation');
-        };
+        this.login = function(user, token) {
+            // save the user details
+            StorageService.set('user', user);
 
-        this.checkToken = function() {
-            return $http.get(this.apiUrl + '/auth/check?token=' + this.getToken());
-        };
-
-        this.getToken = function() {
-            return StorageService.get('token');
-        };
-        
-        this.login = function(user) {
-            return StorageService.set('user', JSON.stringify(user));
+            // save the token details
+            StorageService.set('token', token);
         };
 
         this.logout = function() {
-            // remove user
             StorageService.remove('user');
-            // remove token
             StorageService.remove('token');
         };
 
-        this.setToken = function(token) {
-            return StorageService.set('token', token);
+        this.token = function() {
+            return StorageService.get('token');
         };
 
         this.user = function() {
-            return JSON.parse(StorageService.get('user'));
+            return StorageService.get('user');
+        };
+
+        this.validateInstallation = function() {
+
+        };
+
+        this.validateToken = function() {
+            var deferred = $q.defer();
+
+            $http.get(this.apiUrl + '/auth/check?token=' + this.token())
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
         };
     }
 })();

@@ -12,9 +12,10 @@ class DbUserRepository implements UserRepositoryInterface
      * @param $name
      * @param $email
      * @param $password
+     * @param $role
      * @return \Journal\User
      */
-    public function create($name, $email, $password)
+    public function create($name, $email, $password, $role)
     {
         // insert data
         $user = User::create([
@@ -22,6 +23,9 @@ class DbUserRepository implements UserRepositoryInterface
             'email'     => $email,
             'slug'      => $this->validateSlug($name),
             'password'  => Hash::make($password)]);
+
+        // add role
+        $user->role()->sync([$role]);
 
         // get the full data of the user
         return $this->findById($user->id);
@@ -258,10 +262,13 @@ class DbUserRepository implements UserRepositoryInterface
         if (!$id) {
             // add password rules
             $rules['password'] = 'required|min:6';
+            // add role rules
+            $rules['role'] = 'required';
 
             // prepare the message
-            $messages['password.required'] = 'A password is required.';
-            $messages['password.min'] = 'Password should be :min+ characters.';
+            $messages['password.required']  = 'A password is required.';
+            $messages['password.min']       = 'Password should be :min+ characters.';
+            $messages['role.required']      = 'Role of the new user is required.';
         }
 
         // validate

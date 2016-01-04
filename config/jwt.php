@@ -22,9 +22,11 @@ return [
     | Specify the length of time (in minutes) that the token will be valid for.
     | Defaults to 1 hour
     |
+    | Journal Token is set to 1 week
+    |
     */
 
-    'ttl' => 1440,
+    'ttl' => 10080,
 
     /*
     |--------------------------------------------------------------------------

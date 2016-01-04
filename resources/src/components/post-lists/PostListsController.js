@@ -1,70 +1,92 @@
 (function() {
     'use strict';
 
-    angular.module('journal.component.postLists')
-        .controller('PostListsController', ['$modal', 'PostListService', PostListsController]);
+    angular.module('journal.components.postLists')
+        .controller('PostListsController', ['$uibModal', 'PostListsService', 'CONFIG', PostListsController]);
 
-    function PostListsController($modal, PostListService) {
+    function PostListsController($uibModal, PostListsService, CONFIG) {
         var vm = this;
 
-        vm.loading = true;
-        vm.posts = [];
-        vm.activePost = null;
+        // controller variables
+        vm.active       = [];
+        vm.posts        = {};
+        vm.processing   = true;
 
-        vm.deletePost = function(post) {
-            var modalInstance = $modal.open({
-                animation : true,
-                templateUrl : '/assets/templates/delete-post-modal/delete-post-modal.html',
+        /**
+         * Opens the modal to prepare the post to be deleted.
+         * @param post
+         */
+        vm.openDeletePostModal = function() {
+            var post = vm.active;
+
+            if (!post) {
+                return;
+            }
+
+            var modalInstance = $uibModal.open({
+                animation: true,
+                size: 'delete-post',
+                controllerAs : 'dpmc',
                 controller : 'DeletePostModalController',
+                templateUrl: CONFIG.TEMPLATE_PATH + 'delete-post-modal/delete-post-modal.html',
                 resolve : {
                     post : function() {
-                        return post;
+                        return angular.copy(post);
                     }
                 }
             });
 
-            modalInstance.result.then(function(results) {
-                if (!results.error) {
-                    // no error occurred and post is successfully deleted
-                    // remove the post
+            modalInstance.result.then(function(response){
+                if (!response.error) {
+                    // get the index of the current post
                     var index = vm.posts.indexOf(post);
+
+                    // we want to set the post before the deleted post to be
+                    // active so we're going to subtract 1 from the index. but
+                    // if the index is 0 or the first post, let's get the next
+                    // post by doing +1
+                    var nextActiveIndex = (index == 0) ? index + 1 : index - 1;
+
+                    // set the active post
+                    vm.active = vm.posts[nextActiveIndex];
+
+                    // remove the deleted post from the scope
                     vm.posts.splice(index, 1);
-
-                    // get the current first post and make it active
-                    vm.activePost = vm.posts[0];
-
-                    // set the active page
-                    vm.activePane = 'lists';
                 }
-            });
+            }).finally(function() {
+
+            })
         };
 
+        /**
+         * Fetches the posts from the API once the page loads.
+         */
         vm.initialize = function() {
-            // get all the posts
-            PostListService.getPosts()
-                .success(function(response) {
+            PostListsService.getAllPosts()
+                .then(function(response) {
                     if (response.posts) {
-                        // get the post and assign to the scope
                         vm.posts = response.posts;
-                        // get the first post and make it active
-                        vm.activePost = response.posts[0];
+
+                        // get the first post and set it to active
+                        vm.active = vm.posts[0];
                     }
 
-                    vm.loading = false;
-                })
-                .error(function() {
-                    vm.loading = false;
+                    vm.processing = false;
+                },
+                function() {
+                    // flag that there's something wrong with fetching the
+                    // posts from the API
                 });
         };
 
         /**
-         * Shows the selected post and preview its content
+         * Shows the selected post from the lists.
          */
-        vm.previewThisPost = function(post) {
-            vm.activePost = post;
+        vm.selectThisPost = function(post) {
+            vm.active = post;
         };
 
-        // fire away!
+        // run it!
         vm.initialize();
     }
 })();

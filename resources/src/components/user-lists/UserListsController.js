@@ -1,36 +1,33 @@
 (function() {
     'use strict';
 
-    angular.module('journal.component.userLists')
+    angular.module('journal.components.userLists')
         .controller('UserListsController', ['UserListsService', 'CONFIG', UserListsController]);
 
-    function UserListsController(UserListService, CONFIG) {
+    function UserListsController(UserListsService, CONFIG) {
         var vm = this;
 
-        // user list scope
+        // controller variables
+        vm.processing = false;
         vm.users = [];
 
-        /**
-         * This will run once page loads
-         */
         vm.initialize = function() {
-            // get the users
-            UserListService.getAllUsers()
-                .success(function(response) {
+            UserListsService.getUsers()
+                .then(function(response) {
                     if (response.users) {
                         vm.users = response.users;
                     }
-                })
-                .error(function() {
-                    // determine what is the error
+
+                    vm.processing = false;
+                }, function(error) {
+
                 });
         };
 
-        vm.setUserAvatarImage = function(user) {
+        vm.setUserAvatar = function(user) {
             return (user.avatar_url) ? user.avatar_url : CONFIG.DEFAULT_AVATAR_URL;
         };
 
-        // fire away
         vm.initialize();
     }
 })();

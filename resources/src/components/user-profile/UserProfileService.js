@@ -1,40 +1,49 @@
 (function() {
     'use strict';
 
-    angular.module('journal.component.userProfile')
-        .service('UserProfileService', ['$http', 'AuthService', 'CONFIG', UserProfileService]);
+    angular.module('journal.components.userProfile')
+        .service('UserProfileService', [
+            '$http', '$q', 'AuthService', 'CONFIG', UserProfileService]);
 
-    function UserProfileService($http, AuthService, CONFIG) {
+    function UserProfileService($http, $q, AuthService, CONFIG) {
         this.apiUrl = CONFIG.API_URL;
 
-        this.getUser = function(userId) {
-            return $http.get(this.apiUrl + '/users/get_user?user_id=' + userId);
+        this.getUser = function(id) {
+            var deferred = $q.defer();
+
+            $http.get(this.apiUrl + '/users/get_user?user_id=' + id || '')
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
         };
 
-        this.updatePassword = function(data) {
-            var token = AuthService.getToken(),
-                userId = AuthService.user().id;
+        this.updateProfileDetails = function(user) {
+            var deferred    = $q.defer(),
+                token       = AuthService.token(),
+                userId      = user.id || '';
 
-            return $http.post(this.apiUrl + '/users/change_password?token=' + token + '&user_id=' + userId, {
-                old_password    : data.old_password || '',
-                new_password    : data.new_password || '',
-                repeat_password : data.repeat_password || ''
-            });
-        };
+            $http.post(this.apiUrl + '/users/update_profile?user_id='+userId+'&token='+token, {
+                    name        : user.name         || '',
+                    email       : user.email        || '',
+                    biography   : user.biography    || '',
+                    location    : user.location     || '',
+                    website     : user.website      || '',
+                    avatar_url  : user.avatar_url   || '',
+                    cover_url   : user.cover_url    || ''
+                })
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+                .error(function(error) {
+                    deferred.reject(error);
+                });
 
-        this.updateUserDetails = function(data) {
-            var token = AuthService.getToken(),
-                userId = (data.id || '');
-
-            return $http.post(this.apiUrl + '/users/update_details?token=' + token + '&user_id=' + userId, {
-                name        : (data.name || ''),
-                email       : (data.email || ''),
-                biography   : (data.biography || ''),
-                location    : (data.location || ''),
-                website     : (data.website || ''),
-                cover_url   : (data.cover_url || ''),
-                avatar_url  : (data.avatar_url || '')
-            });
+            return deferred.promise;
         };
     }
 })();

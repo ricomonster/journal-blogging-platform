@@ -1,20 +1,20 @@
-var gulp        = require('gulp'),
-    concat      = require('gulp-concat'),
-    minifyCss   = require('gulp-minify-css'),
-    plumber     = require('gulp-plumber'),
-    notify      = require('gulp-notify'),
-    uglify      = require('gulp-uglify'),
-    inject      = require('gulp-inject'),
-    runSequence = require('run-sequence');
+var gulp            = require('gulp'),
+    autoprefixer    = require('gulp-autoprefixer'),
+    concat          = require('gulp-concat'),
+    minifyCss       = require('gulp-minify-css'),
+    plumber         = require('gulp-plumber'),
+    notify          = require('gulp-notify'),
+    uglify          = require('gulp-uglify'),
+    util            = require('gulp-util'),
+    inject          = require('gulp-inject'),
+    runSequence     = require('run-sequence');
 
-// paths
-var paths = {
-    build   : './resources/build',
-    src     : './resources/src',
-    public  : './public',
-    bower   : './bower_components',
-    themes  : './themes'
-};
+var paths       = require('./gulp/paths'),
+    bowerFiles  = require('./gulp/bower'),
+    vendor      = require('./gulp/vendor');
+
+// check the environment to use
+var isProduction = (util.env.prod) ? true : false;
 
 // notify error handler
 var onError = function(err) {
@@ -39,421 +39,262 @@ var transformAssetPath = function(filename) {
     return '<link rel="stylesheet" href="'+filename+'"/>';
 };
 
-var minifiedFiles = {
-    app : [
-        paths.public + '/vendor/vendor.js',
-        paths.public + '/vendor/journal.js'],
-    css : [
-        paths.public + '/vendor/stylesheets/bootstrap.min.css',
-        paths.public + '/vendor/stylesheets/font-awesome.min.css',
-        paths.public + '/vendor/stylesheets/angular-toastr.min.css',
-        paths.public + '/vendor/stylesheets/codemirror.css',
-        paths.public + '/vendor/stylesheets/ngprogress-lite.css',
-        paths.public + '/assets/screen.css'],
-    js : [
-        paths.public + '/vendor/javascript/codemirror.js',
-        paths.public + '/vendor/javascript/showdown.min.js',
-        paths.public + '/vendor/javascript/moment.min.js',
-        paths.public + '/vendor/javascript/angular.min.js',
-        paths.public + '/vendor/javascript/angular-animate.min.js',
-        paths.public + '/vendor/javascript/angular-sanitize.min.js',
-        paths.public + '/vendor/javascript/angular-ui-router.min.js',
-        paths.public + '/vendor/javascript/ui-bootstrap.min.js',
-        paths.public + '/vendor/javascript/ui-bootstrap-tpls.min.js',
-        paths.public + '/vendor/javascript/ui-codemirror.min.js',
-        paths.public + '/vendor/javascript/angular-local-storage.min.js',
-        paths.public + '/vendor/javascript/angular-toastr.min.js',
-        paths.public + '/vendor/javascript/angular-toastr.tpls.min.js',
-        paths.public + '/vendor/javascript/angular-moment.min.js',
-        paths.public + '/vendor/javascript/ng-file-upload-shim.min.js',
-        paths.public + '/vendor/javascript/ng-file-upload.min.js',
-        paths.public + '/vendor/javascript/ngprogress-lite.min.js']
-};
-
-var unminifiedFiles = {
-    app : [
-        paths.public + '/assets/scripts/app.js',
-        paths.public + '/assets/scripts/controllers.js',
-        paths.public + '/assets/scripts/directives.js',
-        paths.public + '/assets/scripts/providers.js',
-        paths.public + '/assets/scripts/services.js'],
-    css : [
-        paths.public + '/vendor/stylesheets/bootstrap.css',
-        paths.public + '/vendor/stylesheets/font-awesome.css',
-        paths.public + '/vendor/stylesheets/angular-toastr.css',
-        paths.public + '/vendor/stylesheets/codemirror.css',
-        paths.public + '/vendor/stylesheets/ngprogress-lite.css',
-        paths.public + '/assets/screen.css'],
-    js : [
-        paths.public + '/vendor/javascript/codemirror.js',
-        paths.public + '/vendor/javascript/showdown.js',
-        paths.public + '/vendor/javascript/moment.js',
-        paths.public + '/vendor/javascript/angular.js',
-        paths.public + '/vendor/javascript/angular-animate.js',
-        paths.public + '/vendor/javascript/angular-sanitize.js',
-        paths.public + '/vendor/javascript/angular-ui-router.js',
-        paths.public + '/vendor/javascript/ui-bootstrap.js',
-        paths.public + '/vendor/javascript/ui-bootstrap-tpls.js',
-        paths.public + '/vendor/javascript/ui-codemirror.js',
-        paths.public + '/vendor/javascript/angular-local-storage.js',
-        paths.public + '/vendor/javascript/angular-toastr.js',
-        paths.public + '/vendor/javascript/angular-toastr.tpls.js',
-        paths.public + '/vendor/javascript/angular-moment.js',
-        paths.public + '/vendor/javascript/ng-file-upload-shim.js',
-        paths.public + '/vendor/javascript/ng-file-upload.js',
-        paths.public + '/vendor/javascript/ngprogress-lite.js']
-};
-
 /**
- * Build Task: Fetch library files from the bower_components folder
+ * Build: Transfer needed files from bower to the vendor folder
  */
-gulp.task('build-bower-files', function() {
-    // javascript
-    gulp.src([
-        // angular
-        paths.bower + '/angular/angular.js',
-        paths.bower + '/angular/angular.min.js',
-        // angular animate
-        paths.bower + '/angular-animate/angular-animate.js',
-        paths.bower + '/angular-animate/angular-animate.min.js',
-        // angular bootstrap
-        paths.bower + '/angular-bootstrap/ui-bootstrap.js',
-        paths.bower + '/angular-bootstrap/ui-bootstrap.min.js',
-        paths.bower + '/angular-bootstrap/ui-bootstrap-tpls.js',
-        paths.bower + '/angular-bootstrap/ui-bootstrap-tpls.min.js',
-        // angular local storage
-        paths.bower + '/angular-local-storage/dist/*',
-        // angular moment
-        paths.bower + '/angular-moment/angular-moment.js',
-        paths.bower + '/angular-moment/angular-moment.min.js',
-        // angular sanitize
-        paths.bower + '/angular-sanitize/angular-sanitize.js',
-        paths.bower + '/angular-sanitize/angular-sanitize.min.js',
-        // angular toastr
-        paths.bower + '/angular-toastr/dist/angular-toastr.js',
-        paths.bower + '/angular-toastr/dist/angular-toastr.min.js',
-        paths.bower + '/angular-toastr/dist/angular-toastr.tpls.js',
-        paths.bower + '/angular-toastr/dist/angular-toastr.tpls.min.js',
-        // angular ui codemirror
-        paths.bower + '/angular-ui-codemirror/*.js',
-        // angular ui router
-        paths.bower + '/angular-ui-router/release/*',
-        // codemirror
-        paths.bower + '/codemirror/lib/codemirror.js',
-        // moment
-        paths.bower + '/moment/moment.js',
-        paths.bower + '/moment/min/moment.min.js',
-        // ng-file-upload
-        paths.bower + '/ng-file-upload/ng-file-upload.js',
-        paths.bower + '/ng-file-upload/ng-file-upload.min.js',
-        paths.bower + '/ng-file-upload/ng-file-upload-shim.js',
-        paths.bower + '/ng-file-upload/ng-file-upload-shim.min.js',
-        // ngprogress lite
-        paths.bower + '/ngprogress-lite/*.js',
-        // showdown
-        paths.bower + '/showdown/dist/*'
-    ]).pipe(gulp.dest(paths.public + '/vendor/javascript'));
-
-    // stylesheets
-    gulp.src([
-        // angular toastr
-        paths.bower + '/angular-toastr/dist/angular-toastr.css',
-        paths.bower + '/angular-toastr/dist/angular-toastr.min.css',
-        // bootstrap
-        paths.bower + '/bootstrap/dist/css/*',
-        // codemirror
-        paths.bower + '/codemirror/lib/codemirror.css',
-        // fontawesome
-        paths.bower + '/font-awesome/css/*',
-        // ngprogress lite
-        paths.bower + '/ngprogress-lite/*.css'
-    ]).pipe(gulp.dest(paths.public + '/vendor/stylesheets'));
+gulp.task('install-from-bower', function() {
+    // css
+    gulp.src(bowerFiles.css)
+        .pipe(gulp.dest(paths.destination.vendor.css));
 
     // fonts
-    gulp.src([
-        // bootstrap
-        paths.bower + '/bootstrap/dist/fonts/*',
-        // fontawesome
-        paths.bower + '/font-awesome/fonts/*'
-    ]).pipe(gulp.dest(paths.public + '/vendor/fonts'));
+    gulp.src(bowerFiles.fonts)
+        .pipe(gulp.dest(paths.destination.vendor.fonts));
+
+    // js
+    gulp.src(bowerFiles.js)
+        .pipe(gulp.dest(paths.destination.vendor.js));
 });
 
 /**
- * Build Task: Concatenate the main application file
+ * Build: Build task for the admin main app file.
  */
-gulp.task('build-app', function() {
-    return gulp.src([
-            paths.src + '/app.module.js',
-            paths.src + '/app.routes.js',
-            paths.src + '/app.config.js',
-            paths.src + '/app.run.js',
-            paths.src + '/app.constant.js'
-        ])
+gulp.task('build-admin-app', function() {
+    return gulp.src(paths.sources.app)
         .pipe(concat('app.js'))
         .pipe(plumber({
             errorHandler : onError
         }))
-        .pipe(gulp.dest(paths.build + '/app'))
-        .pipe(gulp.dest(paths.public + '/assets/scripts'));
+        .pipe(gulp.dest(paths.destination.build))
+        .pipe(gulp.dest(paths.destination.assets.js));
 });
 
 /**
- * Build Task: Concatenate controllers from components
+ * Build: Build task for the admin controllers.
  */
-gulp.task('build-controllers', function() {
+gulp.task('build-admin-controllers', function() {
     return gulp.src([
-            paths.src + '/components/**/*Controller.js'
+            paths.sources.components.controllers,
+            paths.sources.shared.controllers
         ])
         .pipe(concat('controllers.js'))
         .pipe(plumber({
             errorHandler : onError
         }))
-        .pipe(gulp.dest(paths.build + '/app'))
-        .pipe(gulp.dest(paths.public + '/assets/scripts'));
+        .pipe(gulp.dest(paths.destination.build))
+        .pipe(gulp.dest(paths.destination.assets.js));
 });
 
 /**
- * Build Task: Concatenate directives from components and shared components
+ * Build: Build task for the admin directives.
  */
-gulp.task('build-directives', function() {
+gulp.task('build-admin-directives', function() {
     return gulp.src([
-            paths.src + '/components/**/*Directive.js',
-            paths.src + '/shared/**/*Directive.js'
+            paths.sources.components.directives,
+            paths.sources.shared.directives
         ])
         .pipe(concat('directives.js'))
         .pipe(plumber({
             errorHandler : onError
         }))
-        .pipe(gulp.dest(paths.build + '/app'))
-        .pipe(gulp.dest(paths.public + '/assets/scripts'));
+        .pipe(gulp.dest(paths.destination.build))
+        .pipe(gulp.dest(paths.destination.assets.js));
 });
 
 /**
- * Build Task: Concatenate services from components and shared components
+ * Build: Build task for the admin services.
  */
-gulp.task('build-services', function() {
+gulp.task('build-admin-services', function() {
     return gulp.src([
-            paths.src + '/components/**/*Service.js',
-            paths.src + '/shared/**/*Service.js'
+            paths.sources.components.services,
+            paths.sources.shared.services
         ])
         .pipe(concat('services.js'))
         .pipe(plumber({
             errorHandler : onError
         }))
-        .pipe(gulp.dest(paths.build + '/app'))
-        .pipe(gulp.dest(paths.public + '/assets/scripts'));
+        .pipe(gulp.dest(paths.destination.build))
+        .pipe(gulp.dest(paths.destination.assets.js));
 });
 
 /**
- * Build Task: Concatenates providers from components and shared components
+ * Build: Build task for the admin providers.
  */
-gulp.task('build-providers', function() {
+gulp.task('build-admin-providers', function() {
     return gulp.src([
-        paths.src + '/shared/**/*Provider.js',
-    ])
+            paths.sources.components.providers,
+            paths.sources.shared.providers
+        ])
         .pipe(concat('providers.js'))
         .pipe(plumber({
             errorHandler : onError
         }))
-        .pipe(gulp.dest(paths.build + '/app'))
-        .pipe(gulp.dest(paths.public + '/assets/scripts'));
+        .pipe(gulp.dest(paths.destination.build))
+        .pipe(gulp.dest(paths.destination.assets.js));
 });
 
 /**
- * Build Task: Copies and transfer to the public folder all the templates
- * from components and shared
+ * Build: Copies the templates.
  */
-gulp.task('build-templates', function() {
+gulp.task('build-admin-templates', function() {
     return gulp.src([
-            paths.src + '/components/**/*.html',
-            paths.src + '/shared/**/*.html'
+            paths.sources.components.templates,
+            paths.sources.shared.templates
         ])
-        .pipe(gulp.dest(paths.build + '/templates'))
-        .pipe(gulp.dest(paths.public + '/assets/templates'));
+        .pipe(gulp.dest(paths.destination.build + '/templates'))
+        .pipe(gulp.dest(paths.destination.templates));
 });
 
 /**
- * Build Task: Concatenates the css files from global css components css and
- * shared css
+ * Build: Builds the stylesheets
  */
 gulp.task('build-stylesheets', function() {
-    return gulp.src([
-            paths.src + '/*.css',
-            paths.src + '/components/**/*.css',
-            paths.src + '/shared/**/*.css'
-        ])
+    return gulp.src(paths.sources.css)
+        // autoprefixer
+        .pipe(autoprefixer('last 2 versions'))
+        .pipe(plumber({
+            errorHandler : onError
+        }))
+        // concatenate
         .pipe(concat('screen.css'))
         .pipe(plumber({
             errorHandler : onError
         }))
-        .pipe(gulp.dest(paths.build + '/css'))
-        .pipe(gulp.dest(paths.public + '/assets'));
+        // uglify if it sets to production
+        .pipe(isProduction ? minifyCss() : util.noop())
+        .pipe(plumber({
+            errorHandler : onError
+        }))
+        // go to build
+        .pipe(gulp.dest(paths.destination.build))
+        // assets
+        .pipe(gulp.dest(paths.destination.assets.css));
 });
 
 /**
- * Production Build Task: Minifies all libraries used.
+ * Build: Builds the vendor files and concatenates them all to a single file.
  */
 gulp.task('build-vendor', function() {
-    return gulp.src(minifiedFiles.js)
+    return gulp.src(vendor.minified.js)
+        // concat
         .pipe(concat('vendor.js'))
         .pipe(plumber({
             errorHandler : onError
         }))
+        // uglify
         .pipe(uglify())
         .pipe(plumber({
             errorHandler : onError
         }))
-        .pipe(gulp.dest(paths.public + '/vendor'));
+        .pipe(gulp.dest(paths.destination.vendorBase));
 });
 
-gulp.task('build-journal', function() {
-    return gulp.src([
-            paths.build + '/app/app.js',
-            paths.build + '/app/controllers.js',
-            paths.build + '/app/directives.js',
-            paths.build + '/app/providers.js',
-            paths.build + '/app/services.js',
-        ])
+/**
+ * Build: Builds the application files.
+ */
+gulp.task('build-admin', function() {
+    return gulp.src(paths.sources.build)
+        // concat
         .pipe(concat('journal.js'))
         .pipe(plumber({
             errorHandler : onError
         }))
+        // uglify
         .pipe(uglify())
         .pipe(plumber({
             errorHandler : onError
         }))
-        .pipe(gulp.dest(paths.public + '/vendor'));
-});
-
-gulp.task('minify-styles', function() {
-    return gulp.src(paths.build + 'css/*')
-        .pipe(minifyCss())
-        .pipe(plumber({
-            errorHandler : onError
-        }))
-        .pipe(gulp.dest(paths.public + '/assets'));
-
+        .pipe(gulp.dest(paths.destination.vendorBase));
 });
 
 /**
- * Inject Task: Development Environment
- */
-gulp.task('inject-development-scripts', function() {
-    var jsFiles = unminifiedFiles.js.concat(unminifiedFiles.app);
-
-    return gulp.src('./resources/views/journal.blade.php')
-        // insert css of the dependencies
-        .pipe(inject(gulp.src(unminifiedFiles.css), {
-            transform : transformAssetPath
-        }))
-        // insert js dependencies
-        .pipe(inject(gulp.src(jsFiles), {
-            transform : transformAssetPath
-        }))
-        .pipe(gulp.dest('./resources/views'));
-});
-
-/**
- * Inject Task: Production Environment
- */
-gulp.task('inject-production-scripts', function() {
-    return gulp.src('./resources/views/journal.blade.php')
-        // insert css of the dependencies
-        .pipe(inject(gulp.src(minifiedFiles.css), {
-            transform : transformAssetPath
-        }))
-        // insert js dependencies
-        .pipe(inject(gulp.src(minifiedFiles.app), {
-            transform : transformAssetPath
-        }))
-        .pipe(gulp.dest('./resources/views'));
-});
-
-/**
- * Watch Task: Watches the given files and do the given tasks according
- * to the file that is being watched.
- */
-gulp.task('watch', function() {
-    gulp.watch([
-            paths.src + '/app.module.js',
-            paths.src + '/app.routes.js',
-            paths.src + '/app.config.js',
-            paths.src + '/app.run.js',
-            paths.src + '/app.constant.js'
-        ], ['build-app']);
-
-    gulp.watch(paths.src + '/components/**/*Controller.js', ['build-controllers']);
-
-    gulp.watch([
-        paths.src + '/components/**/*Directive.js',
-        paths.src + '/shared/**/*Directive.js'], ['build-directives']);
-
-    gulp.watch([
-        paths.src + '/components/**/*Service.js',
-        paths.src + '/shared/**/*Service.js'], ['build-services']);
-
-    gulp.watch(paths.src + '/shared/**/*Provider.js', ['build-providers']);
-
-    gulp.watch([
-        paths.src + '/components/**/*.html',
-        paths.src + '/shared/**/*.html'], ['build-templates']);
-
-    gulp.watch([
-        paths.src + '/*.css',
-        paths.src + '/components/**/*.css',
-        paths.src + '/shared/**/*.css'], ['build-stylesheets']);
-});
-
-/**
- * Build Task: Copy the assets from the themes that are installed.
+ * Build: Copy the theme assets from the themes folder to the public.
  */
 gulp.task('get-theme-assets', function() {
-    return gulp.src(paths.themes + '/**/assets/**/*')
-        .pipe(gulp.dest(paths.public + '/themes'));
+    return gulp.src([paths.base.themes + '/**/assets/**/*'])
+        .pipe(gulp.dest(paths.base.public + '/themes'));
 });
 
 /**
- * More likely the build script for development environment
+ * Inject: Inject needed scripts to the base file.
  */
-gulp.task('dev', function(callback) {
-    runSequence(
-        'build-bower-files',
-        'build-app',
-        'build-controllers',
-        'build-directives',
-        'build-providers',
-        'build-services',
-        'build-templates',
-        'build-stylesheets',
-        'inject-development-scripts',
-        'get-theme-assets',
-        callback);
+gulp.task('inject-scripts', function() {
+    var devJsFiles = vendor.unminified.js.concat(vendor.unminified.app);
+
+    return gulp.src('./resources/views/journal.blade.php')
+        // insert css of the dependencies
+        .pipe(inject(gulp.src(vendor.minified.css), {
+            transform : transformAssetPath
+        }))
+        // insert js dependencies
+        .pipe(inject(gulp.src(isProduction ? vendor.minified.app : devJsFiles), {
+            transform : transformAssetPath
+        }))
+        .pipe(gulp.dest('./resources/views'));
 });
 
 /**
- * Build script for production environment
+ * Watch: Watches the selected files and run specific tasks on it.
  */
-gulp.task('prod', function(callback) {
-    runSequence(
-        'build-bower-files',
-        'build-app',
-        'build-controllers',
-        'build-directives',
-        'build-providers',
-        'build-services',
-        'build-templates',
-        'build-stylesheets',
-        'build-vendor',
-        'build-journal',
-        'minify-styles',
-        'inject-production-scripts',
-        'get-theme-assets',
-        callback);
+gulp.task('watch', function() {
+    // app
+    gulp.watch(paths.sources.app, ['build-admin-app']);
+
+    // controllers
+    gulp.watch([
+        paths.sources.components.controllers,
+        paths.sources.shared.controllers
+    ], ['build-admin-controllers']);
+
+    // directives
+    gulp.watch([
+        paths.sources.components.directives,
+        paths.sources.shared.directives
+    ], ['build-admin-directives']);
+
+    // services
+    gulp.watch([
+        paths.sources.components.services,
+        paths.sources.shared.services
+    ], ['build-admin-services']);
+
+    // templates
+    gulp.watch([
+        paths.sources.components.templates,
+        paths.sources.shared.templates
+    ], ['build-admin-templates']);
+
+    // css
+    gulp.watch(paths.sources.css, ['build-stylesheets']);
 });
 
-/**
- * Default Task
- */
 gulp.task('default', function(callback) {
-    runSequence('dev', 'watch', callback)
+    // check if there's a production flag
+    if (isProduction) {
+        runSequence(
+            'install-from-bower',
+            'build-vendor',
+            'build-admin',
+            'build-stylesheets',
+            'inject-scripts',
+            'get-theme-assets',
+            callback);
+        return;
+    }
+
+    // development setup
+    runSequence(
+        'install-from-bower',
+        'build-admin-app',
+        'build-admin-controllers',
+        'build-admin-directives',
+        'build-admin-services',
+        'build-admin-providers',
+        'build-admin-templates',
+        'build-stylesheets',
+        'inject-scripts',
+        'get-theme-assets',
+        'watch',
+        callback);
+    return;
 });

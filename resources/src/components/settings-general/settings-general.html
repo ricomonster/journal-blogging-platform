@@ -1,0 +1,66 @@
+<div id="settings_general_page" ng-controller="SettingsGeneralController as sgc">
+    <header class="page-header clearfix">
+        <h1 class="page-title">General Settings</h1>
+        <button class="btn btn-primary" ng-click="sgc.saveSettings()" ladda="sgc.processing">
+            <i class="fa fa-floppy-o"></i> Save settings
+        </button>
+    </header>
+    <section class="general-settings scrollable-content">
+        <div class="form-wrapper">
+            <div class="form-group">
+                <label class="control-label">Blog title</label>
+                <input type="text" ng-model="sgc.settings.title" class="form-control"/>
+                <span class="help-block">The name of your blog.</span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Blog description</label>
+                <textarea class="form-control" ng-model="sgc.settings.description"></textarea>
+                <span class="help-block">Describe what your blog is all about.</span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Blog logo</label>
+                <div class="image-wrapper">
+                    <a ng-if="sgc.settings.logo_url" ng-click="sgc.openUploaderModal('logo')"
+                    class="open-modal">
+                        <img ng-src="{{sgc.settings.logo_url}}"/>
+                    </a>
+                    <a class="btn btn-info" ng-click="sgc.openUploaderModal('logo')"
+                    ng-if="!sgc.settings.logo_url">
+                        <i class="fa fa-camera"></i> Upload a photo.
+                    </a>
+                </div>
+                <span class="help-block">Upload a logo for your blog.</span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Blog cover photo</label>
+                <div class="image-wrapper">
+                    <a ng-if="sgc.settings.cover_url" ng-click="sgc.openUploaderModal('cover')"
+                    class="open-modal">
+                        <img ng-src="{{sgc.settings.cover_url}}"/>
+                    </a>
+                    <a class="btn btn-info" ng-click="sgc.openUploaderModal('cover')"
+                    ng-if="!sgc.settings.cover_url">
+                        <i class="fa fa-camera"></i> Upload a photo.
+                    </a>
+                </div>
+                <span class="help-block">Upload a cover photo for your blog.</span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Post per page</label>
+                <input type="number" ng-model="sgc.settings.post_per_page" class="form-control"/>
+                <span class="help-block">Number of posts that a page will show.</span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Theme</label>
+                <select class="form-control" ng-model="sgc.settings.theme">
+                    <option value="" selected>Select theme...</option>
+                    <option ng-repeat="theme in sgc.themes" value="{{theme.theme_name}}"
+                    ng-selected="theme.theme_name == sgc.settings.theme">
+                        {{theme.name}} (v{{theme.version}})
+                    </option>
+                </select>
+                <span class="help-block">The theme that will be rendered on your blog.</span>
+            </div>
+        </div>
+    </section>
+</div>

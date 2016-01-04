@@ -26,7 +26,9 @@
     <div class="vertical">
         <div class="header-content">
             <figure class="author-avatar">
-                <div class="img" style="background-image: url('{{ $author->avatar_url }}')"></div>
+                <div class="img-wrapper">
+                    <img src="{{$author->avatar_url}}" alt="{{$author->name}}"/>
+                </div>
             </figure>
             <h1 class="author-name">{{ $author->name }}</h1>
             <div class="author-meta">

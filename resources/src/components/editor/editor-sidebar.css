@@ -1,0 +1,52 @@
+#editor_sidebar {}
+#editor_sidebar .sidebar-overlay { position: absolute; z-index: 200; }
+
+#editor_sidebar .content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -100%;
+    width: 300px;
+    background-color: #f6f7f8;
+    border-left: 1px solid #dddddd;
+    z-index: 300;
+    transition: all 0.4s ease 0s;
+}
+
+#editor_sidebar .content .sidebar-header { border-bottom: 1px solid #dddddd; padding: 14px 10px; }
+#editor_sidebar .content .sidebar-header h3 { float: left; margin: 0; }
+#editor_sidebar .content .sidebar-header .close-sidebar { font-size: 24px; float: right; }
+
+#editor_sidebar .content .post-settings {
+    padding: 15px 10px;
+    position: absolute;
+    top: 55px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#editor_sidebar .content .post-settings .delete-post-zone {
+    border-top: 1px solid #dddddd;
+    margin: 0 -15px;
+    padding: 15px;
+}
+
+#editor_sidebar .content .post-settings .delete-post-zone .message {
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Opened sidebar */
+#editor_sidebar.active .sidebar-overlay {
+    top: 0;
+    left: -220px;
+    right: 0;
+    bottom: 0;
+}
+
+#editor_sidebar.active .content {
+    right: 0;
+}
