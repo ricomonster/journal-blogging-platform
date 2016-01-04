@@ -2,14 +2,61 @@
     'use strict';
 
     angular.module('journal.components.postLists')
-        .controller('PostListsController', ['PostListsService', PostListsController]);
+        .controller('PostListsController', ['$uibModal', 'PostListsService', 'CONFIG', PostListsController]);
 
-    function PostListsController(PostListsService) {
+    function PostListsController($uibModal, PostListsService, CONFIG) {
         var vm = this;
 
-        vm.active = [];
-        vm.posts = {};
-        vm.processing = true;
+        // controller variables
+        vm.active       = [];
+        vm.posts        = {};
+        vm.processing   = true;
+
+        /**
+         * Opens the modal to prepare the post to be deleted.
+         * @param post
+         */
+        vm.openDeletePostModal = function() {
+            var post = vm.active;
+
+            if (!post) {
+                return;
+            }
+
+            var modalInstance = $uibModal.open({
+                animation: true,
+                size: 'delete-post',
+                controllerAs : 'dpmc',
+                controller : 'DeletePostModalController',
+                templateUrl: CONFIG.TEMPLATE_PATH + 'delete-post-modal/delete-post-modal.html',
+                resolve : {
+                    post : function() {
+                        return angular.copy(post);
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(response){
+                if (!response.error) {
+                    // get the index of the current post
+                    var index = vm.posts.indexOf(post);
+
+                    // we want to set the post before the deleted post to be
+                    // active so we're going to subtract 1 from the index. but
+                    // if the index is 0 or the first post, let's get the next
+                    // post by doing +1
+                    var nextActiveIndex = (index == 0) ? index + 1 : index - 1;
+
+                    // set the active post
+                    vm.active = vm.posts[nextActiveIndex];
+
+                    // remove the deleted post from the scope
+                    vm.posts.splice(index, 1);
+                }
+            }).finally(function() {
+
+            })
+        };
 
         /**
          * Fetches the posts from the API once the page loads.

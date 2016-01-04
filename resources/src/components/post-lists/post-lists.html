@@ -1,8 +1,8 @@
 <div id="post_lists_page" ng-controller="PostListsController as plc">
     <header class="page-header clearfix">
         <h1 class="page-title">Posts</h1>
-        <a class="btn btn-success new-post" ui-sref="editor">
-            <i class="fa fa-plus"></i> New Post
+        <a class="btn btn-default new-post" ui-sref="editor">
+            <i class="fa fa-pencil-square-o"></i> New Post
         </a>
     </header>
     <section class="post-lists">
@@ -42,17 +42,17 @@
                 <div class="post-controls">
                     <ul class="control-lists">
                         <li>
-                            <a class="btn btn-default btn-sm" ui-sref="editorPost({postId : plc.active.id})">
+                            <a class="btn btn-success btn-sm" ui-sref="editorPost({postId : plc.active.id})">
                                 <i class="fa fa-pencil"></i> Edit
                             </a>
                         </li>
                         <li>
-                            <a class="btn btn-default btn-sm">
+                            <a class="btn btn-warning btn-sm">
                                 <i class="fa fa-search"></i> Preview
                             </a>
                         </li>
                         <li>
-                            <a class="btn btn-danger btn-sm">
+                            <a class="btn btn-danger btn-sm" ng-click="plc.openDeletePostModal()">
                                 <i class="fa fa-trash-o"></i> Delete
                             </a>
                         </li>

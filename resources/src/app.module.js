@@ -23,6 +23,7 @@
         'journal.components.userProfileModal',
         // SHARED
         'journal.shared.auth',
+        'journal.shared.deletePostModal',
         'journal.shared.fileUploader',
         'journal.shared.markdownReader',
         'journal.shared.storage',
@@ -47,7 +48,7 @@
     angular.module('journal.components.login', []);
 
     // Posts
-    angular.module('journal.components.post', []);
+    //angular.module('journal.components.post', []);
     angular.module('journal.components.postLists', []);
 
     // Settings
@@ -59,7 +60,7 @@
     angular.module('journal.components.sidebar', []);
 
     // Users
-    angular.module('journal.components.user', []);
+    //angular.module('journal.components.user', []);
     angular.module('journal.components.userCreate', []);
     angular.module('journal.components.userLists', ['angularMoment']);
     angular.module('journal.components.userProfile', []);
@@ -67,6 +68,7 @@
 
     // SHARED
     angular.module('journal.shared.auth', []);
+    angular.module('journal.shared.deletePostModal', []);
     angular.module('journal.shared.fileUploader', ['ngFileUpload']);
     angular.module('journal.shared.markdownReader', []);
     angular.module('journal.shared.storage', ['LocalStorageModule']);

@@ -25,9 +25,9 @@
                 <input type="datetime-local" ng-model="es.post.published_at" class="form-control"
                 placeholder="yyyy-MM-dd HH:mm:ss"/>
             </div>
-            <div class="delete-post-zone">
+            <div class="delete-post-zone auto-height" ng-if="es.post.id">
                 <p class="message">Are you you wanted to do this?</p>
-                <a class="btn btn-danger btn-block">
+                <a class="btn btn-danger btn-block" ng-click="es.openDeletePostModal()">
                     <i class="fa fa-trash-o"></i> Delete this post?
                 </a>
             </div>

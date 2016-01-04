@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('journal.components.editor')
-        .controller('EditorController', ['$stateParams', '$uibModal', 'EditorService', 'ToastrService', 'CONFIG', EditorController]);
+        .controller('EditorController', ['$state', '$stateParams', '$uibModal', 'AuthService', 'EditorService', 'ToastrService', 'CONFIG', EditorController]);
 
-    function EditorController($stateParams, $uibModal, EditorService, ToastrService, CONFIG) {
+    function EditorController($state, $stateParams, $uibModal, AuthService, EditorService, ToastrService, CONFIG) {
         var vm = this;
 
         vm.options = {
@@ -17,7 +17,7 @@
         };
 
         // initialize the post object
-        vm.post = { status : 2, tags : [] };
+        vm.post = { author_id: AuthService.user().id, status : 2, tags : [] };
         vm.processing = false;
 
         /**
@@ -114,9 +114,11 @@
                         // there's a post id in the post object
                         if (!vm.post.id) {
                             ToastrService
-                                .toast('You have successfully created the post"'+
+                                .toast('You have successfully created the post "'+
                                 responsePost.title+'"', 'success');
+
                             // TODO: update the URL
+                            $state.go('editorPost', { postId: responsePost.id }, { notify: false });
                         } else {
                             ToastrService
                                 .toast('You have successfully updated "'+
