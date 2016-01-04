@@ -1,0 +1,20 @@
+<article id="delete_post_modal">
+    <header class="modal-header">
+        <button type="button" class="close" ng-click="dpmc.closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="modal-title">Delete post</h3>
+    </header>
+    <section class="modal-body">
+        <p class="message">
+            Are you sure you wanted to delete the post
+            <span class="post-title">{{dpmc.post.title}}</span>?
+        </p>
+    </section>
+    <footer class="modal-footer">
+        <button class="btn btn-danger" type="button" ng-click="dpmc.deletePost()"
+        ladda="dpmc.processing">Yes, delete this post</button>
+        <button class="btn btn-default" type="button" ng-click="dpmc.closeModal()"
+        ng-disabled="dpmc.processing">Cancel</button>
+    </footer>
+</article>

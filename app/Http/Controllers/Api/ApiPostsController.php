@@ -72,7 +72,7 @@ class ApiPostsController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function deletePosts(Request $request)
+    public function deletePost(Request $request)
     {
         $postId = $request->input('post_id');
 
@@ -94,8 +94,7 @@ class ApiPostsController extends ApiController
         // delete post
         $this->posts->setPostInactive($post->id);
 
-        return $this->respond([
-            'error' => false]);
+        return $this->respond(['error' => false]);
     }
 
     /**

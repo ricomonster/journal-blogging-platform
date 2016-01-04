@@ -15,8 +15,10 @@
     padding: 9px 16px;
 }
 
+#editor_page .page-header .editor-controls .sidebar-toggler { float: none; }
 #editor_page .page-header .editor-controls .sidebar-toggler .fa { margin: 0; }
 #editor_page .page-header .editor-controls .btn-group #split_button { width: 120px; }
+#editor_page .page-header .editor-controls .btn-group .btn { float: left; }
 
 #editor_page .editor {
     position: absolute;

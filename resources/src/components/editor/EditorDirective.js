@@ -189,7 +189,7 @@
             replace : true,
             templateUrl : CONFIG.TEMPLATE_PATH + 'editor/_editor-sidebar.html',
             controllerAs : 'es',
-            controller : ['$scope', function($scope) {
+            controller : ['$scope', '$state', '$uibModal', 'CONFIG', function($scope, $state, $uibModal, CONFIG) {
                 var vm = this;
 
                 // scope variables
@@ -205,6 +205,36 @@
                     vm.toggle = false;
                     // update the scope
                     $scope.toggle = false;
+                };
+
+                /**
+                 * Opens the modal to prepare the post to be deleted.
+                 * @param post
+                 */
+                vm.openDeletePostModal = function() {
+                    if (!vm.post.id) {
+                        return;
+                    }
+
+                    var modalInstance = $uibModal.open({
+                        animation: true,
+                        size: 'delete-post',
+                        controllerAs : 'dpmc',
+                        controller : 'DeletePostModalController',
+                        templateUrl: CONFIG.TEMPLATE_PATH + 'delete-post-modal/delete-post-modal.html',
+                        resolve : {
+                            post : function() {
+                                return angular.copy(vm.post);
+                            }
+                        }
+                    });
+
+                    modalInstance.result.then(function(response){
+                        if (!response.error) {
+                            // redirect to post.lists
+                            $state.go('post.lists');
+                        }
+                    });
                 };
 
                 /**

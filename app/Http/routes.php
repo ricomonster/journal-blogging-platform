@@ -34,11 +34,12 @@ Route::group(['prefix' => 'api/v1.0'], function() {
 
     // Post Routes
     Route::group(['prefix' => 'posts'], function() {
+        Route::delete('delete', 'Api\ApiPostsController@deletePost');
+
         Route::get('all', 'Api\ApiPostsController@all');
         Route::get('check_slug', 'Api\ApiPostsController@checkSlug');
         Route::get('get_post', 'Api\ApiPostsController@getPost');
 
-        Route::post('delete', 'Api\ApiPostsController@deletePosts');
         Route::post('save', 'Api\ApiPostsController@save');
     });
 

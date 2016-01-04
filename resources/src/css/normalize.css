@@ -18,3 +18,9 @@ a { color: #3187e1; cursor: pointer; }
 /* Sidebar */
 .main-content { margin-left: 0; position: relative; }
 body.sidebar .main-content { margin-left: 220px; }
+
+/* Toastr */
+.toast-success { background-color: #67c295; }
+.toast-error { background-color: #dc6e53; }
+.toast-info { background-color: #63a7d1; }
+.toast-warning { background-color: #f3a343; }

@@ -8,7 +8,7 @@
 
 #uploader_modal .image-wrapper {
     display: block;
-    height: 300px;
+    min-height: 300px;
     position: relative;
     width: 100%;
 }
@@ -17,7 +17,7 @@
 #uploader_modal .image-wrapper img {
     display: block;
     margin: auto;
-    max-height: 300px;
+    min-height: 300px;
     max-width: 100%;
 }
 
