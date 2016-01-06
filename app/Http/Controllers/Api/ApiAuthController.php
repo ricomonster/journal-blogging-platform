@@ -51,26 +51,23 @@ class ApiAuthController extends ApiController
             'token' => $token]);
     }
 
-    public function checkAuthentication()
+    public function checkAuthentication(Request $request)
     {
+        // grab credentials from the request
+        $credentials = $request->only('email', 'password');
+
         try {
-            if (! $user = JWTAuth::parseToken()->authenticate()) {
-                return $this->setStatusCode(self::NOT_FOUND)
-                    ->respondWithError(['message' => 'User not found.']);
+            // attempt to verify the credentials and create a token for the user
+            if (! $token = JWTAuth::attempt($credentials)) {
+                return response()->json(['error' => 'invalid_credentials'], 401);
             }
-        } catch (TokenExpiredException $e) {
-            return $this->setStatusCode($e->getStatusCode())
-                ->respondWithError(['message' => 'Token expired.']);
-        } catch (TokenInvalidException $e) {
-            return $this->setStatusCode($e->getStatusCode())
-                ->respondWithError(['message' => 'Token invalid.']);
         } catch (JWTException $e) {
-            return $this->setStatusCode($e->getStatusCode())
-                ->respondWithError(['message' => 'Token required.']);
+            // something went wrong whilst attempting to encode the token
+            return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
-        // the token is valid and we have found the user via the sub claim
-        return $this->respond(['user' => $user]);
+        // all good so return the token
+        return response()->json(compact('token'));
     }
 
     public function checkInstallation()

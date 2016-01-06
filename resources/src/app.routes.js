@@ -11,7 +11,7 @@
 
         // default endpoint if page/state does not exists
         $urlRouterProvider.otherwise('/')
-            .when('/', '/post/lists')
+            //.when('/', '/post/lists')
             .when('/post', '/post/lists');
 
         // state configuration

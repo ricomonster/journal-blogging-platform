@@ -4,18 +4,19 @@ use \Michelf\MarkdownExtra;
 /**
  * Converts the tags from the posts to HTML with href links
  *
- * @param array
+ * @param Post Object
+ * @param string
  * @return string
  */
 if ( ! function_exists('get_post_tags')) {
-    function get_post_tags($post) {
+    function get_post_tags($post, $delimiter = ',') {
         $tags = null;
 
         if ($post->tags) {
             // loop the tags
             foreach ($post->tags as $key => $tag) {
                 $tags .= '<a href="'.url('/tag/'.$tag->slug).'">'.$tag->name.'</a>';
-                $tags .= ($key < count($post->tags) - 1) ? ', ' : null;
+                $tags .= ($key < count($post->tags) - 1) ? $delimiter.' ' : null;
             }
         }
 
@@ -26,7 +27,7 @@ if ( ! function_exists('get_post_tags')) {
 /**
  * Converts the published_at field of the post to readable date
  *
- * @param array
+ * @param Post Object
  * @param string
  * @return mixed
  */
@@ -77,24 +78,43 @@ if ( ! function_exists('disqus')) {
  */
 if ( ! function_exists('markdown'))
 {
-    function markdown($str, $trim = false, $limit = 100)
+    function markdown($str)
     {
         $parser = new MarkdownExtra;
         $parser->no_markup = false;
 
-        // check we wanted to trim the string
-        if($trim) {
-            $text = strip_tags($parser->transform($str));
-            if(str_word_count($text) > $limit) {
-                $limit = $limit+1;
-                $words = explode(' ', $text, $limit);
-                array_pop($words);
-                $text = implode(' ', $words) . '...';
-            }
+        return $parser->transform($str);
+    }
+}
 
-            return $text;
+/**
+ * Trims the post content to make it like an excerpt of the post.
+ *
+ * @param Post Object
+ * @param int
+ * @return string
+ */
+if ( ! function_exists('excerpt')) {
+    function excerpt($post, $limit = 100) {
+        // check if there's an object markdown in the post parameter
+        if (!$post->markdown) {
+            // return empty
+            return null;
         }
 
-        return $parser->transform($str);
+        // convert to markdown
+        $markdowned = markdown($post->markdown);
+
+        // remove the tags
+        $excerpt = strip_tags($markdowned);
+
+        if(str_word_count($excerpt) > $limit) {
+            $limit = $limit + 1;
+            $words = explode(' ', $excerpt, $limit);
+            array_pop($words);
+            $excerpt = implode(' ', $words) . '...';
+        }
+
+        return $excerpt;
     }
 }

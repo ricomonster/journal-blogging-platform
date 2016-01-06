@@ -120,7 +120,7 @@
 
         // default endpoint if page/state does not exists
         $urlRouterProvider.otherwise('/')
-            .when('/', '/post/lists')
+            //.when('/', '/post/lists')
             .when('/post', '/post/lists');
 
         // state configuration
@@ -261,6 +261,7 @@
         if (auth.token()) {
             // send request to check validity of the token
             auth.validateToken().then(function(response) {
+                console.log('fire');
                 if (response.user) {
                     // tell that we're finish booting up
                     $rootScope.bootFinish = true;

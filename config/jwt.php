@@ -12,7 +12,7 @@ return [
     |
     */
 
-    'secret' => env('JWT_SECRET', '67e5YGm42oYEVqNBfitUmQJMvmLHArh3'),
+    'secret' => env('JWT_SECRET', 'D4dyVq1AvWzD8gYqCa4odAQgd0AYUcvr'),
 
     /*
     |--------------------------------------------------------------------------
@@ -66,7 +66,7 @@ return [
     |
     */
 
-    'user' => 'Journal\User',
+    'user' => Journal\User::class,
 
     /*
     |--------------------------------------------------------------------------
