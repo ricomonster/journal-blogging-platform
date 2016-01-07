@@ -25,6 +25,7 @@
         'journal.shared.auth',
         'journal.shared.deletePostModal',
         'journal.shared.fileUploader',
+        'journal.shared.journalLoader',
         'journal.shared.markdownReader',
         'journal.shared.storage',
         'journal.shared.toastr',
@@ -70,6 +71,7 @@
     angular.module('journal.shared.auth', []);
     angular.module('journal.shared.deletePostModal', []);
     angular.module('journal.shared.fileUploader', ['ngFileUpload']);
+    angular.module('journal.shared.journalLoader', []);
     angular.module('journal.shared.markdownReader', []);
     angular.module('journal.shared.storage', ['LocalStorageModule']);
     angular.module('journal.shared.toastr', ['ngAnimate', 'toastr']);

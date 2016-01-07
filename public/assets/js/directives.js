@@ -658,7 +658,7 @@
             templateUrl : '/assets/templates/sidebar/_sidebar-directive.html',
             replace: true,
             controllerAs : 'sd',
-            controller : ['$state', 'AuthService', 'SidebarService', function($state, AuthService, SidebarService) {
+            controller : ['$rootScope', '$state', 'AuthService', 'SidebarService', function($rootScope, $state, AuthService, SidebarService) {
                 var vm = this;
 
                 // controller variables
@@ -687,11 +687,58 @@
                     $state.go('login');
                 };
 
+                /**
+                 * Listens for a broadcast which tells that the settings of
+                 * the blog has been changed.
+                 */
+                $rootScope.$on('settings-update', function() {
+                    // just get the settings from the API
+                    SidebarService.getBlogSettings()
+                        .then(function(response) {
+                            if (response.settings) {
+                                vm.sidebar.title = response.settings.title;
+                            }
+                        },
+                        function(error) {
+
+                        });
+                });
+
+                /**
+                 * Listens for a broadcast event which tells that the details
+                 * of the user has been changed.
+                 */
+                $rootScope.$on('user-update', function() {
+                    // just get again the user details from the AuthService
+                    vm.sidebar.user = AuthService.user();
+                });
+
                 vm.initialize();
             }]
         }
     }
 })();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.shared.journalLoader')
+        .directive('journalLoader', ['CONFIG', JournalLoaderDirective]);
+
+    function JournalLoaderDirective(CONFIG) {
+        return {
+            restrict : 'EA',
+            scope : {
+
+            },
+            templateUrl : CONFIG.TEMPLATE_PATH + '/journal-loader/_journal-loader.html',
+            link : function(scope, element, attributes) {
+
+            }
+        }
+    }
+})();
+
 (function() {
     'use strict';
 

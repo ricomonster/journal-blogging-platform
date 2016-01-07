@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('journal.components.settingsGeneral')
-        .controller('SettingsGeneralController', ['$uibModal', 'SettingsGeneralService', 'ToastrService', 'CONFIG', SettingsGeneralController]);
+        .controller('SettingsGeneralController', ['$rootScope', '$uibModal', 'SettingsGeneralService', 'ToastrService', 'CONFIG', SettingsGeneralController]);
 
-    function SettingsGeneralController($uibModal, SettingsGeneralService, ToastrService, CONFIG) {
+    function SettingsGeneralController($rootScope, $uibModal, SettingsGeneralService, ToastrService, CONFIG) {
         var vm = this;
 
         // controller variables
@@ -103,6 +103,9 @@
                         }
 
                         ToastrService.toast('You have successfully updated your blog settings.', 'success');
+
+                        // broadcast an event
+                        $rootScope.$broadcast('settings-update');
                     }
 
                     vm.processing = false;

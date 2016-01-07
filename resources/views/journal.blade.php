@@ -20,13 +20,36 @@
     <!-- endinject -->
 
     <!-- inject:js -->
-    <script type="text/javascript" src="{{ asset('/vendor/vendor.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/vendor/journal.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/js/codemirror.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/js/showdown.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/js/moment.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/js/spin.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/js/ladda.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/js/angular.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/js/angular-animate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/js/angular-sanitize.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/js/angular-ui-router.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/js/ui-bootstrap.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/js/ui-bootstrap-tpls.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/js/ui-codemirror.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/js/angular-ladda.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/js/angular-local-storage.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/js/angular-toastr.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/js/angular-toastr.tpls.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/js/angular-moment.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/js/ng-file-upload-shim.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/js/ng-file-upload.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/js/ngprogress-lite.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/js/controllers.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/js/directives.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/js/providers.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/js/services.js') }}"></script>
     <!-- endinject -->
 </head>
 
 <body ng-app="Journal" ng-class="{ 'sidebar' : loggedIn }">
-    <div ui-view="sidebar" class="auto-height"></div>
+    <journal-sidebar ng-if="loggedIn" class="auto-height"></journal-sidebar>
     <div ui-view class="main-content"></div>
 </body>
 </html>

@@ -23,9 +23,6 @@
                     // default ui-view
                     '' : {
                         templateUrl : templatePath('editor/editor.html')
-                    },
-                    'sidebar' : {
-                        templateUrl : templatePath('sidebar/sidebar.html')
                     }
                 },
                 authenticate : true
@@ -36,9 +33,6 @@
                     // default ui-view
                     '' : {
                         templateUrl : templatePath('editor/editor.html')
-                    },
-                    'sidebar' : {
-                        templateUrl : templatePath('sidebar/sidebar.html')
                     }
                 },
                 authenticate : true
@@ -57,9 +51,6 @@
                     // default ui-view
                     '' : {
                         templateUrl : templatePath('post/post.html')
-                    },
-                    'sidebar' : {
-                        templateUrl : templatePath('sidebar/sidebar.html')
                     }
                 },
                 authenticate : true
@@ -79,9 +70,6 @@
                 views : {
                     '' : {
                         templateUrl : templatePath('settings/settings.html')
-                    },
-                    'sidebar' : {
-                        templateUrl : templatePath('sidebar/sidebar.html')
                     }
                 },
                 abstract : true,
@@ -101,9 +89,6 @@
                 views : {
                     '' : {
                         templateUrl : templatePath('user/user.html')
-                    },
-                    'sidebar' : {
-                        templateUrl : templatePath('sidebar/sidebar.html')
                     }
                 },
                 abstract : true,

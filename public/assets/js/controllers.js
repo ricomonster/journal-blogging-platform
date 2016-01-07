@@ -225,6 +225,7 @@
 
         // controller variables
         vm.active       = [];
+        vm.loading      = true;
         vm.posts        = {};
         vm.processing   = true;
 
@@ -285,13 +286,17 @@
 
                         // get the first post and set it to active
                         vm.active = vm.posts[0];
-                    }
 
-                    vm.processing = false;
+                        vm.loading = false;
+                    }
                 },
                 function() {
                     // flag that there's something wrong with fetching the
                     // posts from the API
+                    ToastrService
+                        .toast('Something went wrong while fetching posts from the API. Please try again later.', 'error');
+
+                    vm.loading = false;
                 });
         };
 
@@ -311,9 +316,9 @@
     'use strict';
 
     angular.module('journal.components.settingsGeneral')
-        .controller('SettingsGeneralController', ['$uibModal', 'SettingsGeneralService', 'ToastrService', 'CONFIG', SettingsGeneralController]);
+        .controller('SettingsGeneralController', ['$rootScope', '$uibModal', 'SettingsGeneralService', 'ToastrService', 'CONFIG', SettingsGeneralController]);
 
-    function SettingsGeneralController($uibModal, SettingsGeneralService, ToastrService, CONFIG) {
+    function SettingsGeneralController($rootScope, $uibModal, SettingsGeneralService, ToastrService, CONFIG) {
         var vm = this;
 
         // controller variables
@@ -412,6 +417,9 @@
                         }
 
                         ToastrService.toast('You have successfully updated your blog settings.', 'success');
+
+                        // broadcast an event
+                        $rootScope.$broadcast('settings-update');
                     }
 
                     vm.processing = false;
@@ -708,9 +716,9 @@
 
     angular.module('journal.components.userProfile')
         .controller('UserProfileController', [
-            '$state', '$stateParams', '$uibModal', 'AuthService', 'ToastrService', 'UserProfileService', 'CONFIG', UserProfileController]);
+            '$rootScope', '$state', '$stateParams', '$uibModal', 'AuthService', 'ToastrService', 'UserProfileService', 'CONFIG', UserProfileController]);
 
-    function UserProfileController($state, $stateParams, $uibModal, AuthService, ToastrService, UserProfileService, CONFIG) {
+    function UserProfileController($rootScope, $state, $stateParams, $uibModal, AuthService, ToastrService, UserProfileService, CONFIG) {
         var vm = this;
 
         // controller variables
@@ -821,6 +829,12 @@
 
                         // update scope
                         vm.user = response.user;
+
+                        // update the details of the user
+                        AuthService.update('user', response.user);
+
+                        // broadcast
+                        $rootScope.$broadcast('user-update');
                     }
 
                     vm.processing = false;

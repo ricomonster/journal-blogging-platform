@@ -30,6 +30,11 @@
     border-radius: 5px;
 }
 
+#post_lists_page .post-lists .lists-wrapper .no-posts {
+    padding: 5px 15px;
+    text-align: center;
+}
+
 #post_lists_page .post-lists .lists-wrapper .post {}
 #post_lists_page .post-lists .post .hyperlink {
     background-color: #fafafa;
@@ -94,3 +99,10 @@
     line-height: 1.5em;
     padding: 40px;
 }
+
+#post_lists_page .post-preview .no-post {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+#post_lists_page .post-preview .no-post a i { margin-left: 3px; }

@@ -210,7 +210,7 @@ gulp.task('build-admin', function() {
 /**
  * Build: Copy the theme assets from the themes folder to the public.
  */
-gulp.task('get-theme-assets', function() {
+gulp.task('theme-assets', function() {
     return gulp.src([paths.base.themes + '/**/assets/**/*'])
         .pipe(gulp.dest(paths.base.public + '/themes'));
 });
@@ -277,7 +277,7 @@ gulp.task('default', function(callback) {
             'build-admin',
             'build-stylesheets',
             'inject-scripts',
-            'get-theme-assets',
+            'theme-assets',
             callback);
         return;
     }
@@ -293,7 +293,7 @@ gulp.task('default', function(callback) {
         'build-admin-templates',
         'build-stylesheets',
         'inject-scripts',
-        'get-theme-assets',
+        'theme-assets',
         'watch',
         callback);
     return;

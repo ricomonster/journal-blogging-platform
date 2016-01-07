@@ -13,14 +13,30 @@ use Schema;
 
 class ApiAuthController extends ApiController
 {
+    /**
+     * [$users description]
+     * @var [type]
+     */
     protected $users;
 
+    /**
+     * [__construct description]
+     * @param SettingRepositoryInterface $settings [description]
+     * @param UserRepositoryInterface    $users    [description]
+     */
     public function __construct(SettingRepositoryInterface $settings, UserRepositoryInterface $users)
     {
         $this->settings = $settings;
         $this->users    = $users;
     }
 
+    /**
+     * Performs authentication to validated the given email and password if
+     * valid and it will return a token to be used in all requests.
+     *
+     * @param  Request $request
+     * @return array
+     */
     public function authenticate(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -51,6 +67,10 @@ class ApiAuthController extends ApiController
             'token' => $token]);
     }
 
+    /**
+     * [checkAuthentication description]
+     * @return [type] [description]
+     */
     public function checkAuthentication()
     {
         try {

@@ -3,9 +3,9 @@
 
     angular.module('journal.components.userProfile')
         .controller('UserProfileController', [
-            '$state', '$stateParams', '$uibModal', 'AuthService', 'ToastrService', 'UserProfileService', 'CONFIG', UserProfileController]);
+            '$rootScope', '$state', '$stateParams', '$uibModal', 'AuthService', 'ToastrService', 'UserProfileService', 'CONFIG', UserProfileController]);
 
-    function UserProfileController($state, $stateParams, $uibModal, AuthService, ToastrService, UserProfileService, CONFIG) {
+    function UserProfileController($rootScope, $state, $stateParams, $uibModal, AuthService, ToastrService, UserProfileService, CONFIG) {
         var vm = this;
 
         // controller variables
@@ -116,6 +116,12 @@
 
                         // update scope
                         vm.user = response.user;
+
+                        // update the details of the user
+                        AuthService.update('user', response.user);
+
+                        // broadcast
+                        $rootScope.$broadcast('user-update');
                     }
 
                     vm.processing = false;

@@ -10,23 +10,29 @@
             <input type="text" class="form-control" placeholder="Search..."/>
         </header>
         <section class="lists-wrapper">
-            <article class="post auto-height" ng-repeat="post in plc.posts"
-            ng-class="{ 'active' : post == plc.active }">
-                <a class="hyperlink" ng-click="plc.selectThisPost(post)">
-                    <header class="post-title">{{post.title}}</header>
-                    <section class="post-meta">
-                        <time class="post-timestamp published" ng-if="post.status == 1">
-                            <span publish-indicator="post.published_at"></span>
-                            <span am-time-ago="post.published_at" am-preprocess="unix"></span>
-                        </time>
-                        <span class="post-status draft" ng-if="post.status == 2">Draft</span>
-                    </section>
-                </a>
-            </article>
+            <div ng-if="!plc.loading && plc.posts.length">
+                <article class="post auto-height" ng-repeat="post in plc.posts"
+                ng-class="{ 'active' : post == plc.active }">
+                    <a class="hyperlink" ng-click="plc.selectThisPost(post)">
+                        <header class="post-title">{{post.title}}</header>
+                        <section class="post-meta">
+                            <time class="post-timestamp published" ng-if="post.status == 1">
+                                <span publish-indicator="post.published_at"></span>
+                                <span am-time-ago="post.published_at" am-preprocess="unix"></span>
+                            </time>
+                            <span class="post-status draft" ng-if="post.status == 2">Draft</span>
+                        </section>
+                    </a>
+                </article>
+            </div>
+            <div ng-if="!plc.loading && !plc.posts.length" class="auto-height no-posts">
+                <h3>No posts to display.</h3>
+            </div>
+            <journal-loader ng-if="plc.loading"></journal-loader>
         </section>
     </section>
     <section class="post-preview">
-        <div ng-if="plc.active">
+        <div ng-if="!plc.loading && plc.active.id">
             <header class="preview-header clearfix">
                 <div class="post-meta">
                     <span class="post-status published" ng-if="plc.active.status == 1">
@@ -63,6 +69,13 @@
                 <!-- Markdown Preview Directive goes here -->
                 <div journal-markdown="plc.active.markdown" class="rendered-markdown"></div>
             </section>
+        </div>
+        <div ng-if="!plc.loading && !plc.active.id" class="no-post">
+            <h3>Compose your first post.</h3>
+            <a ui-sref="editor" class="btn btn-success">
+                Go to Editor
+                <i class="fa fa-arrow-right"></i>
+            </a>
         </div>
     </section>
 </div>

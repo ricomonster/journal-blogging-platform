@@ -9,6 +9,7 @@
 
         // controller variables
         vm.active       = [];
+        vm.loading      = true;
         vm.posts        = {};
         vm.processing   = true;
 
@@ -69,13 +70,17 @@
 
                         // get the first post and set it to active
                         vm.active = vm.posts[0];
-                    }
 
-                    vm.processing = false;
+                        vm.loading = false;
+                    }
                 },
                 function() {
                     // flag that there's something wrong with fetching the
                     // posts from the API
+                    ToastrService
+                        .toast('Something went wrong while fetching posts from the API. Please try again later.', 'error');
+
+                    vm.loading = false;
                 });
         };
 

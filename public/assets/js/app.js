@@ -25,6 +25,7 @@
         'journal.shared.auth',
         'journal.shared.deletePostModal',
         'journal.shared.fileUploader',
+        'journal.shared.journalLoader',
         'journal.shared.markdownReader',
         'journal.shared.storage',
         'journal.shared.toastr',
@@ -70,6 +71,7 @@
     angular.module('journal.shared.auth', []);
     angular.module('journal.shared.deletePostModal', []);
     angular.module('journal.shared.fileUploader', ['ngFileUpload']);
+    angular.module('journal.shared.journalLoader', []);
     angular.module('journal.shared.markdownReader', []);
     angular.module('journal.shared.storage', ['LocalStorageModule']);
     angular.module('journal.shared.toastr', ['ngAnimate', 'toastr']);
@@ -132,9 +134,6 @@
                     // default ui-view
                     '' : {
                         templateUrl : templatePath('editor/editor.html')
-                    },
-                    'sidebar' : {
-                        templateUrl : templatePath('sidebar/sidebar.html')
                     }
                 },
                 authenticate : true
@@ -145,9 +144,6 @@
                     // default ui-view
                     '' : {
                         templateUrl : templatePath('editor/editor.html')
-                    },
-                    'sidebar' : {
-                        templateUrl : templatePath('sidebar/sidebar.html')
                     }
                 },
                 authenticate : true
@@ -166,9 +162,6 @@
                     // default ui-view
                     '' : {
                         templateUrl : templatePath('post/post.html')
-                    },
-                    'sidebar' : {
-                        templateUrl : templatePath('sidebar/sidebar.html')
                     }
                 },
                 authenticate : true
@@ -188,9 +181,6 @@
                 views : {
                     '' : {
                         templateUrl : templatePath('settings/settings.html')
-                    },
-                    'sidebar' : {
-                        templateUrl : templatePath('sidebar/sidebar.html')
                     }
                 },
                 abstract : true,
@@ -210,9 +200,6 @@
                 views : {
                     '' : {
                         templateUrl : templatePath('user/user.html')
-                    },
-                    'sidebar' : {
-                        templateUrl : templatePath('sidebar/sidebar.html')
                     }
                 },
                 abstract : true,

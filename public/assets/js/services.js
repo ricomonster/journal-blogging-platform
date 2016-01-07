@@ -463,6 +463,10 @@
             return StorageService.get('token');
         };
 
+        this.update = function(key, value) {
+            return StorageService.set(key, value);
+        };
+
         this.user = function() {
             return StorageService.get('user');
         };
