@@ -7,11 +7,13 @@
     </header>
     <section class="post-lists">
         <header class="post-lists-header">
-            <input type="text" class="form-control" placeholder="Search..."/>
+            <input type="text" ng-model="plc.query" class="form-control"
+            placeholder="Search..."/>
         </header>
         <section class="lists-wrapper">
             <div ng-if="!plc.loading && plc.posts.length">
-                <article class="post auto-height" ng-repeat="post in plc.posts"
+                <article class="post auto-height"
+                ng-repeat="post in plc.posts | filter:plc.query"
                 ng-class="{ 'active' : post == plc.active }">
                     <a class="hyperlink" ng-click="plc.selectThisPost(post)">
                         <header class="post-title">{{post.title}}</header>

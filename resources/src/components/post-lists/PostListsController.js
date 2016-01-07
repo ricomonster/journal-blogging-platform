@@ -12,6 +12,7 @@
         vm.loading      = true;
         vm.posts        = {};
         vm.processing   = true;
+        vm.query        = '';
 
         /**
          * Opens the modal to prepare the post to be deleted.
