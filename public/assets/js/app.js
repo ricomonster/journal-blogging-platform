@@ -254,14 +254,21 @@
                     // login the user, again
                     AuthService.login(response.user, auth.token());
 
-                    // assign it to a variable
-                    var nextPage = $rootScope.nextPage;
+                    // check if there's nextPage object in the $rootScope
+                    if ($rootScope.nextPage) {
+                        // assign it to a variable
+                        var nextPage = $rootScope.nextPage;
 
-                    // delete it from the rootscope
-                    delete $rootScope.nextPage;
+                        // delete it from the rootscope
+                        delete $rootScope.nextPage;
 
-                    // continue loading the page
-                    $state.transitionTo(nextPage.name, nextPage.params);
+                        // continue loading the page
+                        $state.transitionTo(nextPage.name, nextPage.params);
+                        return;
+                    }
+
+                    // redirect to post.lists
+                    $state.transitionTo('login');
                 }
             }, function() {
                 // tell that we're finish booting up
