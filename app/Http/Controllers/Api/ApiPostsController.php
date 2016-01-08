@@ -241,8 +241,7 @@ class ApiPostsController extends ApiController
         if ($tags) {
             // loop
             foreach ($tags as $key => $tag) {
-
-                $tag = $this->tags->create($tag['name']);
+                $tag = $this->tags->create($tag['name'], null, null);
                 // get the ID and push it to the array
                 array_push($tagIds, $tag->id);
             }

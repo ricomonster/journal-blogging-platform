@@ -1,0 +1,34 @@
+<section id="image_uploader">
+    <figure class="image-wrapper" ng-if="iud.image.url">
+        <a class="btn btn-danger btn-sm remove-image" ng-click="iud.removeImage()"
+        uib-tooltip="Remove the featured image" tooltip-placement="left">
+            <i class="fa fa-trash-o"></i>
+        </a>
+        <img ng-src="{{iud.image.url}}"/>
+    </figure>
+    <div class="wrapper" ng-if="!iud.image.url">
+        <section class="upload" ng-if="iud.image.option == 'file'">
+            <div ngf-drop ngf-select ng-model="iud.image.file" class="drop-box"
+            ngf-drag-over-class="dragover" ngf-multiple="false" ngf-allow-dir="true"
+            accept="image/*" ng-if="!iud.upload.percentage">
+                <span class="add-image-text">Add Image</span>
+            </div>
+            <div class="progressbar-wrapper" ng-if="iud.upload.percentage">
+                <uib-progressbar value="iud.upload.percentage" type="success">
+                    <span>{{iud.upload.percentage}}%</span>
+                </uib-progressbar>
+            </div>
+        </section>
+        <section class="link" ng-if="iud.image.option == 'link'">
+            <div class="form-group">
+                <input type="text" ng-model="iud.image.link" class="form-control" placeholder="http://"
+                ng-blur="iud.getImageLink()"/>
+            </div>
+        </section>
+        <a class="image-option auto-height" ng-click="iud.switchOption()"
+        ng-if="!iud.upload.percentage" uib-tooltip="Click to select">
+            <i ng-class="{'fa-link' : iud.image.option == 'file', 'fa-upload' : iud.image.option == 'link'}"
+            class="fa" ></i>
+        </a>
+    </div>
+</section>

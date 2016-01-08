@@ -16,6 +16,8 @@
         'journal.components.settingsGeneral',
         'journal.components.settingsGeneralModal',
         'journal.components.sidebar',
+        //'journal.components.tag'
+        'journal.components.tagLists',
         //'journal.components.user',
         'journal.components.userCreate',
         'journal.components.userLists',
@@ -26,6 +28,7 @@
         'journal.shared.deletePostModal',
         'journal.shared.fileUploader',
         'journal.shared.journalLoader',
+        'journal.shared.imageUploader',
         'journal.shared.markdownReader',
         'journal.shared.storage',
         'journal.shared.toastr',
@@ -60,6 +63,9 @@
     // Sidebar
     angular.module('journal.components.sidebar', []);
 
+    // Tags    
+    angular.module('journal.components.tagLists', []);
+
     // Users
     //angular.module('journal.components.user', []);
     angular.module('journal.components.userCreate', []);
@@ -71,6 +77,7 @@
     angular.module('journal.shared.auth', []);
     angular.module('journal.shared.deletePostModal', []);
     angular.module('journal.shared.fileUploader', ['ngFileUpload']);
+    angular.module('journal.shared.imageUploader', []);
     angular.module('journal.shared.journalLoader', []);
     angular.module('journal.shared.markdownReader', []);
     angular.module('journal.shared.storage', ['LocalStorageModule']);

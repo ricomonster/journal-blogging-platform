@@ -7,13 +7,7 @@
     function JournalLoaderDirective(CONFIG) {
         return {
             restrict : 'EA',
-            scope : {
-
-            },
-            templateUrl : CONFIG.TEMPLATE_PATH + '/journal-loader/_journal-loader.html',
-            link : function(scope, element, attributes) {
-
-            }
+            templateUrl : CONFIG.TEMPLATE_PATH + '/journal-loader/_journal-loader.html'
         }
     }
 })();

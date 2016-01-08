@@ -1,0 +1,53 @@
+<div id="tag_lists_page" ng-controller="TagListsController as tlc">
+    <header class="page-header clearfix">
+        <h1 class="page-title">Tags</h1>
+    </header>
+    <section class="tag-page-content">
+        <section class="tag-lists scrollable-content">
+            <article class="tag auto-height" ng-repeat="tag in tlc.tags">
+                <a class="tag-hyperlink clearfix">
+                    <h3 class="tag-name">{{tag.name}}</h3>
+                    <span class="tag-slug label label-default">/{{tag.slug}}</span>
+                    <span class="post-tag-count">
+                        {{tag.posts.length}} posts
+                    </span>
+                </a>
+            </article>
+            <journal-loader ng-if="tlc.loading"></journal-loader>
+        </section>
+        <section class="tag-create-form scrollable-content">
+            <h3>Add New Tag</h3>
+            <form ng-submit="tlc.addTag()">
+                <div class="form-group" ng-class="{ 'has-error' : tlc.errors.name }">
+                    <label class="control-label">Name</label>
+                    <input type="text" ng-model="tlc.add.name" class="form-control"/>
+                    <span class="help-block">The name is how it appears on your site.</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Slug</label>
+                    <input type="text" ng-model="tlc.add.slug" class="form-control"/>
+                    <span class="help-block">
+                        The “slug” is the URL-friendly version of the name.
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Image</label>
+                    <div class="image-uploader-wrapper">
+                        <image-uploader ng-model="tlc.add.image_url"></image-uploader>
+                    </div>
+                    <span class="help-block">Image to be used by the tag on its own page.</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Description</label>
+                    <textarea ng-model="tlc.add.description" class="form-control"></textarea>
+                    <span class="help-block">Tell us something about this tag.</span>
+                </div>
+                <div class="form-action">
+                    <button type="submit" class="btn btn-primary" ladda="tlc.processing">
+                        <i class="fa fa-plus"></i> Add New Tag
+                    </button>
+                </div>
+            </form>
+        </section>
+    </section>
+</div>

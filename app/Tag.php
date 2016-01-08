@@ -18,7 +18,7 @@ class Tag extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'slug', 'active'];
+    protected $fillable = ['name', 'description', 'slug', 'image_url', 'active'];
 
     /**
      * The attributes excluded from the model's JSON form.

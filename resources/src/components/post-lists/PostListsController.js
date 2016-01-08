@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('journal.components.postLists')
-        .controller('PostListsController', ['$uibModal', 'PostListsService', 'CONFIG', PostListsController]);
+        .controller('PostListsController', ['$uibModal', 'PostListsService', 'ToastrService', 'CONFIG', PostListsController]);
 
-    function PostListsController($uibModal, PostListsService, CONFIG) {
+    function PostListsController($uibModal, PostListsService, ToastrService, CONFIG) {
         var vm = this;
 
         // controller variables
