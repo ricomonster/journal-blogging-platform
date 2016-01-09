@@ -20,22 +20,27 @@ class BlogController extends Controller
      * @var int
      */
     protected $postPerPage = 10;
+
     /**
      * @var PostRepositoryInterface
      */
     protected $posts;
+
     /**
      * @var mixed
      */
     protected $settings;
+
     /**
      * @var TagRepositoryInterface
      */
     protected $tags;
+
     /**
      * @var string
      */
     protected $theme = 'casper';
+
     /**
      * @var UserRepositoryInterface
      */
@@ -123,7 +128,7 @@ class BlogController extends Controller
      * @return View
      */
     public function post($slug, Request $request)
-    {
+    {    
         // check if the request is just to preview the post
 
         // check if parameter is empty
