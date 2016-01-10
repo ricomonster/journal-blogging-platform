@@ -1,0 +1,41 @@
+<div id="tag_edit_page" ng-controller="TagEditController as tec">
+    <header class="page-header clearfix">
+        <h1 class="page-title">Edit Tag</h1>
+
+        <button type="button" class="btn btn-primary" ng-click="tec.updateTag()"
+        ladda="tec.processing">
+            <i class="fa fa-floppy-o"></i> Update Tag
+        </button>
+        <button type="button" class="btn btn-danger" ng-click="tec.openDeleteTagModal()">
+            <i class="fa fa-trash-o"></i> Delete Tag
+        </button>
+    </header>
+    <section class="tag-edit-content scrollable-content">
+        <div class="form-wrapper">
+            <div class="form-group" ng-class="{ 'has-error' : tec.errors.name }">
+                <label class="control-label">Name</label>
+                <input type="text" ng-model="tec.tag.name" class="form-control"/>
+                <span class="help-block">The name is how it appears on your site.</span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Slug</label>
+                <input type="text" ng-model="tec.tag.slug" class="form-control"/>
+                <span class="help-block">
+                    The “slug” is the URL-friendly version of the name.
+                </span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Image</label>
+                <div class="image-uploader-wrapper">
+                    <image-uploader ng-model="tec.tag.image_url"></image-uploader>
+                </div>
+                <span class="help-block">Image to be used by the tag on its own page.</span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Description</label>
+                <textarea ng-model="tec.tag.description" class="form-control"></textarea>
+                <span class="help-block">Tell us something about this tag.</span>
+            </div>
+        </div>
+    </section>
+</div>

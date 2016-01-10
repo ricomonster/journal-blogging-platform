@@ -1,0 +1,79 @@
+#image_uploader {
+    color: #555;
+    background-color: #ccc;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+#image_uploader .image-wrapper {
+    display: block;
+    min-height: 180px;
+    position: relative;
+    width: 100%;
+}
+
+#image_uploader .image-wrapper .remove-image { position: absolute; right: 5px; top: 5px; z-index: 100; }
+#image_uploader .image-wrapper img {
+    display: block;
+    margin: auto;
+    min-height: 180px;
+    max-width: 100%;
+}
+
+#image_uploader .wrapper { height: 180px; }
+#image_uploader .wrapper .upload { position: relative; }
+#image_uploader .wrapper .upload .drop-box {
+    cursor: pointer;
+    display: block;
+    height: 180px;
+    width: 100%;
+}
+
+#image_uploader .wrapper .upload .drop-box .add-image-text {
+    bottom: 50%;
+    display: block;
+    font-size: 16px;
+    height: 22px;
+    left: 0;
+    margin: -11px 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 50%;
+    width: 100%;
+}
+
+#image_uploader .wrapper .upload .drop-box .add-image-text i { margin-right: 3px; }
+
+#image_uploader .wrapper .upload .progressbar-wrapper {
+    bottom: 50%;
+    height: 20px;
+    left: 15px;
+    margin: -10px 0;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+}
+
+#image_uploader .wrapper .upload .progressbar-wrapper .progress { margin: 0; }
+
+#image_uploader .wrapper .link { position: relative; }
+#image_uploader .wrapper .link .form-group {
+    bottom: 50%;
+    left: 0;
+    margin: -18px 0;
+    padding: 0 50px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+}
+
+#image_uploader .wrapper .image-option {
+    color: #555;
+    font-size: 18px;
+    left: 10px;
+    line-height: 1;
+    position: absolute;
+    bottom: 10px;
+}

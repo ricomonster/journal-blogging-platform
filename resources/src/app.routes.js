@@ -11,8 +11,9 @@
 
         // default endpoint if page/state does not exists
         $urlRouterProvider.otherwise('/')
-            //.when('/', '/post/lists')
-            .when('/post', '/post/lists');
+            .when('/post', '/post/lists')
+            .when('/tag', '/tag/lists')
+            .when('/user', '/user/lists');
 
         // state configuration
         $stateProvider
@@ -64,6 +65,17 @@
                 },
                 authenticate : true
             })
+            // ROOT
+            .state('root', {
+                url : '/',
+                controller : ['$state', function($state) {
+                    // for now let's redirect this to post.lists then later on
+                    // we'll create a dashboard and that would be the permanent
+                    // redirect page
+                    $state.go('post.lists');
+                }],
+                authenticate : true
+            })
             // SETTINGS
             .state('settings', {
                 url : '/settings',
@@ -82,6 +94,44 @@
                         templateUrl : templatePath('settings-general/settings-general.html')
                     }
                 }
+            })
+            // TAG
+            .state('tag', {
+                url : '/tag',
+                views : {
+                    '' : {
+                        templateUrl : templatePath('tag/tag.html')
+                    }
+                },
+                abstract : true,
+                authenticate : true
+            })
+            .state('tag.edit', {
+                url : '/edit/:tagId',
+                views : {
+                    'tag_content' : {
+                        templateUrl : templatePath('tag-edit/tag-edit.html')
+                    }
+                },
+                authenticate : true
+            })
+            .state('tag.lists', {
+                url : '/lists',
+                views : {
+                    'tag_content' : {
+                        templateUrl : templatePath('tag-lists/tag-lists.html')
+                    }
+                },
+                authenticate : true
+            })
+            .state('tag.create', {
+                url : '/create',
+                views : {
+                    'tag_content' : {
+                        templateUrl : templatePath('tag-create/tag-create.html')
+                    }
+                },
+                authenticate : true
             })
             // USER
             .state('user', {

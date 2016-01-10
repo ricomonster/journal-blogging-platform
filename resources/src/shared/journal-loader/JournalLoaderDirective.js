@@ -7,12 +7,18 @@
     function JournalLoaderDirective(CONFIG) {
         return {
             restrict : 'EA',
-            scope : {
-
-            },
+            replace : true,
             templateUrl : CONFIG.TEMPLATE_PATH + '/journal-loader/_journal-loader.html',
-            link : function(scope, element, attributes) {
+            link : function(scope, element, attribute) {
+                // TODO: Dynamic settings to be put as an element attribute
+                var options = {
+                        color: '#4d4a4c',
+                        width: 4
+                    };
 
+                var spinner = new Spinner(options).spin()
+
+                element[0].appendChild(spinner.el);
             }
         }
     }

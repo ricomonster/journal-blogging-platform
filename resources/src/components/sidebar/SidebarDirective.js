@@ -31,6 +31,13 @@
                         });
                 };
 
+                vm.setActiveClass = function(stateName) {
+                    // get the current state name
+                    var state = $state.current.name;
+
+                    return (state.indexOf(stateName) > -1);
+                };
+
                 vm.logout = function() {
                     // logout the user
                     AuthService.logout();

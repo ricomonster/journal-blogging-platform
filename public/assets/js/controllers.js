@@ -218,9 +218,9 @@
     'use strict';
 
     angular.module('journal.components.postLists')
-        .controller('PostListsController', ['$uibModal', 'PostListsService', 'CONFIG', PostListsController]);
+        .controller('PostListsController', ['$uibModal', 'PostListsService', 'ToastrService', 'CONFIG', PostListsController]);
 
-    function PostListsController($uibModal, PostListsService, CONFIG) {
+    function PostListsController($uibModal, PostListsService, ToastrService, CONFIG) {
         var vm = this;
 
         // controller variables
@@ -622,6 +622,224 @@
                     });
             }
         });
+
+        vm.initialize();
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.components.tagDeleteModal')
+        .controller('TagDeleteModalController', ['$uibModalInstance', 'TagDeleteModalService', 'ToastrService', 'tag', TagDeleteModalController]);
+
+    function TagDeleteModalController($uibModalInstance, TagDeleteModalService, ToastrService, tag) {
+        var vm = this;
+
+        // controller variables
+        vm.processing = false;
+        vm.tag = tag;
+
+        /**
+         * Closes the modal
+         */
+        vm.closeModal = function() {
+            $uibModalInstance.dismiss('cancel');
+        };
+
+        vm.deleteTag = function() {
+            var tag = vm.tag;
+
+            // flag that we're processing
+            vm.processing = true;
+
+            // send request to the API
+            TagDeleteModalService.deleteTag(tag.id)
+                .then(function(response) {
+                    if (!response.error) {
+                        // success message
+                        ToastrService
+                            .toast('You have successfully deleted the tag "'+tag.name+'"', 'success');
+                        // close and return the response
+                        $uibModalInstance.close(response);
+                    }
+                }, function(error) {
+                    ToastrService
+                        .toast('Something went wrong while deleting the tag. Please try again', 'error');
+
+                    // close the modal
+                    $uibModalInstance.dismiss('cancel');
+                });
+        };
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.components.tagEdit')
+        .controller('TagEditController', ['$state', '$stateParams', '$uibModal', 'TagEditService', 'ToastrService', 'CONFIG', TagEditController]);
+
+    function TagEditController($state, $stateParams, $uibModal, TagEditService, ToastrService, CONFIG) {
+        var vm = this;
+
+        // controller variables
+        vm.errors = {};
+        vm.processing = false;
+        vm.tag = {};
+
+        vm.initialize = function() {
+            // check for a parameter
+            if ($stateParams.tagId) {
+                // get the tag from the API
+                TagEditService.getTag($stateParams.tagId)
+                    .then(function(response) {
+                        if (response.tag) {
+                            vm.tag = response.tag;
+                        }
+                    }, function(error) {
+                        // TODO: Handle error
+                    });
+            }
+
+            // TODO: Redirect to a 404 page if the page does not exists.
+        };
+
+        this.updateTag = function() {
+            var tag = vm.tag;
+
+            // flag that we're going to process the request
+            vm.processing = true;
+
+            // send request to the API
+            TagEditService.updateTagDetails(tag)
+                .then(function(response) {
+                    if (response.tag) {
+                        vm.errors = {};
+
+                        // show a success message
+                        ToastrService.toast('You have successfully updated the tag.', 'success');
+
+                        // update vm.tag
+                        vm.tag = response.tag;
+                    }
+
+                    vm.processing = false;
+                }, function(error) {
+                    vm.processing = false;
+
+                    // tell that there's an error
+                    ToastrService
+                        .toast('There are some errors encountered processing your request.', 'error');
+
+                    // get the errors
+                    vm.errors = error.errors;
+
+                    // loop the errors so we can show it via toastr
+                    for (var e in error.errors) {
+                        ToastrService.toast(error.errors[e][0], 'error');
+                    }
+                });
+        };
+
+        vm.openDeleteTagModal = function() {
+            // instantiate the modal
+            var modal = $uibModal.open({
+                animation: true,
+                controllerAs : 'tdmc',
+                controller : 'TagDeleteModalController',
+                templateUrl: CONFIG.TEMPLATE_PATH + 'tag-delete-modal/tag-delete-modal.html',
+                resolve: {
+                    tag : function() {
+                        return angular.copy(vm.tag);
+                    }
+                },
+                size : 'delete-tag'
+            });
+
+            modal.result.then(function(response) {
+                if (!response.error) {
+                    // redirect to tag lists
+                    $state.go('tag.lists');
+                }
+            });
+        };
+
+        vm.initialize();
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular.module('journal.components.tagLists')
+        .controller('TagListsController', ['TagListsService', 'ToastrService', TagListsController]);
+
+    function TagListsController(TagListsService, ToastrService) {
+        var vm = this;
+
+        // controller variables
+        vm.add          = {};
+        vm.errors       = {};
+        vm.loading      = true;
+        vm.processing   = false;
+        vm.tags         = {};
+
+        vm.addTag = function() {
+            var tag = vm.add;
+
+            // flag that we're going to process this
+            vm.processing = true;
+
+            TagListsService.createTag(tag)
+                .then(function(response) {
+                    if (response.tag) {
+                        ToastrService.toast('You have successfully created a new tag!', 'success');
+
+                        // empty the errors
+                        vm.errors = {};
+
+                        // empty the form
+                        vm.add = {};
+
+                        // push the new tag to the list
+                        vm.tags.push(response.tag);
+                    }
+
+                    vm.processing = false;
+                }, function(error) {
+                    vm.processing = false;
+
+                    // tell that there's an error
+                    ToastrService
+                        .toast('There are some errors encountered processing your request.', 'error');
+
+                    // get the errors
+                    vm.errors = error.errors;
+
+                    // loop the errors so we can show it via toastr
+                    for (var e in error.errors) {
+                        ToastrService.toast(error.errors[e][0], 'error');
+                    }
+                });
+        };
+
+        /**
+         * Fetch tags from the API once the page loads.
+         */
+        vm.initialize = function() {
+            // fetch the tags from the API
+            TagListsService.getTags().then(function(response) {
+                if (response.tags) {
+                    vm.tags = response.tags;
+
+                    // flag that we're finish loading data
+                    vm.loading = false;
+                }
+            }, function() {
+
+            });
+        };
 
         vm.initialize();
     }

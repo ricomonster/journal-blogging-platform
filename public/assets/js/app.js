@@ -16,6 +16,10 @@
         'journal.components.settingsGeneral',
         'journal.components.settingsGeneralModal',
         'journal.components.sidebar',
+        //'journal.components.tag'
+        'journal.components.tagDeleteModal',
+        'journal.components.tagEdit',
+        'journal.components.tagLists',
         //'journal.components.user',
         'journal.components.userCreate',
         'journal.components.userLists',
@@ -26,6 +30,7 @@
         'journal.shared.deletePostModal',
         'journal.shared.fileUploader',
         'journal.shared.journalLoader',
+        'journal.shared.imageUploader',
         'journal.shared.markdownReader',
         'journal.shared.storage',
         'journal.shared.toastr',
@@ -60,6 +65,11 @@
     // Sidebar
     angular.module('journal.components.sidebar', []);
 
+    // Tags
+    angular.module('journal.components.tagDeleteModal', []);
+    angular.module('journal.components.tagEdit', []);
+    angular.module('journal.components.tagLists', []);
+
     // Users
     //angular.module('journal.components.user', []);
     angular.module('journal.components.userCreate', []);
@@ -71,6 +81,7 @@
     angular.module('journal.shared.auth', []);
     angular.module('journal.shared.deletePostModal', []);
     angular.module('journal.shared.fileUploader', ['ngFileUpload']);
+    angular.module('journal.shared.imageUploader', []);
     angular.module('journal.shared.journalLoader', []);
     angular.module('journal.shared.markdownReader', []);
     angular.module('journal.shared.storage', ['LocalStorageModule']);
@@ -122,8 +133,9 @@
 
         // default endpoint if page/state does not exists
         $urlRouterProvider.otherwise('/')
-            //.when('/', '/post/lists')
-            .when('/post', '/post/lists');
+            .when('/post', '/post/lists')
+            .when('/tag', '/tag/lists')
+            .when('/user', '/user/lists');
 
         // state configuration
         $stateProvider
@@ -175,6 +187,17 @@
                 },
                 authenticate : true
             })
+            // ROOT
+            .state('root', {
+                url : '/',
+                controller : ['$state', function($state) {
+                    // for now let's redirect this to post.lists then later on
+                    // we'll create a dashboard and that would be the permanent
+                    // redirect page
+                    $state.go('post.lists');
+                }],
+                authenticate : true
+            })
             // SETTINGS
             .state('settings', {
                 url : '/settings',
@@ -193,6 +216,44 @@
                         templateUrl : templatePath('settings-general/settings-general.html')
                     }
                 }
+            })
+            // TAG
+            .state('tag', {
+                url : '/tag',
+                views : {
+                    '' : {
+                        templateUrl : templatePath('tag/tag.html')
+                    }
+                },
+                abstract : true,
+                authenticate : true
+            })
+            .state('tag.edit', {
+                url : '/edit/:tagId',
+                views : {
+                    'tag_content' : {
+                        templateUrl : templatePath('tag-edit/tag-edit.html')
+                    }
+                },
+                authenticate : true
+            })
+            .state('tag.lists', {
+                url : '/lists',
+                views : {
+                    'tag_content' : {
+                        templateUrl : templatePath('tag-lists/tag-lists.html')
+                    }
+                },
+                authenticate : true
+            })
+            .state('tag.create', {
+                url : '/create',
+                views : {
+                    'tag_content' : {
+                        templateUrl : templatePath('tag-create/tag-create.html')
+                    }
+                },
+                authenticate : true
             })
             // USER
             .state('user', {

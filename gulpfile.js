@@ -172,6 +172,20 @@ gulp.task('build-stylesheets', function() {
 });
 
 /**
+ * Build: Builds the Journal application to reflect if there are changes.
+ */
+gulp.task('build-journal', function(callback) {
+    runSequence(
+        'build-admin-app',
+        'build-admin-controllers',
+        'build-admin-directives',
+        'build-admin-services',
+        'build-admin-providers',
+        'build-admin-templates',
+        callback);
+});
+
+/**
  * Build: Builds the vendor files and concatenates them all to a single file.
  */
 gulp.task('build-vendor', function() {
@@ -273,6 +287,7 @@ gulp.task('default', function(callback) {
     if (isProduction) {
         runSequence(
             'install-from-bower',
+            'build-journal',
             'build-vendor',
             'build-admin',
             'build-stylesheets',
@@ -285,12 +300,7 @@ gulp.task('default', function(callback) {
     // development setup
     runSequence(
         'install-from-bower',
-        'build-admin-app',
-        'build-admin-controllers',
-        'build-admin-directives',
-        'build-admin-services',
-        'build-admin-providers',
-        'build-admin-templates',
+        'build-journal',
         'build-stylesheets',
         'inject-scripts',
         'theme-assets',

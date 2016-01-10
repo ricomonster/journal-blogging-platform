@@ -1,2 +1,8 @@
-#journal_loader { display: block; padding: 50px 0; text-align: center; width: auto; }
-#journal_loader i.fa { font-size: 32px; }
+#journal_loader {
+    display: block;
+    height: 100px;
+    padding: 50px 0;
+    position: relative;
+    text-align: center;
+    width: auto;
+}

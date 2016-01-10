@@ -1,0 +1,13 @@
+#tag_delete_modal {}
+#tag_delete_modal .modal-body { padding: 30px 15px; }
+#tag_delete_modal .modal-body p {
+    font-size: 16px;
+    margin: 0;
+    text-align: center;
+}
+
+#tag_delete_modal .modal-body p .tag { font-weight: bold; }
+#tag_delete_modal .modal-body p .tag:after { content: '"'; }
+#tag_delete_modal .modal-body p .tag:before { content: '"'; }
+
+.modal-delete-tag { width: 500px; }

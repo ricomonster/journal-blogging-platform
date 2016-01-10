@@ -58,9 +58,14 @@ Route::group(['prefix' => 'api/v1.0', 'middleware' => 'cors'], function() {
 
     // Tag Routes
     Route::group(['prefix' => 'tags'], function() {
-        Route::get('all', 'Api\ApiTagsController@all');
+        Route::delete('delete_tag', 'Api\ApiTagsController@deleteTag');
 
-        Route::post('create_tag', 'Api\ApiTagsController@createTag');
+        Route::get('all', 'Api\ApiTagsController@all');
+        Route::get('get_tag', 'Api\ApiTagsController@getTag');
+
+        Route::post('create', 'Api\ApiTagsController@createTag');
+
+        Route::put('update', 'Api\ApiTagsController@update');
     });
 
     // User Routes
