@@ -82,6 +82,23 @@ class DbTagRepository implements TagRepositoryInterface
     }
 
     /**
+     * @param $id
+     * @return void
+     */
+    public function deactivate($id)
+    {
+        // get the tag
+        $tag = $this->findById($id);
+
+        // unlink
+        $tag->posts()->detach();
+
+        // deactivate
+        $tag->active = 0;
+        $tag->save();
+    }
+
+    /**
      * @param $string
      * @param $id
      * @return string

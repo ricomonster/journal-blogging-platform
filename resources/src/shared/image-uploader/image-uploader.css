@@ -8,7 +8,7 @@
 
 #image_uploader .image-wrapper {
     display: block;
-    min-height: 300px;
+    min-height: 180px;
     position: relative;
     width: 100%;
 }

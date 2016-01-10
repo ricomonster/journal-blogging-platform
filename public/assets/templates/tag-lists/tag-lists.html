@@ -5,7 +5,7 @@
     <section class="tag-page-content">
         <section class="tag-lists scrollable-content">
             <article class="tag auto-height" ng-repeat="tag in tlc.tags">
-                <a class="tag-hyperlink clearfix">
+                <a class="tag-hyperlink clearfix" ui-sref="tag.edit({ tagId : tag.id })">
                     <h3 class="tag-name">{{tag.name}}</h3>
                     <span class="tag-slug label label-default">/{{tag.slug}}</span>
                     <span class="post-tag-count">

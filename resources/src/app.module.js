@@ -17,6 +17,7 @@
         'journal.components.settingsGeneralModal',
         'journal.components.sidebar',
         //'journal.components.tag'
+        'journal.components.tagDeleteModal',
         'journal.components.tagEdit',
         'journal.components.tagLists',
         //'journal.components.user',
@@ -65,6 +66,7 @@
     angular.module('journal.components.sidebar', []);
 
     // Tags
+    angular.module('journal.components.tagDeleteModal', []);
     angular.module('journal.components.tagEdit', []);
     angular.module('journal.components.tagLists', []);
 

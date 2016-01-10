@@ -166,6 +166,8 @@ class DbPostRepository implements PostRepositoryInterface
         // get user
         $post = $this->findById($id);
 
+        // unlink the tags
+
         // update user
         $post->active = 0;
         $post->save();

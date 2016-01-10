@@ -1,1 +1,4 @@
 #tag_edit_page {}
+#tag_edit_page .page-header .btn.btn-danger { float: right; margin-right: 5px; }
+#tag_edit_page .tag-edit-content .form-wrapper { padding: 15px 30px; width: 50%; }
+#tag_edit_page .tag-edit-content .image-uploader-wrapper { padding: 15px; }

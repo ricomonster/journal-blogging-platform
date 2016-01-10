@@ -17,6 +17,7 @@
         'journal.components.settingsGeneralModal',
         'journal.components.sidebar',
         //'journal.components.tag'
+        'journal.components.tagDeleteModal',
         'journal.components.tagEdit',
         'journal.components.tagLists',
         //'journal.components.user',
@@ -65,6 +66,7 @@
     angular.module('journal.components.sidebar', []);
 
     // Tags
+    angular.module('journal.components.tagDeleteModal', []);
     angular.module('journal.components.tagEdit', []);
     angular.module('journal.components.tagLists', []);
 
@@ -131,7 +133,9 @@
 
         // default endpoint if page/state does not exists
         $urlRouterProvider.otherwise('/')
-            .when('/post', '/post/lists');
+            .when('/post', '/post/lists')
+            .when('/tag', '/tag/lists')
+            .when('/user', '/user/lists');
 
         // state configuration
         $stateProvider
@@ -222,6 +226,15 @@
                     }
                 },
                 abstract : true,
+                authenticate : true
+            })
+            .state('tag.edit', {
+                url : '/edit/:tagId',
+                views : {
+                    'tag_content' : {
+                        templateUrl : templatePath('tag-edit/tag-edit.html')
+                    }
+                },
                 authenticate : true
             })
             .state('tag.lists', {

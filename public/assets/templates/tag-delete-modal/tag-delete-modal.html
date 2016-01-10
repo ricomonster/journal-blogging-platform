@@ -1,0 +1,20 @@
+<article id="tag_delete_modal">
+    <header class="modal-header">
+        <button type="button" class="close" ng-click="tdmc.closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="modal-title">Delete Tag</h3>
+    </header>
+    <section class="modal-body">
+        <p class="message">
+            Are you sure you wanted to delete the tag
+            <span class="tag">{{tdmc.tag.name}}</span>?
+        </p>
+    </section>
+    <footer class="modal-footer">
+        <button class="btn btn-danger" type="button" ng-click="tdmc.deleteTag()"
+        ladda="tdmc.processing">Yes, delete this tag</button>
+        <button class="btn btn-default" type="button" ng-click="tdmc.closeModal()"
+        ng-disabled="tdmc.processing">Cancel</button>
+    </footer>
+</article>

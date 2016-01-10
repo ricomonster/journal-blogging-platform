@@ -43,6 +43,12 @@ interface TagRepositoryInterface
     public function update($id, $name, $slug, $imageUrl);
 
     /**
+     * @param $id
+     * @return void
+     */
+    public function deactivate($id);
+
+    /**
      * @param $string
      * @param $id
      * @return string
