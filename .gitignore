@@ -1,0 +1,10 @@
+/vendor
+/node_modules
+/bower_components
+/themes/bootstrap
+Homestead.yaml
+.env
+.idea
+composer.lock
+/public/uploads
+/resources/build
