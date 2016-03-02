@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Journal;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -12,8 +12,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
-    ];
+        'name', 'email', 'password', 'biography', 'avatar_url', 'cover_url',
+        'location', 'website', 'slug', 'login_at', 'active'];
 
     /**
      * The attributes excluded from the model's JSON form.
