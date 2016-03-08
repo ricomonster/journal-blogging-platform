@@ -17,15 +17,18 @@ Route::get('/', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| API Routes
 |--------------------------------------------------------------------------
 |
-| This route group applies the "web" middleware group to every route
-| it contains. The "web" middleware group is defined in your HTTP
-| kernel and includes session state, CSRF protection, and more.
-|
 */
+Route::group(['namespace' => 'API', 'prefix' => 'api'], function () {
+    // Auth Routes
+    Route::group(['prefix' => 'auth'], function () {
+        Route::post('authorize', 'ApiAuthController@authorize');
+    });
 
-Route::group(['middleware' => ['web']], function () {
-    //
+    // User Routes
+    Route::group(['prefix' => 'users'], function () {
+        Route::post('create', 'ApiUsersController@create');
+    });
 });

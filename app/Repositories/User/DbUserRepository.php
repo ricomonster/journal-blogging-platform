@@ -112,7 +112,7 @@ class DbUserRepository implements UserRepositoryInterface
         $slug = str_slug($string, '-');
 
         // prepare the query to check for slugs
-        $query = User::where('slug', 'LIKE', $string.'%');
+        $query = User::where('slug', 'LIKE', $slug.'%');
 
         // check if the ID is set
         if (!is_null($id)) {
