@@ -1,0 +1,16 @@
+html, body { height: 100%; }
+body {
+    background-color: #ffffff;
+    color: #231f20;
+    /*font-family: "Roboto", sans-serif;*/
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    overflow-x: hidden;
+    position: relative;
+}
+
+h1, h2, h3, h4, h5, h6 { color: #434648; }
+
+a { color: #3187e1; cursor: pointer; }

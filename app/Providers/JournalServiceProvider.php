@@ -25,6 +25,14 @@ class JournalServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
+            'Journal\Repositories\Settings\SettingsRepositoryInterface',
+            'Journal\Repositories\Settings\DbSettingsRepository');
+
+        $this->app->bind(
+            'Journal\Repositories\Post\PostRepositoryInterface',
+            'Journal\Repositories\Post\DbPostRepository');
+
+        $this->app->bind(
             'Journal\Repositories\User\UserRepositoryInterface',
             'Journal\Repositories\User\DbUserRepository');
     }

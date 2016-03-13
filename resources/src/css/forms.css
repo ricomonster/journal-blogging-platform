@@ -1,0 +1,14 @@
+.form-group { margin-bottom: 20px; }
+
+/*.form-group > .help-block { font-style: italic; }*/
+.form-group > .help-block.error { font-style: none; }
+
+.form-control { border-width: 1px; height: 36px; }
+.input-group-addon { border-radius: 2px; border-width: 1px; }
+
+.form-control, .form-control:focus {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    border-radius: 2px;
+    box-shadow: none;
+}

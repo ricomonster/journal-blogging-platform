@@ -1,0 +1,9 @@
+/* New color schemes for the buttons */
+.btn.btn-primary { border-color: #529ecc; background: #529ecc; }
+.btn.btn-danger { background-color: #dc6e53; border-color: #dc6e53;}
+.btn.btn-success { background-color: #67c295; border-color: #67c295; }
+.btn.btn-info { background-color: #63a7d1; border-color: #63a7d1; }
+.btn.btn-warning { background-color: #f3a343; border-color: #f3a343; }
+
+.btn { border-radius: 2px; padding: 7px 12px; }
+.btn.btn-sm { padding: 4px 12px; }

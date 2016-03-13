@@ -33,7 +33,9 @@ class DbPostRepository implements PostRepositoryInterface
      */
     public function all()
     {
-        return Post::where('active', '=', 1)->get();
+        return Post::where('active', '=', 1)
+            ->where('is_page', '=', 0)
+            ->get();
     }
 
     /**
@@ -53,6 +55,7 @@ class DbPostRepository implements PostRepositoryInterface
     {
         return Post::where('id', '=', $id)
             ->where('active', '=', 1)
+            ->where('is_page', '=', 0)
             ->first();
     }
 
@@ -64,6 +67,7 @@ class DbPostRepository implements PostRepositoryInterface
     {
         return Post::where('slug', '=', $slug)
             ->where('active', '=', 1)
+            ->where('is_page', '=', 0)
             ->first();
     }
 

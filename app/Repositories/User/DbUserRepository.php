@@ -17,10 +17,10 @@ class DbUserRepository implements UserRepositoryInterface
     public function create($user)
     {
         return User::create([
-            'name' => $user->name,
-            'email' => $user->email,
-            'password' => Hash::make($user->password),
-            'slug' => $this->generateSlug($user->name)
+            'name'      => $user->name,
+            'email'     => $user->email,
+            'password'  => Hash::make($user->password),
+            'slug'      => $this->generateSlug($user->name)
         ]);
     }
 
@@ -122,7 +122,7 @@ class DbUserRepository implements UserRepositoryInterface
         // execute the query and count the results
         $count = count($query->get());
 
-        return $slug.'-'.$count;
+        return ($count > 0) ? $slug.'-'.$count : $slug;
     }
 
     /**
@@ -148,14 +148,14 @@ class DbUserRepository implements UserRepositoryInterface
         ];
 
         // check if the given data has an ID on it
-        if ($user->id) {
+        if (isset($user->id)) {
             // fix the rules for email unique because we will exclude the email
             // of the current request based on the given ID
             $rules['email'] += ','.$user->id;
         }
 
         // ID is not set
-        if (!$user->id) {
+        if (!isset($user->id)) {
             // we're expecting this to be a create so we will validate the
             // password given if there is given.
             $rules['password'] = 'required|min:6';

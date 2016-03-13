@@ -27,8 +27,28 @@ Route::group(['namespace' => 'API', 'prefix' => 'api'], function () {
         Route::post('authorize', 'ApiAuthController@authorize');
     });
 
+    // Installer Routes
+    Route::group(['prefix' => 'installer'], function () {
+        Route::post('save_setup', 'ApiInstallerController@saveSetup');
+    });
+
     // User Routes
     Route::group(['prefix' => 'users'], function () {
         Route::post('create', 'ApiUsersController@create');
     });
+});
+
+/*
+|--------------------------------------------------------------------------
+| Installer Routes
+|--------------------------------------------------------------------------
+|
+*/
+Route::group(['namespace' => 'Installer', 'prefix' => 'installer'], function () {
+    Route::get('/', 'WelcomeController@page');
+    Route::get('database', 'DatabaseController@page');
+    Route::get('success', 'FinalController@page');
+    Route::get('setup', 'SetupController@page');
+
+    Route::post('setup_database', 'DatabaseController@setup');
 });

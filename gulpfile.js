@@ -3,7 +3,7 @@ var gulp = require('gulp'),
     minifyCss = require('gulp-minify-css'),
     notify = require('gulp-notify'),
     uglify = require('gulp-uglify'),
-    plumber = require('plumber'),
+    plumber = require('gulp-plumber'),
     runSequence = require('run-sequence');
 
 var paths = require('./gulp-lib/paths'),
@@ -24,6 +24,22 @@ gulp.task('bower', function () {
         .pipe(gulp.dest(paths.base.vendor + '/js'));
 });
 
-gulp.task('default', function (callback) {
+/**
+ * Build: Builds css files and concatenates to a single file
+ */
+gulp.task('build-stylesheets', function () {
+    return gulp.src(paths.src.stylesheets)
+        .pipe(concat('screen.css'))
+        .pipe(plumber({
+            errorHandler: notify.onError("Error: <%= error.message %>")
+        }))
+        .pipe(gulp.dest(paths.base.public + '/assets'));
+});
 
+gulp.task('watch', function () {
+    gulp.watch(paths.src.stylesheets, ['build-stylesheets']);
+});
+
+gulp.task('default', function (callback) {
+    runSequence('bower', 'watch');
 });

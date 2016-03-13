@@ -1,0 +1,42 @@
+html, body { height: 100%; }
+body {
+    background-color: #ffffff;
+    color: #231f20;
+    /*font-family: "Roboto", sans-serif;*/
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    overflow-x: hidden;
+    position: relative;
+}
+
+h1, h2, h3, h4, h5, h6 { color: #434648; }
+
+a { color: #3187e1; cursor: pointer; }
+
+/* New color schemes for the buttons */
+.btn.btn-primary { border-color: #529ecc; background: #529ecc; }
+.btn.btn-danger { background-color: #dc6e53; border-color: #dc6e53;}
+.btn.btn-success { background-color: #67c295; border-color: #67c295; }
+.btn.btn-info { background-color: #63a7d1; border-color: #63a7d1; }
+.btn.btn-warning { background-color: #f3a343; border-color: #f3a343; }
+
+.btn { border-radius: 2px; padding: 7px 12px; }
+.btn.btn-sm { padding: 4px 12px; }
+
+.form-group { margin-bottom: 20px; }
+
+/*.form-group > .help-block { font-style: italic; }*/
+.form-group > .help-block.error { font-style: none; }
+
+.form-control { border-width: 1px; height: 36px; }
+.input-group-addon { border-radius: 2px; border-width: 1px; }
+
+.form-control, .form-control:focus {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    border-radius: 2px;
+    box-shadow: none;
+}
+
