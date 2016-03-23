@@ -1,0 +1,59 @@
+/* OSX Browser Issues fix */
+html { overflow: hidden; height: 100%; }
+body { height: 100%; overflow: auto; }
+
+/* Sidebar */
+.main-content { margin-left: 0; height: 100%; position: relative; }
+.sidebar .main-content { margin-left: 220px; }
+
+.page-header { border-bottom: 1px solid #e4e4e4; margin: 0; padding: 9px 10px; }
+.page-header h1.page-title {
+    font-size: 24px;
+    float: left;
+    line-height: 1;
+    margin: 6px 0;
+}
+
+.page-header .btn.btn-default,
+.page-header .btn.btn-primary { float: right; }
+.page-header .btn i.fa { margin-right: 3px; }
+
+.page-content { margin-left: 220px; }
+
+.full-height, .ng-scope { height: 100%; }
+.auto-height { height: auto; }
+
+.scrollable-content {
+    bottom: 0;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: absolute;
+    right: 0;
+    top: 55px;
+}
+
+/* Markdown */
+.rendered-markdown img {
+    display: block;
+    height: auto;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+.rendered-markdown code { white-space: normal; }
+.rendered-markdown em { font-family: 'Noto Serif', serif; }
+/*.rendered-markdown p { margin-bottom: 20px; }*/
+
+/* Alerts */
+.alert { color: #ffffff; }
+.alert.alert-danger { background-color: #dc6e53; border-color: #dc6e53;}
+.alert.alert-success { background-color: #67c295; border-color: #67c295; }
+.alert.alert-info { background-color: #63a7d1; border-color: #63a7d1; }
+.alert.alert-warning { background-color: #f3a343; border-color: #f3a343; }
+
+ul.alert { list-style: none; }
+.alert > p { margin: 0; }
+
+/* Vue JS */
+ [v-cloak] { display: none }

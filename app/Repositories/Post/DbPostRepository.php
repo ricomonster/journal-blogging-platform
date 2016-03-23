@@ -17,15 +17,19 @@ class DbPostRepository implements PostRepositoryInterface
      */
     public function create($post)
     {
-        return Post::create([
-            'author_id'     => $post->author_id,
-            'title'         => $post->title,
-            'content'       => $post->content,
-            'cover_image'   => $post->cover_image,
-            'slug'          => $post->slug,
-            'status'        => $post->status,
-            'published_at'  => $post->published_at
+        $result = Post::create([
+            'author_id'     => $post['author_id'],
+            'title'         => $post['title'],
+            'content'       => $post['content'],
+            'cover_image'   => $post['cover_image'],
+            'slug'          => $this->generateSlug($post['title']),
+            'status'        => $post['status'],
+            'published_at'  => $post['published_at']
         ]);
+
+        // TODO: Save tags and link them
+
+        return $result;
     }
 
     /**
@@ -35,6 +39,7 @@ class DbPostRepository implements PostRepositoryInterface
     {
         return Post::where('active', '=', 1)
             ->where('is_page', '=', 0)
+            ->orderBy('published_at', 'DESC')
             ->get();
     }
 
@@ -77,7 +82,20 @@ class DbPostRepository implements PostRepositoryInterface
      */
     public function update($post)
     {
+        $savedPost = $this->findById($post['post_id']);
 
+        // update
+        $savedPost->title        = $post['title'];
+        $savedPost->content      = $post['content'];
+        $savedPost->cover_image  = $post['cover_image'];
+        $savedPost->slug         = $this->generateSlug($post['title'], $post['post_id']);
+        $savedPost->status       = $post['status'];
+        $savedPost->published_at = $post['published_at'];
+        $savedPost->save();
+
+        // TODO: tags
+
+        return $savedPost;
     }
 
     /**
@@ -110,7 +128,7 @@ class DbPostRepository implements PostRepositoryInterface
         // execute the query and count the results
         $count = count($query->get());
 
-        return $slug.'-'.$count;
+        return ($count > 0) ? $slug.'-'.$count : $slug;
     }
 
     /**

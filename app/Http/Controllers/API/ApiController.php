@@ -9,12 +9,18 @@ use Journal\Http\Requests;
 
 class ApiController extends Controller
 {
+    // API Response Status Codes
     const OK                    = 200;
     const BAD_REQUEST           = 400;
     const UNAUTHORIZED          = 401;
     const FORBIDDEN             = 403;
     const NOT_FOUND             = 404;
     const INTERNAL_SERVER_ERROR = 500;
+
+    const AUTHOR_ID_REQUIRED    = 'Author ID is required.';
+    const AUTHOR_NOT_FOUND      = 'Author not found.';
+    const INVALID_CREDENTIALS   = 'Invalid e-mail or password.';
+    const POST_NOT_FOUND        = 'Post not found.';
 
     /**
      * Request status code

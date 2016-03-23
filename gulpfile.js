@@ -41,5 +41,5 @@ gulp.task('watch', function () {
 });
 
 gulp.task('default', function (callback) {
-    runSequence('bower', 'watch');
+    runSequence('bower', 'build-stylesheets', 'watch');
 });

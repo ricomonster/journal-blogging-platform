@@ -1,0 +1,39 @@
+<?php //-->
+namespace Journal\Http\Controllers\Admin;
+
+use Illuminate\Http\Request;
+use Journal\Http\Requests;
+use Journal\Http\Requests\AuthFormRequest;
+use Journal\Http\Controllers\Controller;
+use Auth;
+
+class AuthController extends Controller
+{
+    public function authenticate(AuthFormRequest $request)
+    {
+        // authenticate
+        $credentials = [
+            'email'     => $request->input('email'),
+            'password'  => $request->input('password')
+        ];
+
+        if (Auth::attempt($credentials)) {
+            // login is success
+            return redirect('journal/posts/list');
+        }
+
+        // redirect back
+        return redirect('journal/login')
+            ->with('error_message', 'Invalid e-mail or password.');
+    }
+
+    public function login()
+    {
+        return view('admin.auth.login');
+    }
+
+    public function logout()
+    {
+
+    }
+}

@@ -1,6 +1,6 @@
 .form-group { margin-bottom: 20px; }
 
-/*.form-group > .help-block { font-style: italic; }*/
+.form-group > .help-block { font-style: italic; }
 .form-group > .help-block.error { font-style: none; }
 
 .form-control { border-width: 1px; height: 36px; }

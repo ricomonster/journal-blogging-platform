@@ -2,7 +2,7 @@ html, body { height: 100%; }
 body {
     background-color: #ffffff;
     color: #231f20;
-    /*font-family: "Roboto", sans-serif;*/
+    font-family: "Roboto", sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
