@@ -7,20 +7,24 @@ body { height: 100%; overflow: auto; }
 .sidebar .main-content { margin-left: 220px; }
 
 .page-header { border-bottom: 1px solid #e4e4e4; margin: 0; padding: 9px 10px; }
-.page-header h1.page-title {
-    font-size: 24px;
-    float: left;
-    line-height: 1;
-    margin: 6px 0;
-}
+.page-header {
+    h1.page-title {
+        font-size: 24px;
+        float: left;
+        line-height: 1;
+        margin: 6px 0;
+    }
 
-.page-header .btn.btn-default,
-.page-header .btn.btn-primary { float: right; }
-.page-header .btn i.fa { margin-right: 3px; }
+    .btn.btn-default  { float: right; }
+    .btn.primary { @extend .btn.btn-default; }
+    .btn {
+        i.fa { margin-right: 3px; }
+    }
+}
 
 .page-content { margin-left: 220px; }
 
-.full-height, .ng-scope { height: 100%; }
+.full-height { height: 100%; }
 .auto-height { height: auto; }
 
 .scrollable-content {
@@ -34,16 +38,18 @@ body { height: 100%; overflow: auto; }
 }
 
 /* Markdown */
-.rendered-markdown img {
-    display: block;
-    height: auto;
-    margin: 0 auto;
-    max-width: 100%;
-}
+.rendered-markdown {
+    img {
+        display: block;
+        height: auto;
+        margin: 0 auto;
+        max-width: 100%;
+    }
 
-.rendered-markdown code { white-space: normal; }
-.rendered-markdown em { font-family: 'Noto Serif', serif; }
-/*.rendered-markdown p { margin-bottom: 20px; }*/
+    code { white-space: normal; }
+
+    em { font-family: 'Noto Serif', serif; }
+}
 
 /* Alerts */
 .alert { color: #ffffff; }
@@ -53,7 +59,9 @@ body { height: 100%; overflow: auto; }
 .alert.alert-warning { background-color: #f3a343; border-color: #f3a343; }
 
 ul.alert { list-style: none; }
-.alert > p { margin: 0; }
+.alert {
+    p { margin: 0; }
+}
 
 /* Vue JS */
  [v-cloak] { display: none }

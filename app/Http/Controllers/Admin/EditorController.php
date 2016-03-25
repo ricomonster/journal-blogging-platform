@@ -16,6 +16,8 @@ class EditorController extends Controller
 
     public function edit($postId)
     {
+        // check first if the post exists
+
         return view('admin.editor.index', compact('postId'));
     }
 }

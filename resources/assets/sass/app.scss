@@ -1,0 +1,24 @@
+/*
+ * Bootstrap CSS...
+ */
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+/**
+ * Font Awesome CSS
+ */
+@import "node_modules/font-awesome/scss/font-awesome.scss";
+
+/**
+ * Toastr CSS
+ */
+@import "node_modules/toastr/package/toastr.scss";
+
+/**
+ * Plugins
+ */
+@import "./plugins/codemirror.scss";
+
+/**
+ * Journal Styles
+ */
+@import "./journal.scss";

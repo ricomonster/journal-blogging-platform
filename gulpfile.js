@@ -1,45 +1,77 @@
-var gulp = require('gulp'),
-    concat = require('gulp-concat'),
-    minifyCss = require('gulp-minify-css'),
-    notify = require('gulp-notify'),
-    uglify = require('gulp-uglify'),
-    plumber = require('gulp-plumber'),
-    runSequence = require('run-sequence');
+var browserify  = require('browserify'),
+    gulp        = require('gulp'),
+    notify      = require('gulp-notify'),
+    plumber     = require('gulp-plumber')
+    rename      = require('gulp-rename'),
+    sass        = require('gulp-sass'),
+    util        = require('gulp-util'),
+    runSequence = require('run-sequence'),
+    source      = require('vinyl-source-stream'),
+    buffer      = require('vinyl-buffer');
 
-var paths = require('./gulp-lib/paths'),
-    bower = require('./gulp-lib/bower'),
-    vendor = require('./gulp-lib/vendor');
-
-gulp.task('bower', function () {
-    // css
-    gulp.src(bower.css)
-        .pipe(gulp.dest(paths.base.vendor + '/css'));
-
-    // fonts
-    gulp.src(bower.fonts)
-        .pipe(gulp.dest(paths.base.vendor + '/fonts'));
-
-    // js
-    gulp.src(bower.js)
-        .pipe(gulp.dest(paths.base.vendor + '/js'));
-});
+var production = !!util.env.prod;
 
 /**
- * Build: Builds css files and concatenates to a single file
+ * notify error handler
  */
-gulp.task('build-stylesheets', function () {
-    return gulp.src(paths.src.stylesheets)
-        .pipe(concat('screen.css'))
+var onError = function(err) {
+    notify.onError({
+        title:    "Gulp",
+        subtitle: "Failure!",
+        message:  "Error: <%= error.message %>",
+        sound:    "Beep"
+    })(err);
+
+    this.emit('end');
+};
+
+gulp.task('browserify', function () {
+    var transform = browserify({
+        entries : './resources/assets/js/app.js',
+        debug : true
+    });
+
+    return transform
+        .bundle()
+        .on('error', onError)
+        .pipe(source('app.js'))
+        .pipe(buffer())
         .pipe(plumber({
-            errorHandler: notify.onError("Error: <%= error.message %>")
+            errorHandler : onError
         }))
-        .pipe(gulp.dest(paths.base.public + '/assets'));
+        .pipe(gulp.dest('./public/assets/'))
+        .pipe(notify({
+            title : 'Browserify',
+            message : 'Finished building using Browserify.'
+        }));
+});
+
+gulp.task('build-sass', function () {
+    return gulp.src('./resources/assets/sass/app.scss')
+        .pipe(sass())
+        .on('error', onError)
+        .pipe(rename('screen.css'))
+        .pipe(gulp.dest('./public/assets/'));
+});
+
+gulp.task('get-fonts', function () {
+    return gulp.src([
+            './node_modules/font-awesome/fonts/*'
+        ])
+        .pipe(gulp.dest('./public/fonts'));
 });
 
 gulp.task('watch', function () {
-    gulp.watch(paths.src.stylesheets, ['build-stylesheets']);
+    gulp.watch([
+        './resources/assets/js/*.js',
+        './resources/assets/js/**/*.js',
+        './resources/assets/js/**/**/*.js'], ['browserify']);
+
+    gulp.watch([
+        './resources/assets/sass/*.scss',
+        './resources/assets/sass/**/.scss'], ['build-sass']);
 });
 
 gulp.task('default', function (callback) {
-    runSequence('bower', 'build-stylesheets', 'watch');
+    runSequence('browserify', 'build-sass', 'watch', callback);
 });

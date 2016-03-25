@@ -1,0 +1,28 @@
+#login_page {
+    .page-content {
+        height: 100%;
+        margin: 0 !important;
+        position: relative;
+    }
+
+    #login_form {
+        bottom: 50%;
+        left: 50%;
+        margin: -130px -170.5px;
+        position: absolute;
+        top: 50%;
+        width: 350px;
+    }
+
+    #login_form {
+        h1 {
+            margin: 10px 0 15px;
+            text-align: center;
+        }
+
+        .form-actions {
+            .btn { margin-bottom: 20px; }
+            .forgot-password { text-align: center; }
+        }
+    }
+}

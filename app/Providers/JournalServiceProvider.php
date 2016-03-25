@@ -14,7 +14,8 @@ class JournalServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        require __DIR__.'/../Http/helpers.php';
+        // add your file here...
     }
 
     /**

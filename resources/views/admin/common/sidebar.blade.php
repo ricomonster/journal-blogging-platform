@@ -53,9 +53,9 @@
     <div class="content">
         <header class="sidebar-header">
             <h1 class="blog-title">
-                <a href="/" target="_blank">Title</a>
+                <a href="/" target="_blank">{{blog_title()}}</a>
             </h1>
-            <p class="user-name">name</p>
+            <p class="user-name">{{auth_user()->name}}</p>
         </header>
         <section class="sidebar-content">
             <ul class="menu-lists">

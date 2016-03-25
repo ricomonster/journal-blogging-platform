@@ -6,29 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,700" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic" rel="stylesheet" type="text/css"> -->
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic" rel="stylesheet" type="text/css">
 
-    <link rel="stylesheet" href="{{ asset('/vendor/css/bootstrap.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('/vendor/css/font-awesome.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('/assets/screen.css') }}"/>
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <style type="text/css">
-        #login_page {}
-        #login_page .page-content { height: 100%; margin: 0 !important; position: relative; }
-        #login_page #login_form {
-            bottom: 50%;
-            left: 50%;
-            margin: -130px -170.5px;
-            position: absolute;
-            top: 50%;
-            width: 350px;
-        }
-
-        #login_page #login_form h1 { margin: 10px 0 15px; text-align: center; }
-        #login_page #login_form .form-actions .btn { margin-bottom: 20px; }
-        #login_page #login_form .form-actions .forgot-password { text-align: center; }
-    </style>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ asset('assets/screen.css') }}"/>
 </head>
 
 <body>
