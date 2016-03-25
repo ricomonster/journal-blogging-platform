@@ -1,7 +1,7 @@
 var browserify  = require('browserify'),
     gulp        = require('gulp'),
     notify      = require('gulp-notify'),
-    plumber     = require('gulp-plumber')
+    plumber     = require('gulp-plumber'),
     rename      = require('gulp-rename'),
     sass        = require('gulp-sass'),
     util        = require('gulp-util'),
@@ -39,11 +39,7 @@ gulp.task('browserify', function () {
         .pipe(plumber({
             errorHandler : onError
         }))
-        .pipe(gulp.dest('./public/assets/'))
-        .pipe(notify({
-            title : 'Browserify',
-            message : 'Finished building using Browserify.'
-        }));
+        .pipe(gulp.dest('./public/assets/'));
 });
 
 gulp.task('build-sass', function () {

@@ -44,7 +44,8 @@
                     </header>
                     <section class="editor-wrapper editor-scroll">
                         <!-- Codemirror here -->
-                        <div v-codemirror="post.content"></div>
+                        <div v-codemirror="post.content"
+                        v-sync-scroll.literal=".preview-wrapper"></div>
                     </section>
                 </section>
                 <section class="markdown-preview window">

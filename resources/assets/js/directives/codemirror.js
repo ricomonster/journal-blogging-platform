@@ -1,4 +1,3 @@
-// Codemirror Directive
 Vue.directive('codemirror', {
     twoWay : true,
     bind : function () {

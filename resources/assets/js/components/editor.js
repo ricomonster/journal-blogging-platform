@@ -1,4 +1,5 @@
 require('./../directives/codemirror');
+require('./../directives/sync-scroll');
 
 Vue.component('journal-editor', {
     data: function () {
