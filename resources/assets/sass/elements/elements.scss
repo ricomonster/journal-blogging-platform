@@ -3,23 +3,45 @@ html { overflow: hidden; height: 100%; }
 body { height: 100%; overflow: auto; }
 
 /* Sidebar */
-.main-content { margin-left: 0; height: 100%; position: relative; }
+.main-content { height: 100%; margin-left: 0; position: relative; }
 .sidebar .main-content { margin-left: 220px; }
 
-.page-header { border-bottom: 1px solid #e4e4e4; margin: 0; padding: 9px 10px; }
+.page-header {
+    background-color: $primary-bg-color;
+    border-bottom: 1px solid $border-color;
+    margin: 0;
+    padding: 11px 25px;
+}
+
 .page-header {
     h1.page-title {
-        font-size: 24px;
+        color: $text;
         float: left;
+        font-size: 24px;
         line-height: 1;
         margin: 6px 0;
     }
 
-    .btn.btn-default  { float: right; }
-    .btn.primary { @extend .btn.btn-default; }
-    .btn {
-        i.fa { margin-right: 3px; }
+    .options {
+        float: right;
+
+        i.fa {
+            font-size: 24px;
+            line-height: 36px;
+        }
     }
+
+    // .btn.btn-default {
+    //     float: right;
+    // }
+
+    // .btn.primary {
+    //     @extend .btn.btn-default;
+    // }
+
+    // .btn {
+    //     i.fa { margin-right: 3px; }
+    // }
 }
 
 .page-content { margin-left: 220px; }
@@ -48,7 +70,7 @@ body { height: 100%; overflow: auto; }
 
     code { white-space: normal; }
 
-    em { font-family: 'Noto Serif', serif; }
+    em { font-family: $italic-font; }
 }
 
 /* Alerts */

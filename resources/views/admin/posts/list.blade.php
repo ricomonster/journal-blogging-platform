@@ -7,8 +7,8 @@
     <div id="posts_list_page">
         <header class="page-header clearfix">
             <h1 class="page-title">Posts</h1>
-            <a class="btn btn-default new-post" href="{{url('journal/editor')}}">
-                <i class="fa fa-pencil-square-o"></i> New Post
+            <a class="new-post options" href="{{url('journal/editor')}}">
+                <i class="fa fa-pencil-square"></i>
             </a>
         </header>
         <section class="post-lists">
@@ -25,7 +25,7 @@
                             <time class="post-timestamp published"
                             v-if="post.status == 1">
                                 <span>Published</span>
-                                <span>7 years ago</span>
+                                <time-ago :timestamp="post.published_at"></time-ago>
                             </time>
                             <span class="post-status draft" v-if="post.status == 2">Draft</span>
                         </section>
@@ -52,18 +52,19 @@
                 <div class="post-controls">
                     <ul class="control-lists">
                         <li>
-                            <a href="/journal/editor/@{{active.id}}" class="btn btn-success btn-sm">
-                                <i class="fa fa-pencil"></i> Edit
+                            <a href="/journal/editor/@{{active.id}}" class="edit-post">
+                                <i class="fa fa-pencil"></i>
                             </a>
                         </li>
                         <li>
-                            <a class="btn btn-warning btn-sm">
-                                <i class="fa fa-search"></i> Preview
+                            <a class="preview-post">
+                                <i class="fa fa-search"></i>
                             </a>
                         </li>
                         <li>
-                            <a class="btn btn-danger btn-sm">
-                                <i class="fa fa-trash-o"></i> Delete
+                            <a class="delete-post" data-toggle="modal"
+                            data-target="#delete_post_modal">
+                                <i class="fa fa-trash"></i>
                             </a>
                         </li>
                     </ul>
@@ -83,6 +84,31 @@
                 </a>
             </div>
         </section>
+    </div>
+
+    <div id="delete_post_modal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Delete Post</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Are you sure you wanted to delete the post
+                        <span class="post-title">@{{active.title}}</span>?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" v-on:click="deletePost()">
+                        Yes, delete this post
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
     </div>
 </journal-posts-list>
 @endsection

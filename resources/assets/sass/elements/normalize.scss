@@ -1,8 +1,8 @@
 html, body { height: 100%; }
 body {
-    background-color: #ffffff;
-    color: #231f20;
-    font-family: "Roboto", sans-serif;
+    background-color: $secondary-bg-color;
+    color: $text;
+    font-family: $default-font;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -11,6 +11,6 @@ body {
     position: relative;
 }
 
-h1, h2, h3, h4, h5, h6 { color: #434648; }
+h1, h2, h3, h4, h5, h6 { color: $text; }
 
-a { color: #3187e1; cursor: pointer; }
+a { color: $hyperlink; cursor: pointer; }

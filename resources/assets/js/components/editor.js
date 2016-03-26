@@ -15,7 +15,8 @@ Vue.component('journal-editor', {
             sidebarOpen : false,
             post : {
                 status : 2,
-                slug : ''
+                slug : '',
+                published_at : ''
             },
             processing : false,
             userId : Journal.userId
@@ -23,6 +24,7 @@ Vue.component('journal-editor', {
     },
     ready : function () {
         this.renderButtons();
+        this.setPublishDateTime();
 
         if ($('input[name="post_id"]').length > 0) {
             // get the the post
@@ -49,6 +51,9 @@ Vue.component('journal-editor', {
 
                         // render the buttons
                         vm.renderButtons();
+
+                        // set the published date time
+                        vm.setPublishDateTime();
                     }
                 });
         },
@@ -56,14 +61,13 @@ Vue.component('journal-editor', {
         /**
          * Saves the post to the API
          */
-        savePost : function () {
+        savePost : function (e) {
+            e.preventDefault();
+
             var vm = this,
                 post = vm.post,
                 successMessage = 'You have successfully created a new post.',
                 url = '/api/posts/save?author_id='+vm.userId;
-
-            console.log(post);
-            return;
 
             // check if post id is present
             if (post.id) {
@@ -71,6 +75,9 @@ Vue.component('journal-editor', {
 
                 successMessage = 'You have successfully updated your post.';
             }
+
+            // fix the publish date, convert it to timestamp
+            post.published_at = moment(post.published_at).unix();
 
             // save post
             vm.$http.post(url, post)
@@ -84,6 +91,9 @@ Vue.component('journal-editor', {
 
                         // update the buttons
                         vm.renderButtons();
+
+                        // update the published date time
+                        vm.setPublishDateTime();
                     }
                 }, function (response) {
                     // error, show it
@@ -98,16 +108,18 @@ Vue.component('journal-editor', {
          * This will render the buttons to be shown
          */
         renderButtons : function () {
+            var vm = this;
+
             // we're going to assume that status is published.
-            var selectedOption = this.buttons[3];
+            var selectedOption = vm.buttons[3];
 
             // check if the post status is draft
-            if (this.post.status == 2) {
-                selectedOption = this.buttons[1];
+            if (vm.post.status == 2) {
+                selectedOption = vm.buttons[1];
             }
 
             // set the button option
-            this.active = selectedOption;
+            vm.$set('active', selectedOption);
         },
 
         /**
@@ -117,24 +129,25 @@ Vue.component('journal-editor', {
             var vm = this;
 
             // set the selected one to be active
-            vm.active = option;
+            vm.$set('active', option);
 
             // reflect to the prop
-            vm.post.status = option.status;
+            vm.$set('post.status', option.status);
         },
 
         /**
          * Toggle to close or open the sidebar
          */
         toggleSidebar : function () {
-            this.sidebarOpen = !this.sidebarOpen;
+            this.$set('sidebarOpen', !this.sidebarOpen);
         },
 
         /**
          * Gets the value of the title and send to the API to generate a slug
          */
         generateSlug : function () {
-            var title = this.post.title || '',
+            var vm = this,
+                title = vm.post.title || '',
                 url = '/api/posts/generate_slug';
 
             // let's not send if the title is empty
@@ -143,20 +156,40 @@ Vue.component('journal-editor', {
             }
 
             // check if post id is present
-            if (this.post.id) {
-                url += '?post_id='+this.post.id;
+            if (vm.post.id) {
+                url += '?post_id='+vm.post.id;
             }
 
             // send request to the api
-            this.$http.post(url, { string : title })
+            vm.$http.post(url, { string : title })
                 .then(function (response) {
                     if (response.data.slug) {
                         // update the post slug
-                        this.$set('post.slug', response.data.slug);
+                        vm.$set('post.slug', response.data.slug);
                     }
                 }, function () {
                     // do something
-                }.bind(this));
+                });
+        },
+
+        /**
+         * Sets the date and time to be shown in the input datetime-local field.
+         */
+        setPublishDateTime : function () {
+            var vm = this,
+                // set format
+                format = 'YYYY-MM-DD[T]HH:mm';
+
+            if (vm.post.published_at) {
+                // render the published date
+                vm.$set(
+                    'post.published_at',
+                    moment.unix(vm.post.published_at).format(format));
+                return;
+            }
+
+            // get the current date and set as published date/time
+            vm.$set('post.published_at', moment().format(format));
         }
     }
 });

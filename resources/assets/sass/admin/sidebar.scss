@@ -1,0 +1,90 @@
+#sidebar {
+    .content {
+        background-color: $secondary-bg-color;
+        border-right: 1px solid $border-color;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 220px;
+    }
+
+    .content {
+        .sidebar-header {
+            border-bottom: 1px solid $border-color;
+            padding: 15px 10px 5px;
+        }
+
+        .sidebar-header {
+            .blog-title {
+                margin: 0 0 5px;
+                font-size: 24px;
+                font-weight: bold;
+            }
+
+            .blog-title {
+                a {
+                    color: $hyperlink;
+                    text-decoration: none;
+                }
+            }
+        }
+
+        .sidebar-content {
+            padding: 10px 0;
+            position: absolute;
+            top: 82px;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            overflow-y: auto
+        }
+
+        .sidebar-content {
+            .menu-lists {
+                margin: 0;
+                padding: 0 10px;
+                width: 100%;
+            }
+
+            .menu-lists {
+                li {
+                    padding: 3px 0;
+                }
+                li {
+                    a {
+                        color: $text;
+                        padding: 0 10px;
+                        text-decoration: none;
+                    }
+
+                    a {
+                        i {
+                            margin-right: 5px;
+                        }
+                    }
+                }
+
+                li.active {
+                    a {
+                        color: $hyperlink;
+                    }
+                }
+
+                li.header {
+                    color: $subtext;
+                    font-size: 13px;
+                    font-weight: bold;
+                    margin: 15px 0 0;
+                    text-transform: uppercase;
+                }
+
+                li.header{
+                    &:first-child {
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
+}

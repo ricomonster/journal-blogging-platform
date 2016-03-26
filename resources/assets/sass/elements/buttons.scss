@@ -1,9 +1,104 @@
 /* New color schemes for the buttons */
-.btn.btn-primary { border-color: #529ecc; background: #529ecc; }
-.btn.btn-danger { background-color: #dc6e53; border-color: #dc6e53;}
-.btn.btn-success { background-color: #67c295; border-color: #67c295; }
-.btn.btn-info { background-color: #63a7d1; border-color: #63a7d1; }
-.btn.btn-warning { background-color: #f3a343; border-color: #f3a343; }
+.btn.btn-default {
+    background-color: $primary-bg-color;
+    border-color: $secondary-border-color;
+    font-weight: bold;
+    text-transform: uppercase;
 
-.btn { border-radius: 2px; padding: 7px 12px; }
+    &:hover,
+    &:focus,
+    &:active,
+    &.focus
+    &.active {
+        @extend .btn-default;
+        outline: none;
+    }
+}
+
+.btn.btn-primary {
+    background-color: $color-primary;
+    border-color: $color-primary;
+    color: $primary-bg-color;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    &:hover,
+    &:focus,
+    &:active,
+    &.focus
+    &.active {
+        @extend .btn-primary;
+        outline: none;
+    }
+}
+
+.btn.btn-danger {
+    background-color: $color-danger;
+    border-color: $color-danger;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    &:hover,
+    &:focus,
+    &:active,
+    &.focus
+    &.active {
+        @extend .btn-danger;
+        outline: none;
+    }
+}
+
+.btn.btn-success {
+    background-color: $color-success;
+    border-color: $color-success;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    &:hover,
+    &:focus,
+    &:active,
+    &.focus
+    &.active {
+        @extend .btn-success;
+        outline: none;
+    }
+}
+
+.btn.btn-info {
+    background-color: $color-info;
+    border-color: $color-info;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    &:hover,
+    &:focus,
+    &:active,
+    &.focus
+    &.active {
+        @extend .btn-info;
+        outline: none;
+    }
+}
+
+.btn.btn-warning {
+    background-color: $color-warning;
+    border-color: $color-primary;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    &:hover,
+    &:focus,
+    &:active,
+    &.focus
+    &.active {
+        @extend .btn-warning;
+        outline: none;
+    }
+}
+
+.btn {
+    border-radius: 2px;
+    padding: 7px 12px;
+}
+
 .btn.btn-sm { padding: 4px 12px; }

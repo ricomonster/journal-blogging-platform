@@ -17,6 +17,14 @@ class DbPostRepository implements PostRepositoryInterface
      */
     public function create($post)
     {
+        $publishedAt = $post['published_at'];
+
+        // validate first the publish timestamp if it is less than the
+        // current time
+        if ($post['status'] == 1 && ($publishedAt < time())) {
+            $publishedAt = time();
+        }
+
         $result = Post::create([
             'author_id'     => $post['author_id'],
             'title'         => $post['title'],
@@ -24,7 +32,7 @@ class DbPostRepository implements PostRepositoryInterface
             'cover_image'   => $post['cover_image'],
             'slug'          => $this->generateSlug($post['title']),
             'status'        => $post['status'],
-            'published_at'  => $post['published_at']
+            'published_at'  => $publishedAt
         ]);
 
         // TODO: Save tags and link them

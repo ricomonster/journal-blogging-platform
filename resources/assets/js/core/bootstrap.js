@@ -42,6 +42,13 @@ if (window.toastr === undefined) {
     window.toastr = require('toastr');
 }
 
+/*
+ * Load Moment.js, used for date formatting and presentation.
+ */
+if (window.moment === undefined) {
+    window.moment = require('moment');
+}
+
 // set some global options for the toastr
 toastr.options.positionClass = 'toast-bottom-left';
 toastr.options.newestOnTop = false;

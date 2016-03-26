@@ -6,12 +6,15 @@
     }
 
     #login_form {
-        bottom: 50%;
+        background-color: $primary-bg-color;
+        border: 1px solid $border-color;
+        border-radius: $default-border-radius;
         left: 50%;
-        margin: -130px -170.5px;
+        margin: 0 -200px;
+        padding: 14px 20px;
         position: absolute;
-        top: 50%;
-        width: 350px;
+        top: 15%;
+        width: 400px;
     }
 
     #login_form {

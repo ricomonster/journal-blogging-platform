@@ -5,34 +5,34 @@
 
 #posts_list_page {
     .post-lists {
+        border-right: 1px solid $border-color;
         bottom: 0;
-        border-right: 1px solid #dddddd;
         left: 0;
         position: absolute;
-        top: 55px;
+        top: 59px;
         width: 30%;
     }
 
     .post-lists {
         .post-lists-header {
-            border-bottom: 1px solid #e4e4e4;
+            background-color: $primary-bg-color;
+            border-bottom: 1px solid $border-color;
+            left: 0;
             padding: 10px 5px;
             position: absolute;
-            top: 0;
             right: 0;
-            left: 0;
-            background-color: rgba(246, 247, 247, .9);
+            top: 0;
             z-index: 100;
         }
 
         .lists-wrapper {
-            overflow: auto;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
             bottom: 0;
+            left: 0;
+            overflow: auto;
             padding-top: 57px;
+            position: absolute;
+            right: 0;
+            top: 0;
         }
 
         .lists-wrapper {
@@ -44,9 +44,9 @@
 
         .post {
             .hyperlink {
-                background-color: #fafafa;
-                border-bottom: 1px solid #e4e4e4;
-                border-left: 3px solid #fafafa;
+                background-color: $primary-bg-color;
+                border-bottom: 1px solid $border-color;
+                border-left: 3px solid $primary-bg-color;
                 display: block;
                 padding: 10px 15px;
                 text-decoration: none;
@@ -54,27 +54,28 @@
             }
 
             .hyperlink:hover {
-                border-left: 3px solid #f2f2f2;
-                background-color: #f2f2f2;
+                background-color: $secondary-bg-color;
+                border-left: 3px solid $secondary-bg-color;
                 cursor: pointer;
             }
 
             .hyperlink {
                 .post-title {
-                    color: #231f20;
+                    color: $text;
                     font-size: 18px;
                     font-weight: normal;
                     line-height: 24px;
                     margin: 0 0 5px;
                 }
 
-                .post-meta { color: #827f80; }
+                .post-meta { color: $subtext; }
             }
         }
 
         .post.active {
             .hyperlink {
-                border-left: 3px solid #3187e1;
+                background-color: $secondary-bg-color;
+                border-left: 3px solid $hyperlink;
             }
         }
     }
@@ -83,23 +84,24 @@
         bottom: 0;
         position: absolute;
         right: 0;
-        top: 55px;
+        top: 59px;
         width: 70%;
     }
 
     .post-preview {
         .preview-header {
-            background-color: #ffffff;
-            left: 0;
-            padding: 10px 15px;
+            background-color: $primary-bg-color;
+            border-bottom: 1px solid $border-color;
+            left: 30px;
+            padding: 14px 0;
             position: absolute;
-            right: 0;
+            right: 30px;
             top: 0;
             z-index: 100;
         }
 
         .preview-header {
-            .post-meta { color: #827f80; float: left; padding: 4px 0; }
+            .post-meta { color: $subtext; float: left; padding: 4px 0; }
             .post-controls { float: right; }
             .post-controls {
                 .control-lists {
@@ -114,8 +116,20 @@
                     }
 
                     li {
-                        a {
-                            i { margin-right: 3px; }
+                        .edit-post {
+                            font-size: 20px;
+                            text-indent: 30px;
+                            color: $color-success;
+                        }
+
+                        .preview-post {
+                            @extend .edit-post;
+                            color: $color-warning;
+                        }
+
+                        .delete-post {
+                            @extend .edit-post;
+                            color: $color-danger;
                         }
                     }
                 }
@@ -123,15 +137,16 @@
         }
 
         .preview-content {
-            font-size: 1.6rem;
-            line-height: 1.5em;
-            padding: 60px 40px 40px;
-            overflow: auto;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            background-color: $primary-bg-color;
             bottom: 0;
+            font-size: 1.6rem;
+            left: 0;
+            line-height: 1.5em;
+            overflow: auto;
+            padding: 70px 30px 40px;
+            position: absolute;
+            right: 0;
+            top: 0;
         }
 
         .no-post {

@@ -5,12 +5,12 @@
 @section('content')
 <journal-editor inline-template>
     <div id="editor_page">
-        <form v-on:submit.prevent="savePost()">
+        <form v-on:submit="savePost($event)">
             <header class="page-header clearfix">
                 <input type="text" v-model="post.title" placeholder="Title"
                 class="form-control input-lg input-post-slug" v-on:blur="generateSlug()"/>
                 <div class="editor-controls">
-                    <a class="btn btn-default sidebar-toggler" v-on:click="toggleSidebar()">
+                    <a class="sidebar-toggler" v-on:click="toggleSidebar()">
                         <i class="fa fa-cog"></i>
                     </a>
                     <!-- Buttons -->

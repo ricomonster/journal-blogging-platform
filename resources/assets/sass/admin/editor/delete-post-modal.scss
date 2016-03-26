@@ -1,0 +1,36 @@
+#delete_post_modal {
+    .modal-dialog {
+        width: 500px;
+    }
+
+    .modal-dialog {
+        .modal-body {
+            padding: 40px 15px;
+            text-align: center;
+        }
+
+        .modal-body {
+            p {
+                font-size: 16px;
+                margin: 0;
+                text-align: center;
+            }
+
+            p {
+                .post-title {
+                    font-weight: bold;
+                }
+
+                .post-title {
+                    &:before {
+                        content: '"';
+                    }
+
+                    &:after {
+                        content: '"';
+                    }
+                }
+            }
+        }
+    }
+}

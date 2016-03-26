@@ -1,5 +1,5 @@
 Vue.component('markdown-reader', {
-    template : '<div>{{{html}}}</div>',
+    template : '<div class="markdown-reader">{{{html}}}</div>',
     props : ['markdown', 'editorMode', 'wordCount'],
     computed : {
         html : function () {

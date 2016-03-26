@@ -5,7 +5,7 @@
 
 #editor_page {
     .page-header {
-        height: 55px;
+        height: 60px;
         padding: 0;
         position: relative;
     }
@@ -19,18 +19,27 @@
         }
 
         .editor-controls {
-            position: absolute;
-            top: 0;
             bottom: 0;
+            padding: 12px 16px;
+            position: absolute;
             right: 0;
-            padding: 9px 16px;
+            top: 0;
         }
 
         .editor-controls {
-            .sidebar-toggler { float: none; }
+            .sidebar-toggler {
+                color: $subtext;
+                display: inline-block;
+                float: none;
+                margin-right: 15px;
+                vertical-align: middle;
+            }
 
             .sidebar-toggler {
-                .fa { margin: 0; }
+                .fa {
+                    font-size: 24px;
+                    line-height: 1;
+                }
             }
 
             .btn-group {
@@ -44,11 +53,11 @@
     }
 
     .editor {
-        position: absolute;
-        top: 55px;
-        right: 0;
-        left: 0;
         bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 60px;
     }
 
     .editor {
@@ -61,19 +70,20 @@
 
         .window {
             .floating-header {
-                background-color: rgba(255,255,255,.9);
+                background-color: $primary-bg-color;
+                border-bottom: 1px solid $border-color;
                 height: 40px;
-                padding: 10px 20px;
+                left: 30px;
+                padding: 10px 0;
                 position: absolute;
+                right: 30px;
                 top: 0;
-                right: 0;
-                left: 0;
                 z-index: 100
             }
 
             .floating-header {
                 span {
-                    color: rgba(35, 31, 32, 0.5);
+                    color: $subtext;
                     font-size: 12px;
                     text-transform:uppercase;
                 }
@@ -91,8 +101,8 @@
 
         .markdown-editor {
             .markdown-helper {
-                color: rgba(35, 31, 32, 0.5);
-                font-size: 12px;
+                color: $subtext;
+                font-size: 13px;
                 float: right;
                 text-decoration: none;
             }
@@ -109,11 +119,11 @@
                 }
 
                 .CodeMirror {
-                    .CodeMirror-lines { padding: 55px 0 40px; }
+                    .CodeMirror-lines { padding: 60px 0 25px; }
                     pre {
                         font-family: Inconsolata, monospace;
-                        font-size: 1.6rem;
-                        padding: 0 40px;
+                        font-size: 1.7rem;
+                        padding: 0 30px;
                     }
                 }
             }
@@ -132,6 +142,7 @@
                 -ms-user-select: none;
                 -webkit-hyphens: auto;
                 -webkit-user-select: none;
+                background-color: $primary-bg-color;
                 bottom: 0;
                 cursor: default;
                 font-size: 1.8rem;
@@ -139,17 +150,17 @@
                 left: 0;
                 line-height: 1.5em;
                 overflow: auto;
-                padding: 0 40px 0;
+                padding: 0 30px 0;
                 position: absolute;
                 right: 0;
                 top: 0;
                 user-select: none;
-                word-wrap: break-word;
                 word-break: normal;
+                word-wrap: break-word;
             }
 
             .preview-wrapper {
-                .rendered-markdown { padding: 50px 0 40px; }
+                .rendered-markdown { padding: 60px 0 40px; }
             }
         }
     }
