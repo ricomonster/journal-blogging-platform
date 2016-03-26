@@ -1,7 +1,7 @@
 Vue.directive('sync-scroll', function (element) {
     $(this.el)
         .find('.CodeMirror-scroll')
-        .on('scroll', function (event) {
+        .scroll(function (event) {
             var codemirror = $(event.target),
                 codemirrorSizer = $(codemirror).find('.CodeMirror-sizer'),
                 synchronizedElement = $(element),

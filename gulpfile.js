@@ -65,7 +65,7 @@ gulp.task('watch', function () {
 
     gulp.watch([
         './resources/assets/sass/*.scss',
-        './resources/assets/sass/**/.scss'], ['build-sass']);
+        './resources/assets/sass/**/*.scss'], ['build-sass']);
 });
 
 gulp.task('default', function (callback) {

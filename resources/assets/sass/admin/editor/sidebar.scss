@@ -1,0 +1,64 @@
+#editor_sidebar {
+    .sidebar-overlay { display: none; }
+    .content {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: -100%;
+        width: 300px;
+        background-color: #f6f7f8;
+        border-left: 1px solid #dddddd;
+        z-index: 500;
+        transition: all 0.4s ease 0s;
+    }
+
+    .content {
+        .sidebar-header { border-bottom: 1px solid #dddddd; padding: 14px 10px; }
+        .sidebar-header {
+            h3 { float: left; margin: 0; }
+            .close-sidebar { font-size: 24px; float: right; }
+        }
+
+        .post-settings {
+            padding: 15px 10px;
+            position: absolute;
+            top: 55px;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .post-settings {
+            .delete-post-zone {
+                border-top: 1px solid #dddddd;
+                margin: 0 -15px;
+                padding: 15px;
+            }
+
+            .delete-post-zone {
+                .message {
+                    text-align: center;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}
+
+#editor_sidebar.active {
+    .sidebar-overlay {
+        display: block;
+        top: 0;
+        left: -220px;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        z-index: 300;
+    }
+
+    .content {
+        right: 0;
+    }
+}

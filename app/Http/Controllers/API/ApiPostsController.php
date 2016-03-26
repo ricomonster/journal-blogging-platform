@@ -20,6 +20,24 @@ class ApiPostsController extends ApiController
         $this->users = $users;
     }
 
+    public function generateSlug(Request $request)
+    {
+        // check if there's a string given
+        if (empty($request->input('string'))) {
+            return $this->setStatusCode(self::BAD_REQUEST)
+                ->respondWithError(['message' => 'String is required.']);
+        }
+
+        // check if there's a post id
+        $postId = (empty($request->input('post_id'))) ?
+            null : $request->input('post_id');
+
+        // generate slug
+        $slug = $this->posts->generateSlug($request->input('string'), $postId);
+
+        return $this->respond(['slug' => $slug]);
+    }
+
     /**
      * Fetches the posts either by giving the post id or not.
      *

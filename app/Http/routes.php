@@ -29,6 +29,7 @@ Route::group(['middleware' => ['web'], 'namespace' => 'API', 'prefix' => 'api'],
     Route::group(['prefix' => 'posts'], function () {
         Route::get('get', 'ApiPostsController@get');
 
+        Route::post('generate_slug', 'ApiPostsController@generateSlug');
         Route::post('save', 'ApiPostsController@save');
     });
 

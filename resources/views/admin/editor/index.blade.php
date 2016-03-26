@@ -8,9 +8,9 @@
         <form v-on:submit.prevent="savePost()">
             <header class="page-header clearfix">
                 <input type="text" v-model="post.title" placeholder="Title"
-                class="form-control input-lg input-post-slug"/>
+                class="form-control input-lg input-post-slug" v-on:blur="generateSlug()"/>
                 <div class="editor-controls">
-                    <a class="btn btn-default sidebar-toggler">
+                    <a class="btn btn-default sidebar-toggler" v-on:click="toggleSidebar()">
                         <i class="fa fa-cog"></i>
                     </a>
                     <!-- Buttons -->
@@ -44,7 +44,8 @@
                     </header>
                     <section class="editor-wrapper editor-scroll">
                         <!-- Codemirror here -->
-                        <div v-codemirror="post.content"
+                        <div class="codemirror-wrapper"
+                        v-codemirror="post.content"
                         v-sync-scroll.literal=".preview-wrapper"></div>
                     </section>
                 </section>
@@ -63,6 +64,7 @@
                 </section>
             </section>
             <!-- Sidebar -->
+            @include('admin.editor.sidebar')
 
             @if ($postId)
             <input type="hidden" name="post_id" value="{{$postId}}"/>

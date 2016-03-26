@@ -21,4 +21,14 @@ class Post extends Model
      * @var array
      */
     protected $hidden = [];
+
+    /**
+     * User/Post Relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function author()
+    {
+        return $this->belongsTo('Journal\User', 'author_id');
+    }
 }

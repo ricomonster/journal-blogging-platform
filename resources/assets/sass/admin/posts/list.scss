@@ -33,7 +33,6 @@
             right: 0;
             bottom: 0;
             padding-top: 57px;
-            border-radius: 5px;
         }
 
         .lists-wrapper {
@@ -82,7 +81,6 @@
 
     .post-preview {
         bottom: 0;
-        overflow-y: auto;
         position: absolute;
         right: 0;
         top: 55px;
@@ -90,7 +88,16 @@
     }
 
     .post-preview {
-        .preview-header { padding: 5px 10px; }
+        .preview-header {
+            background-color: #ffffff;
+            left: 0;
+            padding: 10px 15px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 100;
+        }
+
         .preview-header {
             .post-meta { color: #827f80; float: left; padding: 4px 0; }
             .post-controls { float: right; }
@@ -118,7 +125,13 @@
         .preview-content {
             font-size: 1.6rem;
             line-height: 1.5em;
-            padding: 40px;
+            padding: 60px 40px 40px;
+            overflow: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
         }
 
         .no-post {

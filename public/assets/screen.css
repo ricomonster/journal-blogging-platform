@@ -8707,8 +8707,7 @@ a {
   left: 0;
   right: 0;
   bottom: 0;
-  padding-top: 57px;
-  border-radius: 5px; }
+  padding-top: 57px; }
 
 #posts_list_page .post-lists .lists-wrapper .no-posts {
   padding: 5px 15px;
@@ -8743,14 +8742,19 @@ a {
 
 #posts_list_page .post-preview {
   bottom: 0;
-  overflow-y: auto;
   position: absolute;
   right: 0;
   top: 55px;
   width: 70%; }
 
 #posts_list_page .post-preview .preview-header {
-  padding: 5px 10px; }
+  background-color: #ffffff;
+  left: 0;
+  padding: 10px 15px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 100; }
 
 #posts_list_page .post-preview .preview-header .post-meta {
   color: #827f80;
@@ -8774,7 +8778,13 @@ a {
 #posts_list_page .post-preview .preview-content {
   font-size: 1.6rem;
   line-height: 1.5em;
-  padding: 40px; }
+  padding: 60px 40px 40px;
+  overflow: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; }
 
 #posts_list_page .post-preview .no-post {
   padding: 60px 20px;
@@ -8796,7 +8806,7 @@ a {
   border: 0;
   font-size: 28px;
   height: 54px;
-  padding-right: 220px; }
+  padding: 10px 220px 10px 16px; }
 
 #editor_page .page-header .editor-controls {
   position: absolute;
@@ -8905,6 +8915,63 @@ a {
 
 #editor_page .editor .markdown-preview .preview-wrapper .rendered-markdown {
   padding: 50px 0 40px; }
+
+#editor_sidebar .sidebar-overlay {
+  display: none; }
+
+#editor_sidebar .content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -100%;
+  width: 300px;
+  background-color: #f6f7f8;
+  border-left: 1px solid #dddddd;
+  z-index: 500;
+  transition: all 0.4s ease 0s; }
+
+#editor_sidebar .content .sidebar-header {
+  border-bottom: 1px solid #dddddd;
+  padding: 14px 10px; }
+
+#editor_sidebar .content .sidebar-header h3 {
+  float: left;
+  margin: 0; }
+
+#editor_sidebar .content .sidebar-header .close-sidebar {
+  font-size: 24px;
+  float: right; }
+
+#editor_sidebar .content .post-settings {
+  padding: 15px 10px;
+  position: absolute;
+  top: 55px;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  overflow-y: auto;
+  overflow-x: hidden; }
+
+#editor_sidebar .content .post-settings .delete-post-zone {
+  border-top: 1px solid #dddddd;
+  margin: 0 -15px;
+  padding: 15px; }
+
+#editor_sidebar .content .post-settings .delete-post-zone .message {
+  text-align: center;
+  font-weight: bold; }
+
+#editor_sidebar.active .sidebar-overlay {
+  display: block;
+  top: 0;
+  left: -220px;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  z-index: 300; }
+
+#editor_sidebar.active .content {
+  right: 0; }
 
 #login_page .page-content {
   height: 100%;

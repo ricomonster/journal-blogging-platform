@@ -37,7 +37,8 @@ class DbPostRepository implements PostRepositoryInterface
      */
     public function all()
     {
-        return Post::where('active', '=', 1)
+        return Post::with(['author'])
+            ->where('active', '=', 1)
             ->where('is_page', '=', 0)
             ->orderBy('published_at', 'DESC')
             ->get();
@@ -58,7 +59,8 @@ class DbPostRepository implements PostRepositoryInterface
      */
     public function findById($id)
     {
-        return Post::where('id', '=', $id)
+        return Post::with(['author'])
+            ->where('id', '=', $id)
             ->where('active', '=', 1)
             ->where('is_page', '=', 0)
             ->first();
@@ -70,7 +72,8 @@ class DbPostRepository implements PostRepositoryInterface
      */
     public function findBySlug($slug)
     {
-        return Post::where('slug', '=', $slug)
+        return Post::with(['author'])
+            ->where('slug', '=', $slug)
             ->where('active', '=', 1)
             ->where('is_page', '=', 0)
             ->first();

@@ -46,7 +46,7 @@
                         Written by
                     </span>
                     <span class="author-name">
-                        Author Name
+                        @{{active.author.name}}
                     </span>
                 </div>
                 <div class="post-controls">
