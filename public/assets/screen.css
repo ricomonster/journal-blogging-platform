@@ -8911,7 +8911,7 @@ body {
   overflow-y: auto;
   position: absolute;
   right: 0;
-  top: 55px; }
+  top: 59px; }
 
 /* Markdown */
 .rendered-markdown img {
@@ -8952,15 +8952,34 @@ ul.alert {
 .alert p {
   margin: 0; }
 
+/* Dropdown */
+.dropdown-menu {
+  border-color: #edeeee;
+  border-radius: 3px; }
+
 /* Vue JS */
 [v-cloak] {
   display: none; }
 
+.form-horizontal .form-group {
+  margin-left: 0;
+  margin-right: 0; }
+
+.form-horizontal .control-label {
+  text-align: left; }
+
+.form-horizontal div[class*="col-"],
+.form-horizontal label[class*="col-"] {
+  padding-left: 0;
+  padding-right: 0; }
+
 .form-group {
-  margin-bottom: 20px; }
+  border-bottom: 1px solid #edeeee;
+  margin-bottom: 20px;
+  padding-bottom: 20px; }
 
 .form-group .help-block {
-  font-style: italic; }
+  color: #a5a7aa; }
 
 .form-group .help-block.error {
   font-style: none; }
@@ -9173,6 +9192,11 @@ a {
 #editor_page .page-header .editor-controls .btn-group .btn {
   float: left; }
 
+#editor_page .page-header .editor-controls .btn-group .dropdown-menu .active a {
+  background-color: #4090db; }
+  #editor_page .page-header .editor-controls .btn-group .dropdown-menu .active a:hover, #editor_page .page-header .editor-controls .btn-group .dropdown-menu .active a:focus {
+    background-color: #4090db; }
+
 #editor_page .editor {
   bottom: 0;
   left: 0;
@@ -9289,9 +9313,10 @@ a {
   display: none; }
 
 #editor_sidebar .content {
-  background-color: #f6f7f8;
-  border-left: 1px solid #dddddd;
+  background-color: #f5f7f8;
+  border-left: 1px solid #edeeee;
   bottom: 0;
+  padding: 0 15px;
   position: absolute;
   right: -100%;
   top: 0;
@@ -9300,8 +9325,8 @@ a {
   z-index: 500; }
 
 #editor_sidebar .content .sidebar-header {
-  border-bottom: 1px solid #dddddd;
-  padding: 14px 10px; }
+  border-bottom: 1px solid #edeeee;
+  padding: 14px 0; }
 
 #editor_sidebar .content .sidebar-header h3 {
   float: left;
@@ -9316,15 +9341,15 @@ a {
   left: 0;
   overflow-x: hidden;
   overflow-y: auto;
-  padding: 15px 10px;
+  padding: 15px;
   position: absolute;
   right: 0;
   top: 55px; }
 
 #editor_sidebar .content .post-settings .delete-post-zone {
-  border-top: 1px solid #dddddd;
-  margin: 0 -15px;
-  padding: 15px; }
+  border-top: 1px solid #edeeee;
+  margin: 0;
+  padding: 15px 0; }
 
 #editor_sidebar .content .post-settings .delete-post-zone .message {
   text-align: center;
@@ -9368,18 +9393,40 @@ a {
 #login_page #login_form .form-actions .forgot-password {
   text-align: center; }
 
+#settings_page .settings .form-wrapper {
+  background-color: #ffffff;
+  border: 1px solid #edeeee;
+  border-radius: 3px;
+  margin: 40px;
+  padding: 14px 20px;
+  width: 55%; }
+
+#settings_page .settings .form-wrapper .image-wrapper .btn i {
+  margin-right: 3px; }
+
+#settings_page .settings .form-wrapper .image-wrapper .open-modal {
+  display: block;
+  padding: 5px 10px;
+  width: 100%; }
+
+#settings_page .settings .form-wrapper .image-wrapper .open-modal img {
+  display: block;
+  margin: auto;
+  max-width: 100%; }
+
 #sidebar .content {
-  background-color: #fafafa;
+  background-color: #f5f7f8;
   border-right: 1px solid #edeeee;
   bottom: 0;
   left: 0;
+  padding: 0 15px;
   position: absolute;
   top: 0;
   width: 220px; }
 
 #sidebar .content .sidebar-header {
   border-bottom: 1px solid #edeeee;
-  padding: 15px 10px 5px; }
+  padding: 15px 0 5px; }
 
 #sidebar .content .sidebar-header .blog-title {
   margin: 0 0 5px;
@@ -9401,7 +9448,7 @@ a {
 
 #sidebar .content .sidebar-content .menu-lists {
   margin: 0;
-  padding: 0 10px;
+  padding: 0;
   width: 100%; }
 
 #sidebar .content .sidebar-content .menu-lists li {
@@ -9409,7 +9456,7 @@ a {
 
 #sidebar .content .sidebar-content .menu-lists li a {
   color: #000000;
-  padding: 0 10px;
+  padding: 0 20px;
   text-decoration: none; }
 
 #sidebar .content .sidebar-content .menu-lists li a i {
@@ -9423,6 +9470,7 @@ a {
   font-size: 13px;
   font-weight: bold;
   margin: 15px 0 0;
+  padding: 3px 15px;
   text-transform: uppercase; }
 
 #sidebar .content .sidebar-content .menu-lists li.header:first-child {

@@ -1,9 +1,10 @@
 #editor_sidebar {
     .sidebar-overlay { display: none; }
     .content {
-        background-color: #f6f7f8;
-        border-left: 1px solid #dddddd;
+        background-color: $sidebar-bg-color;
+        border-left: 1px solid $border-color;
         bottom: 0;
+        padding: 0 15px;
         position: absolute;
         right: -100%;
         top: 0;
@@ -13,7 +14,10 @@
     }
 
     .content {
-        .sidebar-header { border-bottom: 1px solid #dddddd; padding: 14px 10px; }
+        .sidebar-header {
+            border-bottom: 1px solid $border-color; padding: 14px 0;
+        }
+
         .sidebar-header {
             h3 { float: left; margin: 0; }
             .close-sidebar { font-size: 24px; float: right; }
@@ -24,7 +28,7 @@
             left: 0;
             overflow-x: hidden;
             overflow-y: auto;
-            padding: 15px 10px;
+            padding: 15px;
             position: absolute;
             right: 0;
             top: 55px;
@@ -32,9 +36,9 @@
 
         .post-settings {
             .delete-post-zone {
-                border-top: 1px solid #dddddd;
-                margin: 0 -15px;
-                padding: 15px;
+                border-top: 1px solid $border-color;
+                margin: 0;
+                padding: 15px 0;
             }
 
             .delete-post-zone {

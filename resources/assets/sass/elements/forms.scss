@@ -1,7 +1,28 @@
-.form-group { margin-bottom: 20px; }
+.form-horizontal {
+    .form-group {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .control-label {
+        text-align: left;
+    }
+
+    div[class*="col-"],
+    label[class*="col-"] {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
 
 .form-group {
-    .help-block { font-style: italic; }
+    border-bottom: 1px solid $border-color;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+.form-group {
+    .help-block { color: $subtext; }
     .help-block.error { font-style: none; }
 }
 

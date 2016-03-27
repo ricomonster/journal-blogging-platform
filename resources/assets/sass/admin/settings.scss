@@ -1,0 +1,36 @@
+#settings_page {
+    .settings {
+        .form-wrapper {
+            background-color: $primary-bg-color;
+            border: 1px solid $border-color;
+            border-radius: $default-border-radius;
+            margin: 40px;
+            padding: 14px 20px;
+            width: 55%;
+        }
+
+        .form-wrapper {
+            .image-wrapper {
+                .btn {
+                    i {
+                        margin-right: 3px;
+                    }
+                }
+
+                .open-modal {
+                    display: block;
+                    padding: 5px 10px;
+                    width: 100%;
+                }
+
+                .open-modal {
+                    img {
+                        display: block;
+                        margin: auto;
+                        max-width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

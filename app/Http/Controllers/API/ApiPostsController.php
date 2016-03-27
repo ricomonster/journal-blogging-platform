@@ -6,6 +6,7 @@ use Journal\Http\Requests;
 use Journal\Http\Controllers\API\ApiController;
 use Journal\Repositories\Post\PostRepositoryInterface;
 use Journal\Repositories\User\UserRepositoryInterface;
+use Validator;
 
 class ApiPostsController extends ApiController
 {
@@ -18,6 +19,57 @@ class ApiPostsController extends ApiController
     {
         $this->posts = $posts;
         $this->users = $users;
+    }
+
+    /**
+     * Performs the action to delete a post.
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function delete(Request $request)
+    {
+        $postId = $request->input('post_id');
+        $userId = $request->input('user_id');
+
+        // validate
+        $errors = $this->validateDeletePost($request->all());
+
+        if (count($errors) > 0) {
+            return $this->setStatusCode(self::BAD_REQUEST)
+                ->respondWithError($errors);
+        }
+
+        // check if the post exists
+        $post = $this->posts->findById($postId);
+
+        if (empty($post)) {
+            return $this->setStatusCode(self::NOT_FOUND)
+                ->respondWithError([
+                    'message' => self::POST_NOT_FOUND]);
+        }
+
+        // check if the user exists
+        $user = $this->users->findById($userId);
+
+        if (empty($user)) {
+            return $this->setStatusCode(self::NOT_FOUND)
+                ->respondWithError([
+                    'message' => self::USER_NOT_FOUND]);
+        }
+
+        // check if the post is owned by the given author
+        if ($post->author_id != $user->id) {
+            return $this->setStatusCode(self::FORBIDDEN)
+                ->respondWithError([
+                    'message' => self::UNAUTHORIZED_ACCESS]);
+        }
+
+        // delete post
+        $this->posts->setToInactive($post->id);
+
+        return $this->respond([
+            'error' => false]);
     }
 
     public function generateSlug(Request $request)
@@ -142,5 +194,33 @@ class ApiPostsController extends ApiController
 
         return $this->respond([
             'post' => $post->toArray()]);
+    }
+
+    /**
+     * Validate the data passed to delete a post
+     *
+     * @param $data
+     * @return \Illuminate\Support\MessageBag
+     */
+    protected function validateDeletePost($data)
+    {
+        // prepare the rules
+        $rules = [
+            'post_id'   => 'required',
+            'user_id'   => 'required'
+        ];
+
+        // set the custom messages
+        $messages = [
+            'post_id.required'  => self::POST_ID_REQUIRED,
+            'user_id.required'  => self::USER_ID_REQUIRED
+        ];
+
+        // validate
+        $validator = Validator::make($data, $rules, $messages);
+        $validator->passes();
+
+        // return errors if there are
+        return $validator->errors();
     }
 }

@@ -39,6 +39,29 @@ Vue.component('journal-editor', {
     },
     methods : {
         /**
+         * Deletes the selected/active post.
+         */
+        deletePost : function () {
+            var vm = this,
+                post = vm.post;
+
+            vm.$http.delete('/api/posts/delete', {
+                    post_id : post.id,
+                    user_id : vm.userId
+                })
+                .then(function (response) {
+                    if (!response.data.error) {
+                        toastr.success('You have successfully deleted the post.');
+
+                        setTimeout(function () {
+                            // redirect
+                            window.location.href = '/journal/posts/list';
+                        }, 3000);
+                    }
+                })
+        },
+
+        /**
          * Fetches the post from the API
          */
         getPost : function (postId) {

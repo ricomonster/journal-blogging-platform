@@ -56,7 +56,7 @@ body { height: 100%; overflow: auto; }
     overflow-y: auto;
     position: absolute;
     right: 0;
-    top: 55px;
+    top: 59px;
 }
 
 /* Markdown */
@@ -83,6 +83,12 @@ body { height: 100%; overflow: auto; }
 ul.alert { list-style: none; }
 .alert {
     p { margin: 0; }
+}
+
+/* Dropdown */
+.dropdown-menu {
+    border-color: $border-color;
+    border-radius: $default-border-radius;
 }
 
 /* Vue JS */

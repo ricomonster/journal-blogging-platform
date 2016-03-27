@@ -42,7 +42,8 @@
             </div>
             <div class="delete-post-zone auto-height" v-if="post.id">
                 <p class="message">Are you you wanted to do this?</p>
-                <a class="btn btn-danger btn-block">
+                <a class="btn btn-danger btn-block" data-toggle="modal"
+                data-target="#delete_post_modal">
                     <i class="fa fa-trash-o"></i> Delete this post?
                 </a>
             </div>

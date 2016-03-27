@@ -53,21 +53,23 @@ class DbSettingsRepository implements SettingsRepositoryInterface
      */
     public function get($settings)
     {
-        // check if the parameter is an array
-        if (is_array($settings)) {
-            // we need to fetch multiple settings
-            $results = [];
+        // check if the parameter has a comma because this is used to separate
+        // settings to be taken
+        if (strpos($settings, ',')) {
+            $query = [];
+
+            // make the parameter an array
+            $settings = explode(',', $settings);
 
             // loop
             foreach ($settings as $key => $value) {
-                $result = $this->get($value);
-
-                // check if empty
-                if (empty($result)) continue;
-
-                // push to the array
-                $results[key($result)] = current($result);
+                $query[] = $value;
             }
+
+            // perform search
+            $results = DB::table('settings')
+                ->whereIn('name', $query)
+                ->get();
 
             return $results;
         }
@@ -83,6 +85,6 @@ class DbSettingsRepository implements SettingsRepositoryInterface
             return [];
         }
 
-        return [$result->name => $result->value];
+        return $result;
     }
 }

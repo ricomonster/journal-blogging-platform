@@ -1,10 +1,20 @@
 Vue.component('markdown-reader', {
     template : '<div class="markdown-reader">{{{html}}}</div>',
-    props : ['markdown', 'editorMode', 'wordCount'],
+    props : [
+        {
+            name : 'markdown',
+            type : String
+        },
+        {
+            name : 'editorMode',
+            type : Boolean
+        }
+    ],
     computed : {
         html : function () {
             var converter   = new showdown.Converter(),
-                html        = converter.makeHtml(this.markdown);
+                html        = (this.markdown) ?
+                    converter.makeHtml(this.markdown) : '';
 
             // do some cleaning in the converted markdown
             // check if it is in editor mode

@@ -27,6 +27,8 @@ Route::group(['middleware' => ['web'], 'namespace' => 'API', 'prefix' => 'api'],
     });
 
     Route::group(['prefix' => 'posts'], function () {
+        Route::delete('delete', 'ApiPostsController@delete');
+
         Route::get('get', 'ApiPostsController@get');
 
         Route::post('generate_slug', 'ApiPostsController@generateSlug');
@@ -61,6 +63,11 @@ Route::group(['middleware' => ['web'], 'namespace' => 'Admin', 'prefix' => 'jour
             Route::get('list', 'PostsController@lists');
         });
 
+        Route::group(['prefix' => 'settings'], function () {
+            Route::get('/', 'SettingsController@index');
+        });
+
+        // User Routes
         Route::group(['prefix' => 'users'], function () {
             Route::get('create', 'UsersController@create');
             Route::get('lists', 'UsersController@lists');

@@ -33,6 +33,11 @@
                     </a>
                 </li>
                 <li class="">
+                    <a href="/journal/pages/list">
+                        <i class="fa fa-file-text fa-fw"></i> Pages
+                    </a>
+                </li>
+                <li class="">
                     <a href="/journal/tags/list">
                         <i class="fa fa-tags fa-fw"></i> Tags
                     </a>

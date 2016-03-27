@@ -18,7 +18,8 @@
     <div class="main-content">
         <div id="login_page" class="full-height">
             <section class="page-content">
-                <form id="login_form" method="post" action="{{url('journal/auth/authenticate')}}">
+                <form id="login_form" method="post" action="{{url('journal/auth/authenticate')}}"
+                autocomplete="off">
                     <h1>Journal</h1>
                     <div class="form-group">
                         <div class="input-group">

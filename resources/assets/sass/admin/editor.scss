@@ -48,6 +48,19 @@
 
             .btn-group {
                 .btn { float: left; }
+
+                .dropdown-menu {
+                    .active {
+                        a {
+                            background-color: $sub-hyperlink;
+
+                            &:hover,
+                            &:focus {
+                                background-color: $sub-hyperlink;
+                            }
+                        }
+                    }
+                }
             }
         }
     }

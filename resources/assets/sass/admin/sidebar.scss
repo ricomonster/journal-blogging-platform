@@ -1,9 +1,10 @@
 #sidebar {
     .content {
-        background-color: $secondary-bg-color;
+        background-color: $sidebar-bg-color;
         border-right: 1px solid $border-color;
         bottom: 0;
         left: 0;
+        padding: 0 15px;
         position: absolute;
         top: 0;
         width: 220px;
@@ -12,7 +13,7 @@
     .content {
         .sidebar-header {
             border-bottom: 1px solid $border-color;
-            padding: 15px 10px 5px;
+            padding: 15px 0 5px;
         }
 
         .sidebar-header {
@@ -43,7 +44,7 @@
         .sidebar-content {
             .menu-lists {
                 margin: 0;
-                padding: 0 10px;
+                padding: 0;
                 width: 100%;
             }
 
@@ -54,7 +55,7 @@
                 li {
                     a {
                         color: $text;
-                        padding: 0 10px;
+                        padding: 0 20px;
                         text-decoration: none;
                     }
 
@@ -76,6 +77,7 @@
                     font-size: 13px;
                     font-weight: bold;
                     margin: 15px 0 0;
+                    padding: 3px 15px;
                     text-transform: uppercase;
                 }
 

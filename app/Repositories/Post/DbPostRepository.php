@@ -115,7 +115,10 @@ class DbPostRepository implements PostRepositoryInterface
      */
     public function setToInactive($id)
     {
+        $post = $this->findById($id);
 
+        $post->active = 0;
+        $post->save();
     }
 
     /**

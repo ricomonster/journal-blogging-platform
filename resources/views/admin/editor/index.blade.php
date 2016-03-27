@@ -1,5 +1,4 @@
 @extends('admin.layout')
-
 @section('title', 'Editor')
 
 @section('content')
@@ -58,7 +57,8 @@
                     </header>
                     <section class="preview-wrapper">
                         <div class="rendered-markdown">
-                            <markdown-reader :markdown.sync="post.content"></markdown-reader>
+                            <markdown-reader :markdown.sync="post.content"
+                            :editor-mode="true"></markdown-reader>
                         </div>
                     </section>
                 </section>
@@ -70,6 +70,31 @@
             <input type="hidden" name="post_id" value="{{$postId}}"/>
             @endif
         </form>
+    </div>
+
+    <div id="delete_post_modal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Delete Post</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Are you sure you wanted to delete the post
+                        <span class="post-title">@{{post.title}}</span>?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" v-on:click="deletePost()">
+                        Yes, delete this post
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
     </div>
 </journal-editor>
 @endsection

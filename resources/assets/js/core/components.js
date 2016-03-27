@@ -7,3 +7,4 @@ require('./../components/time-ago');
 
 require('./../components/posts/list');
 require('./../components/editor');
+require('./../components/settings');
