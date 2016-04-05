@@ -23,9 +23,11 @@ Route::get('/', function () {
 Route::group(['middleware' => ['web'], 'namespace' => 'API', 'prefix' => 'api'], function () {
     // Installer Routes
     Route::group(['prefix' => 'installer'], function () {
-        Route::post('save_setup', 'ApiInstallerController@saveSetup');
+        Route::post('database', 'ApiInstallerController@database');
+        Route::post('setup', 'ApiInstallerController@setup');
     });
 
+    // Post Routes
     Route::group(['prefix' => 'posts'], function () {
         Route::delete('delete', 'ApiPostsController@delete');
 
@@ -35,10 +37,19 @@ Route::group(['middleware' => ['web'], 'namespace' => 'API', 'prefix' => 'api'],
         Route::post('save', 'ApiPostsController@save');
     });
 
+    // Setting Routes
+    Route::group(['prefix' => 'settings'], function () {
+        Route::get('get', 'ApiSettingsController@get');
+
+        Route::post('save_settings', 'ApiSettingsController@saveSettings');
+    });
+
     // User Routes
     Route::group(['prefix' => 'users'], function () {
         Route::post('create', 'ApiUsersController@create');
     });
+
+    Route::post('upload', 'ApiUploadController@upload');
 });
 
 /*

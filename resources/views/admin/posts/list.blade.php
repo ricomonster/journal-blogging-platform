@@ -37,7 +37,7 @@
             </section>
         </section>
         <section class="post-preview">
-            <header class="preview-header clearfix" v-if="!loading && active.id">
+            <header class="preview-header clearfix" v-if="!loading && active">
                 <div class="post-meta">
                     <span class="post-status published" v-if="active.status == 1">
                         Published by
@@ -70,13 +70,13 @@
                     </ul>
                 </div>
             </header>
-            <section class="preview-content" v-if="!loading && active.id">
+            <section class="preview-content" v-if="!loading && active">
                 <!-- Markdown Preview Directive goes here -->
                 <div class="rendered-markdown">
                     <markdown-reader :markdown.sync="active.content"></markdown-reader>
                 </div>
             </section>
-            <div class="no-post" v-if="!loading && !active.id">
+            <div class="no-post" v-if="!loading && !active">
                 <h3>Compose your first post.</h3>
                 <a href="/journal/editor" class="btn btn-success">
                     Go to Editor
@@ -86,7 +86,8 @@
         </section>
     </div>
 
-    <div id="delete_post_modal" class="modal fade" tabindex="-1" role="dialog">
+    <aside id="delete_post_modal" class="modal fade" tabindex="-1" role="dialog"
+    v-if="!loading && active">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -109,6 +110,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </aside>
 </journal-posts-list>
 @endsection

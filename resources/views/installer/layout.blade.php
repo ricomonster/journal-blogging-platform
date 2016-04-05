@@ -1,29 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Journal &#8212; @yield('title')</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Journal - @yield('title')</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
 
-    <link href="{{ asset('vendor/css/bootstrap.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/css/font-awesome.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/screen.css') }}" rel="stylesheet">
-    <style type="text/css">
-        .installer .container { padding: 20px 0; width: 640px; }
-        .installer .installer-header { margin-bottom: 15px; padding: 5px 0 15px; }
-        .installer .installer-header h1 { text-align: center;}
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic" rel="stylesheet" type="text/css">
 
-        .installer .content { padding: 0 15px; }
-
-        .subheader { border-bottom: 2px solid #e4e4e4; margin-bottom: 20px; }
-        .subheader h3 { margin: 5px 0 15px; }
-    </style>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ asset('assets/screen.css') }}"/>
 
     @yield('css')
+
+    <!-- Journal Globals -->
+    @include('admin.scripts.globals')
 </head>
-<body class="installer">
-    <div class="container">
+<body id="journal_layout" class="installer">
+    <div id="journal_app" class="container" v-cloak>
         <header class="installer-header">
             <h1>Journal</h1>
         </header>
@@ -31,8 +28,7 @@
         @yield('content')
     </div>
 
-    <script src="{{ asset('vendor/js/vue.js') }}"></script>
-    <script src="{{ asset('vendor/js/vue-resource.js') }}"></script>
+    <script src="{{ asset('assets/app.js') }}"></script>
     @yield('footer.js')
 </body>
 </html>

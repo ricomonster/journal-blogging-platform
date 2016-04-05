@@ -1,0 +1,46 @@
+.installer {
+    #journal_app {
+        background-color: $primary-bg-color;
+        border-radius: $default-border-radius;
+        border: 1px solid $border-color;
+        margin: 60px auto;
+        padding: 14px 20px;
+        width: 640px;
+    }
+
+    #journal_app {
+        .installer-header {
+            margin: 10px auto 25px;
+        }
+
+        .installer-header {
+            h1 {
+                color: $text;
+                font-size: 40px;
+                font-weight: bold;
+                letter-spacing: 1px;
+                margin: 0;
+                text-align: center;
+            }
+        }
+
+        .content {
+            padding: 0;
+        }
+    }
+
+    .subheader {
+        border-bottom: 1px solid $border-color;
+        margin-bottom: 20px;
+    }
+
+    .subheader {
+        h3 {
+            color: $hyperlink;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 5px 0 15px;
+            text-align: center;
+        }
+    }
+}

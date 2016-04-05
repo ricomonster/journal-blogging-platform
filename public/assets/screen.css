@@ -9027,132 +9027,6 @@ a {
 /**
  * Admin
  */
-#posts_list_page {
-  height: 100%;
-  position: relative; }
-
-#posts_list_page .post-lists {
-  border-right: 1px solid #edeeee;
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  top: 59px;
-  width: 30%; }
-
-#posts_list_page .post-lists .post-lists-header {
-  background-color: #ffffff;
-  border-bottom: 1px solid #edeeee;
-  left: 0;
-  padding: 10px 5px;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 100; }
-
-#posts_list_page .post-lists .lists-wrapper {
-  bottom: 0;
-  left: 0;
-  overflow: auto;
-  padding-top: 57px;
-  position: absolute;
-  right: 0;
-  top: 0; }
-
-#posts_list_page .post-lists .lists-wrapper .no-posts {
-  padding: 5px 15px;
-  text-align: center; }
-
-#posts_list_page .post-lists .post .hyperlink {
-  background-color: #ffffff;
-  border-bottom: 1px solid #edeeee;
-  border-left: 3px solid #ffffff;
-  display: block;
-  padding: 10px 15px;
-  text-decoration: none;
-  width: 100%; }
-
-#posts_list_page .post-lists .post .hyperlink:hover {
-  background-color: #fafafa;
-  border-left: 3px solid #fafafa;
-  cursor: pointer; }
-
-#posts_list_page .post-lists .post .hyperlink .post-title {
-  color: #000000;
-  font-size: 18px;
-  font-weight: normal;
-  line-height: 24px;
-  margin: 0 0 5px; }
-
-#posts_list_page .post-lists .post .hyperlink .post-meta {
-  color: #a5a7aa; }
-
-#posts_list_page .post-lists .post.active .hyperlink {
-  background-color: #fafafa;
-  border-left: 3px solid #125688; }
-
-#posts_list_page .post-preview {
-  bottom: 0;
-  position: absolute;
-  right: 0;
-  top: 59px;
-  width: 70%; }
-
-#posts_list_page .post-preview .preview-header {
-  background-color: #ffffff;
-  border-bottom: 1px solid #edeeee;
-  left: 30px;
-  padding: 14px 0;
-  position: absolute;
-  right: 30px;
-  top: 0;
-  z-index: 100; }
-
-#posts_list_page .post-preview .preview-header .post-meta {
-  color: #a5a7aa;
-  float: left;
-  padding: 4px 0; }
-
-#posts_list_page .post-preview .preview-header .post-controls {
-  float: right; }
-
-#posts_list_page .post-preview .preview-header .post-controls .control-lists {
-  list-style: none;
-  margin: 0;
-  padding: 0; }
-
-#posts_list_page .post-preview .preview-header .post-controls .control-lists li {
-  display: inline-block; }
-
-#posts_list_page .post-preview .preview-header .post-controls .control-lists li .edit-post, #posts_list_page .post-preview .preview-header .post-controls .control-lists li .preview-post, #posts_list_page .post-preview .preview-header .post-controls .control-lists li .delete-post {
-  font-size: 20px;
-  text-indent: 30px;
-  color: #67c295; }
-
-#posts_list_page .post-preview .preview-header .post-controls .control-lists li .preview-post {
-  color: #f3a343; }
-
-#posts_list_page .post-preview .preview-header .post-controls .control-lists li .delete-post {
-  color: #dc6e53; }
-
-#posts_list_page .post-preview .preview-content {
-  background-color: #ffffff;
-  bottom: 0;
-  font-size: 1.6rem;
-  left: 0;
-  line-height: 1.5em;
-  overflow: auto;
-  padding: 70px 30px 40px;
-  position: absolute;
-  right: 0;
-  top: 0; }
-
-#posts_list_page .post-preview .no-post {
-  padding: 60px 20px;
-  text-align: center; }
-
-#posts_list_page .post-preview .no-post a i {
-  margin-left: 3px; }
-
 #editor_page {
   position: relative;
   height: 100%; }
@@ -9214,10 +9088,10 @@ a {
   background-color: #ffffff;
   border-bottom: 1px solid #edeeee;
   height: 40px;
-  left: 30px;
+  left: 15px;
   padding: 10px 0;
   position: absolute;
-  right: 30px;
+  right: 15px;
   top: 0;
   z-index: 100; }
 
@@ -9254,7 +9128,7 @@ a {
 #editor_page .editor .markdown-editor .editor-wrapper .CodeMirror pre {
   font-family: Inconsolata, monospace;
   font-size: 1.7rem;
-  padding: 0 30px; }
+  padding: 0 15px; }
 
 #editor_page .editor .window.markdown-preview {
   right: 0; }
@@ -9277,7 +9151,7 @@ a {
   left: 0;
   line-height: 1.5em;
   overflow: auto;
-  padding: 0 30px 0;
+  padding: 0 15px 0;
   position: absolute;
   right: 0;
   top: 0;
@@ -9367,6 +9241,64 @@ a {
 #editor_sidebar.active .content {
   right: 0; }
 
+.featured-image {
+  background-color: #fafafa;
+  border: 1px solid #edeeee;
+  border-radius: 3px;
+  position: relative; }
+
+.featured-image .content {
+  min-height: 300px; }
+
+.featured-image .content .image-preview {
+  width: 100%; }
+
+.featured-image .content .image-preview .remove-image {
+  position: absolute;
+  right: 5px;
+  top: 5px; }
+
+.featured-image .content .image-preview .remove-image i.fa {
+  margin-right: 0px !important; }
+
+.featured-image .content .image-preview img {
+  display: block;
+  width: 100%; }
+
+.featured-image .content .file-upload {
+  bottom: 50%;
+  left: 0;
+  margin: -18px 0;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 50%; }
+
+.featured-image .content .file-upload input[type="file"] {
+  display: none; }
+
+.featured-image .content .file-upload .loader {
+  margin: -10px 0; }
+
+.featured-image .content .file-upload .loader i.fa {
+  color: #125688;
+  font-size: 60px; }
+
+.featured-image .content .image-url {
+  bottom: 50%;
+  left: 0;
+  margin: -18px 0;
+  padding: 0 30px;
+  position: absolute;
+  right: 0;
+  top: 50%; }
+
+.featured-image .upload-option a.fa {
+  bottom: 10px;
+  left: 10px;
+  position: absolute;
+  text-decoration: none; }
+
 #login_page .page-content {
   height: 100%;
   margin: 0 !important;
@@ -9381,17 +9313,147 @@ a {
   padding: 14px 20px;
   position: absolute;
   top: 15%;
-  width: 400px; }
+  width: 380px; }
 
 #login_page #login_form h1 {
   margin: 10px 0 15px;
   text-align: center; }
+
+#login_page #login_form .form-group {
+  border-bottom: 0;
+  padding-bottom: 10px; }
 
 #login_page #login_form .form-actions .btn {
   margin-bottom: 20px; }
 
 #login_page #login_form .form-actions .forgot-password {
   text-align: center; }
+
+#posts_list_page {
+  height: 100%;
+  position: relative; }
+
+#posts_list_page .post-lists {
+  border-right: 1px solid #edeeee;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  top: 59px;
+  width: 30%; }
+
+#posts_list_page .post-lists .post-lists-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #edeeee;
+  left: 0;
+  padding: 10px 5px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 100; }
+
+#posts_list_page .post-lists .lists-wrapper {
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  padding-top: 57px;
+  position: absolute;
+  right: 0;
+  top: 0; }
+
+#posts_list_page .post-lists .lists-wrapper .no-posts {
+  padding: 5px 15px;
+  text-align: center; }
+
+#posts_list_page .post-lists .post .hyperlink {
+  background-color: #ffffff;
+  border-bottom: 1px solid #edeeee;
+  border-left: 3px solid #ffffff;
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  width: 100%; }
+
+#posts_list_page .post-lists .post .hyperlink:hover {
+  background-color: #fafafa;
+  border-left: 3px solid #fafafa;
+  cursor: pointer; }
+
+#posts_list_page .post-lists .post .hyperlink .post-title {
+  color: #000000;
+  font-size: 18px;
+  font-weight: normal;
+  line-height: 24px;
+  margin: 0 0 5px; }
+
+#posts_list_page .post-lists .post .hyperlink .post-meta {
+  color: #a5a7aa; }
+
+#posts_list_page .post-lists .post.active .hyperlink {
+  background-color: #fafafa;
+  border-left: 3px solid #125688; }
+
+#posts_list_page .post-preview {
+  bottom: 0;
+  position: absolute;
+  right: 0;
+  top: 59px;
+  width: 70%; }
+
+#posts_list_page .post-preview .preview-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #edeeee;
+  left: 15px;
+  padding: 14px 0;
+  position: absolute;
+  right: 15px;
+  top: 0;
+  z-index: 100; }
+
+#posts_list_page .post-preview .preview-header .post-meta {
+  color: #a5a7aa;
+  float: left;
+  padding: 4px 0; }
+
+#posts_list_page .post-preview .preview-header .post-controls {
+  float: right; }
+
+#posts_list_page .post-preview .preview-header .post-controls .control-lists {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+
+#posts_list_page .post-preview .preview-header .post-controls .control-lists li {
+  display: inline-block; }
+
+#posts_list_page .post-preview .preview-header .post-controls .control-lists li .edit-post, #posts_list_page .post-preview .preview-header .post-controls .control-lists li .preview-post, #posts_list_page .post-preview .preview-header .post-controls .control-lists li .delete-post {
+  font-size: 20px;
+  text-indent: 30px;
+  color: #67c295; }
+
+#posts_list_page .post-preview .preview-header .post-controls .control-lists li .preview-post {
+  color: #f3a343; }
+
+#posts_list_page .post-preview .preview-header .post-controls .control-lists li .delete-post {
+  color: #dc6e53; }
+
+#posts_list_page .post-preview .preview-content {
+  background-color: #ffffff;
+  bottom: 0;
+  font-size: 1.6rem;
+  left: 0;
+  line-height: 1.5em;
+  overflow: auto;
+  padding: 70px 15px 40px;
+  position: absolute;
+  right: 0;
+  top: 0; }
+
+#posts_list_page .post-preview .no-post {
+  padding: 60px 20px;
+  text-align: center; }
+
+#posts_list_page .post-preview .no-post a i {
+  margin-left: 3px; }
 
 #settings_page .settings .form-wrapper {
   background-color: #ffffff;
@@ -9413,6 +9475,13 @@ a {
   display: block;
   margin: auto;
   max-width: 100%; }
+
+#upload_image_modal .modal-body {
+  padding: 0; }
+
+#upload_image_modal .modal-body .featured-image {
+  border: 0;
+  border-radius: 0; }
 
 #sidebar .content {
   background-color: #f5f7f8;
@@ -9475,3 +9544,39 @@ a {
 
 #sidebar .content .sidebar-content .menu-lists li.header:first-child {
   margin: 0; }
+
+/**
+ * Installer
+ */
+.installer #journal_app {
+  background-color: #ffffff;
+  border-radius: 3px;
+  border: 1px solid #edeeee;
+  margin: 60px auto;
+  padding: 14px 20px;
+  width: 640px; }
+
+.installer #journal_app .installer-header {
+  margin: 10px auto 25px; }
+
+.installer #journal_app .installer-header h1 {
+  color: #000000;
+  font-size: 40px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin: 0;
+  text-align: center; }
+
+.installer #journal_app .content {
+  padding: 0; }
+
+.installer .subheader {
+  border-bottom: 1px solid #edeeee;
+  margin-bottom: 20px; }
+
+.installer .subheader h3 {
+  color: #125688;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 5px 0 15px;
+  text-align: center; }

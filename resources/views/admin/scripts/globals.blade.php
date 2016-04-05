@@ -4,7 +4,7 @@
         csrfToken : '{{ csrf_token() }}',
         // Current User ID
         userId : {!! auth_user() ? auth_user()->id : 'null' !!},
-        // Settings
-        settings : {}
+        // Flash Messages
+        flash : {!! session('message') ? session('message') : 'null' !!}
     }
 </script>

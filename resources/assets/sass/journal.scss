@@ -9,10 +9,16 @@
 /**
  * Admin
  */
-@import "admin/posts/list";
 @import "admin/editor";
 @import "admin/editor/delete-post-modal";
 @import "admin/editor/sidebar";
+@import "admin/image-uploader";
 @import "admin/login";
+@import "admin/posts/list";
 @import "admin/settings";
 @import "admin/sidebar";
+
+/**
+ * Installer
+ */
+@import "installer/main.scss";

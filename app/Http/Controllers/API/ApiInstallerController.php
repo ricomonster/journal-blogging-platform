@@ -6,6 +6,8 @@ use Journal\Http\Controllers\API\ApiController;
 use Journal\Http\Requests;
 use Journal\Repositories\Settings\SettingsRepositoryInterface;
 use Journal\Repositories\User\UserRepositoryInterface;
+use Journal\Support\DatabaseManager;
+use Journal\Support\EnvironmentManager;
 use Validator;
 
 class ApiInstallerController extends ApiController
@@ -18,16 +20,65 @@ class ApiInstallerController extends ApiController
         'time_format'       => 'g:i a'
     ];
 
+    protected $database;
+    protected $environment;
     protected $settings;
     protected $users;
 
-    public function __construct(SettingsRepositoryInterface $settings, UserRepositoryInterface $users)
+    public function __construct(
+        SettingsRepositoryInterface $settings,
+        UserRepositoryInterface $users,
+        DatabaseManager $database,
+        EnvironmentManager $environment)
     {
         $this->settings = $settings;
         $this->users    = $users;
+
+        $this->database     = $database;
+        $this->environment  = $environment;
     }
 
-    public function saveSetup(Request $request)
+    public function database(Request $request)
+    {
+        // get the content of the form and apply it to the env file
+        $post = $request->all();
+
+        // get the env content
+        $env = $this->environment->getEnv(true);
+
+        // loop the post
+        foreach ($post as $key => $value) {
+            // update the env
+            $env[$key] = $value;
+        }
+
+        // update the contents to the env file
+        $this->environment->update($env);
+
+        // perform migration
+        $result = $this->database->migrate();
+
+        // there's an error
+        if ($result) {
+            // else show error message
+            return $this->setStatusCode(self::INTERNAL_SERVER_ERROR)
+                ->respondWithError([
+                    'message' => 'Something went wrong while performing migration.']);
+        }
+
+        // return the redirect url
+        return $this->respond([
+            'redirect_url' => '/installer/setup'
+        ]);
+    }
+
+    /**
+     * Saves the initial setup of the application.
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function setup(Request $request)
     {
         // validate first
         $error = $this->users->validateUser($request->all());
@@ -53,6 +104,9 @@ class ApiInstallerController extends ApiController
         return $this->respond(['user' => $user->toArray()]);
     }
 
+    /**
+     * "Install" Journal by putting a file somewhere in the storage path
+     */
     protected function installJournal()
     {
         file_put_contents(storage_path('installed'), '');
@@ -64,8 +118,8 @@ class ApiInstallerController extends ApiController
 
         // prepare the settings
         $settings = [
-            'blog_title' => $data->blog_title,
-            'blog_description' => $data->blog_description
+            'blog_title'        => $data->blog_title,
+            'blog_description'  => $data->blog_description
         ];
 
         // get the other settings and merge it

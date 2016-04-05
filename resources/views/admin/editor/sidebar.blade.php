@@ -33,7 +33,7 @@
             <div class="form-group">
                 <label class="control-label">Post URL</label>
                 <input type="text" v-model="post.slug" class="form-control" placeholder="post-url"/>
-                <span class="help-block"></span>
+                <span class="help-block">@{{baseUrl}}/@{{post.slug}}</span>
             </div>
             <div class="form-group">
                 <label class="control-label">Published Date/Time</label>

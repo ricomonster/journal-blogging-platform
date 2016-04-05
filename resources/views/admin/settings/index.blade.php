@@ -8,18 +8,18 @@
             <h1 class="page-title">Settings</h1>
         </header>
         <section class="settings scrollable-content">
-            <form class="form-wrapper form-horizontal">
+            <form class="form-wrapper form-horizontal" v-on:submit.prevent="saveSettings()">
                 <div class="form-group">
                     <label class="control-label col-sm-3">Blog title</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control"/>
+                        <input type="text" v-model="settings.blog_title" class="form-control"/>
                         <span class="help-block">The name of your blog.</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">Blog description</label>
                     <div class="col-sm-9">
-                        <textarea class="form-control"></textarea>
+                        <textarea v-model="settings.blog_description" class="form-control"></textarea>
                         <span class="help-block">Describe what your blog is all about.</span>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                         <a class="open-modal">
                             <!-- <img ng-src=""/> -->
                         </a>
-                        <a class="btn btn-info">
+                        <a class="btn btn-info" v-on:click="openImageUploaderModal('logo_url')">
                             <i class="fa fa-camera"></i> Upload a photo.
                         </a>
 
@@ -40,9 +40,9 @@
                     <label class="control-label col-sm-3">Blog cover photo</label>
                     <div class="image-wrapper col-sm-9">
                         <a class="open-modal">
-                            <!-- <img ng-src=""/> -->
+                            <img/>
                         </a>
-                        <a class="btn btn-info">
+                        <a class="btn btn-info" v-on:click="openImageUploaderModal('cover_url')">
                             <i class="fa fa-camera"></i> Upload a photo.
                         </a>
 
@@ -52,7 +52,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-3">Post per page</label>
                     <div class="col-sm-9">
-                        <input type="number" class="form-control"/>
+                        <input type="number" v-model="settings.post_per_page" class="form-control"/>
                         <span class="help-block">Number of posts that a page will show.</span>
                     </div>
                 </div>
@@ -73,5 +73,23 @@
             </form>
         </section>
     </div>
+
+    <aside id="upload_image_modal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <image-uploader></image-uploader>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" v-on:click="saveSettingImage">
+                        Save
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </aside>
 </journal-settings>
+
+@include('admin.scripts.image-uploader')
 @endsection

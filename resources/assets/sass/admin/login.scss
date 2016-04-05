@@ -14,13 +14,18 @@
         padding: 14px 20px;
         position: absolute;
         top: 15%;
-        width: 400px;
+        width: 380px;
     }
 
     #login_form {
         h1 {
             margin: 10px 0 15px;
             text-align: center;
+        }
+
+        .form-group {
+            border-bottom: 0;
+            padding-bottom: 10px;
         }
 
         .form-actions {

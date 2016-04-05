@@ -5,6 +5,7 @@ Vue.component('journal-editor', {
     data: function () {
         return {
             active : [],
+            baseUrl : window.location.protocol + "//" + window.location.host,
             buttons : [
                 { class : 'btn-danger', group : 1, status : 1, text : 'Publish Now' },
                 { class : 'btn-primary', group : 1, status : 2, text : 'Save as Draft' },
@@ -22,6 +23,7 @@ Vue.component('journal-editor', {
             userId : Journal.userId
         };
     },
+
     ready : function () {
         this.renderButtons();
         this.setPublishDateTime();
@@ -108,6 +110,15 @@ Vue.component('journal-editor', {
                     if (response.data.post) {
                         // update the post data
                         vm.post = response.data.post;
+
+                        // check if this is a new post
+                        if (!post.id && history.pushState) {
+                            // update the url
+                            var newurl = vm.baseUrl +
+                                window.location.pathname + '/'+vm.post.id;
+
+                            window.history.pushState({path:newurl},'',newurl);
+                        }
 
                         // notify user for success
                         toastr.success(successMessage, 'Success!');

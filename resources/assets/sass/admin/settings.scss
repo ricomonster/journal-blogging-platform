@@ -34,3 +34,16 @@
         }
     }
 }
+
+#upload_image_modal {
+    .modal-body {
+        padding: 0;
+    }
+
+    .modal-body {
+        .featured-image {
+            border: 0;
+            border-radius: 0;
+        }
+    }
+}

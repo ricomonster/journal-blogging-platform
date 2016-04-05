@@ -86,10 +86,10 @@
                 background-color: $primary-bg-color;
                 border-bottom: 1px solid $border-color;
                 height: 40px;
-                left: 30px;
+                left: 15px;
                 padding: 10px 0;
                 position: absolute;
-                right: 30px;
+                right: 15px;
                 top: 0;
                 z-index: 100
             }
@@ -136,7 +136,7 @@
                     pre {
                         font-family: Inconsolata, monospace;
                         font-size: 1.7rem;
-                        padding: 0 30px;
+                        padding: 0 15px;
                     }
                 }
             }
@@ -163,7 +163,7 @@
                 left: 0;
                 line-height: 1.5em;
                 overflow: auto;
-                padding: 0 30px 0;
+                padding: 0 15px 0;
                 position: absolute;
                 right: 0;
                 top: 0;

@@ -19,6 +19,7 @@ class ApiController extends Controller
 
     const AUTHOR_ID_REQUIRED    = 'Author ID is required.';
     const AUTHOR_NOT_FOUND      = 'Author not found.';
+    const FILE_REQUIRED         = 'A file is required to be uploaded.';
     const INVALID_CREDENTIALS   = 'Invalid e-mail or password.';
     const POST_ID_REQUIRED      = 'Post ID is required.';
     const POST_NOT_FOUND        = 'Post not found.';

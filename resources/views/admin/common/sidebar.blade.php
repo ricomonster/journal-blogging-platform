@@ -49,7 +49,7 @@
                 </li>
                 <li class="header">Settings</li>
                 <li class="">
-                    <a href="/journal/settings/general">
+                    <a href="/journal/settings">
                         <i class="fa fa-cog fa-fw"></i> General
                     </a>
                 </li>
