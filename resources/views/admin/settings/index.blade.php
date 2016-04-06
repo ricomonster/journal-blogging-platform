@@ -26,10 +26,12 @@
                 <div class="form-group">
                     <label class="control-label col-sm-3">Blog logo</label>
                     <div class="image-wrapper col-sm-9">
-                        <a class="open-modal">
-                            <!-- <img ng-src=""/> -->
+                        <a class="open-modal" v-on:click="openImageUploaderModal('logo_url')"
+                        v-if="settings.logo_url">
+                            <img v-bind:src="settings.logo_url"/>
                         </a>
-                        <a class="btn btn-info" v-on:click="openImageUploaderModal('logo_url')">
+                        <a class="btn btn-info" v-on:click="openImageUploaderModal('logo_url')"
+                        v-if="!settings.logo_url">
                             <i class="fa fa-camera"></i> Upload a photo.
                         </a>
 
@@ -39,10 +41,12 @@
                 <div class="form-group">
                     <label class="control-label col-sm-3">Blog cover photo</label>
                     <div class="image-wrapper col-sm-9">
-                        <a class="open-modal">
-                            <img/>
+                        <a class="open-modal"  v-on:click="openImageUploaderModal('cover_url')"
+                        v-if="settings.cover_url">
+                            <img v-bind:src="settings.cover_url"/>
                         </a>
-                        <a class="btn btn-info" v-on:click="openImageUploaderModal('cover_url')">
+                        <a class="btn btn-info" v-on:click="openImageUploaderModal('cover_url')"
+                        v-if="!settings.cover_url">
                             <i class="fa fa-camera"></i> Upload a photo.
                         </a>
 
@@ -74,14 +78,15 @@
         </section>
     </div>
 
-    <aside id="upload_image_modal" class="modal fade" tabindex="-1" role="dialog">
+    <aside id="upload_image_modal" class="modal fade" tabindex="-1" role="dialog"
+    v-if="modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <image-uploader></image-uploader>
+                    <image-uploader :image.sync="modal.image" :type="modal.type"></image-uploader>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" v-on:click="saveSettingImage">
+                    <button type="button" class="btn btn-primary" v-on:click="saveImageSettings">
                         Save
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

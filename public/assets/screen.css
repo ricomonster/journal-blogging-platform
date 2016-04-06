@@ -8991,7 +8991,7 @@ ul.alert {
   border-width: 1px; }
 
 .input-group-addon .fa {
-  color: #125688; }
+  color: #a5a7aa; }
 
 .form-control, .form-control:focus {
   -moz-box-shadow: none;
@@ -9310,17 +9310,20 @@ a {
   border-radius: 3px;
   left: 50%;
   margin: 0 -200px;
-  padding: 14px 20px;
+  padding: 14px 30px;
   position: absolute;
   top: 15%;
   width: 380px; }
 
 #login_page #login_form h1 {
-  margin: 10px 0 15px;
+  color: #125688;
+  font-size: 44px;
+  margin: 20px 0;
   text-align: center; }
 
 #login_page #login_form .form-group {
   border-bottom: 0;
+  margin-bottom: 5px;
   padding-bottom: 10px; }
 
 #login_page #login_form .form-actions .btn {

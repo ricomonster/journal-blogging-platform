@@ -13,6 +13,13 @@ Vue.component('image-uploader', {
         }
     },
 
+    ready : function () {
+        // make sure that everytime this loads up, it will be empty
+        this.$set('option', 'file');
+        this.$set('imageUrl', '');
+        this.$set('inputtedUrl', '');
+    },
+
     methods : {
         /**
          * Gets the input and shows it as the image
@@ -26,6 +33,9 @@ Vue.component('image-uploader', {
             setTimeout( function () {
                 // get the value of the input and set as a value
                 vm.$set('imageUrl', vm.inputtedUrl);
+
+                // now assign this to the prop
+                vm.$set('image', vm.inputtedUrl);
             }, 1000);
         },
 
@@ -47,6 +57,9 @@ Vue.component('image-uploader', {
 
             // remove the value of the input field for the image link
             vm.$set('inputtedUrl', null);
+
+            // also the prop!
+            vm.$set('image', null);
         },
 
         /**
@@ -85,12 +98,32 @@ Vue.component('image-uploader', {
                         // set the new image
                         vm.$set('imageUrl', response.data.url);
 
+                        // assign to the prop
+                        vm.$set('image', response.data.url);
+
                         // flag to false the loading
                         vm.$set('loading', false);
                     }
-                }, function () {
+                }, function (response) {
+                    // there's an error
+                    toastr.error(response.data.message);
 
+                    // flag to false the loading
+                    vm.$set('loading', false);
                 });
+        }
+    },
+
+    watch : {
+        /**
+         * Watches the changes to the image property and once there's a change
+         * detected it will assign to the imageUrl variable.
+         */
+        'image' : function (value) {
+            var vm = this;
+
+            // assign to imageUrl
+            vm.$set('imageUrl', value);
         }
     }
 });

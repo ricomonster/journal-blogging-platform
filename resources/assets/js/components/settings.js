@@ -55,8 +55,49 @@ Vue.component('journal-settings', {
             var vm = this;
 
             // get the value of the selected type
+            var image = vm.settings[type];
+
             // assign in the modal object
+            vm.modal = {
+                type : type,
+                image : image
+            };
+
             // open modal
+            $('#upload_image_modal').modal('show');
+        },
+
+        /**
+         * Sends request to the API so we can save the newly inputted image.
+         */
+        saveImageSettings : function () {
+            var vm          = this,
+                settings    = vm.settings,
+                message     = (vm.modal.type == 'cover_url') ? 'cover photo' : 'avatar',
+                data        = {};
+
+            // prepare the data
+            data[vm.modal.type] = vm.modal.image;
+
+            vm.$http.post('/api/settings/save_settings', data)
+                .then( function (response) {
+                    if (response.data.settings) {
+                        // update the settings scope
+                        settings[response.data.settings[0].name] = response.data.settings[0].value;
+
+                        vm.$set('settings', settings);
+
+                        // show success message
+                        toastr.success('You have successfully updated ' + message + ' of your blog.');
+
+                        // close the modal
+                        $('#upload_image_modal').modal('hide');
+                    }
+                }, function (response) {
+                    var error = response.data.message;
+
+                    toastr.error(error);
+                });
         },
 
         /**
