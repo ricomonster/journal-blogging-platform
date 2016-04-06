@@ -1,6 +1,6 @@
 <aside id="editor_sidebar" v-bind:class="{ active : sidebarOpen }">
     <div class="sidebar-overlay"></div>
-    <div class="content">
+    <div class="editor-content">
         <header class="sidebar-header clearfix">
             <h3>Settings</h3>
             <a class="close close-sidebar" v-on:click="toggleSidebar()">&times;</a>
@@ -8,24 +8,7 @@
         <section class="post-settings">
             <div class="form-group">
                 <label class="control-label">Featured Image</label>
-                <!-- <div id="featured_image_component">
-                    <div class="wrapper">
-                        <section class="content">
-                            <div class="image-preview">
-                                <a class="fa fa-times" v-on:click="removeCurrentImage()"></a>
-                                <img src=""/>
-                            </div>
-                            <div class="file-upload">
-
-                            </div>
-                            <div class="image-url"></div>
-                        </section>
-                        <footer class="upload-option">
-                            <a v-on:click="toggleOption()" class="fa"
-                            v-bind:class="{ 'fa-upload' : option == 'link', 'fa-link' : option == 'file' }"></a>
-                        </footer>
-                    </div>
-                </div> -->
+                <image-uploader :image.sync="post.cover_image"></image-uploader>
             </div>
             <div class="form-group">
                 <label class="control-label">Tags</label>

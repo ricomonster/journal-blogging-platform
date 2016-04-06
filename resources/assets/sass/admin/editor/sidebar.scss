@@ -1,6 +1,6 @@
 #editor_sidebar {
     .sidebar-overlay { display: none; }
-    .content {
+    .editor-content {
         background-color: $sidebar-bg-color;
         border-left: 1px solid $border-color;
         bottom: 0;
@@ -13,7 +13,7 @@
         z-index: 500;
     }
 
-    .content {
+    .editor-content {
         .sidebar-header {
             border-bottom: 1px solid $border-color; padding: 14px 0;
         }
@@ -35,6 +35,18 @@
         }
 
         .post-settings {
+            .featured-image {
+                .content {
+                    min-height: 180px;
+                }
+
+                .content {
+                    .image-url {
+                        padding: 0 10px;
+                    }
+                }
+            }
+
             .delete-post-zone {
                 border-top: 1px solid $border-color;
                 margin: 0;
@@ -62,7 +74,7 @@
         z-index: 300;
     }
 
-    .content {
+    .editor-content {
         right: 0;
     }
 }

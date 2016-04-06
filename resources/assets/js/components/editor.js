@@ -1,6 +1,8 @@
 require('./../directives/codemirror');
 require('./../directives/sync-scroll');
 
+require('./image-uploader');
+
 Vue.component('journal-editor', {
     data: function () {
         return {

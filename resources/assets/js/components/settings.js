@@ -51,6 +51,10 @@ Vue.component('journal-settings', {
 
         },
 
+        /**
+         * Opens the modal for the image uploader and also populates the modal
+         * object that will be used by the image uploader.
+         */
         openImageUploaderModal : function (type) {
             var vm = this;
 

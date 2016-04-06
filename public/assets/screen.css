@@ -9186,7 +9186,7 @@ a {
 #editor_sidebar .sidebar-overlay {
   display: none; }
 
-#editor_sidebar .content {
+#editor_sidebar .editor-content {
   background-color: #f5f7f8;
   border-left: 1px solid #edeeee;
   bottom: 0;
@@ -9198,19 +9198,19 @@ a {
   width: 300px;
   z-index: 500; }
 
-#editor_sidebar .content .sidebar-header {
+#editor_sidebar .editor-content .sidebar-header {
   border-bottom: 1px solid #edeeee;
   padding: 14px 0; }
 
-#editor_sidebar .content .sidebar-header h3 {
+#editor_sidebar .editor-content .sidebar-header h3 {
   float: left;
   margin: 0; }
 
-#editor_sidebar .content .sidebar-header .close-sidebar {
+#editor_sidebar .editor-content .sidebar-header .close-sidebar {
   font-size: 24px;
   float: right; }
 
-#editor_sidebar .content .post-settings {
+#editor_sidebar .editor-content .post-settings {
   bottom: 0;
   left: 0;
   overflow-x: hidden;
@@ -9220,12 +9220,18 @@ a {
   right: 0;
   top: 55px; }
 
-#editor_sidebar .content .post-settings .delete-post-zone {
+#editor_sidebar .editor-content .post-settings .featured-image .content {
+  min-height: 180px; }
+
+#editor_sidebar .editor-content .post-settings .featured-image .content .image-url {
+  padding: 0 10px; }
+
+#editor_sidebar .editor-content .post-settings .delete-post-zone {
   border-top: 1px solid #edeeee;
   margin: 0;
   padding: 15px 0; }
 
-#editor_sidebar .content .post-settings .delete-post-zone .message {
+#editor_sidebar .editor-content .post-settings .delete-post-zone .message {
   text-align: center;
   font-weight: bold; }
 
@@ -9238,7 +9244,7 @@ a {
   top: 0;
   z-index: 300; }
 
-#editor_sidebar.active .content {
+#editor_sidebar.active .editor-content {
   right: 0; }
 
 .featured-image {

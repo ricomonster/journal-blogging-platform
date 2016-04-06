@@ -97,4 +97,6 @@
         </div>
     </div>
 </journal-editor>
+
+@include('admin.scripts.image-uploader')
 @endsection
