@@ -7,71 +7,46 @@
             <p class="user-name">{{auth_user()->name}}</p>
         </header>
         <section class="sidebar-content">
-            <ul class="menu-lists">
-                <li class="header">Create new...</li>
-                <li class="">
-                    <a href="/journal/editor">
-                        <i class="fa fa-plus-circle fa-fw"></i> Post
-                    </a>
-                </li>
-                <li style="display: none;">
-                    <a>
-                        <i class="fa fa-user-plus fa-fw"></i> User
-                    </a>
-                </li>
-                <li>
-                    <a href="/journal/tags/create">
-                        <i class="fa fa-tag fa-fw"></i> Tag
-                    </a>
-                </li>
+            <ul class="menu">
                 <li class="header">
-                    Menu
+                    <span class="title">Content</span>
                 </li>
-                <li class="">
-                    <a href="/journal/posts/list">
-                        <i class="fa fa-list fa-fw"></i> Posts
+                <li class="{!! (is_active_menu('posts/list')) ? 'active' : null !!}">
+                    <a href="{{ url('journal/posts/list') }}">
+                        <i class="fa fa-list fa-fw"></i>
+                        <span class="text">Posts</span>
                     </a>
                 </li>
-                <li class="">
-                    <a href="/journal/pages/list">
-                        <i class="fa fa-file-text fa-fw"></i> Pages
+                <li class="{!! (is_active_menu('pages/list')) ? 'active' : null !!}">
+                    <a href="{{ url('journal/pages/list') }}">
+                        <i class="fa fa-file fa-fw"></i>
+                        <span class="text">Pages</span>
                     </a>
                 </li>
-                <li class="">
-                    <a href="/journal/tags/list">
-                        <i class="fa fa-tags fa-fw"></i> Tags
+                <li class="{!! (is_active_menu('tags/list')) ? 'active' : null !!}">
+                    <a href="{{ url('journal/tags/list') }}">
+                        <i class="fa fa-tags fa-fw"></i>
+                        <span class="text">Tags</span>
                     </a>
                 </li>
-                <li class="">
-                    <a href="/journal/users/list">
-                        <i class="fa fa-users fa-fw"></i> Users
+                <li class="{!! (is_active_menu('users/list')) ? 'active' : null !!}">
+                    <a href="{{ url('journal/users/list') }}">
+                        <i class="fa fa-users fa-fw"></i>
+                        <span class="text">Users</span>
                     </a>
                 </li>
-                <li class="header">Settings</li>
-                <li class="">
-                    <a href="/journal/settings">
-                        <i class="fa fa-cog fa-fw"></i> General
+                <li class="divider"></li>
+                <li class="{!! (is_active_menu('settings')) ? 'active' : null !!}">
+                    <a href="{{ url('journal/settings') }}">
+                        <i class="fa fa-cog fa-fw"></i>
+                        <span class="text">Settings</span>
                     </a>
                 </li>
-                <li style="display: none;">
-                    <a>
-                        <i class="fa fa-rocket fa-fw"></i> Services
-                    </a>
-                </li>
-                <li class="header">Account</li>
-                <li class="">
-                    <a href="/journal/user/profile">
-                        <i class="fa fa-user fa-fw"></i> Edit Profile
-                    </a>
-                </li>
-                <li style="display: none;">
-                    <a>
-                        <i class="fa fa-unlock fa-fw"></i> Change Password
-                    </a>
-                </li>
+                <li class="divider"></li>
                 <li>
-                    <a href="/journal/logout">
-                        <i class="fa fa-power-off fa-fw"></i> Log out
+                    <a href="{{ url('journal/logout') }}">
+                        <i class="fa fa-power-off fa-fw"></i>
+                        <span class="text">Log out</span>
                     </a>
                 </li>
             </ul>

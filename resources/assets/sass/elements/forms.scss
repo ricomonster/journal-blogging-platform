@@ -29,7 +29,7 @@
 .input-group-addon {
     background-color: $secondary-bg-color;
     border-color: $border-color;
-    border-radius: $default-border-radius;
+    border-radius: $border-radius;
     border-width: 1px;
 }
 
@@ -43,7 +43,7 @@
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
     border-color: $border-color;
-    border-radius: $default-border-radius;
+    border-radius: $border-radius;
     border-width: 1px;
     box-shadow: none;
     color: $text;

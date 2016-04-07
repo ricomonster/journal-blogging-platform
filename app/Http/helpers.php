@@ -33,3 +33,13 @@ if ( ! function_exists('blog_title')) {
             $settings->value : null;
     }
 }
+
+if ( ! function_exists('is_active_menu')) {
+    function is_active_menu($keyword)
+    {
+        // get the current url of the page
+        $url = Request::url();
+
+        return strpos($url, $keyword);
+    }
+}

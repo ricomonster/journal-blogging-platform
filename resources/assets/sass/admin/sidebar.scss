@@ -1,7 +1,7 @@
 #sidebar {
     .content {
-        background-color: $sidebar-bg-color;
-        border-right: 1px solid $border-color;
+        background-color: #2d393c;
+        border-right: 1px solid #4b5254;
         bottom: 0;
         left: 0;
         padding: 0 15px;
@@ -12,7 +12,7 @@
 
     .content {
         .sidebar-header {
-            border-bottom: 1px solid $border-color;
+            border-bottom: 1px solid #404a4d;
             padding: 15px 0 5px;
         }
 
@@ -25,9 +25,13 @@
 
             .blog-title {
                 a {
-                    color: $hyperlink;
+                    color: #ffffff;
                     text-decoration: none;
                 }
+            }
+
+            .user-name {
+                color: #aaafb0;
             }
         }
 
@@ -42,49 +46,49 @@
         }
 
         .sidebar-content {
-            .menu-lists {
+            .menu {
+                list-style: none;
                 margin: 0;
                 padding: 0;
-                width: 100%;
             }
 
-            .menu-lists {
+            .menu {
                 li {
-                    padding: 3px 0;
-                }
-                li {
+                    .title {
+                        color: #ffffff;
+                        display: block;
+                        font-weight: bold;
+                        padding: 3px 15px;
+                        text-transform: uppercase;
+                    }
+
                     a {
-                        color: $text;
-                        padding: 0 20px;
+                        border-left: 3px solid #2d393c;
+                        color: #aaafb0;
+                        display: block;
+                        margin: 8px 0;
+                        padding: 4px 15px 4px 12px;
                         text-decoration: none;
                     }
 
                     a {
-                        i {
-                            margin-right: 5px;
+                        i.fa {
+                            float: left;
+                            font-size: 18px;
+                            margin-right: 10px;
                         }
                     }
                 }
 
                 li.active {
                     a {
-                        color: $hyperlink;
+                        border-left-color: $hyperlink;
                     }
                 }
 
-                li.header {
-                    color: $subtext;
-                    font-size: 13px;
-                    font-weight: bold;
-                    margin: 15px 0 0;
-                    padding: 3px 15px;
-                    text-transform: uppercase;
-                }
-
-                li.header{
-                    &:first-child {
-                        margin: 0;
-                    }
+                li.divider {
+                    content : "";
+                    margin: 15px 0;
                 }
             }
         }

@@ -9,7 +9,7 @@
                 <img v-bind:src="imageUrl"/>
             </div>
             <div class="file-upload" v-if="!imageUrl && option == 'file'">
-                <button type="button" class="btn btn-primary" v-on:click="openFileManager"
+                <button type="button" class="btn btn-success" v-on:click="openFileManager"
                 v-if="!loading">
                     <i class="fa fa-upload"></i> Add Image to Upload
                 </button>

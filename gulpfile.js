@@ -1,9 +1,11 @@
 var browserify  = require('browserify'),
     gulp        = require('gulp'),
+    cleanCss    = require('gulp-clean-css'),
     notify      = require('gulp-notify'),
     plumber     = require('gulp-plumber'),
     rename      = require('gulp-rename'),
     sass        = require('gulp-sass'),
+    uglify      = require('gulp-uglify'),
     util        = require('gulp-util'),
     runSequence = require('run-sequence'),
     source      = require('vinyl-source-stream'),
@@ -36,6 +38,7 @@ gulp.task('browserify', function () {
         .on('error', onError)
         .pipe(source('app.js'))
         .pipe(buffer())
+        .pipe(production ? uglify() : util.noop())
         .pipe(plumber({
             errorHandler : onError
         }))
@@ -47,6 +50,10 @@ gulp.task('build-sass', function () {
         .pipe(sass())
         .on('error', onError)
         .pipe(rename('screen.css'))
+        .pipe(production ? cleanCss() : util.noop())
+        .pipe(plumber({
+            errorHandler : onError
+        }))
         .pipe(gulp.dest('./public/assets/'));
 });
 
@@ -69,5 +76,5 @@ gulp.task('watch', function () {
 });
 
 gulp.task('default', function (callback) {
-    runSequence('browserify', 'build-sass', 'watch', callback);
+    runSequence('browserify', 'build-sass', callback);
 });
