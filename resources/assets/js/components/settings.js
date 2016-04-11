@@ -48,7 +48,17 @@ Vue.component('journal-settings', {
          * Get the lists of installed themes.
          */
         getThemes : function () {
+            var vm = this;
 
+            // get the themes
+            vm.$http.get('/api/settings/themes')
+                .then( function (response) {
+                    if (response.data.themes) {
+                        vm.$set('themes', response.data.themes);
+                    }
+                }, function () {
+
+                });
         },
 
         /**

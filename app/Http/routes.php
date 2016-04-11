@@ -40,6 +40,7 @@ Route::group(['middleware' => ['web'], 'namespace' => 'API', 'prefix' => 'api'],
     // Setting Routes
     Route::group(['prefix' => 'settings'], function () {
         Route::get('get', 'ApiSettingsController@get');
+        Route::get('themes', 'ApiSettingsController@themes');
 
         Route::post('save_settings', 'ApiSettingsController@saveSettings');
     });

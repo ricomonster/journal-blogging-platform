@@ -33,34 +33,34 @@
             </header>
             <section class="editor">
                 <section class="markdown-editor window">
-                    <header class="floating-header">
-                        <span class="title">
-                            <i class="fa fa-arrow-circle-o-down"></i> Markdown
-                        </span>
-                        <a class="markdown-helper" title="Open the markdown helper">
-                            <i class="fa fa-question-circle"></i>
-                        </a>
-                    </header>
                     <section class="editor-wrapper editor-scroll">
                         <!-- Codemirror here -->
                         <div class="codemirror-wrapper"
                         v-codemirror="post.content"
                         v-sync-scroll.literal=".preview-wrapper"></div>
                     </section>
+                    <footer class="floating-footer">
+                        <span class="title">
+                            <i class="fa fa-arrow-circle-o-down"></i> Markdown
+                        </span>
+                        <a class="markdown-helper" title="Open the markdown helper">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </footer>
                 </section>
                 <section class="markdown-preview window">
-                    <header class="floating-header">
-                        <span class="title">
-                            <i class="fa fa-eye"></i> Preview
-                        </span>
-                        <span class="word-counter">0 words</span>
-                    </header>
                     <section class="preview-wrapper">
                         <div class="rendered-markdown">
                             <markdown-reader :markdown.sync="post.content"
-                            :editor-mode="true"></markdown-reader>
+                            :editor-mode="true" :counter.sync="counter"></markdown-reader>
                         </div>
                     </section>
+                    <footer class="floating-footer">
+                        <span class="title">
+                            <i class="fa fa-eye"></i> Preview
+                        </span>
+                        <span class="word-counter">@{{counter.count}} words</span>
+                    </footer>
                 </section>
             </section>
             <!-- Sidebar -->

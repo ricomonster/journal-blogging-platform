@@ -63,8 +63,12 @@
                 <div class="form-group">
                     <label class="control-label col-sm-3">Theme</label>
                     <div class="col-sm-9">
-                        <select class="form-control">
+                        <select class="form-control" v-model="settings.theme_template">
                             <option value="" selected>Select theme...</option>
+                            <option v-for="theme in themes"
+                            v-bind:value="theme.theme_name">
+                                @{{theme.name}} (v@{{theme.version}})
+                            </option>
                         </select>
                         <span class="help-block">The theme that will be rendered on your blog.</span>
                     </div>

@@ -29,7 +29,8 @@ class DbSettingsRepository implements SettingsRepositoryInterface
             DB::table('settings')
                 ->where('name', '=', $name)
                 ->update([
-                    'value' => $value
+                    'value' => $value,
+                    'updated_at' => date('Y-m-d h:i:s')
                 ]);
 
             // return the settings
@@ -40,7 +41,9 @@ class DbSettingsRepository implements SettingsRepositoryInterface
         DB::table('settings')
             ->insert([
                 'name' => $name,
-                'value' => $value
+                'value' => $value,
+                'created_at' => date('Y-m-d h:i:s'),
+                'updated_at' => date('Y-m-d h:i:s')
             ]);
 
         // return the settings

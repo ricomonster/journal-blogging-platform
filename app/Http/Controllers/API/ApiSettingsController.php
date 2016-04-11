@@ -56,4 +56,27 @@ class ApiSettingsController extends ApiController
         return $this->respond([
             'settings' => $settings]);
     }
+
+    public function themes()
+    {
+        $themeLists = [];
+        $themesPath = base_path('themes');
+        
+        $themes = array_diff(scandir($themesPath), array('..', '.'));
+
+        // check contents of the theme
+        foreach ($themes as $key => $theme) {
+            $themeDirectory = scandir($themesPath.'/'.$theme);
+
+            if (in_array('theme.json', $themeDirectory)) {
+                // get the contents of the theme.json
+                $content = json_decode(
+                    file_get_contents($themesPath.'/'.$theme.'/theme.json'), true);
+
+                array_push($themeLists, $content);
+            }
+        }
+
+        return $this->respond(['themes' => $themeLists]);
+    }
 }

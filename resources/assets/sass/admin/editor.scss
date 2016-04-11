@@ -82,19 +82,19 @@
         }
 
         .window {
-            .floating-header {
+            .floating-footer {
                 background-color: $primary-bg-color;
-                border-bottom: 1px solid $border-color;
+                border-top: 1px solid $border-color;
+                bottom: 0;
                 height: 40px;
                 left: 15px;
                 padding: 10px 0;
                 position: absolute;
                 right: 15px;
-                top: 0;
                 z-index: 100
             }
 
-            .floating-header {
+            .floating-footer {
                 span {
                     color: $subtext;
                     font-size: 12px;
@@ -122,7 +122,7 @@
 
             .editor-wrapper {
                 .CodeMirror {
-                    bottom: 0;
+                    bottom: 40px;
                     color: #3c4043;
                     height: auto;
                     left: 0;
@@ -132,7 +132,10 @@
                 }
 
                 .CodeMirror {
-                    .CodeMirror-lines { padding: 60px 0 25px; }
+                    .CodeMirror-lines {
+                        padding: 30px 0 40px;
+                    }
+
                     pre {
                         font-family: Inconsolata, monospace;
                         font-size: 1.7rem;
@@ -142,9 +145,12 @@
             }
         }
 
-        .window.markdown-preview { right: 0; }
+        .window.markdown-preview {
+            right: 0;
+        }
+
         .markdown-preview {
-            .floating-header {
+            .floating-footer {
                 .word-counter { float: right; }
             }
 
@@ -156,7 +162,7 @@
                 -webkit-hyphens: auto;
                 -webkit-user-select: none;
                 background-color: $primary-bg-color;
-                bottom: 0;
+                bottom: 40px;
                 cursor: default;
                 font-size: 1.8rem;
                 hyphens: auto;
@@ -173,7 +179,7 @@
             }
 
             .preview-wrapper {
-                .rendered-markdown { padding: 60px 0 40px; }
+                .rendered-markdown { padding: 30px 0 40px; }
             }
         }
     }

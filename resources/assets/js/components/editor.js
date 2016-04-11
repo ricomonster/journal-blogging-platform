@@ -14,6 +14,10 @@ Vue.component('journal-editor', {
                 { class : 'btn-danger', group : 2, status : 2, text : 'Unpublish Post' },
                 { class : 'btn-info', group : 2, status : 1, text : 'Update Post' }
             ],
+            counter : {
+                enable : true,
+                count : 0
+            },
             loading : true,
             sidebarOpen : false,
             post : {
@@ -115,10 +119,11 @@ Vue.component('journal-editor', {
 
                         // check if this is a new post
                         if (!post.id && history.pushState) {
-                            // update the url
+                            // set the new url
                             var newurl = vm.baseUrl +
                                 window.location.pathname + '/'+vm.post.id;
 
+                            // update the url
                             window.history.pushState({path:newurl},'',newurl);
                         }
 
