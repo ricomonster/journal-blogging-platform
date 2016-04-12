@@ -35,9 +35,12 @@ class DbPostRepository implements PostRepositoryInterface
             'published_at'  => $publishedAt
         ]);
 
-        // TODO: Save tags and link them
+        // check if there are tag ids
+        if (isset($post['tag_ids']) && !empty($post['tag_ids'])) {
+            $result->tags()->sync($post['tag_ids']);
+        }
 
-        return $result;
+        return $this->findById($result->id);
     }
 
     /**
@@ -67,7 +70,7 @@ class DbPostRepository implements PostRepositoryInterface
      */
     public function findById($id)
     {
-        return Post::with(['author'])
+        return Post::with(['author', 'tags'])
             ->where('id', '=', $id)
             ->where('active', '=', 1)
             ->where('is_page', '=', 0)
@@ -104,9 +107,15 @@ class DbPostRepository implements PostRepositoryInterface
         $savedPost->published_at = $post['published_at'];
         $savedPost->save();
 
-        // TODO: tags
+        // remove all the tags
+        $savedPost->tags()->detach();
 
-        return $savedPost;
+        // check if there are tag ids
+        if (isset($post['tag_ids']) && !empty($post['tag_ids'])) {
+            $savedPost->tags()->sync($post['tag_ids']);
+        }
+
+        return $this->findById($savedPost->id);
     }
 
     /**

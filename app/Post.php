@@ -31,4 +31,14 @@ class Post extends Model
     {
         return $this->belongsTo('Journal\User', 'author_id');
     }
+
+    /**
+     * Post/Tag Relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tags()
+    {
+        return $this->belongsToMany('Journal\Tag', 'post_tags', 'post_id', 'tag_id');
+    }
 }

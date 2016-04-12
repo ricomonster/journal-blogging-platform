@@ -34,6 +34,10 @@ class JournalServiceProvider extends ServiceProvider
             'Journal\Repositories\Post\DbPostRepository');
 
         $this->app->bind(
+            'Journal\Repositories\Tag\TagRepositoryInterface',
+            'Journal\Repositories\Tag\DbTagRepository');
+
+        $this->app->bind(
             'Journal\Repositories\User\UserRepositoryInterface',
             'Journal\Repositories\User\DbUserRepository');
     }

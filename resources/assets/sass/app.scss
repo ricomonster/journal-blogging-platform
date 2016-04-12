@@ -14,9 +14,14 @@
 @import "node_modules/toastr/package/toastr.scss";
 
 /**
- * Plugins
+ * Selectize CSS
  */
-@import "./plugins/codemirror.scss";
+@import "node_modules/selectize/dist/css/selectize.bootstrap3";
+
+/**
+ * CodeMirror CSS
+ */
+@import "node_modules/codemirror/lib/codemirror";
 
 /**
  * Journal SASS Variables

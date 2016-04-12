@@ -4,7 +4,7 @@
 @section('content')
 <journal-editor inline-template>
     <div id="editor_page">
-        <form v-on:submit="savePost($event)">
+        <form v-on:submit.prevent="savePost($event)">
             <header class="page-header clearfix">
                 <input type="text" v-model="post.title" placeholder="Title"
                 class="form-control input-lg input-post-slug" v-on:blur="generateSlug()"/>

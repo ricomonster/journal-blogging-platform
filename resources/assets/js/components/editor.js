@@ -1,4 +1,5 @@
 require('./../directives/codemirror');
+require('./../directives/selectize');
 require('./../directives/sync-scroll');
 
 require('./image-uploader');
@@ -26,12 +27,19 @@ Vue.component('journal-editor', {
                 published_at : ''
             },
             processing : false,
+            tags : [],
             userId : Journal.userId
         };
     },
 
     ready : function () {
+        // get the tags from the API
+        this.getTags();
+
+        // render the buttons based on the post status
         this.renderButtons();
+
+        // set the publish date and time
         this.setPublishDateTime();
 
         if ($('input[name="post_id"]').length > 0) {
@@ -45,6 +53,7 @@ Vue.component('journal-editor', {
             this.toggleSidebar();
         }.bind(this));
     },
+
     methods : {
         /**
          * Deletes the selected/active post.
@@ -90,6 +99,20 @@ Vue.component('journal-editor', {
         },
 
         /**
+         * Fetches all the tags saved in the API.
+         */
+        getTags : function () {
+            var vm = this;
+
+            vm.$http.get('/api/tags/get')
+                .then( function (response) {
+                    if (response.data.tags) {
+                        vm.$set('tags', response.data.tags);
+                    }
+                });
+        },
+
+        /**
          * Saves the post to the API
          */
         savePost : function (e) {
@@ -109,6 +132,8 @@ Vue.component('journal-editor', {
 
             // fix the publish date, convert it to timestamp
             post.published_at = moment(post.published_at).unix();
+
+            console.log(post);
 
             // save post
             vm.$http.post(url, post)

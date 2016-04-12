@@ -91,5 +91,19 @@ ul.alert { list-style: none; }
     border-radius: $border-radius;
 }
 
+/* Selectize JS */
+.selectize-input {
+    border-color: $border-color;
+    border-radius: $border-radius;
+}
+
+.selectize-control.multi {
+    .selectize-input {
+        div {
+            padding: 1px 5px;
+        }
+    }
+}
+
 /* Vue JS */
  [v-cloak] { display: none }

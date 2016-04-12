@@ -45,6 +45,11 @@ Route::group(['middleware' => ['web'], 'namespace' => 'API', 'prefix' => 'api'],
         Route::post('save_settings', 'ApiSettingsController@saveSettings');
     });
 
+    // Tag Routes
+    Route::group(['prefix' => 'tags'], function () {
+        Route::get('get', 'ApiTagsController@get');
+    });
+
     // User Routes
     Route::group(['prefix' => 'users'], function () {
         Route::post('create', 'ApiUsersController@create');

@@ -49,6 +49,8 @@ if (window.moment === undefined) {
     window.moment = require('moment');
 }
 
+require('selectize');
+
 // set some global options for the toastr
 toastr.options.positionClass = 'toast-bottom-left';
 toastr.options.newestOnTop = false;

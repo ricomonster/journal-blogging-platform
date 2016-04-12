@@ -21,4 +21,14 @@ class Tag extends Model
      * @var array
      */
     protected $hidden = [];
+
+    /**
+     * Post/Tag Relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function posts()
+    {
+        return $this->belongsToMany('Journal\Post', 'post_tags', 'tag_id', 'post_id');
+    }
 }

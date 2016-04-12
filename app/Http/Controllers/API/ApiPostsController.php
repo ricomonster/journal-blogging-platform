@@ -6,6 +6,7 @@ use Journal\Http\Requests;
 use Journal\Http\Controllers\API\ApiController;
 use Journal\Repositories\Post\PostRepositoryInterface;
 use Journal\Repositories\User\UserRepositoryInterface;
+use Journal\Repositories\Tag\TagRepositoryInterface;
 use Validator;
 
 class ApiPostsController extends ApiController
@@ -13,12 +14,14 @@ class ApiPostsController extends ApiController
     const POST_NO_TITLE = 'Untitled';
 
     protected $posts;
+    protected $tags;
     protected $users;
 
-    public function __construct(PostRepositoryInterface $posts, UserRepositoryInterface $users)
+    public function __construct(PostRepositoryInterface $posts, TagRepositoryInterface $tags, UserRepositoryInterface $users)
     {
-        $this->posts = $posts;
-        $this->users = $users;
+        $this->posts    = $posts;
+        $this->tags     = $tags;
+        $this->users    = $users;
     }
 
     /**
@@ -151,6 +154,9 @@ class ApiPostsController extends ApiController
             self::POST_NO_TITLE :
             $request->input('title');
 
+        // set the tags to be sent
+        $tagIds = $this->tags->generatePostTags($request->input('tags'));
+
         // prepare the data to be sent as post
         $postData = [
             'author_id'     => $user->id,
@@ -159,7 +165,8 @@ class ApiPostsController extends ApiController
             'cover_image'   => $request->input('cover_image'),
             'slug'          => $request->input('slug'),
             'status'        => $request->input('status'),
-            'published_at'  => $request->input('published_at')
+            'published_at'  => $request->input('published_at'),
+            'tag_ids'       => $tagIds
         ];
 
         // check if there's a post_id

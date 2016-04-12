@@ -12,6 +12,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Tags</label>
+                <input type="text" v-selectize="post.tags" v-bind:tags="tags"/>
             </div>
             <div class="form-group">
                 <label class="control-label">Post URL</label>
