@@ -49,6 +49,9 @@ if (window.moment === undefined) {
     window.moment = require('moment');
 }
 
+/**
+ * Load Selectize JS
+ */
 require('selectize');
 
 // set some global options for the toastr

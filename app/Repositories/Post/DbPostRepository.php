@@ -126,6 +126,9 @@ class DbPostRepository implements PostRepositoryInterface
     {
         $post = $this->findById($id);
 
+        // detach tags
+        $post->tags()->detach();
+
         $post->active = 0;
         $post->save();
     }

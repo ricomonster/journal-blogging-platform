@@ -9875,13 +9875,21 @@ a {
 #posts_list_page .post-preview .no-post a i {
   margin-left: 3px; }
 
+#tags_list_page .tags-list .wrapper {
+  background-color: #ffffff;
+  border: 1px solid #edeeee;
+  border-radius: 3px;
+  margin: 40px auto;
+  padding: 14px 20px;
+  width: 60%; }
+
 #settings_page .settings .form-wrapper {
   background-color: #ffffff;
   border: 1px solid #edeeee;
   border-radius: 3px;
-  margin: 40px;
+  margin: 40px auto;
   padding: 14px 20px;
-  width: 55%; }
+  width: 60%; }
 
 #settings_page .settings .form-wrapper .image-wrapper .btn i {
   margin-right: 3px; }

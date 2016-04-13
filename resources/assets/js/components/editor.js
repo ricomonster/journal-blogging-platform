@@ -133,8 +133,6 @@ Vue.component('journal-editor', {
             // fix the publish date, convert it to timestamp
             post.published_at = moment(post.published_at).unix();
 
-            console.log(post);
-
             // save post
             vm.$http.post(url, post)
                 .then(function (response) {

@@ -80,14 +80,18 @@ Route::group(['middleware' => ['web'], 'namespace' => 'Admin', 'prefix' => 'jour
             Route::get('list', 'PostsController@lists');
         });
 
-        Route::group(['prefix' => 'settings'], function () {
-            Route::get('/', 'SettingsController@index');
+        // Settings Routes
+        Route::get('settings', 'SettingsController@index');
+
+        // Tag Routes
+        Route::group(['prefix' => 'tags'], function () {
+            Route::get('list', 'TagsController@lists');
         });
 
         // User Routes
         Route::group(['prefix' => 'users'], function () {
             Route::get('create', 'UsersController@create');
-            Route::get('lists', 'UsersController@lists');
+            Route::get('list', 'UsersController@list');
         });
     });
 });

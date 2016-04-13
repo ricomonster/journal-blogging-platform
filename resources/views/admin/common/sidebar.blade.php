@@ -17,13 +17,15 @@
                         <span class="text">Posts</span>
                     </a>
                 </li>
-                <li class="{!! (is_active_menu('pages/list')) ? 'active' : null !!}">
+                <li class="{!! (is_active_menu('pages/list')) ? 'active' : null !!}"
+                style="display: none;">
                     <a href="{{ url('journal/pages/list') }}">
                         <i class="fa fa-file fa-fw"></i>
                         <span class="text">Pages</span>
                     </a>
                 </li>
-                <li class="{!! (is_active_menu('tags/list')) ? 'active' : null !!}">
+                <li class="{!! (is_active_menu('tags/list')) ? 'active' : null !!}"
+                style="display: none;">
                     <a href="{{ url('journal/tags/list') }}">
                         <i class="fa fa-tags fa-fw"></i>
                         <span class="text">Tags</span>
