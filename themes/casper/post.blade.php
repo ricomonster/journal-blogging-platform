@@ -4,6 +4,12 @@
 @section('header')
     <header class="main-header post-head no-cover">
         <nav class="main-nav overlay clearfix">
+            @if ($logo_url)
+            <a class="blog-logo" href="{{ url('/') }}">
+                <img src="{{ $logo_url }}" alt="Blog blog blog">
+            </a>
+            @endif
+
             <a class="menu-button" href="#">
                 <i class="fa fa-bars"></i>
                 <span class="word">Menu</span>
@@ -24,9 +30,7 @@
                 </time>
                 @if ($post->tags->count() > 0)
                 on
-                @foreach ($post->tags as $tag)
-                    <a href="/tag/{{ $tag->slug }}">{{ $tag->title }}</a>
-                @endforeach
+                {!! post_tags($post->tags) !!}
                 @endif
             </section>
         </header>

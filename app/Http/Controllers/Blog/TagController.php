@@ -13,28 +13,7 @@ use Journal\Repositories\Tag\TagRepositoryInterface;
  */
 class TagController extends BlogController
 {
-    /**
-     * @var BlogRepositoryInterface
-     */
-    protected $blog;
-
-    /**
-     * @var TagRepositoryInterface
-     */
-    protected $tag;
-
-    /**
-     * @param BlogRepositoryInterface $blog
-     * @param TagRepositoryInterface $tag
-     * @return HomeController
-     */
-    public function __construct(BlogRepositoryInterface $blog, TagRepositoryInterface $tag)
-    {
-        $this->blog = $blog;
-        $this->tag  = $tag;
-    }
-
-    public function page($slug)
+    public function page($slug, BlogRepositoryInterface $blogRepository, TagRepositoryInterface $tagRepository)
     {
         // check if slug does not exists
         if (empty($slug)) {
@@ -43,7 +22,7 @@ class TagController extends BlogController
         }
 
         // get the tag
-        $tag = $this->tag->findBySlug($slug);
+        $tag = $tagRepository->findBySlug($slug);
 
         // check if the tag exists
         if (empty($tag)) {
@@ -51,7 +30,7 @@ class TagController extends BlogController
         }
 
         // get the posts
-        $posts = $this->blog->tagPosts($tag->id, $this->postPerPage);
+        $posts = $blogRepository->tagPosts($tag->id, $this->postPerPage);
 
         // prepare the data
         $data = [

@@ -1,7 +1,7 @@
 #sidebar {
     .content {
-        background-color: #2d393c;
-        border-right: 1px solid #4b5254;
+        background-color: $sidebar-bg-color;
+        border-right: 1px solid $border-color;
         bottom: 0;
         left: 0;
         padding: 0 15px;
@@ -12,7 +12,7 @@
 
     .content {
         .sidebar-header {
-            border-bottom: 1px solid #404a4d;
+            border-bottom: 1px solid $border-color;
             padding: 15px 0 5px;
         }
 
@@ -25,13 +25,13 @@
 
             .blog-title {
                 a {
-                    color: #ffffff;
+                    color: $sub-hyperlink;
                     text-decoration: none;
                 }
             }
 
             .user-name {
-                color: #aaafb0;
+                color: $subtext;
             }
         }
 
@@ -55,7 +55,7 @@
             .menu {
                 li {
                     .title {
-                        color: #ffffff;
+                        color: $subtext;
                         display: block;
                         font-size: 12px;
                         font-weight: bold;
@@ -64,8 +64,8 @@
                     }
 
                     a {
-                        border-left: 3px solid #2d393c;
-                        color: #aaafb0;
+                        border-left: 3px solid $sidebar-bg-color;
+                        color: $text;
                         display: block;
                         margin: 8px 0;
                         padding: 4px 15px 4px 12px;

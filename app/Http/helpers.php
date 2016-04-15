@@ -122,6 +122,9 @@ if (!function_exists('excerpt')) {
     }
 }
 
+/**
+ * Renders the post tags in a better fashion. :)
+ */
 if (!function_exists('post_tags')) {
     function post_tags($tags, $delimiter = ',', $convertToLink = true)
     {

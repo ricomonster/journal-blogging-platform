@@ -34,8 +34,15 @@
     <span class="nav-cover"></span>
     <div class="site-wrapper">
         @section('header')
-            <header class="main-header no-cover">
+            <header class="main-header {!! ($cover_url) ? null : 'no-cover' !!}"
+            {!! ($cover_url) ? 'style="background-image: url('.$cover_url.');"' : null !!}>
                 <nav class="main-nav overlay clearfix">
+                    @if ($logo_url)
+                    <a class="blog-logo" href="{{ url('/') }}">
+                        <img src="{{ $logo_url }}" alt="Blog blog blog">
+                    </a>
+                    @endif
+
                     <a class="menu-button" href="#">
                         <i class="fa fa-bars"></i>
                         <span class="word">Menu</span>

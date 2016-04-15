@@ -12,25 +12,11 @@ use Journal\Repositories\Blog\BlogRepositoryInterface;
  */
 class HomeController extends BlogController
 {
-    /**
-     * @var BlogRepositoryInterface
-     */
-    protected $blog;
-
-    /**
-     * @param BlogRepositoryInterface $blog
-     * @return HomeController
-     */
-    public function __construct(BlogRepositoryInterface $blog)
-    {
-        $this->blog = $blog;
-    }
-
-    public function page()
+    public function page(BlogRepositoryInterface $blogRepository)
     {
         // initialize the data to be passed
         // posts
-        $data['posts'] = $this->blog->blogPosts($this->postPerPage);
+        $data['posts'] = $blogRepository->blogPosts($this->postPerPage);
 
         return $this->loadThemeTemplate('index', $data);
     }

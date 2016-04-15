@@ -92,6 +92,12 @@ class BlogController extends Controller
         // set the body class
         $data['body_class'] = $this->bodyClass($template);
 
+        // set the cover url
+        $data['cover_url'] = $this->blogSettings['cover_url'];
+
+        // set the logo url
+        $data['logo_url'] = $this->blogSettings['logo_url'];
+
         return view($this->theme . '.' . $template, $data);
     }
 

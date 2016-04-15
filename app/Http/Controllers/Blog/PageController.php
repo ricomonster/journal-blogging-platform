@@ -8,26 +8,12 @@ use Journal\Repositories\Blog\BlogRepositoryInterface;
 
 class PageController extends BlogController
 {
-    /**
-     * @var BlogRepositoryInterface
-     */
-    protected $blog;
-
-    /**
-     * @param BlogRepositoryInterface $blog
-     * @return PageController
-     */
-    public function __construct(BlogRepositoryInterface $blog)
-    {
-        $this->blog = $blog;
-    }
-
-    public function page($parameter)
+    public function page($parameter, BlogRepositoryInterface $blogRepository)
     {
         $data = [];
 
         // get the post
-        $data['post'] = $this->blog->post($parameter);
+        $data['post'] = $blogRepository->post($parameter);
 
         // check if it's empty
         if (empty($data['post'])) {

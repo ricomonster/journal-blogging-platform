@@ -9,28 +9,7 @@ use Journal\Repositories\User\UserRepositoryInterface;
 
 class AuthorController extends BlogController
 {
-    /**
-     * @var BlogRepositoryInterface
-     */
-    protected $blog;
-
-    /**
-     * @var UserRepositoryInterface
-     */
-    protected $user;
-
-    /**
-     * @param BlogRepositoryInterface $blog
-     * @param UserRepositoryInterface $user
-     * @return PageController
-     */
-    public function __construct(BlogRepositoryInterface $blog, UserRepositoryInterface $user)
-    {
-        $this->blog = $blog;
-        $this->user = $user;
-    }
-
-    public function page($slug)
+    public function page($slug, BlogRepositoryInterface $blogRepository, UserRepositoryInterface $userRepository)
     {
         // check if slug does not exists
         if (empty($slug)) {
@@ -39,7 +18,7 @@ class AuthorController extends BlogController
         }
 
         // get the user
-        $user = $this->user->findBySlug($slug);
+        $user = $userRepository->findBySlug($slug);
 
         // check if the user exists
         if (empty($user)) {
@@ -47,7 +26,7 @@ class AuthorController extends BlogController
         }
 
         // get the posts
-        $posts = $this->blog->authorPosts($user->id, $this->postPerPage);
+        $posts = $blogRepository->authorPosts($user->id, $this->postPerPage);
 
         // prepare the data
         $data = [

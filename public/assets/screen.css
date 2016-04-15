@@ -9912,8 +9912,8 @@ a {
   border-radius: 0; }
 
 #sidebar .content {
-  background-color: #2d393c;
-  border-right: 1px solid #4b5254;
+  background-color: #f5f7f8;
+  border-right: 1px solid #edeeee;
   bottom: 0;
   left: 0;
   padding: 0 15px;
@@ -9922,7 +9922,7 @@ a {
   width: 220px; }
 
 #sidebar .content .sidebar-header {
-  border-bottom: 1px solid #404a4d;
+  border-bottom: 1px solid #edeeee;
   padding: 15px 0 5px; }
 
 #sidebar .content .sidebar-header .blog-title {
@@ -9931,11 +9931,11 @@ a {
   font-weight: bold; }
 
 #sidebar .content .sidebar-header .blog-title a {
-  color: #ffffff;
+  color: #4090db;
   text-decoration: none; }
 
 #sidebar .content .sidebar-header .user-name {
-  color: #aaafb0; }
+  color: #a5a7aa; }
 
 #sidebar .content .sidebar-content {
   padding: 10px 0;
@@ -9952,7 +9952,7 @@ a {
   padding: 0; }
 
 #sidebar .content .sidebar-content .menu li .title {
-  color: #ffffff;
+  color: #a5a7aa;
   display: block;
   font-size: 12px;
   font-weight: bold;
@@ -9960,8 +9960,8 @@ a {
   text-transform: uppercase; }
 
 #sidebar .content .sidebar-content .menu li a {
-  border-left: 3px solid #2d393c;
-  color: #aaafb0;
+  border-left: 3px solid #f5f7f8;
+  color: #000000;
   display: block;
   margin: 8px 0;
   padding: 4px 15px 4px 12px;
