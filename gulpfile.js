@@ -64,6 +64,14 @@ gulp.task('get-fonts', function () {
         .pipe(gulp.dest('./public/fonts'));
 });
 
+gulp.task('theme-assets', function () {
+    return gulp.src([
+            './themes/**/assets/*',
+            './themes/**/assets/**/*'
+        ])
+        .pipe(gulp.dest('./public/themes'));
+});
+
 gulp.task('watch', function () {
     gulp.watch([
         './resources/assets/js/*.js',

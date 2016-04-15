@@ -2,21 +2,6 @@
 
 /*
 |--------------------------------------------------------------------------
-| Routes File
-|--------------------------------------------------------------------------
-|
-| Here is where you will register all of the routes in an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-/*
-|--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
 */
@@ -108,4 +93,16 @@ Route::group(['namespace' => 'Installer', 'prefix' => 'installer'], function () 
     Route::get('setup', 'SetupController@page');
 
     Route::post('setup_database', 'DatabaseController@setup');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Blog Routes
+|--------------------------------------------------------------------------
+*/
+Route::group(['namespace' => 'Blog'], function () {
+    Route::get('/', 'HomeController@page');
+    Route::get('author/{slug}', 'AuthorController@page');
+    Route::get('tag/{slug}', 'TagController@page');
+    Route::get('{parameter}', 'PageController@page');
 });

@@ -16,7 +16,8 @@ interface SettingsRepositoryInterface
 
     /**
      * @param $settings
+     * @param $setNameAsArrayKey
      * @return mixed
      */
-    public function get($settings);
+    public function get($settings, $setNameAsArrayKey);
 }

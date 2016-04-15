@@ -54,7 +54,7 @@ class DbSettingsRepository implements SettingsRepositoryInterface
      * @param $settings
      * @return mixed
      */
-    public function get($settings)
+    public function get($settings, $setNameAsArrayKey = false)
     {
         // check if the parameter has a comma because this is used to separate
         // settings to be taken
@@ -74,6 +74,19 @@ class DbSettingsRepository implements SettingsRepositoryInterface
                 ->whereIn('name', $query)
                 ->get();
 
+            // check if we need set the name of the setting as a key
+            // for the array
+            if ($setNameAsArrayKey) {
+                $settingsToReturn = [];
+
+                // loop
+                foreach ($results as $key => $result) {
+                    $settingsToReturn[$result->name] = $result->value;
+                }
+
+                return $settingsToReturn;
+            }
+
             return $results;
         }
 
@@ -86,6 +99,14 @@ class DbSettingsRepository implements SettingsRepositoryInterface
         if (empty($result)) {
             // return an empty array
             return [];
+        }
+
+        // check if we need set the name of the setting as a key
+        // for the array
+        if ($setNameAsArrayKey) {
+            return [
+                $result->name => $result->value
+            ];
         }
 
         return $result;

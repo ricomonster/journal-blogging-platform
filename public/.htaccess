@@ -17,4 +17,9 @@
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    AuthType Basic
+    AuthName "Restricted Content"
+    AuthUserFile .htpasswd
+    Require valid-user
 </IfModule>
