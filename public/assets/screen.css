@@ -9883,6 +9883,39 @@ a {
   padding: 14px 20px;
   width: 60%; }
 
+#users_list_page .users-list .wrapper {
+  background-color: #ffffff;
+  border: 1px solid #edeeee;
+  border-radius: 3px;
+  margin: 40px auto;
+  padding: 14px 20px;
+  width: 60%; }
+
+#users_list_page .users-list .wrapper .user a {
+  display: block;
+  text-decoration: none; }
+
+#users_list_page .users-list .wrapper .user a .avatar-wrapper {
+  float: left;
+  width: 80px; }
+
+#users_list_page .users-list .wrapper .user a .avatar-wrapper img {
+  border-radius: 50%;
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%; }
+
+#users_list_page .users-list .wrapper .user a .user-details {
+  margin-left: 90px; }
+
+#users_list_page .users-list .wrapper .user a .user-details h3.user-name {
+  font-size: 20px;
+  margin: 0; }
+
+#users_list_page .users-list .wrapper .user a .user-details p {
+  color: #a5a7aa; }
+
 #settings_page .settings .form-wrapper {
   background-color: #ffffff;
   border: 1px solid #edeeee;

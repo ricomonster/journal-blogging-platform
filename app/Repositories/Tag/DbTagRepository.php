@@ -112,6 +112,14 @@ class DbTagRepository implements TagRepositoryInterface
 
         // loop the tags
         foreach ($tags as $key => $tag) {
+            // check if there's an id or title
+            if (isset($tag['id'])) {
+                // it's already an existing tag
+                // get the ID
+                $tagIds[] = $tag['id'];
+                continue;
+            }
+
             // make the tag name as slug
             $slug = str_slug($tag['tag'], '-');
 

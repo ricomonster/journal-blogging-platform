@@ -38,6 +38,8 @@ Route::group(['middleware' => ['web'], 'namespace' => 'API', 'prefix' => 'api'],
     // User Routes
     Route::group(['prefix' => 'users'], function () {
         Route::post('create', 'ApiUsersController@create');
+
+        Route::get('get', 'ApiUsersController@get');
     });
 
     Route::post('upload', 'ApiUploadController@upload');
@@ -49,6 +51,10 @@ Route::group(['middleware' => ['web'], 'namespace' => 'API', 'prefix' => 'api'],
 |--------------------------------------------------------------------------
 */
 Route::group(['middleware' => ['web'], 'namespace' => 'Admin', 'prefix' => 'journal'], function () {
+    Route::get('/', function () {
+        return redirect('journal/posts/list');
+    });
+
     // Auth Routes
     Route::get('login', 'AuthController@login');
     Route::get('logout', 'AuthController@logout');
@@ -76,7 +82,7 @@ Route::group(['middleware' => ['web'], 'namespace' => 'Admin', 'prefix' => 'jour
         // User Routes
         Route::group(['prefix' => 'users'], function () {
             Route::get('create', 'UsersController@create');
-            Route::get('list', 'UsersController@list');
+            Route::get('list', 'UsersController@lists');
         });
     });
 });

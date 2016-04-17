@@ -1,8 +1,6 @@
 Vue.directive('selectize', {
     twoWay : true,
 
-    // priority : 1000,
-
     params: ['tags'],
 
     bind : function () {

@@ -23,7 +23,7 @@ class DbBlogRepository implements BlogRepositoryInterface
             // get active posts
             ->where('active', '=', 1)
             // get published posts
-            ->where('status', '=', 2)
+            ->where('status', '=', 1)
             // get posts that are not converted to a page
             ->where('is_page', '=', 0)
             // get posts that are beyond the current timestamp
@@ -48,7 +48,7 @@ class DbBlogRepository implements BlogRepositoryInterface
             // get active posts
             ->where('active', '=', 1)
             // get published posts
-            ->where('status', '=', 2)
+            ->where('status', '=', 1)
             // get posts that are not converted to a page
             ->where('is_page', '=', 0)
             // get posts that are beyond the current timestamp
@@ -73,7 +73,7 @@ class DbBlogRepository implements BlogRepositoryInterface
             // get active posts
             ->where('active', '=', 1)
             // get published posts
-            ->where('status', '=', 2)
+            ->where('status', '=', 1)
             // get posts that are not converted to a page
             ->where('is_page', '=', 0)
             // get posts that are beyond the current timestamp
@@ -105,7 +105,7 @@ class DbBlogRepository implements BlogRepositoryInterface
             // get active posts
             ->where('active', '=', 1)
             // get published posts
-            ->where('status', '=', 2)
+            ->where('status', '=', 1)
             // get posts that are not converted to a page
             ->where('is_page', '=', 0)
             // get posts that are beyond the current timestamp

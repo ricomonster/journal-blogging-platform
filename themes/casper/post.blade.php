@@ -2,7 +2,8 @@
 @section('title', $post->title)
 
 @section('header')
-    <header class="main-header post-head no-cover">
+    <header class="main-header post-head {!! ($post->cover_image) ? null : 'no-cover' !!}"
+    {!! ($post->cover_image) ? 'style="background-image: url('.$post->cover_image.');"' : null !!}>
         <nav class="main-nav overlay clearfix">
             @if ($logo_url)
             <a class="blog-logo" href="{{ url('/') }}">

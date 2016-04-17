@@ -6,6 +6,10 @@ use Journal\Http\Requests;
 use Journal\Http\Controllers\Controller;
 use Journal\Repositories\Settings\SettingsRepositoryInterface;
 
+/**
+ * Class BlogController
+ * @package Journal\Http\Controllers\Blog
+ */
 class BlogController extends Controller
 {
     /**

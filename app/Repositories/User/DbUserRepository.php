@@ -28,7 +28,7 @@ class DbUserRepository implements UserRepositoryInterface
      * Search a user based on the given parameters
      *
      * @param array $parameters
-     * @return [type] [description]
+     * @return \Journal\User
      */
     public function search($parameters)
     {
@@ -36,9 +36,21 @@ class DbUserRepository implements UserRepositoryInterface
     }
 
     /**
-     * [findByEmail description]
-     * @param  [type] $email [description]
-     * @return [type]        [description]
+     * Gets all the active users.
+     *
+     * @return \Journal\User
+     */
+    public function all()
+    {
+        return User::where('active', '=', 1)
+            ->get();
+    }
+
+    /**
+     * Gets a user based on the saved email.
+     *
+     * @param $email
+     * @return \Journal\User
      */
     public function findByEmail($email)
     {

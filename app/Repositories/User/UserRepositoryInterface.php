@@ -15,21 +15,30 @@ interface UserRepositoryInterface
      * Search a user based on the given parameters
      *
      * @param array $parameters
-     * @return [type] [description]
+     * @return \Journal\User
      */
     public function search($parameters);
 
     /**
-     * [findByEmail description]
-     * @param  [type] $email [description]
-     * @return [type]        [description]
+     * Gets all the active users.
+     *
+     * @return \Journal\User
+     */
+    public function all();
+
+    /**
+     * Gets a user based on the saved email.
+     *
+     * @param $email
+     * @return \Journal\User
      */
     public function findByEmail($email);
 
     /**
-     * [findById description]
-     * @param  [type] $id [description]
-     * @return [type]     [description]
+     * Gets a user based on the given ID.
+     *
+     * @param $id
+     * @return \Journal\User
      */
     public function findById($id);
 
