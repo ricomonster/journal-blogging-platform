@@ -12,11 +12,19 @@ use Validator;
 
 class ApiInstallerController extends ApiController
 {
+    /**
+     * @var $defaultSettings
+     */
     protected $defaultSettings = [
+        // default number post per page
         'post_per_page'     => 10,
+        // default theme
         'theme'             => 'Casper',
+        // default theme template
         'theme_template'    => 'casper',
+        // default date format
         'date_format'       => 'F j, Y',
+        // default time format
         'time_format'       => 'g:i a'
     ];
 
@@ -65,6 +73,9 @@ class ApiInstallerController extends ApiController
                 ->respondWithError([
                     'message' => 'Something went wrong while performing migration.']);
         }
+
+        // seed
+        $this->database->seed();
 
         // return the redirect url
         return $this->respond([

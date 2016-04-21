@@ -66,6 +66,9 @@
                 </div>
 
                 <div class="form-buttons">
+                    @if ($ownerRole)
+                    <input type="hidden" v-model="setup.role" value="{{ $ownerRole->id }}"/>
+                    @endif
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>

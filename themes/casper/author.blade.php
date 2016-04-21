@@ -4,11 +4,7 @@
 @section('header')
     <header class="main-header author-head no-cover">
         <nav class="main-nav overlay clearfix">
-            @if ($logo_url)
-            <a class="blog-logo" href="{{ url('/') }}">
-                <img src="{{ $logo_url }}" alt="Blog blog blog">
-            </a>
-            @endif
+            {!! blog_logo_photo() !!}
 
             <a class="menu-button" href="#">
                 <i class="fa fa-bars"></i>

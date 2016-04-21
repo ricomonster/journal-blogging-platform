@@ -54,6 +54,10 @@
 
             .menu {
                 li {
+                    min-height: 34px;
+                }
+
+                li {
                     .title {
                         color: $subtext;
                         display: block;
@@ -67,8 +71,8 @@
                         border-left: 3px solid $sidebar-bg-color;
                         color: $text;
                         display: block;
-                        margin: 8px 0;
-                        padding: 4px 15px 4px 12px;
+                        line-height: 18px;
+                        padding: 8px 0 8px 10px;
                         text-decoration: none;
                     }
 
@@ -89,7 +93,8 @@
 
                 li.divider {
                     content : "";
-                    margin: 15px 0;
+                    height: 6px;
+                    min-height: 6px;
                 }
             }
         }

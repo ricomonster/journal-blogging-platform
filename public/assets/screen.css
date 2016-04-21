@@ -9984,6 +9984,9 @@ a {
   margin: 0;
   padding: 0; }
 
+#sidebar .content .sidebar-content .menu li {
+  min-height: 34px; }
+
 #sidebar .content .sidebar-content .menu li .title {
   color: #a5a7aa;
   display: block;
@@ -9996,8 +9999,8 @@ a {
   border-left: 3px solid #f5f7f8;
   color: #000000;
   display: block;
-  margin: 8px 0;
-  padding: 4px 15px 4px 12px;
+  line-height: 18px;
+  padding: 8px 0 8px 10px;
   text-decoration: none; }
 
 #sidebar .content .sidebar-content .menu li a i.fa {
@@ -10010,7 +10013,8 @@ a {
 
 #sidebar .content .sidebar-content .menu li.divider {
   content: "";
-  margin: 15px 0; }
+  height: 6px;
+  min-height: 6px; }
 
 /**
  * Installer

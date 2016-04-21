@@ -5,6 +5,12 @@ use Artisan;
 
 class DatabaseManager
 {
+    public function seed()
+    {
+        // database seed
+        return Artisan::call('db:seed');
+    }
+
     public function migrate()
     {
         return $this->performMigration();

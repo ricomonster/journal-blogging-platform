@@ -4,11 +4,7 @@
 @section('header')
     <header class="main-header tag-head no-cover">
         <nav class="main-nav overlay clearfix">
-            @if ($logo_url)
-            <a class="blog-logo" href="{{ url('/') }}">
-                <img src="{{ $logo_url }}" alt="Blog blog blog">
-            </a>
-            @endif
+            {!! blog_logo_photo() !!}
 
             <a class="menu-button" href="#">
                 <i class="fa fa-bars"></i>
@@ -20,7 +16,7 @@
             <div class="main-header-content inner">
                 <h1 class="page-title">{{ $tag->title }}</h1>
                 <h2 class="page-description">
-                        A {{ $posts->count() }}-post collection
+                    A {{ $posts->count() }}-post collection
                 </h2>
             </div>
         </div>

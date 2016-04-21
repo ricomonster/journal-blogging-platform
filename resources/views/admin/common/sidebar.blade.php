@@ -8,9 +8,9 @@
         </header>
         <section class="sidebar-content">
             <ul class="menu">
-                <li class="header">
+                <!-- <li class="header">
                     <span class="title">Content</span>
-                </li>
+                </li> -->
                 <li class="{!! (is_active_menu('posts/list')) ? 'active' : null !!}">
                     <a href="{{ url('journal/posts/list') }}">
                         <i class="fa fa-list fa-fw"></i>
@@ -44,7 +44,28 @@
                         <span class="text">Settings</span>
                     </a>
                 </li>
+                <!-- Owner Priviledge Access -->
+                <li>
+                    <a href="{{ url('journal/settings/roles') }}">
+                        <i class="fa fa-briefcase fa-fw"></i>
+                        <span class="text">Roles</span>
+                    </a>
+                </li>
                 <li class="divider"></li>
+                <li>
+                    <a href="{{ url('journal/users/'.auth_user()->id) }}">
+                        <i class="fa fa-user fa-fw"></i>
+                        <span class="text">
+                            Edit Profile
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url('journal/users/change-password') }}">
+                        <i class="fa fa-unlock-alt fa-fw"></i>
+                        <span class="text">Change Password</span>
+                    </a>
+                </li>
                 <li>
                     <a href="{{ url('journal/logout') }}">
                         <i class="fa fa-power-off fa-fw"></i>

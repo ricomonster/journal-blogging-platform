@@ -1,4 +1,4 @@
-require('./image-uploader');
+require('./../journal-components/image-uploader');
 
 Vue.component('journal-settings', {
     data : function () {

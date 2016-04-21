@@ -53,6 +53,66 @@ if (!function_exists('blog_description')) {
 }
 
 /**
+ * Returns the cover url for the blog.
+ */
+if (!function_exists('cover_photo')) {
+    function cover_photo()
+    {
+        $settings = \DB::table('settings')
+            ->where('name', 'cover_url')
+            ->first();
+
+        return (count($settings) > 0) ?
+            $settings->value : null;
+    }
+}
+
+/**
+ * Returns the logo url for the blog.
+ */
+if (!function_exists('logo_photo'))
+{
+    function logo_photo()
+    {
+        $settings = \DB::table('settings')
+            ->where('name', 'logo_url')
+            ->first();
+
+        return (count($settings) > 0) ?
+            $settings->value : null;
+    }
+}
+
+/**
+ * Wraps the logo image in an a href tag
+ */
+if (!function_exists('blog_logo_photo'))
+{
+    function blog_logo_photo($url = '/', $class = null, $alt = null)
+    {
+        // check if the url is empty
+        if (empty($url)) {
+            // set the homepage as the url
+            $url = url('/');
+        }
+
+        // check if there's a logo
+        $logoUrl = logo_photo();
+
+        if (empty($logoUrl)) {
+            return null;
+        }
+
+        return sprintf(
+            '<a href="%s" class="blog-logo %s"><img src="%s" alt="%s"/></a>',
+            $url,
+            $class,
+            $logoUrl,
+            $alt);
+    }
+}
+
+/**
  * Checks if the current url is the same or similar to the given keyword and
  * returns a boolean to confirm it.
  */

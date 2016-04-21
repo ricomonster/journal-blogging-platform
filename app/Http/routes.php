@@ -50,7 +50,7 @@ Route::group(['middleware' => ['web'], 'namespace' => 'API', 'prefix' => 'api'],
 | Admin Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['middleware' => ['web'], 'namespace' => 'Admin', 'prefix' => 'journal'], function () {
+Route::group(['middleware' => ['web', 'installed'], 'namespace' => 'Admin', 'prefix' => 'journal'], function () {
     Route::get('/', function () {
         return redirect('journal/posts/list');
     });

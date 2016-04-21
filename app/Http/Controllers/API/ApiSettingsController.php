@@ -61,7 +61,7 @@ class ApiSettingsController extends ApiController
     {
         $themeLists = [];
         $themesPath = base_path('themes');
-        
+
         $themes = array_diff(scandir($themesPath), array('..', '.'));
 
         // check contents of the theme

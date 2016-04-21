@@ -16,12 +16,15 @@ class DbUserRepository implements UserRepositoryInterface
      */
     public function create($user)
     {
-        return User::create([
-            'name'      => $user->name,
-            'email'     => $user->email,
-            'password'  => Hash::make($user->password),
-            'slug'      => $this->generateSlug($user->name)
+        $user = User::create([
+            'role_id'   => $user['role'],
+            'name'      => $user['name'],
+            'email'     => $user['email'],
+            'password'  => Hash::make($user['password']),
+            'slug'      => $this->generateSlug($user['name'])
         ]);
+
+        return $user;
     }
 
     /**
@@ -42,7 +45,8 @@ class DbUserRepository implements UserRepositoryInterface
      */
     public function all()
     {
-        return User::where('active', '=', 1)
+        return User::with(['role'])
+            ->where('active', '=', 1)
             ->get();
     }
 
