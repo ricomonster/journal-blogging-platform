@@ -26,11 +26,45 @@
                 .avatar {
                     height: 140px;
                     float: left;
+                    position: relative;
                     width: 140px;
                 }
 
                 .avatar {
-                    img {
+                    .update-avatar {
+                        bottom: 0;
+                        left: 0;
+                        position: absolute;
+                        right: 0;
+                        text-decoration: none;
+                        top: 0;
+                    }
+
+                    .update-avatar {
+                        .overlay {
+                            background-color: rgba(0, 0, 0, .8);
+                            border-radius: 50%;
+                            bottom: 0;
+                            color: #ffffff;
+                            left: 0;
+                            opacity: 0;
+                            padding: 52px 0;
+                            position: absolute;
+                            right: 0;
+                            text-align: center;
+                            top: 0;
+                            transition:opacity 0.3s linear;
+                            z-index: 100;
+                        }
+                    }
+
+                    .update-avatar:hover {
+                        .overlay {
+                            opacity: 1;
+                        }
+                    }
+
+                    .avatar-photo {
                         border: 2px solid $secondary-bg-color;
                         border-radius: 50%;
                         display: block;

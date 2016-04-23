@@ -10,11 +10,21 @@
         </header>
         <section class="user-profile scrollable-content">
             <header class="user-header">
-                <img src="https://gotag-static.s3-eu-west-1.amazonaws.com/assets/core/default_cover-b045d9c32935fda6b3c19cc04082b863.jpg"
-                class="cover-photo"/>
+                <img v-if="!user.cover_url" v-bind:src="images.cover" class="cover-photo"/>
+                <img v-if="user.cover_url" v-bind:src="user.cover_url" class="cover-photo"/>
+
                 <div class="user-avatar-details">
                     <figure class="avatar">
-                        <img src="http://41.media.tumblr.com/4883a07dc16a879663ce1c8f97352811/tumblr_mldfty8fh41qcnibxo2_540.png"/>
+                        <a href="#" class="update-avatar" v-on:click="openImageUploaderModal('avatar_url')">
+                            <span class="overlay">
+                                <i class="fa fa-camera"></i> Update Avatar Photo
+                            </span>
+                        </a>
+
+                        <img v-if="!user.avatar_url" v-bind:src="images.avatar"
+                        class="avatar-photo"/>
+                        <img v-if="user.avatar_url" v-bind:src="user.avatar_url"
+                        class="avatar-photo"/>
                     </figure>
                     <div id="name" class="form-group">
                         <input type="text" class="form-control" v-model="user.name"/>
@@ -24,7 +34,8 @@
                     </div>
                 </div>
 
-                <a class="btn btn-info update-cover-photo">
+                <a class="btn btn-info update-cover-photo"
+                v-on:click="openImageUploaderModal('cover_url')">
                     <i class="fa fa-camera"></i> Update Cover Photo
                 </a>
             </header>
@@ -78,5 +89,24 @@
             </section>
         </section>
     </div>
+
+    <aside id="upload_image_modal" class="modal fade" tabindex="-1" role="dialog"
+    v-if="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <image-uploader :image.sync="modal.image" :type="modal.type"></image-uploader>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" v-on:click="saveUserImage">
+                        Save
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </aside>
 </journal-user-profile>
+
+@include('admin.scripts.image-uploader')
 @endsection
