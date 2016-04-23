@@ -5,44 +5,49 @@
 | API Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['middleware' => ['web'], 'namespace' => 'API', 'prefix' => 'api'], function () {
-    // Installer Routes
-    Route::group(['prefix' => 'installer'], function () {
-        Route::post('database', 'ApiInstallerController@database');
-        Route::post('setup', 'ApiInstallerController@setup');
-    });
+Route::group([
+    'middleware' => ['web'],
+    'namespace' =>
+    'API',
+    'prefix' => 'api'], function () {
+        // Installer Routes
+        Route::group(['prefix' => 'installer'], function () {
+            Route::post('database', 'ApiInstallerController@database');
+            Route::post('setup', 'ApiInstallerController@setup');
+        });
 
-    // Post Routes
-    Route::group(['prefix' => 'posts'], function () {
-        Route::delete('delete', 'ApiPostsController@delete');
+        // Post Routes
+        Route::group(['prefix' => 'posts'], function () {
+            Route::delete('delete', 'ApiPostsController@delete');
 
-        Route::get('get', 'ApiPostsController@get');
+            Route::get('get', 'ApiPostsController@get');
 
-        Route::post('generate_slug', 'ApiPostsController@generateSlug');
-        Route::post('save', 'ApiPostsController@save');
-    });
+            Route::post('generate_slug', 'ApiPostsController@generateSlug');
+            Route::post('save', 'ApiPostsController@save');
+        });
 
-    // Setting Routes
-    Route::group(['prefix' => 'settings'], function () {
-        Route::get('get', 'ApiSettingsController@get');
-        Route::get('themes', 'ApiSettingsController@themes');
+        // Setting Routes
+        Route::group(['prefix' => 'settings'], function () {
+            Route::get('get', 'ApiSettingsController@get');
+            Route::get('themes', 'ApiSettingsController@themes');
 
-        Route::post('save_settings', 'ApiSettingsController@saveSettings');
-    });
+            Route::post('save_settings', 'ApiSettingsController@saveSettings');
+        });
 
-    // Tag Routes
-    Route::group(['prefix' => 'tags'], function () {
-        Route::get('get', 'ApiTagsController@get');
-    });
+        // Tag Routes
+        Route::group(['prefix' => 'tags'], function () {
+            Route::get('get', 'ApiTagsController@get');
+        });
 
-    // User Routes
-    Route::group(['prefix' => 'users'], function () {
-        Route::post('create', 'ApiUsersController@create');
+        // User Routes
+        Route::group(['prefix' => 'users'], function () {
+            Route::post('create', 'ApiUsersController@create');
+            Route::post('update', 'ApiUsersController@update');
 
-        Route::get('get', 'ApiUsersController@get');
-    });
+            Route::get('get', 'ApiUsersController@get');
+        });
 
-    Route::post('upload', 'ApiUploadController@upload');
+        Route::post('upload', 'ApiUploadController@upload');
 });
 
 /*
@@ -50,41 +55,45 @@ Route::group(['middleware' => ['web'], 'namespace' => 'API', 'prefix' => 'api'],
 | Admin Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['middleware' => ['web', 'installed'], 'namespace' => 'Admin', 'prefix' => 'journal'], function () {
-    Route::get('/', function () {
-        return redirect('journal/posts/list');
-    });
-
-    // Auth Routes
-    Route::get('login', 'AuthController@login');
-    Route::get('logout', 'AuthController@logout');
-
-    Route::post('auth/authenticate', 'AuthController@authenticate');
-
-    Route::group(['middleware' => ['auth']], function () {
-        // Editor Routes
-        Route::get('editor', 'EditorController@index');
-        Route::get('editor/{postId}', 'EditorController@edit');
-
-        // Post Routes
-        Route::group(['prefix' => 'posts'], function () {
-            Route::get('list', 'PostsController@lists');
+Route::group([
+    'middleware' => ['web', 'installed'],
+    'namespace' => 'Admin',
+    'prefix' => 'journal'], function () {
+        Route::get('/', function () {
+            return redirect('journal/posts/list');
         });
 
-        // Settings Routes
-        Route::get('settings', 'SettingsController@index');
+        // Auth Routes
+        Route::get('login', 'AuthController@login');
+        Route::get('logout', 'AuthController@logout');
 
-        // Tag Routes
-        Route::group(['prefix' => 'tags'], function () {
-            Route::get('list', 'TagsController@lists');
-        });
+        Route::post('auth/authenticate', 'AuthController@authenticate');
 
-        // User Routes
-        Route::group(['prefix' => 'users'], function () {
-            Route::get('create', 'UsersController@create');
-            Route::get('list', 'UsersController@lists');
+        Route::group(['middleware' => ['auth']], function () {
+            // Editor Routes
+            Route::get('editor', 'EditorController@index');
+            Route::get('editor/{postId}', 'EditorController@edit');
+
+            // Post Routes
+            Route::group(['prefix' => 'posts'], function () {
+                Route::get('list', 'PostsController@lists');
+            });
+
+            // Settings Routes
+            Route::get('settings', 'SettingsController@index');
+
+            // Tag Routes
+            Route::group(['prefix' => 'tags'], function () {
+                Route::get('list', 'TagsController@lists');
+            });
+
+            // User Routes
+            Route::group(['prefix' => 'users'], function () {
+                Route::get('create', 'UsersController@create');
+                Route::get('list', 'UsersController@lists');
+                Route::get('{id}', 'UsersController@profile');
+            });
         });
-    });
 });
 
 /*

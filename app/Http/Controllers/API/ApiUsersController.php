@@ -56,4 +56,49 @@ class ApiUsersController extends ApiController
         return $this->respond([
             'users' => $users->toArray()]);
     }
+
+    /**
+     * Updates the details of the user.
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function update(Request $request)
+    {
+        // check if there's a user id
+        if (!$request->input('user_id')) {
+            // return an error message
+            return $this->setStatusCode(self::BAD_REQUEST)
+                ->respondWithError([
+                    'message' => self::USER_ID_REQUIRED
+                ]);
+        }
+
+        // check if the user exists
+        $user = $this->users->findById($request->input('user_id'));
+
+        if (empty($user)) {
+            // user not found, return an error message
+            return $this->setStatusCode(self::NOT_FOUND)
+                ->respondWithError([
+                    'message' => self::USER_NOT_FOUND
+                ]);
+        }
+
+        // validate the data
+        $messages = $this->users->validateUser($request->all());
+
+        // check for errors
+        if (count($messages) > 0) {
+            return $this->setStatusCode(self::BAD_REQUEST)
+                ->respondWithError($messages);
+        }
+
+        // it seems we're good to go so let's update the user
+        $user = $this->users->updateDetails($request->all());
+
+        return $this->respond([
+            'user' => $user->toArray()
+        ]);
+    }
 }

@@ -1,0 +1,72 @@
+#user_profile_page {
+    .user-profile {
+        .user-header {
+            display: block;
+            height: 360px;
+            position: relative;
+            width: 100%;
+        }
+
+        .user-header {
+            .cover-photo {
+                display: block;
+                height: 100%;
+                object-fit: cover;
+                width: 100%;
+            }
+
+            .user-avatar-details {
+                bottom: -45px;
+                left: 20px;
+                position: absolute;
+                width: 480px;
+            }
+
+            .user-avatar-details {
+                .avatar {
+                    height: 140px;
+                    float: left;
+                    width: 140px;
+                }
+
+                .avatar {
+                    img {
+                        border: 2px solid $secondary-bg-color;
+                        border-radius: 50%;
+                        display: block;
+                        height: 140px;
+                        object-fit: cover;
+                        width: 140px;
+                    }
+                }
+
+                #name {
+                    border-bottom: 0;
+                    margin-left: 160px;
+                    padding: 20px 0 0;
+                }
+
+                #name {
+                    .help-block {
+                        color: #ffffff;
+                    }
+                }
+            }
+
+            .update-cover-photo {
+                bottom: 20px;
+                position: absolute;
+                right: 20px;
+            }
+        }
+
+        .user-details {
+            background-color: $primary-bg-color;
+            border: 1px solid $border-color;
+            border-radius: $border-radius;
+            margin: 40px auto;
+            padding: 14px 20px;
+            width: 60%;
+        }
+    }
+}

@@ -9916,6 +9916,58 @@ a {
 #users_list_page .users-list .wrapper .user a .user-details p {
   color: #a5a7aa; }
 
+#user_profile_page .user-profile .user-header {
+  display: block;
+  height: 360px;
+  position: relative;
+  width: 100%; }
+
+#user_profile_page .user-profile .user-header .cover-photo {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%; }
+
+#user_profile_page .user-profile .user-header .user-avatar-details {
+  bottom: -45px;
+  left: 20px;
+  position: absolute;
+  width: 480px; }
+
+#user_profile_page .user-profile .user-header .user-avatar-details .avatar {
+  height: 140px;
+  float: left;
+  width: 140px; }
+
+#user_profile_page .user-profile .user-header .user-avatar-details .avatar img {
+  border: 2px solid #fafafa;
+  border-radius: 50%;
+  display: block;
+  height: 140px;
+  object-fit: cover;
+  width: 140px; }
+
+#user_profile_page .user-profile .user-header .user-avatar-details #name {
+  border-bottom: 0;
+  margin-left: 160px;
+  padding: 20px 0 0; }
+
+#user_profile_page .user-profile .user-header .user-avatar-details #name .help-block {
+  color: #ffffff; }
+
+#user_profile_page .user-profile .user-header .update-cover-photo {
+  bottom: 20px;
+  position: absolute;
+  right: 20px; }
+
+#user_profile_page .user-profile .user-details {
+  background-color: #ffffff;
+  border: 1px solid #edeeee;
+  border-radius: 3px;
+  margin: 40px auto;
+  padding: 14px 20px;
+  width: 60%; }
+
 #settings_page .settings .form-wrapper {
   background-color: #ffffff;
   border: 1px solid #edeeee;

@@ -10,7 +10,7 @@
         <section class="users-list scrollable-content">
             <div class="wrapper">
                 <article class="user clearfix" v-for="user in users">
-                    <a href="#" class="clearfix">
+                    <a href="/journal/users/@{{ user.id }}" class="clearfix">
                         <figure class="avatar-wrapper">
                             <img src="https://instagram.fmnl4-3.fna.fbcdn.net/t51.2885-15/s750x750/sh0.08/e35/12501866_1081025575254288_1106918070_n.jpg?ig_cache_key=MTIzMDIzMzA2MzA2Nzk0MzMwMg%3D%3D.2"/>
                         </figure>

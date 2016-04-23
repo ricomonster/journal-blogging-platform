@@ -11,4 +11,9 @@ class UsersController extends Controller
     {
         return view('admin.users.list');
     }
+
+    public function profile($id)
+    {
+        return view('admin.users.profile', compact('id'));
+    }
 }

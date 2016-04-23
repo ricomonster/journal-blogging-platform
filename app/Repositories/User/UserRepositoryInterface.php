@@ -43,16 +43,18 @@ interface UserRepositoryInterface
     public function findById($id);
 
     /**
-     * [findBySlug description]
-     * @param  [type] $slug [description]
-     * @return [type]       [description]
+     * Finds a user based on the given slug.
+     *
+     * @param $slug
+     * @return \Journal\User
      */
     public function findBySlug($slug);
 
     /**
-     * [updateDetails description]
-     * @param  [type] $user [description]
-     * @return [type]       [description]
+     * Updates the details of the user
+     *
+     * @param $user
+     * @return \Journal\User
      */
     public function updateDetails($user);
 
