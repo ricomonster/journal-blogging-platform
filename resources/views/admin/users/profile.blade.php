@@ -82,7 +82,7 @@
 
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary"
-                    v-on:click="updateUserDetails">
+                    v-on:click="updateUserDetails" v-button-loader="processing">
                         Save
                     </button>
                 </div>
@@ -98,7 +98,8 @@
                     <image-uploader :image.sync="modal.image" :type="modal.type"></image-uploader>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" v-on:click="saveUserImage">
+                    <button type="button" class="btn btn-primary"
+                    v-on:click="saveUserImage" v-button-loader="processing">
                         Save
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

@@ -9373,6 +9373,13 @@ ul.alert {
 [v-cloak] {
   display: none; }
 
+.button-loader i.fa {
+  display: none;
+  margin-right: 5px; }
+
+.button-loader.processing i.fa {
+  display: inline-block; }
+
 .form-horizontal .form-group {
   margin-left: 0;
   margin-right: 0; }
@@ -9452,7 +9459,7 @@ a {
   border: 0;
   font-size: 28px;
   height: 54px;
-  padding: 10px 220px 10px 16px; }
+  padding: 10px 260px 10px 16px; }
 
 #editor_page .page-header .editor-controls {
   bottom: 0;
@@ -9473,7 +9480,7 @@ a {
   line-height: 1; }
 
 #editor_page .page-header .editor-controls .btn-group #split_button {
-  width: 120px; }
+  width: 160px; }
 
 #editor_page .page-header .editor-controls .btn-group .btn {
   float: left; }

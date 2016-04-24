@@ -15,7 +15,7 @@
             border: 0;
             font-size: 28px;
             height: 54px;
-            padding: 10px 220px 10px 16px;
+            padding: 10px 260px 10px 16px;
         }
 
         .editor-controls {
@@ -43,7 +43,9 @@
             }
 
             .btn-group {
-                #split_button { width: 120px; }
+                #split_button {
+                    width: 160px;
+                }
             }
 
             .btn-group {

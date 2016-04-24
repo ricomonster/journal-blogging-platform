@@ -15,9 +15,11 @@
                     <!-- Buttons -->
                     <div class="btn-group">
                         <button id="split_button" type="submit" class="btn"
-                        v-bind:class="active.class">@{{active.text}}</button>
+                        v-bind:class="active.class" v-button-loader="processing">
+                            @{{active.text}}
+                        </button>
                         <button type="button" class="btn" data-toggle="dropdown"
-                        v-bind:class="active.class">
+                        v-bind:class="active.class" v-bind:disabled="processing">
                             <span class="caret"></span>
                             <span class="sr-only"></span>
                         </button>

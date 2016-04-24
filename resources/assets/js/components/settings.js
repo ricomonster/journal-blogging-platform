@@ -7,6 +7,7 @@ Vue.component('journal-settings', {
                 image : null,
                 type : null
             },
+            processing : false,
             settings : {},
             themes : {}
         }
@@ -90,6 +91,9 @@ Vue.component('journal-settings', {
                 message     = (vm.modal.type == 'cover_url') ? 'cover photo' : 'avatar',
                 data        = {};
 
+            // flag that we're processing something
+            vm.$set('processing', true);
+
             // prepare the data
             data[vm.modal.type] = vm.modal.image;
 
@@ -106,11 +110,15 @@ Vue.component('journal-settings', {
 
                         // close the modal
                         $('#upload_image_modal').modal('hide');
+
+                        vm.$set('processing', false);
                     }
                 }, function (response) {
                     var error = response.data.message;
 
                     toastr.error(error);
+
+                    vm.$set('processing', false);
                 });
         },
 
@@ -121,6 +129,9 @@ Vue.component('journal-settings', {
             var vm = this,
                 settings = vm.settings;
 
+            // flag that we're processing something
+            vm.$set('processing', true);
+
             vm.$http.post('/api/settings/save_settings', settings)
                 .then( function (response) {
                     if (response.data.settings) {
@@ -128,6 +139,8 @@ Vue.component('journal-settings', {
 
                         // show success message
                         toastr.success('You have successfully updated the blog settings.');
+
+                        vm.$set('processing', false);
                     }
                 }, function (response) {
                     var error = response.data.message;

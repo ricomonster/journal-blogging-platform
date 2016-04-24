@@ -7,11 +7,12 @@ Vue.component('journal-user-profile', {
                 avatar : 'http://41.media.tumblr.com/4883a07dc16a879663ce1c8f97352811/tumblr_mldfty8fh41qcnibxo2_540.png',
                 cover : 'https://gotag-static.s3-eu-west-1.amazonaws.com/assets/core/default_cover-b045d9c32935fda6b3c19cc04082b863.jpg'
             },
+            loading : true,
             modal : {
                 image : null,
                 type : null
             },
-            loading : true,
+            processing : false,
             user : {}
         }
     },
@@ -77,6 +78,9 @@ Vue.component('journal-user-profile', {
                 modal   = vm.modal,
                 user    = vm.user;
 
+            // flag that we're processing
+            vm.$set('processing', true);
+
             // get the image from the modal and assign to the respected type
             if (modal.type == 'avatar_url') {
                 // update the object
@@ -94,6 +98,7 @@ Vue.component('journal-user-profile', {
                 message = 'You have successfully updated your cover photo.';
             }
 
+            // send request to the API
             vm.$http.post('/api/users/update?user_id=' + user.id, user)
                 .then( function (response) {
                     if (response.data.user) {
@@ -102,6 +107,9 @@ Vue.component('journal-user-profile', {
 
                         // update the data
                         vm.$set('user', response.data.user);
+
+                        // remove the flag
+                        vm.$set('processing', false);
 
                         // close the modal
                         $('#upload_image_modal').modal('hide');
@@ -118,6 +126,9 @@ Vue.component('journal-user-profile', {
             var vm      = this,
                 user    = vm.user;
 
+            // flag that we're processing
+            vm.$set('processing', true);
+
             vm.$http.post('/api/users/update?user_id=' + user.id, user)
                 .then( function (response) {
                     if (response.data.user) {
@@ -126,6 +137,9 @@ Vue.component('journal-user-profile', {
 
                         // update the data
                         vm.$set('user', response.data.user);
+
+                        // remove the processing flag
+                        vm.$set('processing', false);
                     }
                 }, function (response) {
                     if (response.data.errors) {

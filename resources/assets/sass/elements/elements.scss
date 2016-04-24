@@ -107,3 +107,17 @@ ul.alert { list-style: none; }
 
 /* Vue JS */
  [v-cloak] { display: none }
+
+ // Button Loader Directive
+ .button-loader {
+     i.fa {
+         display:none;
+         margin-right: 5px;
+     }
+ }
+
+.button-loader.processing {
+    i.fa {
+        display: inline-block;
+    }
+}

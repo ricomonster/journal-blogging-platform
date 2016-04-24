@@ -9,7 +9,13 @@ require('./../components/tags/list');
 require('./../components/users/list');
 require('./../components/users/profile');
 require('./../components/editor');
+require('./../components/login');
 require('./../components/settings');
 
 require('./../journal-components/markdown-reader');
 require('./../journal-components/time-ago');
+
+/**
+ * Load Directives that most of the components used.
+ */
+require('./../directives/button-loader');

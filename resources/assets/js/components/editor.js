@@ -123,6 +123,9 @@ Vue.component('journal-editor', {
                 successMessage = 'You have successfully created a new post.',
                 url = '/api/posts/save?author_id='+vm.userId;
 
+            // flag that we're processing something
+            vm.$set('processing', true);
+
             // check if post id is present
             if (post.id) {
                 url += '&post_id='+post.id;
@@ -158,6 +161,9 @@ Vue.component('journal-editor', {
 
                         // update the published date time
                         vm.setPublishDateTime();
+
+                        // remove the processing flag
+                        vm.$set('processing', false);
                     }
                 }, function (response) {
                     // error, show it
@@ -165,6 +171,9 @@ Vue.component('journal-editor', {
 
                     // update the buttons
                     vm.renderButtons();
+
+                    // remove the processing flag
+                    vm.$set('processing', false);
                 });
         },
 
