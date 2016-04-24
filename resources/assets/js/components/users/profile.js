@@ -128,7 +128,15 @@ Vue.component('journal-user-profile', {
                         vm.$set('user', response.data.user);
                     }
                 }, function (response) {
+                    if (response.data.errors) {
+                        var errors = response.data.errors
 
+                        // loop the errors
+                        for (var e in errors) {
+                            // show the error message
+                            toastr.error(errors[e][0]);
+                        }
+                    }
                 });
         }
     }

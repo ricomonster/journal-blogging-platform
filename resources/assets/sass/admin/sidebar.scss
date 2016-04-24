@@ -19,8 +19,7 @@
         .sidebar-header {
             .blog-title {
                 margin: 0 0 5px;
-                font-size: 24px;
-                font-weight: bold;
+                font-size: 20px;
             }
 
             .blog-title {
@@ -38,7 +37,7 @@
         .sidebar-content {
             padding: 10px 0;
             position: absolute;
-            top: 82px;
+            top: 77px;
             bottom: 0;
             right: 0;
             left: 0;
@@ -54,7 +53,7 @@
 
             .menu {
                 li {
-                    min-height: 34px;
+                    min-height: 28px;
                 }
 
                 li {
@@ -72,7 +71,7 @@
                         color: $text;
                         display: block;
                         line-height: 18px;
-                        padding: 8px 0 8px 10px;
+                        padding: 5px 0 5px 10px;
                         text-decoration: none;
                     }
 

@@ -42,19 +42,23 @@ class ApiUsersController extends ApiController
             // check if it exists
             if (empty($user)) {
                 return $this->setStatusCode(self::NOT_FOUND)
-                    ->respondWithError(['message' => self::USER_NOT_FOUND]);
+                    ->respondWithError([
+                        'message' => self::USER_NOT_FOUND
+                    ]);
             }
 
             // return the user
             return $this->respond([
-                'user' => $user->toArray()]);
+                'user' => $user->toArray()
+            ]);
         }
 
         // return all users
         $users = $this->users->all();
 
         return $this->respond([
-            'users' => $users->toArray()]);
+            'users' => $users->toArray()
+        ]);
     }
 
     /**

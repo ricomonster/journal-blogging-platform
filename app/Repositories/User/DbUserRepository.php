@@ -185,8 +185,9 @@ class DbUserRepository implements UserRepositoryInterface
     {
         // prepare the basic rules for both creating and updating a user
         $rules = [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email'
+            'name'      => 'required',
+            'email'     => 'required|email|unique:users,email',
+            'website'   => 'url'
         ];
 
         // prepare some custom error messages
@@ -194,7 +195,8 @@ class DbUserRepository implements UserRepositoryInterface
             'name.required'     => 'Name is required.',
             'email.required'    => 'Email is required.',
             'email.email'       => 'Email should be in valid format.',
-            'email.unique'      => 'Email already exists.'
+            'email.unique'      => 'Email already exists.',
+            'website.url'       => 'Website is not a valid URL.'
         ];
 
         // check if the given data has an ID on it

@@ -52,7 +52,7 @@
                     </a>
                 </li>
                 <li class="divider"></li>
-                <li>
+                <li class="{!! (is_active_menu('users/'.auth_user()->id)) ? 'active' : null !!}">
                     <a href="{{ url('journal/users/'.auth_user()->id) }}">
                         <i class="fa fa-user fa-fw"></i>
                         <span class="text">
