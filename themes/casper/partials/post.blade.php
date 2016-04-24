@@ -10,7 +10,12 @@
         {{ excerpt($post) }}
     </section>
     <footer class="post-meta">
-        <a href="">{{ $post->author->name }}</a>
+        @if ($post->author->avatar_url)
+        <img src="{{ $post->author->avatar_url }}" class="author-thumb"
+        alt="{{ $post->author->name }}"/>
+        @endif
+
+        <a href="/author/{{ $post->author->slug }}">{{ $post->author->name }}</a>
         @if ($post->tags->count() > 0)
         on
         {!! post_tags($post->tags) !!}

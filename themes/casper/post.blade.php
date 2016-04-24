@@ -35,6 +35,16 @@
             {!! markdown($post->content) !!}
         </section>
         <footer class="post-footer">
+            @if ($post->author->avatar_url)
+            <figure class="author-image">
+                <a href="/author/{{ $post->author->slug }}" class="img"
+                style="background-image: url({{ $post->author->avatar_url }})">
+                    <span class="hidden">
+                        {{ $post->author->name }}'s Picture
+                    </span>
+                </a>
+            </figure>
+            @endif
             <section class="author">
                 <h4>
                     <a href="/author/{{ $post->author->slug }}">{{ $post->author->name }}</a>
@@ -44,10 +54,26 @@
                     Read <a href="/author/{{ $post->author->slug }}">more posts</a>
                     by this author.
                     @else
-
+                    {{ $post->author->biography }}
                     @endif
                 </p>
-                <div class="author-meta"></div>
+                <div class="author-meta">
+                    @if ($post->author->location)
+                    <span class="author-location">
+                        <i class="fa fa-map-marker"></i>
+                        {{ $post->author->location }}
+                    </span>
+                    @endif
+
+                    @if ($post->author->website)
+                    <span class="author-link">
+                        <a href="{{ $post->author->website }}">
+                            <i class="fa fa-link"></i>
+                            {{ $post->author->website }}
+                        </a>
+                    </span>
+                    @endif
+                </div>
             </section>
 
             <section class="share">

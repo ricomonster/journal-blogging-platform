@@ -27,7 +27,7 @@
         <ul>
             <li class="nav-home nav-current" role="presentation"><a href="/">Home</a></li>
         </ul>
-        <a class="subscribe-button" href="http://localhost:2368/rss/">
+        <a class="subscribe-button" href="/rss">
             <i class="fa fa-rss"></i> Subscribe
         </a>
     </div>
