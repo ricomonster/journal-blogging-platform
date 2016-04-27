@@ -8,7 +8,7 @@
             <h1 class="page-title">Settings</h1>
         </header>
         <section class="settings scrollable-content">
-            <form class="form-wrapper form-horizontal" v-on:submit.prevent="saveSettings()">
+            <div class="form-wrapper form-horizontal centered-content">
                 <div class="form-group">
                     <label class="control-label col-sm-3">Blog title</label>
                     <div class="col-sm-9">
@@ -75,11 +75,11 @@
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary"
-                    v-button-loader="processing">
+                    v-button-loader="processing" v-on:click="saveSettings">
                         Save
                     </button>
                 </div>
-            </form>
+            </div>
         </section>
     </div>
 

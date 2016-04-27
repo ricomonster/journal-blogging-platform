@@ -31,23 +31,25 @@ body { height: 100%; overflow: auto; }
         }
     }
 
-    // .btn.btn-default {
-    //     float: right;
-    // }
-
-    // .btn.primary {
-    //     @extend .btn.btn-default;
-    // }
-
-    // .btn {
-    //     i.fa { margin-right: 3px; }
-    // }
+    .options.btn {
+        i.fa {
+            font-size: inherit;
+            line-height: 1;
+        }
+    }
 }
 
-.page-content { margin-left: 220px; }
+.page-content {
+    margin-left: 220px;
+}
 
-.full-height { height: 100%; }
-.auto-height { height: auto; }
+.full-height {
+    height: 100%;
+}
+
+.auto-height {
+    height: auto;
+}
 
 .scrollable-content {
     bottom: 0;
@@ -59,6 +61,15 @@ body { height: 100%; overflow: auto; }
     top: 59px;
 }
 
+.centered-content {
+    background-color: $primary-bg-color;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    margin: 40px auto;
+    padding: 14px 20px;
+    width: 60%;
+}
+
 /* Markdown */
 .rendered-markdown {
     img {
@@ -68,9 +79,13 @@ body { height: 100%; overflow: auto; }
         max-width: 100%;
     }
 
-    code { white-space: normal; }
+    code {
+        white-space: normal;
+    }
 
-    em { font-family: $italic-font; }
+    em {
+        font-family: $italic-font;
+    }
 }
 
 /* Alerts */
@@ -108,7 +123,7 @@ ul.alert { list-style: none; }
 /* Vue JS */
  [v-cloak] { display: none }
 
- // Button Loader Directive
+ /* Button Loader Directive */
  .button-loader {
      i.fa {
          display:none;

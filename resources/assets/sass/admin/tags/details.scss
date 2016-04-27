@@ -1,0 +1,41 @@
+#tags_details_page {
+    .tag-details {
+        .form-actions {
+            .delete-tag {
+                float: right;
+            }
+        }
+    }
+}
+
+#delete_tag_modal {
+    .modal-dialog {
+        width: 450px;
+    }
+
+    .modal-dialog {
+        .modal-content {
+            .modal-body {
+                p {
+                    text-align: center;
+                }
+
+                p {
+                    .tag-title {
+                        font-weight: bold;
+                    }
+
+                    .tag-title {
+                        &:before {
+                            content: '"';
+                        }
+
+                        &:after {
+                            content: '"';
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

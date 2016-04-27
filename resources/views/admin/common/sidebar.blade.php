@@ -24,8 +24,7 @@
                         <span class="text">Pages</span>
                     </a>
                 </li>
-                <li class="{!! (is_active_menu('tags/list')) ? 'active' : null !!}"
-                style="display: none;">
+                <li class="{!! (is_active_menu('tags/list')) ? 'active' : null !!}">
                     <a href="{{ url('journal/tags/list') }}">
                         <i class="fa fa-tags fa-fw"></i>
                         <span class="text">Tags</span>
@@ -52,8 +51,8 @@
                     </a>
                 </li>
                 <li class="divider"></li>
-                <li class="{!! (is_active_menu('users/'.auth_user()->id)) ? 'active' : null !!}">
-                    <a href="{{ url('journal/users/'.auth_user()->id) }}">
+                <li class="{!! (is_active_menu('users/'.auth_user()->id.'/profile')) ? 'active' : null !!}">
+                    <a href="{{ url('journal/users/'.auth_user()->id.'/profile') }}">
                         <i class="fa fa-user fa-fw"></i>
                         <span class="text">
                             Edit Profile

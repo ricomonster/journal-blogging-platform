@@ -1,7 +1,8 @@
 /* New color schemes for the buttons */
 .btn.btn-default {
     background-color: $primary-bg-color;
-    border-color: $secondary-border-color;
+    border-color: $color-default;
+    color: $color-default;
     font-weight: bold;
     text-transform: uppercase;
 

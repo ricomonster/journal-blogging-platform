@@ -67,7 +67,7 @@
 
                     @if ($post->author->website)
                     <span class="author-link">
-                        <a href="{{ $post->author->website }}">
+                        <a href="{{ $post->author->website }}" target="_blank">
                             <i class="fa fa-link"></i>
                             {{ $post->author->website }}
                         </a>

@@ -1,12 +1,49 @@
 #tags_list_page {
     .tags-list {
         .wrapper {
-            background-color: $primary-bg-color;
-            border: 1px solid $border-color;
-            border-radius: $border-radius;
-            margin: 40px auto;
-            padding: 14px 20px;
-            width: 60%;
+            .tag {
+                border-bottom: 1px solid $border-color;
+                padding: 10px 0;
+            }
+
+            .tag {
+                a {
+                    text-decoration: none;
+                }
+
+                a {
+                    .post-count {
+                        float: right;
+                    }
+
+                    .fa.fa-tag {
+                        color: $hyperlink;
+                        font-size: 18px;
+                        float: left;
+                        margin-top: 5px;
+                    }
+
+                    .tag-details {
+                        margin-left: 30px;
+                    }
+
+                    .tag-details {
+                        .tag-title {
+                            font-size: 20px;
+                            margin: 0 0 5px;
+                        }
+
+                        .tag-slug {
+                            color: $subtext;
+                            margin: 0;
+                        }
+                    }
+                }
+            }
+
+            .tag:last-child {
+                border-bottom: 0;
+            }
         }
     }
 }

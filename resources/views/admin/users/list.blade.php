@@ -8,11 +8,14 @@
             <h1 class="page-title">Users</h1>
         </header>
         <section class="users-list scrollable-content">
-            <div class="wrapper">
+            <div class="wrapper centered-content">
                 <article class="user clearfix" v-for="user in users">
-                    <a href="/journal/users/@{{ user.id }}" class="clearfix">
+                    <a href="/journal/users/@{{ user.id }}/profile" class="clearfix">
                         <figure class="avatar-wrapper">
-                            <img src="https://instagram.fmnl4-3.fna.fbcdn.net/t51.2885-15/s750x750/sh0.08/e35/12501866_1081025575254288_1106918070_n.jpg?ig_cache_key=MTIzMDIzMzA2MzA2Nzk0MzMwMg%3D%3D.2"/>
+                            <img v-if="!user.avatar_url" v-bind:src="defaultAvatar"
+                            class="avatar-photo"/>
+                            <img v-if="user.avatar_url" v-bind:src="user.avatar_url"
+                            class="avatar-photo"/>
                         </figure>
                         <section class="user-details">
                             <span class="role label label-default pull-right">

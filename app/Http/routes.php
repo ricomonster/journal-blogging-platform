@@ -36,7 +36,13 @@ Route::group([
 
         // Tag Routes
         Route::group(['prefix' => 'tags'], function () {
+            Route::delete('delete', 'ApiTagsController@delete');
+
             Route::get('get', 'ApiTagsController@get');
+
+            Route::post('create', 'ApiTagsController@create');
+
+            Route::put('update', 'ApiTagsController@update');
         });
 
         // User Routes
@@ -56,9 +62,9 @@ Route::group([
 |--------------------------------------------------------------------------
 */
 Route::group([
-    'middleware' => ['web', 'installed'],
-    'namespace' => 'Admin',
-    'prefix' => 'journal'], function () {
+    'middleware'    => ['web', 'installed'],
+    'namespace'     => 'Admin',
+    'prefix'        => 'journal'], function () {
         Route::get('/', function () {
             return redirect('journal/posts/list');
         });
@@ -85,13 +91,14 @@ Route::group([
             // Tag Routes
             Route::group(['prefix' => 'tags'], function () {
                 Route::get('list', 'TagsController@lists');
+                Route::get('{tagId}/update', 'TagsController@update');
             });
 
             // User Routes
             Route::group(['prefix' => 'users'], function () {
                 Route::get('create', 'UsersController@create');
                 Route::get('list', 'UsersController@lists');
-                Route::get('{id}', 'UsersController@profile');
+                Route::get('{id}/profile', 'UsersController@profile');
             });
         });
 });

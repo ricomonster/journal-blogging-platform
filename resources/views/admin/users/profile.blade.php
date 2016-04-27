@@ -39,7 +39,7 @@
                     <i class="fa fa-camera"></i> Update Cover Photo
                 </a>
             </header>
-            <section class="user-details">
+            <section class="user-details centered-content">
                 <div class="form-group clearfix">
                     <label class="control-label col-sm-3">Biography</label>
                     <div class="col-sm-9">

@@ -90,24 +90,24 @@
     v-if="!loading && active">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <header class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                     <h4 class="modal-title">Delete Post</h4>
-                </div>
-                <div class="modal-body">
+                </header>
+                <section class="modal-body">
                     <p>
                         Are you sure you wanted to delete the post
                         <span class="post-title">@{{active.title}}</span>?
                     </p>
-                </div>
-                <div class="modal-footer">
+                </section>
+                <footer class="modal-footer">
                     <button type="button" class="btn btn-danger" v-on:click="deletePost()">
                         Yes, delete this post
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                </div>
+                </footer>
             </div>
         </div>
     </aside>

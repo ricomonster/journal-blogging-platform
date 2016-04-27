@@ -13,16 +13,22 @@ class DbTagRepository implements TagRepositoryInterface
      */
     public function create($tag)
     {
+        $slug = $this->generateSlug($tag['title']);
+
+        if (isset($tag['slug']) && !empty($tag['slug'])) {
+            $slug = $this->generateSlug($tag['slug']);
+        }
+
         $tag = Tag::create([
             'title'         => $tag['title'],
             'description'   => (isset($tag['description'])) ?
                 $tag['description'] : null,
             'cover_image'   => (isset($tag['cover_image'])) ?
                 $tag['cover_image'] : null,
-            'slug'          => $this->generateSlug($tag['title'])
+            'slug'          => $slug
         ]);
 
-        return $tag;
+        return $this->findById($tag->id);
     }
 
     /**
@@ -32,7 +38,8 @@ class DbTagRepository implements TagRepositoryInterface
      */
     public function all()
     {
-        return Tag::where('active', '=', 1)
+        return Tag::with(['posts'])
+            ->where('active', '=', 1)
             ->get();
     }
 
@@ -44,7 +51,8 @@ class DbTagRepository implements TagRepositoryInterface
      */
     public function findById($id)
     {
-        return Tag::where('active', '=', 1)
+        return Tag::with(['posts'])
+            ->where('active', '=', 1)
             ->where('id', '=', $id)
             ->first();
     }
@@ -81,7 +89,39 @@ class DbTagRepository implements TagRepositoryInterface
      */
     public function update($tag)
     {
+        // get the tag first
+        $row = $this->findById($tag['id']);
 
+        // check if the slug is given
+        $slug = (!isset($tag['slug']) || empty($tag['slug'])) ?
+            // set the title to be slug
+            $tag['title'] :
+            // just give the slug
+            $tag['slug'];
+
+        // TODO: throw exception here if the tag is not present?
+        // set the fields to be updated
+        $row->title = $tag['title'];
+
+        // generate a new slug and update the slug
+        $row->slug = $this->generateSlug($slug, $tag['id']);
+
+        // optional fields
+        // description
+        if (isset($tag['description']) && !empty($tag['description'])) {
+            $row->description = $tag['description'];
+        }
+
+        // cover image
+        if (isset($tag['cover_image']) && !empty($tag['cover_image'])) {
+            $row->cover_image = $tag['cover_image'];
+        }
+
+        // save
+        $row->save();
+
+        // return the new instance of the tag
+        return $row;
     }
 
     /**
@@ -92,7 +132,13 @@ class DbTagRepository implements TagRepositoryInterface
      */
     public function setToInactive($id)
     {
+        // get the tag
+        $row = $this->findById($id);
 
+        // TODO: throw exception here if the tag is not present?
+        // update the active field to 0
+        $row->active = 0;
+        $row->save();
     }
 
     /**
