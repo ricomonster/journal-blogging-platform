@@ -1,10 +1,26 @@
 /* OSX Browser Issues fix */
-html { overflow: hidden; height: 100%; }
-body { height: 100%; overflow: auto; }
+html {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    height: 100%;
+    overflow: auto; 
+}
 
 /* Sidebar */
-.main-content { height: 100%; margin-left: 0; position: relative; }
-.sidebar .main-content { margin-left: 220px; }
+.main-content {
+    height: 100%;
+    margin-left: 0;
+    position: relative;
+}
+
+.sidebar {
+    .main-content {
+        margin-left: 220px;
+    }
+}
 
 .page-header {
     background-color: $primary-bg-color;

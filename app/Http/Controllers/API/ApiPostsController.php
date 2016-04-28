@@ -146,7 +146,9 @@ class ApiPostsController extends ApiController
 
         if (empty($user)) {
             return $this->setStatusCode(self::NOT_FOUND)
-                ->respondWithError(['message' => self::AUTHOR_NOT_FOUND]);
+                ->respondWithError([
+                    'message' => self::AUTHOR_NOT_FOUND
+                ]);
         }
 
         // check if the title is empty

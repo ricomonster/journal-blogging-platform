@@ -2,7 +2,8 @@
 @section('title', $tag->title . ' - '. blog_title())
 
 @section('header')
-    <header class="main-header tag-head no-cover">
+    <header class="main-header tag-head {!! ($tag->cover_image) ? null : 'no-cover' !!}"
+    {!! ($tag->cover_image) ? 'style="background-image: url('.$tag->cover_image.');"' : null !!}>
         <nav class="main-nav overlay clearfix">
             {!! blog_logo_photo() !!}
 

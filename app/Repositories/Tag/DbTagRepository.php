@@ -139,6 +139,9 @@ class DbTagRepository implements TagRepositoryInterface
         // update the active field to 0
         $row->active = 0;
         $row->save();
+
+        // remove relations
+        $row->posts()->detach();
     }
 
     /**

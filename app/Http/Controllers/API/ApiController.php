@@ -24,6 +24,7 @@ class ApiController extends Controller
     const POST_ID_REQUIRED      = 'Post ID is required.';
     const POST_NOT_FOUND        = 'Post not found.';
     const TAG_ID_REQUIRED       = 'Tag ID is required.';
+    const TAG_NOT_FOUND         = 'Tag not found.';
     const TAG_TITLE_REQUIRED    = 'Title of the tag is required.';
     const TAGS_NOT_FOUND        = 'Tag not found.';
     const UNAUTHORIZED_ACCESS   = 'You are not authorized to perform this action.';

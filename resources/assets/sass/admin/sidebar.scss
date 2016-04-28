@@ -19,10 +19,9 @@
         .sidebar-header {
             .blog-title {
                 margin: 0 0 5px;
-                font-size: 20px;
-            }
+                font-size: 18px;
+                font-weight: bold;
 
-            .blog-title {
                 a {
                     color: $sub-hyperlink;
                     text-decoration: none;
@@ -41,10 +40,8 @@
             bottom: 0;
             right: 0;
             left: 0;
-            overflow-y: auto
-        }
+            overflow-y: auto;
 
-        .sidebar-content {
             .menu {
                 list-style: none;
                 margin: 0;
@@ -54,9 +51,7 @@
             .menu {
                 li {
                     min-height: 28px;
-                }
 
-                li {
                     .title {
                         color: $subtext;
                         display: block;
@@ -73,9 +68,7 @@
                         line-height: 18px;
                         padding: 5px 0 5px 10px;
                         text-decoration: none;
-                    }
-
-                    a {
+                    
                         i.fa {
                             float: left;
                             font-size: 18px;

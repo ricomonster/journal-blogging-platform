@@ -30,6 +30,8 @@ class DbBlogRepository implements BlogRepositoryInterface
             ->where('published_at', '<=', time())
             // filter
             ->where('author_id', '=', $authorId)
+            // sort it according to published date
+            ->orderBy('published_at', 'DESC')
             // paginate
             ->paginate($postPerPage);
 
@@ -80,6 +82,8 @@ class DbBlogRepository implements BlogRepositoryInterface
             ->where('published_at', '<=', time())
             // filter
             ->where('slug', '=', $permalink)
+            // sort it according to published date
+            ->orderBy('published_at', 'DESC')
             // get it
             ->first();
 
