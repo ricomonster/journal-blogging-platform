@@ -16,6 +16,10 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Post URL</label>
+                <a href="{{ url('/') }}/@{{ post.slug }}" v-if="post.status == 1"
+                class="view-post" target="_blank">View Post</a>
+                <a href="{{ url('/') }}/@{{ post.slug }}?preview=true" v-if="post.status == 2"
+                class="view-post" target="_blank">Preview Post</a>
                 <input type="text" v-model="post.slug" class="form-control" placeholder="post-url"/>
                 <span class="help-block">@{{baseUrl}}/@{{post.slug}}</span>
             </div>

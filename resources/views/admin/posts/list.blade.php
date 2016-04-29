@@ -57,7 +57,12 @@
                             </a>
                         </li>
                         <li>
-                            <a class="preview-post">
+                            <a class="preview-post" v-if="active.status == 1"
+                            href="/@{{ active.slug }}" target="_blank">
+                                <i class="fa fa-search"></i>
+                            </a>
+                            <a class="preview-post" v-if="active.status == 2"
+                            href="/@{{ active.slug }}?preview=true">
                                 <i class="fa fa-search"></i>
                             </a>
                         </li>

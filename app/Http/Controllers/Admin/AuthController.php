@@ -14,7 +14,9 @@ class AuthController extends Controller
         // authenticate
         $credentials = [
             'email'     => $request->input('email'),
-            'password'  => $request->input('password')
+            'password'  => $request->input('password'),
+            // make sure that the user is active
+            'active'    => 1
         ];
 
         if (Auth::attempt($credentials)) {

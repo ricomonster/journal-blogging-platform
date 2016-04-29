@@ -8,15 +8,11 @@
         position: absolute;
         top: 0;
         width: 220px;
-    }
 
-    .content {
         .sidebar-header {
             border-bottom: 1px solid $border-color;
             padding: 15px 0 5px;
-        }
 
-        .sidebar-header {
             .blog-title {
                 margin: 0 0 5px;
                 font-size: 18px;
@@ -46,9 +42,7 @@
                 list-style: none;
                 margin: 0;
                 padding: 0;
-            }
 
-            .menu {
                 li {
                     min-height: 28px;
 
@@ -68,7 +62,7 @@
                         line-height: 18px;
                         padding: 5px 0 5px 10px;
                         text-decoration: none;
-                    
+
                         i.fa {
                             float: left;
                             font-size: 18px;
@@ -80,6 +74,7 @@
                 li.active {
                     a {
                         border-left-color: $hyperlink;
+                        color: $hyperlink;
                     }
                 }
 

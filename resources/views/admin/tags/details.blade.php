@@ -46,7 +46,7 @@
                     <div class="col-sm-9">
                         <image-uploader :image.sync="tag.cover_image"></image-uploader>
                         <span class="help-block">
-                            Image that kinda describes this tag.
+                            An image that describes this tag.
                         </span>
                     </div>
                 </div>

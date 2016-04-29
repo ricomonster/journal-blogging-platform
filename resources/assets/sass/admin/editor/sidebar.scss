@@ -1,5 +1,8 @@
 #editor_sidebar {
-    .sidebar-overlay { display: none; }
+    .sidebar-overlay {
+        display: none;
+    }
+
     .editor-content {
         background-color: $sidebar-bg-color;
         border-left: 1px solid $border-color;
@@ -11,16 +14,19 @@
         transition: all 0.4s ease 0s;
         width: 300px;
         z-index: 500;
-    }
 
-    .editor-content {
         .sidebar-header {
             border-bottom: 1px solid $border-color; padding: 14px 0;
-        }
 
-        .sidebar-header {
-            h3 { float: left; margin: 0; }
-            .close-sidebar { font-size: 24px; float: right; }
+            h3 {
+                float: left;
+                margin: 0;
+            }
+
+            .close-sidebar {
+                font-size: 24px;
+                float: right;
+            }
         }
 
         .post-settings {
@@ -32,15 +38,20 @@
             position: absolute;
             right: 0;
             top: 55px;
-        }
 
-        .post-settings {
+            .view-post {
+                float: right;
+            }
+
             .featured-image {
                 .content {
-                    min-height: 180px;
-                }
+                    height: 180px;
 
-                .content {
+                    .image-preview {
+                        height: 180px;
+                        line-height: 180px;
+                    }
+
                     .image-url {
                         padding: 0 10px;
                     }
@@ -50,9 +61,7 @@
             .delete-post-zone {
                 margin: 0;
                 padding: 0 0 15px;
-            }
 
-            .delete-post-zone {
                 .message {
                     text-align: center;
                     font-weight: bold;

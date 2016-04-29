@@ -6,9 +6,8 @@
 |--------------------------------------------------------------------------
 */
 Route::group([
-    'middleware' => ['web'],
-    'namespace' =>
-    'API',
+    'middleware' => ['api'],
+    'namespace' => 'API',
     'prefix' => 'api'], function () {
         // Installer Routes
         Route::group(['prefix' => 'installer'], function () {
@@ -62,7 +61,7 @@ Route::group([
 |--------------------------------------------------------------------------
 */
 Route::group([
-    'middleware'    => ['web', 'installed'],
+    'middleware'    => ['web'],
     'namespace'     => 'Admin',
     'prefix'        => 'journal'], function () {
         Route::get('/', function () {

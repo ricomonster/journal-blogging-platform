@@ -2,7 +2,9 @@
     <div class="content">
         <header class="sidebar-header">
             <h1 class="blog-title">
-                <a href="/" target="_blank">{{blog_title()}}</a>
+                <a href="{{ url('/') }}" target="_blank">
+                    {{blog_title()}}
+                </a>
             </h1>
             <p class="user-name">{{auth_user()->name}}</p>
         </header>
@@ -43,6 +45,12 @@
                         <span class="text">Settings</span>
                     </a>
                 </li>
+                <li class="{!! (is_active_menu('menu')) ? 'active' : null !!}">
+                    <a href="{{ url('journal/menu') }}">
+                        <i class="fa fa-bars fa-fw"></i>
+                        <span class="text">Menu</span>
+                    </a>
+                </li>
                 <!-- Owner Priviledge Access -->
                 <li>
                     <a href="{{ url('journal/settings/roles') }}">
@@ -54,9 +62,7 @@
                 <li class="{!! (is_active_menu('users/'.auth_user()->id.'/profile')) ? 'active' : null !!}">
                     <a href="{{ url('journal/users/'.auth_user()->id.'/profile') }}">
                         <i class="fa fa-user fa-fw"></i>
-                        <span class="text">
-                            Edit Profile
-                        </span>
+                        <span class="text">Edit Profile</span>
                     </a>
                 </li>
                 <li>

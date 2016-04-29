@@ -8,18 +8,38 @@ use Journal\Repositories\Blog\BlogRepositoryInterface;
 
 class PageController extends BlogController
 {
-    public function page($parameter, BlogRepositoryInterface $blogRepository)
+    /**
+     * @param $parameter
+     * @param Request $request
+     * @param BlogRepositoryInterface $blogRepository
+     * @return View
+     */
+    public function page($parameter, Request $request, BlogRepositoryInterface $blogRepository)
     {
+        // initialize array where to save some data
         $data = [];
 
         // get the post
-        $data['post'] = $blogRepository->post($parameter);
+        $post = $blogRepository->post($parameter);
+
+        // check if we have a preview flag
+        if ($request->input('preview')) {
+            // check if the post is already published
+            if ($post->status == 1) {
+                // redirect to a 404 page
+                return $this->fourOhFourPage();
+            }
+
+            // TODO: check if there's a logged in user and check the privilege
+        }
 
         // check if it's empty
-        if (empty($data['post'])) {
+        if (empty($post)) {
             // show 404 page
-            return $this->fourOhFour();
+            return $this->fourOhFourPage();
         }
+
+        $data['post'] = $post;
 
         return $this->loadThemeTemplate('post', $data);
     }

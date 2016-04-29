@@ -1,0 +1,31 @@
+#not_found_page {
+    height: 100%;
+
+    .page-header {
+        .page-title {
+            color: $hyperlink;
+            float: none;
+            font-weight: bold;
+            text-align: center;
+        }
+    }
+
+    .content {
+        .message {
+            left: 50%;
+            position: absolute;
+            text-align: center;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+            .title {
+                font-size: 44px;
+                margin-bottom: 20px;
+            }
+
+            .subtext {
+                font-size: 16px;
+            }
+        }
+    }
+}
