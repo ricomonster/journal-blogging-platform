@@ -52,7 +52,7 @@
                     </a>
                 </li>
                 <!-- Owner Priviledge Access -->
-                <li>
+                <li style="display: none;">
                     <a href="{{ url('journal/settings/roles') }}">
                         <i class="fa fa-briefcase fa-fw"></i>
                         <span class="text">Roles</span>

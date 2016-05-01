@@ -7,6 +7,11 @@ use Journal\Http\Controllers\Controller;
 
 class UsersController extends Controller
 {
+    public function changePassword()
+    {
+        return view('admin.users.change-password');
+    }
+
     public function lists()
     {
         return view('admin.users.list');

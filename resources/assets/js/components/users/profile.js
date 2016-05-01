@@ -72,6 +72,9 @@ Vue.component('journal-user-profile', {
             $('#upload_image_modal').modal('show');
         },
 
+        /**
+         * Saves the uploaded image of the user.
+         */
         saveUserImage : function () {
             var vm      = this,
                 message = '',
@@ -99,7 +102,7 @@ Vue.component('journal-user-profile', {
             }
 
             // send request to the API
-            vm.$http.post('/api/users/update?user_id=' + user.id, user)
+            vm.$http.put('/api/users/update?user_id=' + user.id, user)
                 .then( function (response) {
                     if (response.data.user) {
                         // show success message
@@ -129,7 +132,7 @@ Vue.component('journal-user-profile', {
             // flag that we're processing
             vm.$set('processing', true);
 
-            vm.$http.post('/api/users/update?user_id=' + user.id, user)
+            vm.$http.put('/api/users/update?user_id=' + user.id, user)
                 .then( function (response) {
                     if (response.data.user) {
                         // show success message

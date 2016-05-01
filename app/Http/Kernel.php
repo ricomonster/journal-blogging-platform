@@ -32,7 +32,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            'throttle:60,1',
+            // 'throttle:60,1',
             \Illuminate\Session\Middleware\StartSession::class,
             \Journal\Http\Middleware\VerifyCsrfToken::class
         ],

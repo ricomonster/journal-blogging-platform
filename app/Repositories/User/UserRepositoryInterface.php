@@ -29,7 +29,7 @@ interface UserRepositoryInterface
     /**
      * Gets a user based on the saved email.
      *
-     * @param $email
+     * @param string $email
      * @return \Journal\User
      */
     public function findByEmail($email);
@@ -37,7 +37,7 @@ interface UserRepositoryInterface
     /**
      * Gets a user based on the given ID.
      *
-     * @param $id
+     * @param int $id
      * @return \Journal\User
      */
     public function findById($id);
@@ -45,7 +45,7 @@ interface UserRepositoryInterface
     /**
      * Finds a user based on the given slug.
      *
-     * @param $slug
+     * @param array $slug
      * @return \Journal\User
      */
     public function findBySlug($slug);
@@ -53,28 +53,62 @@ interface UserRepositoryInterface
     /**
      * Updates the details of the user
      *
-     * @param $user
+     * @param array $user
      * @return \Journal\User
      */
     public function updateDetails($user);
 
     /**
-     * [updatePassword description]
-     * @param  [type] $passwords [description]
-     * @return [type]            [description]
+     * Updates the current password of the user.
+     *
+     * @param int $id
+     * @param string $password
+     * @return void
      */
-    public function updatePassword($passwords);
+    public function updatePassword($id, $password);
 
     /**
-     * [setToInactive description]
-     * @param [type] $user [description]
+     *	Sets the user based on the given ID to be inactive
+     *
+     * @param array $user
+     * @return void
      */
     public function setToInactive($user);
 
     /**
+     * Checks if the inputted current password of the user is the same with ones
+     * saved in the database.
+     *
+     * @param int $id
+     * @param string $currentPassword
+     * @return bool
+     */
+    public function checkUserCurrentPassword($id, $currentPassword);
+
+    /**
+     * Generates a slug based on the given string. It also checks if there are
+     * duplicates of the given string converted to slug in the database then
+     * appends the number of instances of the slug to the newly created
+     * slug.
+     *
+     * @param string $string
+     * @param int $id
+     * @return string
+     */
+    public function generateSlug($string, $id);
+
+    /**
+     * Validate the user passwords.
+     *
+     * @param array $passwords
+     * @return \Illuminate\Support\MessageBag
+     */
+    public function validatePasswords($passwords);
+
+    /**
      * Validate the user creation and update.
      *
-     * @param Request $user
+     * @param array $user
      * @return \Illuminate\Support\MessageBag
      */
     public function validateUser($user);

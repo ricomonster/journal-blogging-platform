@@ -132,18 +132,27 @@ class DbUserRepository implements UserRepositoryInterface
     }
 
     /**
-     * [updatePassword description]
-     * @param  [type] $passwords [description]
-     * @return [type]            [description]
+     * Updates the current password of the user.
+     *
+     * @param int $id
+     * @param string $password
+     * @return void
      */
-    public function updatePassword($passwords)
+    public function updatePassword($id, $password)
     {
+        // get the user
+        $row = $this->findById($id);
 
+        // update password
+        $row->password = Hash::make($password);
+        $row->save();
     }
 
     /**
-     * [setToInactive description]
-     * @param [type] $user [description]
+     *	Sets the user based on the given ID to be inactive
+     *
+     * @param array $user
+     * @return void
      */
     public function setToInactive($user)
     {
@@ -151,10 +160,31 @@ class DbUserRepository implements UserRepositoryInterface
     }
 
     /**
-     * [generateSlug description]
-     * @param  [type] $string [description]
-     * @param  [type] $id     [description]
-     * @return [type]         [description]
+     * Checks if the inputted current password of the user is the same with ones
+     * saved in the database.
+     *
+     * @param int $id
+     * @param string $currentPassword
+     * @return bool
+     */
+    public function checkUserCurrentPassword($id, $currentPassword)
+    {
+        // get the user
+        $row = $this->findById($id);
+
+        // compare
+        return Hash::check($currentPassword, $row->password);
+    }
+
+    /**
+     * Generates a slug based on the given string. It also checks if there are
+     * duplicates of the given string converted to slug in the database then
+     * appends the number of instances of the slug to the newly created
+     * slug.
+     *
+     * @param string $string
+     * @param int $id
+     * @return string
      */
     public function generateSlug($string, $id = null)
     {
@@ -176,9 +206,41 @@ class DbUserRepository implements UserRepositoryInterface
     }
 
     /**
+     * Validate the user passwords.
+     *
+     * @param array $passwords
+     * @return \Illuminate\Support\MessageBag
+     */
+    public function validatePasswords($passwords)
+    {
+        // prepare the rules of the data
+        $rules = [
+            'current_password'      => 'required',
+            'new_password'          => 'required|min:6',
+            'repeat_new_password'   => 'required|same:new_password'
+        ];
+
+        // set the custom messages
+        $messages = [
+            'current_password.required'     => 'Current password is required.',
+            'new_password.required'         => 'New password is required.',
+            'new_password.min'              => 'New password should be atleast :min+ characters.',
+            'repeat_new_password.required'  => 'Repeat your new password.',
+            'repeat_new_password.same'      => 'Passwords are not the same.'
+        ];
+
+        // validate
+        $validator = Validator::make($passwords, $rules, $messages);
+        $validator->passes();
+
+        // return errors
+        return $validator->errors();
+    }
+
+    /**
      * Validate the user creation and update.
      *
-     * @param Request $user
+     * @param array $user
      * @return \Illuminate\Support\MessageBag
      */
     public function validateUser($user)

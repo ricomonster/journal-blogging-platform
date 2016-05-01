@@ -46,10 +46,12 @@ Route::group([
 
         // User Routes
         Route::group(['prefix' => 'users'], function () {
-            Route::post('create', 'ApiUsersController@create');
-            Route::post('update', 'ApiUsersController@update');
-
             Route::get('get', 'ApiUsersController@get');
+
+            // Route::post('create', 'ApiUsersController@create');
+
+            Route::put('change-password', 'ApiUsersController@changePassword');
+            Route::put('update', 'ApiUsersController@update');
         });
 
         Route::post('upload', 'ApiUploadController@upload');
@@ -95,6 +97,7 @@ Route::group([
 
             // User Routes
             Route::group(['prefix' => 'users'], function () {
+                Route::get('change-password', 'UsersController@changePassword');
                 Route::get('create', 'UsersController@create');
                 Route::get('list', 'UsersController@lists');
                 Route::get('{id}/profile', 'UsersController@profile');

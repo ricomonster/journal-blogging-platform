@@ -7,6 +7,7 @@ require('./../components/installer/setup');
 require('./../components/posts/list');
 require('./../components/tags/details');
 require('./../components/tags/list');
+require('./../components/users/change-password');
 require('./../components/users/list');
 require('./../components/users/profile');
 require('./../components/editor');

@@ -21,6 +21,67 @@ class ApiUsersController extends ApiController
         $this->users = $users;
     }
 
+    /**
+     * Will validate and update the given password of the user.
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function changePassword(Request $request)
+    {
+        // check if there's a given user_id
+        if (!$request->input('user_id')) {
+            // return an error message
+            return $this->setStatusCode(self::BAD_REQUEST)
+                ->respondWithError([
+                    'message' => self::USER_ID_REQUIRED
+                ]);
+        }
+
+        // check if the user exists
+        $user = $this->users->findById($request->input('user_id'));
+
+        if (empty($user)) {
+            // return an error telling that the user does not exists
+            return $this->setStatusCode(self::NOT_FOUND)
+                ->respondWithError([
+                    'message' => self::USER_NOT_FOUND
+                ]);
+        }
+
+        // validate the inputted passwords
+        $messages = $this->users->validatePasswords($request->all());
+
+        // check for errors
+        if (count($messages) > 0) {
+            // return the errors
+            return $this->setStatusCode(self::BAD_REQUEST)
+                ->respondWithError($messages);
+        }
+
+        // check the current password of the user
+        $same = $this->users->checkUserCurrentPassword(
+            $request->input('user_id'),
+            $request->input('current_password'));
+
+        if (!$same) {
+            return $this->setStatusCode(self::FORBIDDEN)
+                ->respondWithError([
+                    'message' => self::CURRENT_PASSWORD_NOT_THE_SAME
+                ]);
+        }
+
+        // update password
+        $this->users->updatePassword(
+            $request->input('user_id'),
+            $request->input('new_password'));
+
+        // assuming everything went well
+        return $this->respond([
+            'error' => false
+        ]);
+    }
+
     public function create(Request $request)
     {
 
