@@ -14,7 +14,7 @@
         <section class="tags-list scrollable-content">
             <div class="wrapper centered-content">
                 <article class="tag clearfix" v-for="tag in tags">
-                    <a href="/journal/tags/@{{ tag.id }}/update" class="clearfix">
+                    <a href="/journal/tags/@{{ tag.id }}/edit" class="clearfix">
                         <span class="post-count label label-default">
                             @{{ tag.posts.length }} posts
                         </span>

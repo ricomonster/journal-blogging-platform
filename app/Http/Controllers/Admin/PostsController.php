@@ -7,8 +7,8 @@ use Journal\Http\Controllers\Controller;
 
 class PostsController extends Controller
 {
-    public function lists()
+    public function index()
     {
-        return view('admin.posts.list');
+        return view('admin.posts.index');
     }
 }

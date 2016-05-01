@@ -13,8 +13,8 @@
                 <!-- <li class="header">
                     <span class="title">Content</span>
                 </li> -->
-                <li class="{!! (is_active_menu('posts/list')) ? 'active' : null !!}">
-                    <a href="{{ url('journal/posts/list') }}">
+                <li class="{!! (is_active_menu('posts')) ? 'active' : null !!}">
+                    <a href="{{ url('journal/posts') }}">
                         <i class="fa fa-list fa-fw"></i>
                         <span class="text">Posts</span>
                     </a>
@@ -26,14 +26,14 @@
                         <span class="text">Pages</span>
                     </a>
                 </li>
-                <li class="{!! (is_active_menu('tags/list')) ? 'active' : null !!}">
-                    <a href="{{ url('journal/tags/list') }}">
+                <li class="{!! (is_active_menu('tags')) ? 'active' : null !!}">
+                    <a href="{{ url('journal/tags') }}">
                         <i class="fa fa-tags fa-fw"></i>
                         <span class="text">Tags</span>
                     </a>
                 </li>
-                <li class="{!! (is_active_menu('users/list')) ? 'active' : null !!}">
-                    <a href="{{ url('journal/users/list') }}">
+                <li class="{!! (is_active_menu('users')) ? 'active' : null !!}">
+                    <a href="{{ url('journal/users') }}">
                         <i class="fa fa-users fa-fw"></i>
                         <span class="text">Users</span>
                     </a>

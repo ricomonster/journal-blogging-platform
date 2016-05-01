@@ -12,9 +12,9 @@ class UsersController extends Controller
         return view('admin.users.change-password');
     }
 
-    public function lists()
+    public function index()
     {
-        return view('admin.users.list');
+        return view('admin.users.index');
     }
 
     public function profile($id)

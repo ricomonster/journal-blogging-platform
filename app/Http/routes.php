@@ -67,7 +67,7 @@ Route::group([
     'namespace'     => 'Admin',
     'prefix'        => 'journal'], function () {
         Route::get('/', function () {
-            return redirect('journal/posts/list');
+            return redirect('journal/posts');
         });
 
         // Auth Routes
@@ -83,7 +83,7 @@ Route::group([
 
             // Post Routes
             Route::group(['prefix' => 'posts'], function () {
-                Route::get('list', 'PostsController@lists');
+                Route::get('/', 'PostsController@index');
             });
 
             // Settings Routes
@@ -91,15 +91,15 @@ Route::group([
 
             // Tag Routes
             Route::group(['prefix' => 'tags'], function () {
-                Route::get('list', 'TagsController@lists');
-                Route::get('{tagId}/update', 'TagsController@update');
+                Route::get('/', 'TagsController@index');
+                Route::get('{tagId}/edit', 'TagsController@edit');
             });
 
             // User Routes
             Route::group(['prefix' => 'users'], function () {
                 Route::get('change-password', 'UsersController@changePassword');
                 Route::get('create', 'UsersController@create');
-                Route::get('list', 'UsersController@lists');
+                Route::get('/', 'UsersController@index');
                 Route::get('{id}/profile', 'UsersController@profile');
             });
         });
