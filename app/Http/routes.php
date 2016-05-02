@@ -127,6 +127,7 @@ Route::group(['namespace' => 'Installer', 'prefix' => 'installer'], function () 
 Route::group(['namespace' => 'Blog'], function () {
     Route::get('/', 'HomeController@page');
     Route::get('author/{slug}', 'AuthorController@page');
+    Route::get('rss', 'RssController@page');
     Route::get('tag/{slug}', 'TagController@page');
     Route::get('{parameter}', 'PageController@page');
 });
