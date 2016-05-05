@@ -1,5 +1,8 @@
 Vue.directive('codemirror', {
     twoWay : true,
+
+    params: ['action'],
+
     bind : function () {
         this.codemirror = CodeMirror(this.el, {
             mode : "markdown",
@@ -11,7 +14,14 @@ Vue.directive('codemirror', {
             this.set(this.codemirror.getValue());
         }.bind(this));
     },
+
     update: function (value, oldValue) {
         this.codemirror.setValue(value || '');
+    },
+
+    paramWatchers: {
+        action : function (value) {
+            console.log(value);
+        }
     }
 });

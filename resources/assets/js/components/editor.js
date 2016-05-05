@@ -1,8 +1,8 @@
-require('./../directives/codemirror');
 require('./../directives/selectize');
-require('./../directives/sync-scroll');
+// require('./../directives/sync-scroll');
 
 require('./../journal-components/image-uploader');
+require('./../journal-components/markdown-editor');
 
 Vue.component('journal-editor', {
     data: function () {
