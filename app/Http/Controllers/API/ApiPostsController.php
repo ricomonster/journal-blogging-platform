@@ -83,6 +83,16 @@ class ApiPostsController extends ApiController
                 ->respondWithError(['message' => 'String is required.']);
         }
 
+        // check if the string is equal to Journal because this is a restricted
+        // endpoint in our app
+        if (strtolower($request->input('string')) === 'journal') {
+            // return an error
+            return $this->setStatusCode(self::FORBIDDEN)
+                ->respondWithError([
+                    'message' => 'That is a reserved endpoint of the application.'
+                ]);
+        }
+
         // check if there's a post id
         $postId = (empty($request->input('post_id'))) ?
             null : $request->input('post_id');

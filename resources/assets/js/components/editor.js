@@ -240,8 +240,12 @@ Vue.component('journal-editor', {
                         // update the post slug
                         vm.$set('post.slug', response.data.slug);
                     }
-                }, function () {
-                    // do something
+                }, function (response) {
+                    var errors = response.data.errors;
+
+                    if (errors.message) {
+                        toastr.error(errors.message);
+                    }
                 });
         },
 

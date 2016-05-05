@@ -14,7 +14,6 @@ require('./../components/editor');
 require('./../components/login');
 require('./../components/settings');
 
-require('./../journal-components/markdown-reader');
 require('./../journal-components/time-ago');
 
 /**

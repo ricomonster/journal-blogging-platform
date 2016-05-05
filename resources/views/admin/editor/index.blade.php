@@ -36,35 +36,6 @@
             <section class="editor">
                 <markdown-editor :content="post.content"></markdown-editor>
             </section>
-            {{--<section class="editor">--}}
-                {{--<section class="markdown-editor window">--}}
-                    {{--<section class="editor-wrapper editor-scroll">--}}
-                        {{--<!-- Codemirror here -->--}}
-                    {{--</section>--}}
-                    {{--<footer class="floating-footer">--}}
-                        {{--<span class="title">--}}
-                            {{--<i class="fa fa-arrow-circle-o-down"></i> Markdown--}}
-                        {{--</span>--}}
-                        {{--<a class="markdown-helper" title="Open the markdown helper">--}}
-                            {{--<i class="fa fa-question-circle"></i>--}}
-                        {{--</a>--}}
-                    {{--</footer>--}}
-                {{--</section>--}}
-                {{--<section class="markdown-preview window">--}}
-                    {{--<section class="preview-wrapper">--}}
-                        {{--<div class="rendered-markdown">--}}
-                            {{--<markdown-reader :markdown.sync="post.content"--}}
-                            {{--:editor-mode="true" :counter.sync="counter"></markdown-reader>--}}
-                        {{--</div>--}}
-                    {{--</section>--}}
-                    {{--<footer class="floating-footer">--}}
-                        {{--<span class="title">--}}
-                            {{--<i class="fa fa-eye"></i> Preview--}}
-                        {{--</span>--}}
-                        {{--<span class="word-counter">@{{counter.count}} words</span>--}}
-                    {{--</footer>--}}
-                {{--</section>--}}
-            {{--</section>--}}
             <!-- Sidebar -->
             @include('admin.editor.sidebar')
 
