@@ -17,11 +17,5 @@ Vue.directive('codemirror', {
 
     update: function (value, oldValue) {
         this.codemirror.setValue(value || '');
-    },
-
-    paramWatchers: {
-        action : function (value) {
-            console.log(value);
-        }
     }
 });

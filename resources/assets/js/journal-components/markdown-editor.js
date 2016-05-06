@@ -1,4 +1,4 @@
-require('./../directives/codemirror');
+require('./markdown-reader');
 
 var toolbars = {
     'bold' : 'fa-bold',
@@ -6,7 +6,8 @@ var toolbars = {
     'link' : 'fa-link',
     'code' : 'fa-code',
     'image' : 'fa-picture-o',
-    'list' : 'fa-list',
+    'unordered-list' : 'fa-list-ul',
+    'ordered-list' : 'fa-list-ol',
     'quote' : 'fa-quote-right',
     'fullscreen' : 'fa-arrows-alt'
 };
@@ -28,14 +29,20 @@ Vue.component('markdown-editor', {
 
     props : [
         {
-            name : 'content',
+            name : 'model',
             type : String
         }
     ],
 
     data : function () {
         return {
+            active : 'markdown',
             codemirror : '',
+            counter : {
+                enable : true,
+                count : 0
+            },
+            fullscreen : false,
             isMac : false,
             modal : {
                 image : null,
@@ -62,7 +69,7 @@ Vue.component('markdown-editor', {
 
         keyMaps["Enter"] = "newlineAndIndentContinueMarkdownList";
 
-        this.codemirror = CodeMirror.fromTextArea(
+        vm.codemirror = CodeMirror.fromTextArea(
             document.getElementById("codemirror_textarea"), {
                 mode: 'markdown',
                 theme: 'paper',
@@ -72,7 +79,20 @@ Vue.component('markdown-editor', {
                 extraKeys: keyMaps
             });
 
-        this.codemirror.refresh();
+        vm.codemirror.refresh();
+
+        // checks for changes and we're going to set it to the props
+        vm.codemirror.on("change", function () {
+            vm.$set('model', vm.codemirror.getValue());
+        });
+
+        // set the initial value
+        vm.codemirror.setValue(vm.model || '');
+
+        vm.$watch('model', function(value) {
+            if (value && value !== vm.codemirror.getValue())
+                vm.codemirror.setValue(value);
+        });
     },
 
     methods : {
@@ -85,57 +105,29 @@ Vue.component('markdown-editor', {
             cm = cm || vm.codemirror;
             if (!cm) return;
 
-            var toggleLine = function() {
-                var startPoint = cm.getCursor('start');
-                var endPoint = cm.getCursor('end');
-                var repl = {
-                    quote: /^(\s*)\>\s+/,
-                    'unordered-list': /^(\s*)(\*|\-|\+)\s+/,
-                    'ordered-list': /^(\s*)\d+\.\s+/
-                };
-
-                var map = {
-                    quote: '> ',
-                    'unordered-list': '* ',
-                    'ordered-list': '1. '
-                };
-
-                for (var i = startPoint.line; i <= endPoint.line; i++) {
-                    (function(i) {
-                        var text = cm.getLine(i);
-                        if (stat[name]) {
-                            text = text.replace(repl[name], '$1');
-                        } else {
-                            text = map[name] + text;
-                        }
-                        cm.setLine(i, text);
-                    })(i);
-                }
-                cm.focus();
-            };
+            var stat = vm.getState(cm);
 
             switch (name) {
                 case 'bold':
-                    vm.replaceSelection('**');
+                    vm.replaceSelection('**', '', name);
                     break;
                 case 'italic':
-                    vm.replaceSelection('*');
+                    vm.replaceSelection('*', '', name);
                     break;
                 case 'code':
-                    vm.replaceSelection('`', '`');
+                    vm.replaceSelection('`', '', name);
                     break;
                 case 'link':
-                    vm.replaceSelection('[', '](http://)');
+                    vm.replaceSelection('[', '](http://)', name);
                     break;
                 case 'image':
                     // open image uploader
                     vm.openImageUploader();
-                    //replaceSelection('![', '](http://)');
                     break;
                 case 'quote':
                 case 'unordered-list':
                 case 'ordered-list':
-                    toggleLine();
+                    vm.toggleLine(name);
                     break;
                 case 'undo':
                     cm.undo();
@@ -146,7 +138,7 @@ Vue.component('markdown-editor', {
                     cm.focus();
                     break;
                 case 'fullscreen':
-                    // toggleFullScreen(cm.getWrapperElement());
+                    vm.toggleFullScreen();
                     break;
             }
         },
@@ -165,6 +157,9 @@ Vue.component('markdown-editor', {
             return text;
         },
 
+        /**
+         * Gets the current state of Codemirror
+         */
         getState : function (cm, pos) {
             pos = pos || cm.getCursor('start');
             var stat = cm.getTokenAt(pos);
@@ -193,6 +188,9 @@ Vue.component('markdown-editor', {
             return ret;
         },
 
+        /**
+         * Opens a modal to show the image uploader.
+         */
         openImageUploader : function () {
             // clear it
             this.modal = {
@@ -203,7 +201,10 @@ Vue.component('markdown-editor', {
             $('#upload_image_modal').modal('show');
         },
 
-        replaceSelection : function (start, end) {
+        /**
+         * Places the selected action in the Codemirror
+         */
+        replaceSelection : function (start, end, name) {
             var vm = this;
             var cm = this.codemirror;
             var text;
@@ -229,7 +230,10 @@ Vue.component('markdown-editor', {
                     endPoint.ch -= 1;
                 }
 
-                cm.setLine(startPoint.line, start + end);
+                cm.replaceRange(start + end, {
+                    line: startPoint.line
+                });
+
                 cm.setSelection(startPoint, endPoint);
                 cm.focus();
                 return;
@@ -250,13 +254,16 @@ Vue.component('markdown-editor', {
             cm.focus();
         },
 
+        /**
+         * Sets the uploaded or link the image to the editor
+         */
         saveImage : function () {
             var vm = this,
                 // get the image
                 imageUrl = vm.modal.image;
 
             // put it in the editor
-            vm.replaceSelection('![', '](' + imageUrl + ')');
+            vm.replaceSelection('![', '](' + imageUrl + ')', 'image');
 
             // close modal and empty the modal
             $('#upload_image_modal').modal('hide');
@@ -265,6 +272,94 @@ Vue.component('markdown-editor', {
                 image : null,
                 type : null
             };
+        },
+
+        showMarkdownHelpModal : function () {
+            // $('#markdown_help_modal').modal('show');
+            alert('Coming soon...');
+        },
+
+        /**
+         * Full screen mode baby.
+         */
+        toggleFullScreen : function () {
+            var vm = this;
+
+            // toggle to fullscreen or not
+            vm.fullscreen = !vm.fullscreen;
+
+            if (vm.fullscreen) {
+                // hide everything except the editor
+                $('body').addClass('editor-fullscreen');
+            }
+
+            if (!vm.fullscreen) {
+                $('body').removeClass('editor-fullscreen');
+            }
+        },
+
+        /**
+         * Wraps and prepend markdown objects to selected text or in the
+         * current line of the cursor.
+         */
+        toggleLine : function(name) {
+            var vm = this;
+            var cm = vm.codemirror;
+            var stat = vm.getState(cm);
+            var startPoint = cm.getCursor("start");
+            var endPoint = cm.getCursor("end");
+            var repl = {
+                "quote": /^(\s*)\>\s+/,
+                "unordered-list": /^(\s*)(\*|\-|\+)\s+/,
+                "ordered-list": /^(\s*)\d+\.\s+/
+            };
+
+            var map = {
+                "quote": "> ",
+                "unordered-list": "* ",
+                "ordered-list": "1. "
+            };
+
+            for(var i = startPoint.line; i <= endPoint.line; i++) {
+                (function(i) {
+                    var text = cm.getLine(i);
+                    if(stat[name]) {
+                        text = text.replace(repl[name], "$1");
+                    } else {
+                        text = map[name] + text;
+                    }
+
+                    cm.replaceRange(text, {
+                        line: i,
+                        ch: 0
+                    }, {
+                        line: i,
+                        ch: 99999999999999
+                    });
+                })(i);
+            }
+
+            cm.focus();
+        },
+
+        /**
+         * Selects which window to be shown.
+         */
+        toggleWindow : function () {
+            var vm = this;
+
+            // check current active window
+            if (vm.active == 'markdown') {
+                // set active window to preview
+                vm.active = 'preview';
+                return;
+            }
+
+            if (vm.active == 'preview') {
+                // set active window to preview
+                vm.active = 'markdown';
+                return;
+            }
         }
     }
 });

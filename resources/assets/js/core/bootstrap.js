@@ -26,6 +26,9 @@ require('bootstrap-sass/assets/javascripts/bootstrap');
  */
 if (window.CodeMirror === undefined) {
     window.CodeMirror = require('codemirror');
+
+    // require a display plugin for the codemirror
+    require('codemirror/addon/display/placeholder');
 }
 
 /**

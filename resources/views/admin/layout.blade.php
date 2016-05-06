@@ -21,7 +21,7 @@
     @include('admin.scripts.globals')
 </head>
 
-<body id="journal_layout" class="sidebar">
+<body id="journal_layout" class="open-sidebar">
     <div id="journal_app" class="full-height">
         <!-- Sidebar -->
         @include('admin.common.sidebar')

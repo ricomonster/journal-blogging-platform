@@ -6,7 +6,7 @@ html {
 
 body {
     height: 100%;
-    overflow: auto; 
+    overflow: auto;
 }
 
 /* Sidebar */
@@ -16,7 +16,7 @@ body {
     position: relative;
 }
 
-.sidebar {
+.open-sidebar {
     .main-content {
         margin-left: 220px;
     }
@@ -150,5 +150,24 @@ ul.alert { list-style: none; }
 .button-loader.processing {
     i.fa {
         display: inline-block;
+    }
+}
+
+// Editor Fullscreen
+body.editor-fullscreen {
+    .main-content {
+        margin-left: 0;
+    }
+
+    #sidebar {
+        .content {
+            left: -100%;
+        }
+    }
+
+    #editor_page {
+        .editor {
+            top: 0;
+        }
     }
 }
