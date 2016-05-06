@@ -1,3 +1,5 @@
+require('../../journal-components/markdown-reader');
+
 Vue.component('journal-posts-list', {
     data : function () {
         return {

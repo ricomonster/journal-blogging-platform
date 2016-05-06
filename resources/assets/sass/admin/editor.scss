@@ -74,115 +74,135 @@
         right: 0;
         top: 60px;
     }
+}
 
-    .editor {
-        .window {
+.markdown-editor {
+    background-color: $primary-bg-color;
+    height: 100%;
+    position: relative;
+
+    .editor-controls {
+        background-color: $primary-bg-color;
+        border-bottom: 1px solid $border-color;
+        bottom: 0;
+        height: 40px;
+        left: 0;
+        margin: 0 15px;
+        padding: 0 5px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 100;
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+                display: inline-block;
+            }
+        }
+
+        .navigation {
+            float: left;
+            height: 40px;
+
+            .navs {
+                li {
+                    background-color: $primary-bg-color;
+                    float: left;
+                    padding: 10px 0;
+
+                    a {
+                        color: #9b9d9e;
+                        padding: 11px 10px;
+                        text-align: center;
+                        text-decoration: none;
+
+                        :last-of-type {
+                            border-left: none;
+                        }
+                    }
+                }
+
+                li.active {
+                    a {
+                        color: $text;
+                        padding-bottom: 13px;
+                    }
+                }
+            }
+        }
+
+        .controls {
+            float: right;
+
+            .tools {
+                padding: 7px 0;
+
+                li {
+                    a {
+                        color: #9b9d9e;
+                        font-size: 18px;
+                        padding: 0 10px;
+
+                        i {
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .editor-wrapper {
+        .CodeMirror {
             bottom: 0;
-            position: absolute;
-            top: 0;
-            width: 50%;
-        }
-
-        .window {
-            .floating-footer {
-                background-color: $primary-bg-color;
-                border-top: 1px solid $border-color;
-                bottom: 0;
-                height: 40px;
-                left: 15px;
-                padding: 10px 0;
-                position: absolute;
-                right: 15px;
-                z-index: 100
-            }
-
-            .floating-footer {
-                span {
-                    color: $subtext;
-                    font-size: 12px;
-                    text-transform:uppercase;
-                }
-
-                span {
-                    i { margin-right: 3px; }
-                }
-            }
-        }
-
-        .window.markdown-editor {
-            border-right: 1px solid #e4e4e4;
+            color: #3c4043;
+            height: auto;
             left: 0;
-        }
-
-        .markdown-editor {
-            .markdown-helper {
-                color: $subtext;
-                font-size: 13px;
-                float: right;
-                text-decoration: none;
-            }
-
-            .editor-wrapper {
-                .CodeMirror {
-                    bottom: 40px;
-                    color: #3c4043;
-                    height: auto;
-                    left: 0;
-                    position: absolute;
-                    right: 0;
-                    top: 0;
-                }
-
-                .CodeMirror {
-                    .CodeMirror-lines {
-                        padding: 30px 0 40px;
-                    }
-
-                    pre {
-                        font-family: Inconsolata, monospace;
-                        font-size: 1.7rem;
-                        padding: 0 15px;
-                    }
-                }
-            }
-        }
-
-        .window.markdown-preview {
+            position: absolute;
             right: 0;
+            top: 0;
+
+            .CodeMirror-lines {
+                padding: 60px 30px 40px;
+            }
+
+            pre {
+                font-family: Inconsolata, monospace;
+                font-size: 1.7rem;
+                padding: 0 15px;
+            }
         }
+    }
 
-        .markdown-preview {
-            .floating-footer {
-                .word-counter { float: right; }
-            }
+    .preview-wrapper {
+        -moz-hyphens: auto;
+        -moz-user-select: none;
+        -ms-hyphens: auto;
+        -ms-user-select: none;
+        -webkit-hyphens: auto;
+        -webkit-user-select: none;
+        background-color: $primary-bg-color;
+        bottom: 0;
+        cursor: default;
+        font-size: 1.8rem;
+        hyphens: auto;
+        left: 0;
+        line-height: 1.5em;
+        overflow: auto;
+        padding: 0 15px 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        user-select: none;
+        word-break: normal;
+        word-wrap: break-word;
 
-            .preview-wrapper {
-                -moz-hyphens: auto;
-                -moz-user-select: none;
-                -ms-hyphens: auto;
-                -ms-user-select: none;
-                -webkit-hyphens: auto;
-                -webkit-user-select: none;
-                background-color: $primary-bg-color;
-                bottom: 40px;
-                cursor: default;
-                font-size: 1.8rem;
-                hyphens: auto;
-                left: 0;
-                line-height: 1.5em;
-                overflow: auto;
-                padding: 0 15px 0;
-                position: absolute;
-                right: 0;
-                top: 0;
-                user-select: none;
-                word-break: normal;
-                word-wrap: break-word;
-            }
-
-            .preview-wrapper {
-                .rendered-markdown { padding: 30px 0 40px; }
-            }
+        .rendered-markdown {
+            padding: 60px 30px 40px;
         }
     }
 }

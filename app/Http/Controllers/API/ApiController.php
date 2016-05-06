@@ -1,5 +1,4 @@
-<?php
-
+<?php //-->
 namespace Journal\Http\Controllers\API;
 
 use Illuminate\Http\Request;

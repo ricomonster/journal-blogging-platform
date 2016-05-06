@@ -9,7 +9,7 @@ use \Michelf\MarkdownExtra;
 /**
  * Wraps the Auth::user() to a method.
  *
- * @return Auth;
+ * @return Auth
  */
 if (!function_exists('auth_user')) {
     function auth_user()
@@ -119,10 +119,7 @@ if (!function_exists('blog_logo_photo'))
 if (!function_exists('is_active_menu')) {
     function is_active_menu($keyword)
     {
-        // get the current url of the page
-        $url = Request::url();
-
-        return strpos($url, $keyword);
+        return (Request::path() === $keyword);
     }
 }
 

@@ -21,7 +21,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             // login is success
-            return redirect('journal/posts/list');
+            return redirect('journal/posts');
         }
 
         // redirect back

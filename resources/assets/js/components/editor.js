@@ -1,8 +1,8 @@
-require('./../directives/codemirror');
 require('./../directives/selectize');
-require('./../directives/sync-scroll');
+// require('./../directives/sync-scroll');
 
 require('./../journal-components/image-uploader');
+require('./../journal-components/markdown-editor');
 
 Vue.component('journal-editor', {
     data: function () {
@@ -15,10 +15,6 @@ Vue.component('journal-editor', {
                 { class : 'btn-danger', group : 2, status : 2, text : 'Unpublish Post' },
                 { class : 'btn-info', group : 2, status : 1, text : 'Update Post' }
             ],
-            counter : {
-                enable : true,
-                count : 0
-            },
             loading : true,
             sidebarOpen : false,
             post : {
@@ -240,8 +236,12 @@ Vue.component('journal-editor', {
                         // update the post slug
                         vm.$set('post.slug', response.data.slug);
                     }
-                }, function () {
-                    // do something
+                }, function (response) {
+                    var errors = response.data.errors;
+
+                    if (errors.message) {
+                        toastr.error(errors.message);
+                    }
                 });
         },
 
