@@ -5,6 +5,10 @@
 <journal-tag-details inline-template>
     <div id="tags_details_page">
         <header class="page-header clearfix">
+            <a href="{{ url('journal/tags') }}" class="back">
+                <i class="fa fa-angle-left"></i> Back
+            </a>
+
             <h1 class="page-title">Edit Tag</h1>
         </header>
         <section class="tag-details scrollable-content">

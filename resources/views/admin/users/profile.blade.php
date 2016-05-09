@@ -6,6 +6,10 @@
     <div id="user_profile_page">
         <input type="hidden" name="user_id" value="{{$id}}"/>
         <header class="page-header clearfix">
+            <a href="{{ url('journal/users') }}" class="back">
+                <i class="fa fa-angle-left"></i> Back
+            </a>
+
             <h1 class="page-title">@{{ user.name }}</h1>
         </header>
         <section class="user-profile scrollable-content">

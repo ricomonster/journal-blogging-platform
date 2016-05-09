@@ -119,7 +119,9 @@ class ApiPostsController extends ApiController
             // check if it exists
             if (empty($post)) {
                 return $this->setStatusCode(self::NOT_FOUND)
-                    ->respondWithError(['message' => self::POST_NOT_FOUND]);
+                    ->respondWithError([
+                        'message' => self::POST_NOT_FOUND
+                    ]);
             }
 
             // return the post

@@ -5,9 +5,6 @@
 <journal-tags-list inline-template>
     <div id="tags_list_page">
         <header class="page-header clearfix">
-            <a href="#" class="back-link">
-                <i class="fa fa-angle-left"></i>
-            </a>
             <h1 class="page-title">Tags</h1>
 
             <a class="btn btn-default options" v-on:click="toggleSidebar">
