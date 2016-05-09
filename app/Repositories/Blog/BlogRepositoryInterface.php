@@ -12,17 +12,19 @@ interface BlogRepositoryInterface
      *
      * @param $authorId
      * @param $postPerPage
+     * @param $simplePagination
      * @return \Journal\Post
      */
-    public function authorPosts($authorId, $postPerPage);
+    public function authorPosts($authorId, $postPerPage, $simplePagination);
 
     /**
      * Fetches all the published and ready to show posts.
      *
      * @param $postPerPage
+     * @param $simplePagination
      * @return \Journal\Post
      */
-    public function blogPosts($postPerPage);
+    public function blogPosts($postPerPage, $simplePagination);
 
     /**
      * Fetch a post based on the given permalink,slug or ID.
@@ -37,7 +39,8 @@ interface BlogRepositoryInterface
      *
      * @param $tagId
      * @param $postPerPage
+     * @param $simplePagination
      * @return \Journal\Post
      */
-    public function tagPosts($tagId, $postPerPage);
+    public function tagPosts($tagId, $postPerPage, $simplePagination);
 }

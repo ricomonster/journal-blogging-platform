@@ -6,5 +6,7 @@
         @foreach ($posts as $key => $post)
         @include('casper.partials.post')
         @endforeach
+
+        @include('casper.partials.pagination')
     </div>
 @endsection

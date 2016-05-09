@@ -40,6 +40,7 @@ class DbTagRepository implements TagRepositoryInterface
     {
         return Tag::with(['posts'])
             ->where('active', '=', 1)
+            ->orderBy('title', 'ASC')
             ->get();
     }
 

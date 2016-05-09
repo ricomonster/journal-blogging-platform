@@ -17,7 +17,7 @@
             <div class="main-header-content inner">
                 <h1 class="page-title">{{ $tag->title }}</h1>
                 <h2 class="page-description">
-                    A {{ $posts->count() }}-post collection
+                    A {{ $posts->total() }}-post collection
                 </h2>
             </div>
         </div>
@@ -29,5 +29,7 @@
         @foreach ($posts as $key => $post)
         @include('casper.partials.post')
         @endforeach
+
+        @include('casper.partials.pagination')
     </div>
 @endsection

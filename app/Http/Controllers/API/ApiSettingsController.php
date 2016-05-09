@@ -50,6 +50,18 @@ class ApiSettingsController extends ApiController
                 continue;
             }
 
+            if ($field == 'theme_template') {
+                $result = $this->getThemeSettings($value);
+
+                // now save
+                $settings[] = $this->settings->save($field, $value);
+
+                // get the pagination settings and save
+                $this->settings->save('simple_pagination', $result['simple_pagination']);
+
+                continue;
+            }
+
             $settings[] = $this->settings->save($field, $value);
         }
 
@@ -57,7 +69,18 @@ class ApiSettingsController extends ApiController
             'settings' => $settings]);
     }
 
+    /**
+     * API endpoint to get and return the list of available themes.
+     *
+     */
     public function themes()
+    {
+        return $this->respond([
+            'themes' => $this->getInstalledThemes()
+        ]);
+    }
+
+    protected function getInstalledThemes()
     {
         $themeLists = [];
         $themesPath = base_path('themes');
@@ -77,6 +100,28 @@ class ApiSettingsController extends ApiController
             }
         }
 
-        return $this->respond(['themes' => $themeLists]);
+        return $themeLists;
+    }
+
+    /**
+     * Reads the content of the theme.json of the given theme
+     *
+     * @param string
+     * @return array
+     */
+    protected function getThemeSettings($theme)
+    {
+        $settings = [];
+        $themes = $this->getInstalledThemes();
+
+        // find the theme
+        foreach ($themes as $k => $t) {
+            if ($t['theme_name'] == $theme) {
+                $settings = $t;
+                break;
+            }
+        }
+
+        return $settings;
     }
 }

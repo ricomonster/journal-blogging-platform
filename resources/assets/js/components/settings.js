@@ -136,6 +136,14 @@ Vue.component('journal-settings', {
                 .then( function (response) {
                     if (response.data.settings) {
                         // update the data scope
+                        var fields = {},
+                            settings = response.data.settings;
+
+                        for (var s in settings) {
+                            fields[settings[s].name] = settings[s].value;
+                        }
+
+                        vm.$set('settings', fields);
 
                         // show success message
                         toastr.success('You have successfully updated the blog settings.');

@@ -1,4 +1,4 @@
-<aside id="upload_image_modal" class="modal fade" tabindex="-1" role="dialog"
+<article id="upload_image_modal" class="modal fade" tabindex="-1" role="dialog"
 v-if="modal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -14,4 +14,4 @@ v-if="modal">
             </div>
         </div>
     </div>
-</aside>
+</article>

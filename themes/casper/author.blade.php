@@ -42,7 +42,7 @@
             @endif
 
             <span class="author-stats">
-                <i class="fa fa-bar-chart"></i> {{ $posts->count() }} post
+                <i class="fa fa-bar-chart"></i> {{ $posts->total() }} post
             </span>
         </div>
     </section>
@@ -53,5 +53,7 @@
         @foreach ($posts as $key => $post)
         @include('casper.partials.post')
         @endforeach
+
+        @include('casper.partials.pagination')
     </div>
 @endsection

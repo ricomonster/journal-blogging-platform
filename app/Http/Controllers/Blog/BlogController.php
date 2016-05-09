@@ -15,7 +15,7 @@ class BlogController extends Controller
     /**
      * Settings that is needed to be fetched from the database.
      */
-    const SETTING_FIELDS = 'blog_title,blog_description,theme_template,post_per_page,logo_url,cover_url';
+    const SETTING_FIELDS = 'blog_title,blog_description,theme_template,post_per_page,logo_url,cover_url,simple_pagination';
 
     /**
      * Settings that are fetched from the database.
@@ -26,6 +26,12 @@ class BlogController extends Controller
      * Number of posts to be shown in the home, tags and author pages.
      */
     protected $postPerPage = 10;
+
+    /**
+     * Type of pagination that we're going to use. This pagination is provided
+     * by Laravel's Eloquent.
+     */
+    protected $simplePagination = false;
 
     /**
      * The theme that will be used to render the blog pages.

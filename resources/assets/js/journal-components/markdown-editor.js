@@ -275,8 +275,7 @@ Vue.component('markdown-editor', {
         },
 
         showMarkdownHelpModal : function () {
-            // $('#markdown_help_modal').modal('show');
-            alert('Coming soon...');
+            $('#markdown_helper_modal').modal('show');
         },
 
         /**

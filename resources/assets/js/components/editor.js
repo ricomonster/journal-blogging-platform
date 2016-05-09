@@ -1,5 +1,4 @@
 require('./../directives/selectize');
-// require('./../directives/sync-scroll');
 
 require('./../journal-components/image-uploader');
 require('./../journal-components/markdown-editor');
@@ -90,6 +89,8 @@ Vue.component('journal-editor', {
 
                         // set the published date time
                         vm.setPublishDateTime();
+
+                        vm.$set('loading', false);
                     }
                 });
         },

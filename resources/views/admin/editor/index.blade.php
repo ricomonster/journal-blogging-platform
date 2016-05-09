@@ -15,7 +15,8 @@
                     <!-- Buttons -->
                     <div class="btn-group">
                         <button id="split_button" type="submit" class="btn"
-                        v-bind:class="active.class" v-button-loader="processing">
+                        v-bind:class="active.class" v-button-loader="processing"
+                        no-text="true">
                             @{{active.text}}
                         </button>
                         <button type="button" class="btn" data-toggle="dropdown"
@@ -45,30 +46,30 @@
         </form>
     </div>
 
-    <div id="delete_post_modal" class="modal fade" tabindex="-1" role="dialog">
+    <article id="delete_post_modal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <header class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                     <h4 class="modal-title">Delete Post</h4>
-                </div>
-                <div class="modal-body">
+                </header>
+                <section class="modal-body">
                     <p>
                         Are you sure you wanted to delete the post
                         <span class="post-title">@{{post.title}}</span>?
                     </p>
-                </div>
-                <div class="modal-footer">
+                </section>
+                <footer class="modal-footer">
                     <button type="button" class="btn btn-danger" v-on:click="deletePost()">
                         Yes, delete this post
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                </div>
+                </footer>
             </div>
         </div>
-    </div>
+    </article>
 </journal-editor>
 
 <template id="markdown_editor_template">
@@ -111,7 +112,9 @@
             :counter.sync="counter" class="rendered-markdown"></markdown-reader>
         </section>
     </div>
+
     @include('admin.common.modal.image-uploader')
+    @include('admin.common.modal.markdown-helper')
 </template>
 
 @include('admin.scripts.image-uploader')

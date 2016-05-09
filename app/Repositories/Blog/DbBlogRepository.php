@@ -15,11 +15,12 @@ class DbBlogRepository implements BlogRepositoryInterface
      *
      * @param $authorId
      * @param $postPerPage
+     * @param $simplePagination
      * @return \Journal\Post
      */
-    public function authorPosts($authorId, $postPerPage)
+    public function authorPosts($authorId, $postPerPage, $simplePagination = false)
     {
-        $post = Post::with(['author', 'tags'])
+        $posts = Post::with(['author', 'tags'])
             // get active posts
             ->where('active', '=', 1)
             // get published posts
@@ -31,20 +32,25 @@ class DbBlogRepository implements BlogRepositoryInterface
             // filter
             ->where('author_id', '=', $authorId)
             // sort it according to published date
-            ->orderBy('published_at', 'DESC')
-            // paginate
-            ->paginate($postPerPage);
+            ->orderBy('published_at', 'DESC');
 
-        return $post;
+        // check if it will use simple pagination
+        if ($simplePagination) {
+            return $posts->simplePaginate($postPerPage);
+        }
+
+        // just use the normal pagination
+        return $posts->paginate($postPerPage);
     }
 
     /**
      * Fetches all the published and ready to show posts.
      *
      * @param $postPerPage
+     * @param $simplePagination
      * @return \Journal\Post
      */
-    public function blogPosts($postPerPage)
+    public function blogPosts($postPerPage, $simplePagination = false)
     {
         $posts = Post::with(['author', 'tags'])
             // get active posts
@@ -56,11 +62,15 @@ class DbBlogRepository implements BlogRepositoryInterface
             // get posts that are beyond the current timestamp
             ->where('published_at', '<=', time())
             // sort it according to published date
-            ->orderBy('published_at', 'DESC')
-            // paginate
-            ->paginate($postPerPage);
+            ->orderBy('published_at', 'DESC');
 
-        return $posts;
+        // check if it will use simple pagination
+        if ($simplePagination) {
+            return $posts->simplePaginate($postPerPage);
+        }
+
+        // just use the normal pagination
+        return $posts->paginate($postPerPage);
     }
 
     /**
@@ -95,9 +105,10 @@ class DbBlogRepository implements BlogRepositoryInterface
      *
      * @param $tagId
      * @param $postPerPage
+     * @param $simplePagination
      * @return \Journal\Post
      */
-    public function tagPosts($tagId, $postPerPage)
+    public function tagPosts($tagId, $postPerPage, $simplePagination = false)
     {
         $posts = Post::with(['author', 'tags'])
             // we need to get posts based on the tags
@@ -115,10 +126,14 @@ class DbBlogRepository implements BlogRepositoryInterface
             // get posts that are beyond the current timestamp
             ->where('published_at', '<=', time())
             // sort it according to published date
-            ->orderBy('published_at', 'DESC')
-            // paginate
-            ->paginate($postPerPage);
+            ->orderBy('published_at', 'DESC');
 
-        return $posts;
+        // check if it will use simple pagination
+        if ($simplePagination) {
+            return $posts->simplePaginate($postPerPage);
+        }
+
+        // just use the normal pagination
+        return $posts->paginate($postPerPage);
     }
 }

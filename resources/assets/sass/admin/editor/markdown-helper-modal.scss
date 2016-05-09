@@ -1,0 +1,29 @@
+#markdown_helper_modal {
+    .modal-dialog {
+        margin: 30px auto;
+        width: 460px;
+    }
+
+    .modal-footer {
+        border-top: 0;
+        padding-top: 0;
+        text-align: left;
+    }
+
+    /* Let's remove the borders in our dear table */
+    .modal-body {
+        .table {
+            thead {
+                tr {
+                    th {
+                        border: 0;
+                    }
+
+                    td {
+                        @extend th;
+                    }
+                }
+            }
+        }
+    }
+}

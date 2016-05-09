@@ -51,7 +51,7 @@ Vue.component('journal-tag-details', {
 
             if ($('input[name="tag_id"]').length < 1) {
                 // go to 404 page
-                window.location.href = '/journal/tags/list';
+                window.location.href = '/journal/tags';
             }
 
             // get the id

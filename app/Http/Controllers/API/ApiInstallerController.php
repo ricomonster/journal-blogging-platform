@@ -22,6 +22,8 @@ class ApiInstallerController extends ApiController
         'theme'             => 'Casper',
         // default theme template
         'theme_template'    => 'casper',
+        // simple pagination
+        'simple_pagination' => 1,
         // default date format
         'date_format'       => 'F j, Y',
         // default time format
