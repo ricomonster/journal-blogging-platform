@@ -1,0 +1,59 @@
+#settings_navigation_page {
+    .settings-navigation {
+        .centered-content {
+            width: 70%;
+
+            .add-menu {
+                .menu-details {
+                    margin-left: 30px;
+
+                    .form-control {
+                        float: left;
+                    }
+
+                    .menu-label {
+                        margin-right: 10px;
+                        width: 33%;
+                    }
+
+                    .url {
+                        margin-right: 10px;
+                        width: 58%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#menu_sortable {
+    .menu {
+        //border-bottom: 1px solid $border-color;
+        padding: 0 0 10px;
+
+        .handler {
+            color: $subtext;
+            font-size: 18px;
+            float: left;
+            line-height: 36px;
+        }
+
+        .menu-details {
+            margin-left: 30px;
+
+            .form-control {
+                float: left;
+            }
+
+            .menu-label {
+                margin-right: 10px;
+                width: 33%;
+            }
+
+            .url {
+                margin-right: 10px;
+                width: 58%;
+            }
+        }
+    }
+}

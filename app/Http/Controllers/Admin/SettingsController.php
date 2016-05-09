@@ -11,4 +11,9 @@ class SettingsController extends Controller
     {
         return view('admin.settings.index');
     }
+
+    public function navigation()
+    {
+        return view('admin.settings.navigation');
+    }
 }

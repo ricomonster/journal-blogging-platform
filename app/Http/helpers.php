@@ -213,3 +213,24 @@ if (!function_exists('post_tags')) {
         return $tagString;
     }
 }
+
+/**
+ * Returns the list of navigation menu
+ */
+if (!function_exists('navigation_menu')) {
+    function navigation_menu()
+    {
+        // get the saved navigation
+        $settings = \DB::table('settings')
+            ->where('name', 'navigation')
+            ->first();
+
+        if (empty($settings)) {
+            return [];
+        }
+
+        // convert the value to an array because it is saved in JSON and return
+        // it back.
+        return json_decode($settings->value);
+    }
+}

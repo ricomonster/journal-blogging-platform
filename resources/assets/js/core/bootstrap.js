@@ -57,6 +57,13 @@ if (window.moment === undefined) {
  */
 require('selectize');
 
+/**
+ * Load SortableJS
+ */
+if (window.Sortable === undefined) {
+    window.Sortable = require('sortablejs');
+}
+
 // set some global options for the toastr
 toastr.options.positionClass = 'toast-bottom-left';
 toastr.options.newestOnTop = false;

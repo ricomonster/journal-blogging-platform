@@ -50,6 +50,7 @@ class ApiSettingsController extends ApiController
                 continue;
             }
 
+            // check if the data to be saved is the theme
             if ($field == 'theme_template') {
                 $result = $this->getThemeSettings($value);
 
@@ -58,7 +59,16 @@ class ApiSettingsController extends ApiController
 
                 // get the pagination settings and save
                 $this->settings->save('simple_pagination', $result['simple_pagination']);
+                continue;
+            }
 
+            // check if the field to be updated is navigation
+            if ($field == 'navigation') {
+                // make it json so we can save it to the database
+                $navigation = json_encode($value);
+
+                // save it
+                $settings[] = $this->settings->save($field, $navigation);
                 continue;
             }
 

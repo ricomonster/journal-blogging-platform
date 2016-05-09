@@ -19,19 +19,8 @@
     <![endif]-->
 </head>
 <body class="casper {{ $body_class }} nav-closed">
-    <div class="nav">
-        <h3 class="nav-title">Menu</h3>
-        <a href="#" class="nav-close">
-            <span class="hidden">Close</span>
-        </a>
-        <ul>
-            <li class="nav-home nav-current" role="presentation"><a href="/">Home</a></li>
-        </ul>
-        <a class="subscribe-button" href="/rss">
-            <i class="fa fa-rss"></i> Subscribe
-        </a>
-    </div>
-    <span class="nav-cover"></span>
+    @include('casper.partials.sidebar')
+
     <div class="site-wrapper">
         @section('header')
             <header class="main-header {!! (cover_photo()) ? null : 'no-cover' !!}"

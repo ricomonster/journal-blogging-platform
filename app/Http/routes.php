@@ -88,6 +88,7 @@ Route::group([
 
             // Settings Routes
             Route::get('settings', 'SettingsController@index');
+            Route::get('navigation', 'SettingsController@navigation');
 
             // Tag Routes
             Route::group(['prefix' => 'tags'], function () {

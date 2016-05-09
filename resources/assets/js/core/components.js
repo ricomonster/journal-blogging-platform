@@ -12,6 +12,7 @@ require('./../components/users/list');
 require('./../components/users/profile');
 require('./../components/editor');
 require('./../components/login');
+require('./../components/navigation');
 require('./../components/settings');
 
 require('./../journal-components/time-ago');
