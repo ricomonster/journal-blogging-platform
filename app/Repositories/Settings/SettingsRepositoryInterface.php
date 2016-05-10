@@ -1,6 +1,5 @@
 <?php //-->
 namespace Journal\Repositories\Settings;
-
 /**
  * Interface SettingsRepositoryInterface
  * @package Journal\Repositories\Settings
@@ -13,7 +12,6 @@ interface SettingsRepositoryInterface
      * @return mixed
      */
     public function save($name, $value);
-
     /**
      * @param $settings
      * @param $setNameAsArrayKey

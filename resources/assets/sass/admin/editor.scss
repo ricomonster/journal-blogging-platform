@@ -166,9 +166,9 @@
             bottom: 0;
             color: #3c4043;
             height: auto;
-            left: 30px;
+            left: 0;
             position: absolute;
-            right: 30px;
+            right: 0;
             top: 0;
 
             .CodeMirror-lines {
@@ -178,7 +178,7 @@
             pre {
                 font-family: Inconsolata, monospace;
                 font-size: 1.7rem;
-                padding: 0 15px;
+                padding: 0 30px;
             }
         }
     }

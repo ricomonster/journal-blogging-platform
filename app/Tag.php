@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Tag extends Model
 {
     /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'tags';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -21,6 +28,13 @@ class Tag extends Model
      * @var array
      */
     protected $hidden = [];
+
+    /**
+     * The attributes/accessors that will be accessed via JSON or array
+     *
+     * @var array
+     */
+    protected $appends = [];
 
     /**
      * Post/Tag Relationship

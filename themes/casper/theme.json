@@ -2,6 +2,6 @@
   "name" : "Casper",
   "description" : "An exact duplicate of the default theme of Ghost.",
   "theme_name" : "casper",
-  "version" : "2.0.0",
+  "version" : "3.0.0",
   "simple_pagination" : true
 }

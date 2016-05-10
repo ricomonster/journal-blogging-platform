@@ -1,10 +1,8 @@
 <?php //-->
 namespace Journal\Repositories\Settings;
-
 use Journal\Repositories\Settings\SettingsRepositoryInterface;
 use Journal\Settings;
 use DB;
-
 /**
  * Class DbSettingsRepository
  * @package Journal\Repositories\Settings
@@ -22,7 +20,6 @@ class DbSettingsRepository implements SettingsRepositoryInterface
         $exists = DB::table('settings')
             ->where('name', '=', $name)
             ->first();
-
         // if it already exists, just update the setting
         if (!empty($exists)) {
             // update
@@ -32,11 +29,9 @@ class DbSettingsRepository implements SettingsRepositoryInterface
                     'value' => $value,
                     'updated_at' => date('Y-m-d h:i:s')
                 ]);
-
             // return the settings
             return $this->get($name);
         }
-
         // create it
         DB::table('settings')
             ->insert([
@@ -45,11 +40,9 @@ class DbSettingsRepository implements SettingsRepositoryInterface
                 'created_at' => date('Y-m-d h:i:s'),
                 'updated_at' => date('Y-m-d h:i:s')
             ]);
-
         // return the settings
         return $this->get($name);
     }
-
     /**
      * @param $settings
      * @return mixed
@@ -60,47 +53,37 @@ class DbSettingsRepository implements SettingsRepositoryInterface
         // settings to be taken
         if (strpos($settings, ',')) {
             $query = [];
-
             // make the parameter an array
             $settings = explode(',', $settings);
-
             // loop
             foreach ($settings as $key => $value) {
                 $query[] = $value;
             }
-
             // perform search
             $results = DB::table('settings')
                 ->whereIn('name', $query)
                 ->get();
-
             // check if we need set the name of the setting as a key
             // for the array
             if ($setNameAsArrayKey) {
                 $settingsToReturn = [];
-
                 // loop
                 foreach ($results as $key => $result) {
                     $settingsToReturn[$result->name] = $result->value;
                 }
-
                 return $settingsToReturn;
             }
-
             return $results;
         }
-
         // just a single setting
         $result = DB::table('settings')
             ->where('name', '=', $settings)
             ->first();
-
         // check if there's a result
         if (empty($result)) {
             // return an empty array
             return [];
         }
-
         // check if we need set the name of the setting as a key
         // for the array
         if ($setNameAsArrayKey) {
@@ -108,7 +91,6 @@ class DbSettingsRepository implements SettingsRepositoryInterface
                 $result->name => $result->value
             ];
         }
-
         return $result;
     }
 }

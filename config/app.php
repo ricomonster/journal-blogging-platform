@@ -156,7 +156,6 @@ return [
         Journal\Providers\EventServiceProvider::class,
         Journal\Providers\RouteServiceProvider::class,
         Journal\Providers\JournalServiceProvider::class,
-
         Roumen\Feed\FeedServiceProvider::class,
 
     ],

@@ -1,27 +1,82 @@
-# Laravel PHP Framework
+## Journal Blogging Platform
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+Journal is an another blogging platform because [Ghost](http://ghost.org) came in first and we both focused on one thing, publishing. Journal attempts to ease out publishing and sharing your thoughts to the world with our easy-to-use platform. All you need to do is write, and click publish.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+Journal is easy to configure and you can do whatever you want because it is powered by one of PHP's popular and powerful framework, [Laravel](http://laravel.com). So if you're a developer and you wanted to tinker or modify some of its functionality, you're free to go.
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+### How to install this shit?
 
-## Official Documentation
+First of all you need the following:
+- Apache/Nginx Server
+- PHP version >= 5.5.9
+- OpenSSL PHP Extension
+- PDO PHP Extension
+- Mbstring PHP Extension
+- Tokenizer PHP Extension
+- Node JS
+- [Composer](https://getcomposer.org/)
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+Once you have those things installed you're good to go!
 
-## Contributing
+1. Download [Journal](https://github.com/ricomonster/journal-blogging-platform) from its Github repository.
+1. Unzip it in the location you want.
+1. Open up your terminal
+1. Download [Composer](https://getcomposer.org/). To download Composer, type in the terminal `curl -sS https://getcomposer.org/installer | php`
+1. Install Journal's/Laravel dependencies, `composer install`
+1. Once Composer finished downloading, setup your database connection. You can copy `.env.example` in the root directory to `.env` and input your database credentials or open `app/config.php`.
+1. Start Journal! `http://localhost:8000`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+** NOTE: Make sure that the `storage` folder and its contents are writable. Please create also an `upload` folder inside the `public` folder because all of your contents that will uploaded will be stored in this location. Make sure also that `upload` folder is writable.
 
-## Security Vulnerabilities
+#### I'm a developer and I want to use Git because your repository is hosted in Github
+We assume at this point that you have installed PHP, Node JS. Just follow the steps and problems won't come to you.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+Clone Journal
+```bash
+git clone git://github.com/ricomonster/journal-blogging-platform.git
+cd journal-blogging-platform
+```
+
+Install Journal/Laravel's dependency using Composer. If you don't have Composer, type in the terminal `curl -sS https://getcomposer.org/installer | php` to download it.
+
+```bash
+# PHP things
+composer install
+
+# Node JS things
+npm install
+```
+
+Install [Gulp](https://www.npmjs.com/package/gulp) and [Bower](https://www.npmjs.com/package/bower)
+```bash
+npm install -g gulp bower
+```
+
+Build it!
+```bash
+gulp
+```
+
+Do you want this thing to run like in production?
+```bash
+gulp --prod
+```
+
+Fire it up!
+```bash
+php artisan serve
+# or
+php -S <localhost or your public IP>:8080 -t /public
+```
+
+Yay, You're now good to go!
+
+# FAQ
+### Why does it looks like Ghost?
+Ghost is such a wonderful application and I followed it since their Kickstarter days. I believed in their goals so that created me an idea to create a another blogging platform. I also believed in this quote said by some guy that "Imitation is the sincerest form of flattery".
+
+### The requested URL /themes/casper/assets/css/screen.css was not found on this server.
+The default theme is Casper, also imitated the default theme of Ghosts. If you encounter this problem, first make sure that [Gulp](https://www.npmjs.com/package/gulp) is installed then fire up your terminal and run `gulp theme-assets`.
 
 ## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+The Journal Blogging Platform is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)

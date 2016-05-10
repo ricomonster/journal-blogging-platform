@@ -84,5 +84,5 @@ gulp.task('watch', function () {
 });
 
 gulp.task('default', function (callback) {
-    runSequence('browserify', 'build-sass', callback);
+    runSequence('browserify', 'build-sass', 'get-fonts', 'theme-assets', callback);
 });
