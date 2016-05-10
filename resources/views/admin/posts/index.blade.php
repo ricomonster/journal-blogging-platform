@@ -7,8 +7,8 @@
     <div id="posts_list_page">
         <header class="page-header clearfix">
             <h1 class="page-title">Posts</h1>
-            <a class="new-post options" href="{{url('journal/editor')}}">
-                <i class="fa fa-pencil-square"></i>
+            <a class="btn btn-default options" href="{{url('journal/editor')}}">
+                <i class="fa fa-pencil"></i> New post
             </a>
         </header>
         <section class="post-lists">

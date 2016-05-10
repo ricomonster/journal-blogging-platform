@@ -1,16 +1,52 @@
 require('./markdown-reader');
 
-var toolbars = {
-    'bold' : 'fa-bold',
-    'italic' : 'fa-italic',
-    'link' : 'fa-link',
-    'code' : 'fa-code',
-    'image' : 'fa-picture-o',
-    'unordered-list' : 'fa-list-ul',
-    'ordered-list' : 'fa-list-ol',
-    'quote' : 'fa-quote-right',
-    'fullscreen' : 'fa-arrows-alt'
-};
+var toolbars = [
+    {
+        action : 'bold',
+        icon : 'fa-bold',
+        tooltip : 'Add bold text'
+    },
+    {
+        action : 'italic',
+        icon : 'fa-italic',
+        tooltip : 'Add italic text'
+    },
+    {
+        action : 'link',
+        icon : 'fa-link',
+        tooltip : 'Add a link'
+    },
+    {
+        action : 'code',
+        icon : 'fa-code',
+        tooltip : 'Insert code'
+    },
+    {
+        action : 'image',
+        icon : 'fa-picture-o',
+        tooltip : 'Add an image'
+    },
+    {
+        action : 'unordered-list',
+        icon : 'fa-list-ul',
+        tooltip : 'Add a bulleted list'
+    },
+    {
+        action : 'ordered-list',
+        icon : 'fa-list-ol',
+        tooltip : 'Add a numbered list'
+    },
+    {
+        action : 'quote',
+        icon : 'fa-quote-right',
+        tooltip : 'Insert a quote'
+    },
+    {
+        action : 'fullscreen',
+        icon : 'fa-arrows-alt',
+        tooltip : 'Fullscreen'
+    }
+];
 
 var shortcuts = {
     bold: 'Cmd-B',
@@ -93,6 +129,11 @@ Vue.component('markdown-editor', {
             if (value && value !== vm.codemirror.getValue())
                 vm.codemirror.setValue(value);
         });
+
+        // bootstrap tooltip initialize
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
     },
 
     methods : {
@@ -104,8 +145,6 @@ Vue.component('markdown-editor', {
 
             cm = cm || vm.codemirror;
             if (!cm) return;
-
-            var stat = vm.getState(cm);
 
             switch (name) {
                 case 'bold':

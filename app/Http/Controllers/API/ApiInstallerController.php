@@ -10,6 +10,10 @@ use Journal\Support\DatabaseManager;
 use Journal\Support\EnvironmentManager;
 use Validator;
 
+/**
+ * Class ApiInstallerController
+ * @package Journal\Http\Controllers\API
+ */
 class ApiInstallerController extends ApiController
 {
     /**
@@ -30,11 +34,39 @@ class ApiInstallerController extends ApiController
         'time_format'       => 'g:i a'
     ];
 
+    /**
+     * @var $defaultNavigation
+     */
+    protected $defaultNavigation = [
+        'label' => 'Home',
+        'url'   => '/',
+        'order' => 1
+    ];
+
+    /**
+     * @var DatabaseManager
+     */
     protected $database;
+    /**
+     * @var EnvironmentManager
+     */
     protected $environment;
+    /**
+     * @var SettingsRepositoryInterface
+     */
     protected $settings;
+    /**
+     * @var UserRepositoryInterface
+     */
     protected $users;
 
+    /**
+     * ApiInstallerController constructor.
+     * @param SettingsRepositoryInterface $settings
+     * @param UserRepositoryInterface $users
+     * @param DatabaseManager $database
+     * @param EnvironmentManager $environment
+     */
     public function __construct(
         SettingsRepositoryInterface $settings,
         UserRepositoryInterface $users,
@@ -48,6 +80,10 @@ class ApiInstallerController extends ApiController
         $this->environment  = $environment;
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function database(Request $request)
     {
         // get the content of the form and apply it to the env file
@@ -81,7 +117,7 @@ class ApiInstallerController extends ApiController
 
         // return the redirect url
         return $this->respond([
-            'redirect_url' => '/installer/setup'
+            'redirect_url' => url('/installer/setup')
         ]);
     }
 
@@ -106,7 +142,7 @@ class ApiInstallerController extends ApiController
         $user = $this->users->create($request);
 
         // generate some default settings
-        $settings = $this->generateJournalSettings($request);
+        $this->generateJournalSettings($request);
 
         // finally, installation is complete
         $this->installJournal();
@@ -125,6 +161,10 @@ class ApiInstallerController extends ApiController
         file_put_contents(storage_path('installed'), '');
     }
 
+    /**
+     * @param $data
+     * @return array
+     */
     protected function generateJournalSettings($data)
     {
         $results = [];
@@ -142,6 +182,16 @@ class ApiInstallerController extends ApiController
         foreach ($settings as $key => $value) {
             $results[] = $this->settings->save($key, $value);
         }
+
+        // insert the default navigation but first, fix it first by setting the
+        // url of the link
+        $navigation = $this->defaultNavigation;
+
+        // url
+        $navigation['url'] = url($navigation['url']);
+
+        // save it
+        $results[] = $this->settings->save('navigation', json_encode([$navigation]));
 
         return $results;
     }

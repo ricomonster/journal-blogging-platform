@@ -33,7 +33,7 @@ Vue.component('journal-tag-details', {
 
                         // redirect after 5 seconds
                         setTimeout( function () {
-                            window.location.href = '/journal/tags/list';
+                            window.location.href = '/journal/tags';
                         }, 3500);
                     }
                 }, function (response) {

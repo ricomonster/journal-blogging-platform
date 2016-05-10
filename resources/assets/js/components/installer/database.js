@@ -6,9 +6,12 @@ Vue.component('journal-database-setup', {
     },
 
     methods : {
+        /**
+         * Saves the given data in the form to the API.
+         */
         saveDatabaseSettings : function () {
-            var vm = this,
-                data = vm.database;
+            var vm      = this,
+                data    = vm.database;
 
             // send request to the API
             vm.$http.post('/api/installer/database', data)
@@ -19,8 +22,6 @@ Vue.component('journal-database-setup', {
                 }, function (response) {
                     // error
                     var message = response.data.message;
-
-                    console.log(message);
                 })
         }
     }

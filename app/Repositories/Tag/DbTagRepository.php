@@ -208,7 +208,8 @@ class DbTagRepository implements TagRepositoryInterface
         $slug = str_slug($string, '-');
 
         // prepare the query to check for similar slugs
-        $query = Tag::where('slug', 'LIKE', $slug.'%');
+        $query = Tag::where('slug', 'LIKE', $slug.'%')
+            ->where('active', '=', 1);
 
         // check if the ID is not null
         if (!is_null($id)) {
