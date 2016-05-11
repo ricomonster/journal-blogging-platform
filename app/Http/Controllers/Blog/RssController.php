@@ -10,7 +10,27 @@ use URL;
 
 class RssController extends BlogController
 {
-    public function page(BlogRepositoryInterface $blogRepository)
+    /**
+     * The blog repository interface instance.
+     * @var BlogRepositoryInterface
+     */
+    protected $blog;
+
+    /**
+     * RssController constructor.
+     * @param BlogRepositoryInterface $blog
+     */
+    public function __construct(BlogRepositoryInterface $blog)
+    {
+        parent::__construct();
+
+        $this->blog = $blog;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function page()
     {
         // create the feed
         $feed = App::make('feed');
@@ -21,7 +41,7 @@ class RssController extends BlogController
         // check if there is cached feed and build new only if is not
         if (!$feed->isCached()) {
             // creating rss feed with our most recent 20 posts
-            $posts = $blogRepository->blogPosts($this->postPerPage);
+            $posts = $this->blog->blogPosts($this->postPerPage);
 
             // set your feed's title, description, link, pubdate and language
             $feed->title         = blog_title();
@@ -30,6 +50,7 @@ class RssController extends BlogController
             $feed->link          = url('rss');
             $feed->pubdate       = $posts[0]->created_at;
             $feed->lang          = 'en';
+            
             $feed->setDateFormat('datetime');
             $feed->setShortening(true);
             $feed->setTextLimit(100);

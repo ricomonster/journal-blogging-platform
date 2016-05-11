@@ -77,15 +77,16 @@ class DbBlogRepository implements BlogRepositoryInterface
      * Fetch a post based on the given permalink,slug or ID.
      *
      * @param $permalink
+     * @param $preview
      * @return \Journal\Post
      */
-    public function post($permalink)
+    public function post($permalink, $preview = false)
     {
         $post = Post::with(['author', 'tags'])
             // get active posts
             ->where('active', '=', 1)
             // get published posts
-            ->where('status', '=', 1)
+             ->where('status', '=', ($preview) ? 2 : 1)
             // get posts that are not converted to a page
             ->where('is_page', '=', 0)
             // get posts that are beyond the current timestamp

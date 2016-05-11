@@ -4,7 +4,7 @@ namespace Journal\Http\Controllers\Blog;
 use Illuminate\Http\Request;
 use Journal\Http\Requests;
 use Journal\Http\Controllers\Controller;
-use Journal\Repositories\Settings\SettingsRepositoryInterface;
+use Journal\Repositories\Settings\DbSettingsRepository;
 
 /**
  * Class BlogController
@@ -38,8 +38,13 @@ class BlogController extends Controller
      */
     protected $theme = 'casper';
 
-    public function __construct(SettingsRepositoryInterface $settings)
+    /**
+     * BlogController constructor.
+     */
+    public function __construct()
     {
+        $settings = new DbSettingsRepository();
+
         // set the blog settings
         $this->blogSettings = $settings->get(self::SETTING_FIELDS, true);
 
@@ -50,6 +55,12 @@ class BlogController extends Controller
         $this->postPerPage = $this->blogSettings['post_per_page'];
     }
 
+    /**
+     * Returns the name of the class based on the page being rendered.
+     *
+     * @param $template
+     * @return string
+     */
     public function bodyClass($template)
     {
         // check if the template is an index
@@ -60,6 +71,11 @@ class BlogController extends Controller
         return $template . '-template';
     }
 
+    /**
+     * Render the 404 page.
+     *
+     * @return mixed
+     */
     public function fourOhFourPage()
     {
         // TODO: check if the template provided a 404 page
@@ -103,18 +119,6 @@ class BlogController extends Controller
         // set the body class
         $data['body_class'] = $this->bodyClass($template);
 
-        // // set the cover url
-        // $data['cover_url'] = (empty($this->blogSettings['cover_url'])) ?
-        //     '' : $this->blogSettings['cover_url'];
-
-        // // set the logo url
-        // $data['logo_url'] = $this->blogSettings['logo_url'];
-
         return view($this->theme . '.' . $template, $data);
-    }
-
-    public function meta()
-    {
-
     }
 }

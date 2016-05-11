@@ -30,9 +30,10 @@ interface BlogRepositoryInterface
      * Fetch a post based on the given permalink,slug or ID.
      *
      * @param $permalink
+     * @param $preview
      * @return \Journal\Post
      */
-    public function post($permalink);
+    public function post($permalink, $preview);
 
     /**
      * Fetches posts based on the given tag ID.

@@ -9,24 +9,56 @@ use Journal\Repositories\User\UserRepositoryInterface;
 
 class AuthorController extends BlogController
 {
-    public function page($slug, BlogRepositoryInterface $blogRepository, UserRepositoryInterface $userRepository)
+    /**
+     * The blog repository interface instance.
+     * @var BlogRepositoryInterface
+     */
+    protected $blog;
+
+    /**
+     * The user repository interface instance.
+     * @var UserRepositoryInterface
+     */
+    protected $user;
+
+    /**
+     * AuthorController constructor.
+     *
+     * @param BlogRepositoryInterface $blog
+     * @param UserRepositoryInterface $user
+     */
+    public function __construct(BlogRepositoryInterface $blog, UserRepositoryInterface $user)
+    {
+        parent::__construct();
+
+        $this->blog = $blog;
+        $this->user = $user;
+    }
+
+    /**
+     * Renders the author page.
+     *
+     * @param $slug
+     * @return View
+     */
+    public function page($slug)
     {
         // check if slug does not exists
         if (empty($slug)) {
             // return 404 page
-            return $this->fourOhFour();
+            return $this->fourOhFourPage();
         }
 
         // get the user
-        $user = $userRepository->findBySlug($slug);
+        $user = $this->user->findBySlug($slug);
 
         // check if the user exists
         if (empty($user)) {
-            return $this->fourOhFour();
+            return $this->fourOhFourPage();
         }
 
         // get the posts
-        $posts = $blogRepository->authorPosts($user->id, $this->postPerPage);
+        $posts = $this->blog->authorPosts($user->id, $this->postPerPage);
 
         // prepare the data
         $data = [

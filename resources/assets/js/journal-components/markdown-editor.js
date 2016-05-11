@@ -301,9 +301,6 @@ Vue.component('markdown-editor', {
                 // get the image
                 imageUrl = vm.modal.image;
 
-            // put it in the editor
-            vm.replaceSelection('![', '](' + imageUrl + ')', 'image');
-
             // close modal and empty the modal
             $('#upload_image_modal').modal('hide');
 
@@ -311,6 +308,9 @@ Vue.component('markdown-editor', {
                 image : null,
                 type : null
             };
+
+            // put it in the editor
+            vm.replaceSelection('![', '](' + imageUrl + ')', 'image');
         },
 
         showMarkdownHelpModal : function () {

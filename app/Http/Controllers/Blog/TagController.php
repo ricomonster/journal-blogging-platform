@@ -13,24 +13,55 @@ use Journal\Repositories\Tag\TagRepositoryInterface;
  */
 class TagController extends BlogController
 {
-    public function page($slug, BlogRepositoryInterface $blogRepository, TagRepositoryInterface $tagRepository)
+    /**
+     * The blog repository interface instance.
+     * @var BlogRepositoryInterface
+     */
+    protected $blog;
+
+    /**
+     * The tag repository interface instance.
+     * @var TagRepositoryInterface
+     */
+    protected $tag;
+
+    /**
+     * TagController constructor.
+     * @param BlogRepositoryInterface $blog
+     * @param TagRepositoryInterface $tag
+     */
+    public function __construct(BlogRepositoryInterface $blog, TagRepositoryInterface $tag)
+    {
+        parent::__construct();
+
+        $this->blog = $blog;
+        $this->tag  = $tag;
+    }
+
+    /**
+     * Renders the tag page.
+     *
+     * @param $slug
+     * @return View|mixed
+     */
+    public function page($slug)
     {
         // check if slug does not exists
         if (empty($slug)) {
             // return 404 page
-            return $this->fourOhFour();
+            return $this->fourOhFourPage();
         }
 
         // get the tag
-        $tag = $tagRepository->findBySlug($slug);
+        $tag = $this->tag->findBySlug($slug);
 
         // check if the tag exists
         if (empty($tag)) {
-            return $this->fourOhFour();
+            return $this->fourOhFourPage();
         }
 
         // get the posts
-        $posts = $blogRepository->tagPosts($tag->id, $this->postPerPage);
+        $posts = $this->blog->tagPosts($tag->id, $this->postPerPage);
 
         // prepare the data
         $data = [
