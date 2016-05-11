@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>THEME_NAME</title>
+    <!-- Meta and some CSS and even JS can go in here. -->
+</head>
+<body class="{{ $body_class }}">
+    @yield('body')
+</body>
+</html>

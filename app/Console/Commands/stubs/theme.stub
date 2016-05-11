@@ -1,0 +1,7 @@
+{
+  "name" : "THEME_NAME",
+  "description" : "Tell something about your theme.",
+  "theme_name" : "theme_name",
+  "version" : "1.0.0",
+  "simple_pagination" : false
+}

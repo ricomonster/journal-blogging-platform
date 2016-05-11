@@ -1,0 +1,6 @@
+@extends('theme_name.layout')
+@section('title', '')
+
+@section('body')
+    
+@endsection
