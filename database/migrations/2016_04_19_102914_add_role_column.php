@@ -26,7 +26,7 @@ class AddRoleColumn extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumns(['role_id']);
+            $table->dropColumn(['role_id']);
         });
     }
 }

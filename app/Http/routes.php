@@ -111,13 +111,16 @@ Route::group([
 | Installer Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['namespace' => 'Installer', 'prefix' => 'installer'], function () {
-    Route::get('/', 'WelcomeController@page');
-    Route::get('database', 'DatabaseController@page');
-    Route::get('success', 'FinalController@page');
-    Route::get('setup', 'SetupController@page');
+Route::group([
+    'namespace' => 'Installer',
+    'middleware'    => ['web'],
+    'prefix' => 'installer'], function () {
+        Route::get('/', 'WelcomeController@page');
+        Route::get('database', 'DatabaseController@page');
+        Route::get('success', 'FinalController@page');
+        Route::get('setup', 'SetupController@page');
 
-    Route::post('setup_database', 'DatabaseController@setup');
+        Route::post('setup_database', 'DatabaseController@setup');
 });
 
 /*
