@@ -176,9 +176,11 @@
             }
 
             pre {
-                font-family: Inconsolata, monospace;
+                //font-family: Merriweather, Georgia, serif;
+                font-family: 'Roboto Slab', serif;
                 font-size: 1.7rem;
-                padding: 0 30px;
+                line-height: 1.7em;
+                padding: 0 50px;
             }
         }
     }
@@ -207,7 +209,7 @@
         word-wrap: break-word;
 
         .rendered-markdown {
-            padding: 60px 30px 40px;
+            padding: 60px 50px 40px;
         }
     }
 }

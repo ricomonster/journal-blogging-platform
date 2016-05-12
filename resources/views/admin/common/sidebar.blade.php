@@ -3,10 +3,10 @@
         <header class="sidebar-header">
             <h1 class="blog-title">
                 <a href="{{ url('/') }}" target="_blank">
-                    {{blog_title()}}
+                    {{ blog_title() }}
                 </a>
             </h1>
-            <p class="user-name">{{auth_user()->name}}</p>
+            <p class="user-name">{{ auth_user()->name }}</p>
         </header>
         <section class="sidebar-content">
             <ul class="menu">
@@ -15,7 +15,7 @@
                 </li> -->
                 <li class="{!! (is_active_menu('journal/posts')) ? 'active' : null !!}">
                     <a href="{{ url('journal/posts') }}">
-                        <i class="fa fa-list fa-fw"></i>
+                        <i class="fa fa-thumb-tack fa-fw"></i>
                         <span class="text">Posts</span>
                     </a>
                 </li>
