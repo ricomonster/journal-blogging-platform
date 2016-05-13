@@ -1,7 +1,8 @@
 Vue.component('journal-database-setup', {
     data : function () {
         return {
-            database : {}
+            database : {},
+            processing : false
         }
     },
 
@@ -13,6 +14,9 @@ Vue.component('journal-database-setup', {
             var vm      = this,
                 data    = vm.database;
 
+            // flag that we're processing
+            vm.$set('processing', true);
+
             // send request to the API
             vm.$http.post('/api/installer/database', data)
                 .then( function (response) {
@@ -22,6 +26,8 @@ Vue.component('journal-database-setup', {
                 }, function (response) {
                     // error
                     var message = response.data.message;
+
+                    vm.$set('processing', false);
                 })
         }
     }

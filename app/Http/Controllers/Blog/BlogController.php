@@ -79,7 +79,7 @@ class BlogController extends Controller
     public function fourOhFourPage()
     {
         // TODO: check if the template provided a 404 page
-        return view('vendor.404');
+        return view('errors.404');
     }
 
     /**

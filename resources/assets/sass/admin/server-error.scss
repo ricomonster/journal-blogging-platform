@@ -1,0 +1,40 @@
+#server_error_page {
+  height: 100%;
+
+  .page-header {
+    .page-title {
+      color: $hyperlink;
+      float: none;
+      font-weight: bold;
+      text-align: center;
+    }
+  }
+
+  .content {
+    .message {
+      left: 50%;
+      position: absolute;
+      text-align: center;
+      top: 35%;
+      transform: translate(-50%, -35%);
+
+      .title {
+        font-size: 40px;
+        margin-bottom: 30px;
+      }
+
+      .subtext {
+        font-size: 18px;
+        margin-bottom: 20px;
+        text-align: left;
+      }
+
+      .debug-error-tips {
+        li {
+          font-size: 16px;
+          text-align: left;
+        }
+      }
+    }
+  }
+}

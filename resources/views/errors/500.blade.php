@@ -15,15 +15,29 @@
     <link rel="stylesheet" href="{{ asset('assets/screen.css') }}"/>
 </head>
 
-<body class="404-page">
-<div id="not_found_page">
+<body class="500-page">
+<div id="server_error_page">
     <header class="page-header clearfix">
         <h1 class="page-title">Journal</h1>
     </header>
     <section class="content">
         <div class="message">
-            <h1 class="title">Sorry, this page isn't available.</h1>
-            <p class="subtext">The link you followed may be broken, or the page may have been removed.</p>
+            <h1 class="title">Whoops! Something went wrong.</h1>
+            <p class="subtext">
+                @if ($type == 'pdo')
+                    We cannot establish a database connection and the following might help you
+                    figure out what is the error:
+                @else
+                    Please check the following that might caused this error:
+                @endif
+            </p>
+
+            <ul class="debug-error-tips">
+                @if ($type == 'pdo')
+                <li>Invalid database credentials. (Incorrect host, username, or password)</li>
+                <li>Database does not exists.</li>
+                @endif
+            </ul>
         </div>
     </section>
 </div>

@@ -8,6 +8,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use PDOException;
 
 class Handler extends ExceptionHandler
 {
@@ -45,6 +46,20 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if ($e instanceof PDOException) {
+            // if the request came from an AJAX request
+            if ($request->ajax()) {
+                return response()->json([
+                    'message' => $e->getMessage()
+                ], 500);
+            }
+
+            return response()->view(
+                'errors.500', [
+                    'message'   => $e->getMessage(),
+                    'type'      => 'pdo'], 500);
+        }
+
         return parent::render($request, $e);
     }
 }

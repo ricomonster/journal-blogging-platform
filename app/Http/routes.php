@@ -63,7 +63,7 @@ Route::group([
 |--------------------------------------------------------------------------
 */
 Route::group([
-    'middleware'    => ['web'],
+    'middleware'    => ['web', 'installed'],
     'namespace'     => 'Admin',
     'prefix'        => 'journal'], function () {
         Route::get('/', function () {
@@ -128,7 +128,7 @@ Route::group([
 | Blog Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['namespace' => 'Blog'], function () {
+Route::group(['middleware' => ['installed'], 'namespace' => 'Blog'], function () {
     Route::get('/', 'HomeController@page');
     Route::get('author/{slug}', 'AuthorController@page');
     Route::get('rss', 'RssController@page');

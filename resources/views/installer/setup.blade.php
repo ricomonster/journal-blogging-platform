@@ -69,7 +69,8 @@
                     @if ($ownerRole)
                     <input type="hidden" v-model="setup.role" value="{{ $ownerRole->id }}"/>
                     @endif
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary"
+                    v-button-loader="processing">Submit</button>
                 </div>
             </form>
         </section>

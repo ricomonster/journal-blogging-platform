@@ -17,7 +17,12 @@
     @yield('css')
 
     <!-- Journal Globals -->
-    @include('admin.scripts.globals')
+    <script>
+        window.Journal = {
+            // CSRF Token
+            csrfToken : '{{ csrf_token() }}'
+        };
+    </script>
 </head>
 <body id="journal_layout" class="installer">
     <div id="journal_app" class="container" v-cloak>

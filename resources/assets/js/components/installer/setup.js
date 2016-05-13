@@ -5,6 +5,7 @@ Vue.component('journal-installer-setup', {
     data : function () {
         return {
             errors : {},
+            processing : false,
             setup : {}
         }
     },
@@ -19,6 +20,9 @@ Vue.component('journal-installer-setup', {
             var vm      = this,
                 data    = vm.setup;
 
+            // flag that we're processing
+            vm.$set('processing', true);
+
             // perform ajax request so we can save the data
             vm.$http.post('/api/installer/setup', data)
                 .then(function(response) {
@@ -28,6 +32,8 @@ Vue.component('journal-installer-setup', {
                     }
                 }, function (response) {
                     vm.errors = response.data.errors;
+
+                    vm.$set('processing', false);
                 });
         }
     }

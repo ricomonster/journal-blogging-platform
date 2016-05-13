@@ -60,7 +60,8 @@
                 </div>
 
                 <div class="form-buttons">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary"
+                    v-button-loader="processing">Submit</button>
                 </div>
             </form>
         </section>
