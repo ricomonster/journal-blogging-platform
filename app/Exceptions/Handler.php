@@ -57,7 +57,8 @@ class Handler extends ExceptionHandler
             return response()->view(
                 'errors.500', [
                     'message'   => $e->getMessage(),
-                    'type'      => 'pdo'], 500);
+                    'type'      => 'pdo'
+                ], 500);
         }
 
         return parent::render($request, $e);

@@ -38,9 +38,6 @@ class DatabaseManager
      */
     protected function performMigration()
     {
-        // check first
-        Artisan::call('clear-compiled');
-
         // reset first
         Artisan::call('migrate:reset');
 

@@ -19,14 +19,16 @@ class PermissionsChecker
             // check the permission of the folder
             $result = $this->getPermission($folder);
 
+            $allowedPermission = $result >= $permission;
+
             // push the results to an array
             array_push($results['folders'], [
                 'folder'    => $folder,
                 'expected'  => $permission,
                 'current'   => $result,
-                'set'       => $result >= $permission]);
+                'set'       => $allowedPermission]);
 
-            if ($result >= $permission) {
+            if (!$allowedPermission) {
                 $results['errors'] = true;
             }
         }
