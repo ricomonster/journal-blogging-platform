@@ -16,7 +16,7 @@
                 <div class="loader" v-if="loading">
                     <i class="fa fa-circle-o-notch fa-spin"></i>
                 </div>
-                <input type="file" name="files" id="file_uploader" v-on:change="uploadFile"
+                <input type="file" name="files" class="file-uploader" v-on:change="uploadFile"
                 accept="image/*"/>
             </div>
             <div class="image-url" v-if="!imageUrl && option == 'link'">

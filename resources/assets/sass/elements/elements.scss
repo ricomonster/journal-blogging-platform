@@ -185,3 +185,16 @@ body.editor-fullscreen {
         }
     }
 }
+
+// Modal
+.modal-content {
+    border-radius: $border-radius;
+
+    .modal-header {
+        border-color: $border-color;
+    }
+
+    .modal-footer {
+        @extend .modal-header;
+    }
+}

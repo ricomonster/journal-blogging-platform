@@ -1,6 +1,6 @@
 #sidebar {
     .content {
-        background-color: $sidebar-bg-color;
+        background-color: $primary-bg-color;
         border-right: 1px solid $border-color;
         bottom: 0;
         left: 0;
@@ -20,7 +20,7 @@
                 font-weight: bold;
 
                 a {
-                    color: $sub-hyperlink;
+                    color: $text;
                     text-decoration: none;
                 }
             }
@@ -70,12 +70,17 @@
                             margin-right: 10px;
                         }
                     }
+
+                    a:hover {
+                        border-left-color: $border-color;
+                    }
                 }
 
                 li.active {
                     a {
-                        border-left-color: $hyperlink;
-                        color: $hyperlink;
+                        border-left-color: $text;
+                        color: $text;
+                        font-weight: bold;
                     }
                 }
 

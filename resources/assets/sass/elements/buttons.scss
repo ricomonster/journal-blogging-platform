@@ -4,7 +4,6 @@
     border-color: $color-default;
     color: $color-default;
     font-weight: bold;
-    text-transform: uppercase;
 
     &:hover,
     &:focus,
@@ -21,7 +20,6 @@
     border-color: $color-primary;
     color: $primary-bg-color;
     font-weight: bold;
-    text-transform: uppercase;
 
     &:hover,
     &:focus,
@@ -37,7 +35,6 @@
     background-color: $color-danger;
     border-color: $color-danger;
     font-weight: bold;
-    text-transform: uppercase;
 
     &:hover,
     &:focus,
@@ -53,7 +50,6 @@
     background-color: $color-success;
     border-color: $color-success;
     font-weight: bold;
-    text-transform: uppercase;
 
     &:hover,
     &:focus,
@@ -69,7 +65,6 @@
     background-color: $color-info;
     border-color: $color-info;
     font-weight: bold;
-    text-transform: uppercase;
 
     &:hover,
     &:focus,
@@ -85,7 +80,6 @@
     background-color: $color-warning;
     border-color: $color-primary;
     font-weight: bold;
-    text-transform: uppercase;
 
     &:hover,
     &:focus,
@@ -100,6 +94,10 @@
 .btn {
     border-radius: 2px;
     padding: 7px 12px;
+
+    i.fa {
+        margin-right: 3px;
+    }
 }
 
 .btn.btn-sm { padding: 4px 12px; }

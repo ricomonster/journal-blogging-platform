@@ -16,14 +16,17 @@
 }
 
 .form-group {
-    border-bottom: 1px solid $border-color;
     margin-bottom: 20px;
-    padding-bottom: 20px;
 }
 
 .form-group {
-    .help-block { color: $subtext; }
-    .help-block.error { font-style: none; }
+    .help-block {
+        color: $subtext;
+    }
+
+    .help-block.error {
+        font-style: none;
+    }
 }
 
 .input-group-addon {

@@ -3,7 +3,10 @@
 
 @section('content')
 <journal-editor inline-template>
-    <div id="editor_page">
+    @if ($postId)
+    <input type="hidden" name="post_id" value="{{$postId}}"/>
+    @endif
+    <div id="editor_page" v-if="!loading">
         <form v-on:submit.prevent="savePost($event)">
             <header class="page-header clearfix">
                 <input type="text" v-model="post.title" placeholder="Title"
@@ -17,7 +20,9 @@
                         <button id="split_button" type="submit" class="btn"
                         v-bind:class="active.class" v-button-loader="processing"
                         no-text="true">
-                            @{{active.text}}
+                            <span class="button-text" v-if="!processing">
+                                @{{active.text}}
+                            </span>
                         </button>
                         <button type="button" class="btn" data-toggle="dropdown"
                         v-bind:class="active.class" v-bind:disabled="processing">
@@ -39,10 +44,6 @@
             </section>
             <!-- Sidebar -->
             @include('admin.editor.sidebar')
-
-            @if ($postId)
-            <input type="hidden" name="post_id" value="{{$postId}}"/>
-            @endif
         </form>
     </div>
 

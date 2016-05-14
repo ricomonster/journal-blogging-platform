@@ -54,8 +54,8 @@
             }
 
             .hyperlink:hover {
-                background-color: $secondary-bg-color;
-                border-left: 3px solid $secondary-bg-color;
+                background-color: $primary-bg-color;
+                border-left: 3px solid $border-color;
                 cursor: pointer;
             }
 
@@ -74,8 +74,8 @@
 
         .post.active {
             .hyperlink {
-                background-color: $secondary-bg-color;
-                border-left: 3px solid $hyperlink;
+                background-color: $primary-bg-color;
+                border-left: 3px solid $text;
             }
         }
     }
@@ -116,21 +116,22 @@
                     }
 
                     li {
-                        .edit-post {
+                        a {
+                            color: $text;
                             font-size: 20px;
                             text-indent: 30px;
-                            color: $color-success;
+                            //color: $color-success;
                         }
 
-                        .preview-post {
-                            @extend .edit-post;
-                            color: $color-warning;
-                        }
-
-                        .delete-post {
-                            @extend .edit-post;
-                            color: $color-danger;
-                        }
+                        //.preview-post {
+                        //    @extend .edit-post;
+                        //    color: $color-warning;
+                        //}
+                        //
+                        //.delete-post {
+                        //    @extend .edit-post;
+                        //    color: $color-danger;
+                        //}
                     }
                 }
             }

@@ -13,11 +13,12 @@
 
                 a {
                     .post-count {
+                        background-color: $subtext;
                         float: right;
                     }
 
                     .fa.fa-tag {
-                        color: $hyperlink;
+                        color: #9d9d9d;
                         font-size: 18px;
                         float: left;
                         margin-top: 5px;

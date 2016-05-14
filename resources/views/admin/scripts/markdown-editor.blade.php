@@ -37,7 +37,7 @@
         </section>
         <section class="preview-wrapper" v-show="active == 'preview'">
             <markdown-reader :markdown.sync="model" :editor-mode="true"
-                             :counter.sync="counter" class="rendered-markdown"></markdown-reader>
+            :counter.sync="counter" class="rendered-markdown"></markdown-reader>
         </section>
     </div>
 
