@@ -117,7 +117,7 @@ class ApiInstallerController extends ApiController
 
         // return the redirect url
         return $this->respond([
-            'redirect_url' => '/installer/setup'
+            'redirect_url' => url('/installer/setup')
         ]);
     }
 
