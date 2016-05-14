@@ -28,25 +28,33 @@ Vue.component('journal-editor', {
     },
 
     ready : function () {
+        var vm = this;
+
         // get the tags from the API
-        this.getTags();
+        vm.getTags();
 
         // render the buttons based on the post status
-        this.renderButtons();
+        vm.renderButtons();
 
         // set the publish date and time
-        this.setPublishDateTime();
+        vm.setPublishDateTime();
+
+        // end loading
+        vm.$set('loading', false);
 
         if ($('input[name="post_id"]').length > 0) {
+            // reinitialize loading state
+            vm.$set('loading', true);
+
             // get the the post
-            this.getPost($('input[name="post_id"').val());
+            vm.getPost($('input[name="post_id"]').val());
         }
 
         // a little cheat, sorry
         $('.sidebar-overlay').on('click', function () {
             // toggle the sidebar
-            this.toggleSidebar();
-        }.bind(this));
+            vm.toggleSidebar();
+        });
     },
 
     methods : {

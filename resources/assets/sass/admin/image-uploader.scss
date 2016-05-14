@@ -19,13 +19,12 @@
                 z-index: 100;
 
                 i.fa {
-                    margin-right: 0px !important;
+                    margin-right: 0 !important;
                 }
             }
 
             img {
                 display: inline-block;
-                vertical-align: middle;
                 max-width:100%;
                 max-height:100%;
                 vertical-align: middle;
@@ -49,7 +48,7 @@
                 margin: -10px 0;
 
                 i.fa {
-                    color: $hyperlink;
+                    color: $sub-hyperlink;
                     font-size: 60px;
                 }
             }
@@ -68,6 +67,7 @@
 
     .upload-option {
         a.fa {
+            color: $sub-hyperlink;
             bottom: 10px;
             left: 10px;
             position: absolute;

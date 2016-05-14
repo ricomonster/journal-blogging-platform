@@ -43,7 +43,9 @@ Vue.component('image-uploader', {
          * A little cheat on how to open the file manager
          */
         openFileManager : function () {
-            $('#file_uploader').click();
+            var vm = this;
+
+            $(vm.$el).find('.file-uploader').click();
         },
 
         /**
