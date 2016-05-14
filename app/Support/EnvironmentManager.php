@@ -1,6 +1,8 @@
 <?php //-->
 namespace Journal\Support;
 
+use Artisan;
+
 class EnvironmentManager
 {
     const ENV           = '.env';
@@ -45,12 +47,17 @@ class EnvironmentManager
             }
         }
 
+        // clear the cache
+        Artisan::call('cache:clear');
+
         // put it in the file!
         try {
             $results = file_put_contents(base_path(self::ENV), $envContent);
         } catch (Exception $e) {
             return $e->getMessage();
         }
+
+        Artisan::call('config:cache');
 
         return $results;
     }
