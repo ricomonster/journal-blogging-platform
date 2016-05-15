@@ -3,10 +3,13 @@
 
 @section('content')
 <journal-editor inline-template>
-    @if ($postId)
-    <input type="hidden" name="post_id" value="{{$postId}}"/>
-    @endif
-    <div id="editor_page" v-if="!loading">
+    <div id="editor_page">
+        <div class="loading-overlay" v-if="loading">
+            <div class="content">
+                <i class="fa fa-circle-o-notch fa-spin"></i>
+                <p class="loading-text">Loading</p>
+            </div>
+        </div>
         <form v-on:submit.prevent="savePost($event)">
             <header class="page-header clearfix">
                 <input type="text" v-model="post.title" placeholder="Title"
@@ -45,6 +48,10 @@
             <!-- Sidebar -->
             @include('admin.editor.sidebar')
         </form>
+
+        @if ($postId)
+        <input type="hidden" name="post_id" value="{{$postId}}"/>
+        @endif
     </div>
 
     <article id="delete_post_modal" class="modal fade" tabindex="-1" role="dialog">

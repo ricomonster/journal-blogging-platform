@@ -94,7 +94,30 @@ h6, .h6 {
 }
 
 
-.main { font-size: 18px; line-height: 1.5; }
+/*
+ * Main column and sidebar layout
+ */
+
+.blog-main {
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+/* Sidebar modules for boxing content */
+.sidebar-module {
+    padding: 15px;
+    margin: 0 -15px 15px;
+}
+.sidebar-module-inset {
+    padding: 15px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+}
+.sidebar-module-inset p:last-child,
+.sidebar-module-inset ul:last-child,
+.sidebar-module-inset ol:last-child {
+    margin-bottom: 0;
+}
 
 
 /* Pagination */
@@ -114,19 +137,24 @@ h6, .h6 {
  * Blog posts
  */
 
-.post {
+.blog-post {
     margin-bottom: 60px;
 }
-.post-title {
+.blog-post-title {
     margin-bottom: 5px;
     font-size: 40px;
 }
-.post-meta {
+.blog-post-meta {
     margin-bottom: 20px;
     color: #999;
 }
 
-.post .content img { border: 0; max-width: 100%;}
+.post-content img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
 
 /*
  * Footer
