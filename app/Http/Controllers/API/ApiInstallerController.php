@@ -47,14 +47,17 @@ class ApiInstallerController extends ApiController
      * @var DatabaseManager
      */
     protected $database;
+
     /**
      * @var EnvironmentManager
      */
     protected $environment;
+
     /**
      * @var SettingsRepositoryInterface
      */
     protected $settings;
+
     /**
      * @var UserRepositoryInterface
      */
