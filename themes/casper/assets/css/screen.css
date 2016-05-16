@@ -3,6 +3,7 @@ html {
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%
 }
+
 body { margin: 0; }
 article, aside, details,
 figcaption, figure,
@@ -13,6 +14,7 @@ audio, canvas, progress, video {
     display: inline-block;
     vertical-align: baseline;
 }
+
 audio:not([controls]) { display: none; height: 0; }
 [hidden], template { display: none; }
 a { background-color: transparent;}
@@ -879,6 +881,7 @@ body:not(.post-template) .post-title {
     float: left;
     margin-right: 9px;
     border-radius: 100%;
+    object-fit: cover;
 }
 
 .post-meta a {

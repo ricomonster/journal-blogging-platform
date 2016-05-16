@@ -129,6 +129,8 @@ Vue.component('journal-settings', {
             var vm = this,
                 settings = vm.settings;
 
+            console.log(settings);
+
             // flag that we're processing something
             vm.$set('processing', true);
 

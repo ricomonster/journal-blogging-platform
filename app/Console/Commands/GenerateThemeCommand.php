@@ -30,7 +30,7 @@ class GenerateThemeCommand extends Command
     protected $filesystem;
 
     protected $themeFiles = [
-        'index', 'post', 'tag', 'author'
+        'layout', 'index', 'post', 'tag', 'author'
     ];
 
     /**
@@ -132,7 +132,7 @@ class GenerateThemeCommand extends Command
     {
         // replace the placeholders in the file
         $stub = str_replace('THEME_NAME', ucfirst($name), $stub);
-        $stub = str_replace('theme_name', str_slug($name, '_'), $stub);
+        $stub = str_replace('theme_template', str_slug($name, '_'), $stub);
 
         return $stub;
     }
