@@ -53,11 +53,6 @@ if (window.moment === undefined) {
 }
 
 /**
- * Load Selectize JS
- */
-require('selectize');
-
-/**
  * Load SortableJS
  */
 if (window.Sortable === undefined) {

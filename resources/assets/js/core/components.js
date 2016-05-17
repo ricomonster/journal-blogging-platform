@@ -15,6 +15,7 @@ require('./../components/login');
 require('./../components/navigation');
 require('./../components/settings');
 
+require('./../journal-components/loader');
 require('./../journal-components/time-ago');
 
 /**

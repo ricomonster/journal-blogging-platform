@@ -32,6 +32,9 @@ Vue.component('journal-tags-list', {
                 .then( function (response) {
                     if (response.data.tags) {
                         vm.$set('tags', response.data.tags);
+
+                        // unset the loading flag
+                        vm.$set('loading', false);
                     }
                 });
         },
@@ -81,6 +84,6 @@ Vue.component('journal-tags-list', {
          */
         toggleSidebar : function () {
             this.$set('sidebarOpen', !this.sidebarOpen);
-        },
+        }
     }
 });

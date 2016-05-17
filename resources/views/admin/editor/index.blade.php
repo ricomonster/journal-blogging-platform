@@ -4,12 +4,7 @@
 @section('content')
 <journal-editor inline-template>
     <div id="editor_page">
-        <div class="loading-overlay" v-if="loading">
-            <div class="content">
-                <i class="fa fa-circle-o-notch fa-spin"></i>
-                <p class="loading-text">Loading</p>
-            </div>
-        </div>
+        <loader v-if="loading"></loader>
         <form v-on:submit.prevent="savePost($event)">
             <header class="page-header clearfix">
                 <input type="text" v-model="post.title" placeholder="Title"
