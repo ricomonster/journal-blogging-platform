@@ -90,6 +90,18 @@ class GenerateThemeCommand extends Command
             // show some message
             $this->info('Generating file '. $name . '/'. $themeFile.'.blade.php...');
 
+            // check if the file is a layout
+            if ($themeFile === 'layout') {
+                // layout stub
+                $layoutStub = $this->populateStub($name, $this->getStub('layout'));
+
+
+                $this->filesystem->put(
+                    $themePath . '/' . $themeFile . '.blade.php',
+                    $layoutStub);
+                continue;
+            }
+
             $this->filesystem->put(
                 $themePath . '/' . $themeFile . '.blade.php',
                 $stub);

@@ -4,7 +4,9 @@ namespace Journal\Http\Controllers\API;
 use Illuminate\Http\Request;
 use Journal\Http\Controllers\API\ApiController;
 use Journal\Http\Requests;
+use Journal\Repositories\Post\PostRepositoryInterface;
 use Journal\Repositories\Settings\SettingsRepositoryInterface;
+use Journal\Repositories\Tag\TagRepositoryInterface;
 use Journal\Repositories\User\UserRepositoryInterface;
 use Journal\Support\DatabaseManager;
 use Journal\Support\EnvironmentManager;
@@ -54,9 +56,27 @@ class ApiInstallerController extends ApiController
     protected $environment;
 
     /**
+     * @var PostRepositoryInterface
+     */
+    protected $posts;
+
+    /**
+     * @var array
+     */
+    protected $postTags = [
+        ['tag' => 'Journal'],
+        ['tag' => 'Getting Started']
+    ];
+
+    /**
      * @var SettingsRepositoryInterface
      */
     protected $settings;
+
+    /**
+     * @var TagRepositoryInterface
+     */
+    protected $tags;
 
     /**
      * @var UserRepositoryInterface
@@ -65,18 +85,24 @@ class ApiInstallerController extends ApiController
 
     /**
      * ApiInstallerController constructor.
+     *
+     * @param PostRepositoryInterface $posts
      * @param SettingsRepositoryInterface $settings
      * @param UserRepositoryInterface $users
      * @param DatabaseManager $database
      * @param EnvironmentManager $environment
      */
     public function __construct(
+        PostRepositoryInterface $posts,
         SettingsRepositoryInterface $settings,
+        TagRepositoryInterface $tags,
         UserRepositoryInterface $users,
         DatabaseManager $database,
         EnvironmentManager $environment)
     {
+        $this->posts    = $posts;
         $this->settings = $settings;
+        $this->tags     = $tags;
         $this->users    = $users;
 
         $this->database     = $database;
@@ -120,7 +146,7 @@ class ApiInstallerController extends ApiController
 
         // return the redirect url
         return $this->respond([
-            'redirect_url' => url('/installer/setup')
+            'redirect_url' => '/installer/setup'
         ]);
     }
 
@@ -147,10 +173,11 @@ class ApiInstallerController extends ApiController
         // generate some default settings
         $this->generateJournalSettings($request);
 
+        // set the first post of the user
+        $this->generateFirstPost($user);
+
         // finally, installation is complete
         $this->installJournal();
-
-        // TODO: create first post for the user
 
         // return user details
         return $this->respond(['user' => $user->toArray()]);
@@ -162,6 +189,34 @@ class ApiInstallerController extends ApiController
     protected function installJournal()
     {
         file_put_contents(storage_path('installed'), '');
+    }
+
+    /**
+     * Generate the first post.
+     *
+     * @param  Journal\User $user
+     * @return Journal\Post
+     */
+    public function generateFirstPost($user)
+    {
+        // get the file contents of the readme
+        $readme = file_get_contents(base_path('readme.md'));
+
+        // generate post tags
+        $tagIds = $this->tags->generatePostTags($this->postTags);
+
+        // create the post
+        $post = $this->posts->create([
+            'author_id'     => $user->id,
+            'title'         => 'Journal Blogging Platform',
+            'content'       => $readme,
+            'cover_image'   => '',
+            'status'        => 1,
+            'published_at'  => time(),
+            'tag_ids'       => $tagIds
+        ]);
+
+        return $post;
     }
 
     /**
@@ -194,7 +249,9 @@ class ApiInstallerController extends ApiController
         $navigation['url'] = url($navigation['url']);
 
         // save it
-        $results[] = $this->settings->save('navigation', json_encode([$navigation]));
+        $results[] = $this->settings->save(
+            'navigation',
+            json_encode([$navigation]));
 
         return $results;
     }

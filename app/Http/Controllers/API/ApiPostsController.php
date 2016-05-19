@@ -72,7 +72,8 @@ class ApiPostsController extends ApiController
         $this->posts->setToInactive($post->id);
 
         return $this->respond([
-            'error' => false]);
+            'error' => false
+	]);
     }
 
     public function generateSlug(Request $request)
@@ -100,7 +101,9 @@ class ApiPostsController extends ApiController
         // generate slug
         $slug = $this->posts->generateSlug($request->input('string'), $postId);
 
-        return $this->respond(['slug' => $slug]);
+        return $this->respond([
+		'slug' => $slug
+	]);
     }
 
     /**
