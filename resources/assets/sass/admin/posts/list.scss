@@ -1,9 +1,7 @@
 #posts_list_page {
     height: 100%;
     position: relative;
-}
 
-#posts_list_page {
     .post-lists {
         border-right: 1px solid $border-color;
         bottom: 0;
@@ -11,9 +9,7 @@
         position: absolute;
         top: 59px;
         width: 30%;
-    }
 
-    .post-lists {
         .post-lists-header {
             background-color: $primary-bg-color;
             border-bottom: 1px solid $border-color;
@@ -33,12 +29,15 @@
             position: absolute;
             right: 0;
             top: 0;
-        }
 
-        .lists-wrapper {
             .no-posts {
                 padding: 5px 15px;
                 text-align: center;
+            }
+
+            .loading-overlay {
+                border-bottom: 1px solid $border-color;
+                padding: 5px 0;
             }
         }
 
@@ -51,15 +50,7 @@
                 padding: 10px 15px;
                 text-decoration: none;
                 width: 100%;
-            }
 
-            .hyperlink:hover {
-                background-color: $primary-bg-color;
-                border-left: 3px solid $border-color;
-                cursor: pointer;
-            }
-
-            .hyperlink {
                 .post-title {
                     color: $text;
                     font-size: 18px;
@@ -68,7 +59,15 @@
                     margin: 0 0 5px;
                 }
 
-                .post-meta { color: $subtext; }
+                .post-meta {
+                    color: $subtext;
+                }
+            }
+
+            .hyperlink:hover {
+                background-color: $primary-bg-color;
+                border-left: 3px solid $border-color;
+                cursor: pointer;
             }
         }
 
@@ -86,9 +85,7 @@
         right: 0;
         top: 59px;
         width: 70%;
-    }
 
-    .post-preview {
         .preview-header {
             background-color: $primary-bg-color;
             border-bottom: 1px solid $border-color;
@@ -98,24 +95,24 @@
             right: 15px;
             top: 0;
             z-index: 100;
-        }
 
-        .preview-header {
-            .post-meta { color: $subtext; float: left; padding: 4px 0; }
-            .post-controls { float: right; }
+            .post-meta {
+                color: $subtext;
+                float: left;
+                padding: 4px 0;
+            }
+
             .post-controls {
+                float: right;
+
                 .control-lists {
                     list-style: none;
                     margin: 0;
                     padding: 0;
-                }
 
-                .control-lists {
                     li {
                         display: inline-block;
-                    }
 
-                    li {
                         a {
                             color: $text;
                             font-size: 20px;
@@ -153,9 +150,7 @@
         .no-post {
             padding: 60px 20px;
             text-align: center;
-        }
 
-        .no-post {
             a {
                 i { margin-left: 3px; }
             }

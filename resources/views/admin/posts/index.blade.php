@@ -34,6 +34,7 @@
                 <div class="auto-height no-posts" v-if="!loading && !posts.length">
                     <h3>No posts to display.</h3>
                 </div>
+                <loader v-if="loading" class="not-fullscreen"></loader>
             </section>
         </section>
         <section class="post-preview">
@@ -88,6 +89,7 @@
                     <i class="fa fa-arrow-right"></i>
                 </a>
             </div>
+            <loader v-if="loading"></loader>
         </section>
     </div>
 

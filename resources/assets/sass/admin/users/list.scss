@@ -2,22 +2,15 @@
     .users-list {
         .wrapper {
             .user {
-
-            }
-
-            .user {
                 a {
                     display: block;
                     text-decoration: none;
-                }
 
-                a {
                     .avatar-wrapper {
                         float: left;
+                        height: 80px;
                         width: 80px;
-                    }
 
-                    .avatar-wrapper {
                         img {
                             border-radius: 50%;
                             display: block;
@@ -29,9 +22,7 @@
 
                     .user-details {
                         margin-left: 90px;
-                    }
-
-                    .user-details {
+                    
                         h3.user-name {
                             font-size: 20px;
                             margin: 0;

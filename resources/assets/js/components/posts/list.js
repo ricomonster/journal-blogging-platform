@@ -49,18 +49,19 @@ Vue.component('journal-posts-list', {
         getPosts : function () {
             var vm = this;
 
-            vm.loading = true;
+            // flag that we're processing
+            vm.$set('active', true);
 
             vm.$http.get('/api/posts/get')
                 .then(function (response) {
                     if (response.data.posts) {
-                        vm.posts = response.data.posts;
+                        vm.$set('posts', response.data.posts);
 
                         // get the first post as the active post
-                        vm.active = vm.posts[0];
+                        vm.$set('active', vm.posts[0]);
                     }
 
-                    vm.loading = false;
+                    vm.$set('loading', false);
                 });
         },
 
