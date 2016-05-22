@@ -19,50 +19,61 @@
                 settings later.
             </p>
 
-            <form v-on:submit="saveSetup" autocomplete="off">
+            <form v-on:submit="saveSetup" autocomplete="off"
+            class="form-horizontal">
                 <div class="form-group" v-bind:class="{ 'has-error' : errors.blog_title }">
-                    <label class="control-label">Blog Title</label>
-                    <input type="text" v-model="setup.blog_title" class="form-control"
-                    placeholder="Journal"/>
-                    <span class="help-block" v-if="{ 'has-error' : errors.blog_title }">
+                    <label class="control-label col-sm-3">Blog Title</label>
+                    <div class="col-sm-9">
+                        <input type="text" v-model="setup.blog_title" class="form-control"
+                        placeholder="Journal"/>
+                        <span class="help-block" v-if="{ 'has-error' : errors.blog_title }">
 
-                    </span>
+                        </span>
+                    </div>
                 </div>
 
                 <div class="form-group" v-bind:class="{ 'has-error' : errors.blog_description }">
-                    <label class="control-label">Blog Description</label>
-                    <textarea v-model="setup.blog_description" class="form-control"
-                    placeholder="Description..."></textarea>
-                    <span class="help-block" v-if="{ 'has-error' : errors.blog_description }">
+                    <label class="control-label col-sm-3">Blog Description</label>
+                    <div class="col-sm-9">
+                        <textarea v-model="setup.blog_description" class="form-control"
+                        placeholder="Description..."></textarea>
+                        <span class="help-block" v-if="{ 'has-error' : errors.blog_description }">
 
-                    </span>
+                        </span>
+                    </div>
                 </div>
 
                 <div class="form-group" v-bind:class="{ 'has-error' : errors.name }">
-                    <label class="control-label">Your Name</label>
-                    <input type="text" v-model="setup.name" class="form-control"
-                    placeholder="John Doe"/>
-                    <span class="help-block" v-if="{ 'has-error' : errors.name }">
+                    <label class="control-label col-sm-3">Your Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" v-model="setup.name" class="form-control"
+                        placeholder="John Doe"/>
+                        <span class="help-block" v-if="{ 'has-error' : errors.name }">
 
-                    </span>
+                        </span>
+                    </div>
                 </div>
 
                 <div class="form-group" v-bind:class="{ 'has-error' : errors.email }">
-                    <label class="control-label">Email</label>
-                    <input type="email" v-model="setup.email" class="form-control"
-                    placeholder="name@email.com"/>
-                    <span class="help-block" v-if="{ 'has-error' : errors.email }">
+                    <label class="control-label col-sm-3">Email</label>
+                    <div class="col-sm-9">
+                        <input type="email" v-model="setup.email" class="form-control"
+                        placeholder="name@email.com"/>
+                        <span class="help-block" v-if="{ 'has-error' : errors.email }">
 
-                    </span>
+                        </span>
+                    </div>
                 </div>
 
                 <div class="form-group" v-bind:class="{ 'has-error' : errors.password }">
-                    <label class="control-label">Password</label>
-                    <input type="password" v-model="setup.password" class="form-control"
-                    placeholder="******"/>
-                    <span class="help-block" v-if="{ 'has-error' : errors.password }">
+                    <label class="control-label col-sm-3">Password</label>
+                    <div class="col-sm-9">
+                        <input type="password" v-model="setup.password" class="form-control"
+                        placeholder="******"/>
+                        <span class="help-block" v-if="{ 'has-error' : errors.password }">
 
-                    </span>
+                        </span>
+                    </div>
                 </div>
 
                 <div class="form-buttons">

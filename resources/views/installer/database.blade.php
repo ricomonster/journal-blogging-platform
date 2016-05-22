@@ -21,42 +21,50 @@
 
             <br/>
 
-            <form v-on:submit.prevent="saveDatabaseSettings()">
+            <form v-on:submit.prevent="saveDatabaseSettings()" class="form-horizontal">
                 <div class="form-group">
-                    <label class="control-label">Database Name</label>
-                    <input type="text" v-model="database.db_database" class="form-control"
-                    value="{{$env['db_database']}}"/>
-                    <span class="help-block">
-                        The name of the database you want to run Journal
-                    </span>
+                    <label class="control-label col-sm-3">Database Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" v-model="database.db_database" class="form-control"
+                        value="{{$env['db_database']}}"/>
+                        <span class="help-block">
+                            The name of the database you want to run Journal
+                        </span>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label">User Name</label>
-                    <input type="text" v-model="database.db_username" class="form-control"
-                    value="{{$env['db_username']}}"/>
-                    <span class="help-block">
-                        Your MySQL username
-                    </span>
+                    <label class="control-label col-sm-3">User Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" v-model="database.db_username" class="form-control"
+                        value="{{$env['db_username']}}"/>
+                        <span class="help-block">
+                            Your MySQL username
+                        </span>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label">Password</label>
-                    <input type="text" v-model="database.db_password" class="form-control"
-                    value="{{$env['db_password']}}"/>
-                    <span class="help-block">
-                        Your MySQL password
-                    </span>
+                    <label class="control-label col-sm-3">Password</label>
+                    <div class="col-sm-9">
+                        <input type="text" v-model="database.db_password" class="form-control"
+                        value="{{$env['db_password']}}"/>
+                        <span class="help-block">
+                            Your MySQL password
+                        </span>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label">Database Host</label>
-                    <input type="text" v-model="database.db_host" class="form-control"
-                    value="{{$env['db_host']}}"/>
-                    <span class="help-block">
-                        If <code>localhost</code> or <code>127.0.0.1</code> won't work,
-                        check the details from your web host.
-                    </span>
+                    <label class="control-label col-sm-3">Database Host</label>
+                    <div class="col-sm-9">
+                        <input type="text" v-model="database.db_host" class="form-control"
+                        value="{{$env['db_host']}}"/>
+                        <span class="help-block">
+                            If <code>localhost</code> or <code>127.0.0.1</code> won't work,
+                            check the details from your web host.
+                        </span>
+                    </div>
                 </div>
 
                 <div class="form-buttons">
