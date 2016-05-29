@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Journal\Http\Requests;
 use Journal\Http\Controllers\Controller;
 use Journal\Repositories\Settings\DbSettingsRepository;
+use Journal\Support\MetaGenerator;
 
 /**
  * Class BlogController
@@ -116,9 +117,51 @@ class BlogController extends Controller
         // setup the path of the where the themes are located
         view()->addLocation(base_path('themes'));
 
+        // generate the meta
+        $data['journal_head'] = $this->meta($data, $template);
+
         // set the body class
         $data['body_class'] = $this->bodyClass($template);
 
         return view($this->theme . '.' . $template, $data);
+    }
+
+    /**
+     * Generates the meta data for a given page
+     *
+     * @param  object|array|null $data
+     * @param  string|null $type
+     * @return array
+     */
+    protected function meta($data = null, $type = null)
+    {
+        // instantiate the meta generator class
+        $metaGenerator = new MetaGenerator();
+
+        // check the type given based on the name of the template
+        if (!is_null($type)) {
+            switch ($type) {
+                case 'author' :
+                    // get the data for author
+                    $data = $data['author'];
+                    break;
+                case 'post' :
+                    $data = $data['post'];
+                    break;
+                case 'tag' :
+                    // get the data for author
+                    $data = $data['tag'];
+                    break;
+                default:
+                    // let's just make it null so it will render the default metas
+                    $type = null;
+                    break;
+            }
+        }
+
+        // generate and return the data
+        return $metaGenerator
+            ->generate($data, $type)
+            ->withTemplate();
     }
 }

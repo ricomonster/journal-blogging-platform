@@ -8,5 +8,5 @@ Homestead.yaml
 composer.lock
 /public/uploads
 /public/vendor
-/public/themes/bootstrap/assets
+/public/themes/bootstrap
 /storage/installed

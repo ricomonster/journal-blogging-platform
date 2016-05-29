@@ -11,6 +11,8 @@
     <link href="{{ theme_asset('assets/css/font-awesome.min.css') }}" rel="stylesheet"/>
     <link href="{{ theme_asset('assets/css/screen.css') }}" rel="stylesheet"/>
 
+    {!! $journal_head !!}
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
