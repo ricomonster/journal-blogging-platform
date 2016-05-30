@@ -5,6 +5,10 @@ use Illuminate\Http\Request;
 use Journal\Http\Requests;
 use Journal\Http\Controllers\Controller;
 
+/**
+ * Class TagsController
+ * @package Journal\Http\Controllers\Admin
+ */
 class TagsController extends Controller
 {
     /**

@@ -11,6 +11,10 @@ use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use JWTAuth;
 use Schema;
 
+/**
+ * Class ApiAuthController
+ * @package Journal\Http\Controllers\API
+ */
 class ApiAuthController extends ApiController
 {
     /**

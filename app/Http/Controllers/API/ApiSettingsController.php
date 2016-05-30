@@ -6,6 +6,10 @@ use Journal\Http\Requests;
 use Journal\Http\Controllers\API\ApiController;
 use Journal\Repositories\Settings\SettingsRepositoryInterface;
 
+/**
+ * Class ApiSettingsController
+ * @package Journal\Http\Controllers\API
+ */
 class ApiSettingsController extends ApiController
 {
     protected $settings;

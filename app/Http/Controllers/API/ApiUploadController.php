@@ -5,6 +5,10 @@ use Illuminate\Http\Request;
 use Journal\Http\Requests;
 use Journal\Http\Controllers\API\ApiController;
 
+/**
+ * Class ApiUploadController
+ * @package Journal\Http\Controllers\API
+ */
 class ApiUploadController extends ApiController
 {
     protected $uploadPath;

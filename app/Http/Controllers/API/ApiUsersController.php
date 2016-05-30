@@ -6,6 +6,10 @@ use Journal\Http\Controllers\API\ApiController;
 use Journal\Http\Requests;
 use Journal\Repositories\User\UserRepositoryInterface;
 
+/**
+ * Class ApiUsersController
+ * @package Journal\Http\Controllers\API
+ */
 class ApiUsersController extends ApiController
 {
     /**

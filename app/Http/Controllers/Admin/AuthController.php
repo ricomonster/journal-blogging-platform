@@ -7,6 +7,10 @@ use Journal\Http\Requests\AuthFormRequest;
 use Journal\Http\Controllers\Controller;
 use Auth;
 
+/**
+ * Class AuthController
+ * @package Journal\Http\Controllers\Admin
+ */
 class AuthController extends Controller
 {
     public function authenticate(AuthFormRequest $request)

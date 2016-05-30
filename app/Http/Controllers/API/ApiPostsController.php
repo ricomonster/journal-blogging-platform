@@ -9,6 +9,10 @@ use Journal\Repositories\User\UserRepositoryInterface;
 use Journal\Repositories\Tag\TagRepositoryInterface;
 use Validator;
 
+/**
+ * Class ApiPostsController
+ * @package Journal\Http\Controllers\API
+ */
 class ApiPostsController extends ApiController
 {
     const POST_NO_TITLE = 'Untitled';
@@ -17,6 +21,11 @@ class ApiPostsController extends ApiController
     protected $tags;
     protected $users;
 
+    /**
+     * @param PostRepositoryInterface $posts
+     * @param TagRepositoryInterface  $tags
+     * @param UserRepositoryInterface $users
+     */
     public function __construct(PostRepositoryInterface $posts, TagRepositoryInterface $tags, UserRepositoryInterface $users)
     {
         $this->posts    = $posts;
@@ -27,8 +36,8 @@ class ApiPostsController extends ApiController
     /**
      * Performs the action to delete a post.
      *
-     * @param Request $request
-     * @return mixed
+     * @param  Request $request [description]
+     * @return [type]           [description]
      */
     public function delete(Request $request)
     {
@@ -142,8 +151,8 @@ class ApiPostsController extends ApiController
     /**
      * Saves the post
      *
-     * @param Request $request
-     * @return mixed
+     * @param   Request $request
+     * @return  mixed
      */
     public function save(Request $request)
     {

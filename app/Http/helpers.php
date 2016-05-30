@@ -54,6 +54,8 @@ if (!function_exists('blog_description')) {
 
 /**
  * Returns the cover url for the blog.
+ *
+ * @return string|void
  */
 if (!function_exists('cover_photo')) {
     function cover_photo()
@@ -69,6 +71,8 @@ if (!function_exists('cover_photo')) {
 
 /**
  * Returns the logo url for the blog.
+ *
+ * @return string|void
  */
 if (!function_exists('logo_photo'))
 {
@@ -85,6 +89,11 @@ if (!function_exists('logo_photo'))
 
 /**
  * Wraps the logo image in an a href tag
+ *
+ * @param   string $url
+ * @param   string|null $class
+ * @param   string|null $alt
+ * @return  string|null
  */
 if (!function_exists('blog_logo_photo'))
 {
@@ -115,6 +124,9 @@ if (!function_exists('blog_logo_photo'))
 /**
  * Checks if the current url is the same or similar to the given keyword and
  * returns a boolean to confirm it.
+ *
+ * @param   string $keyword
+ * @return  boolean
  */
 if (!function_exists('is_active_menu')) {
     function is_active_menu($keyword)
@@ -125,6 +137,9 @@ if (!function_exists('is_active_menu')) {
 
 /**
  * Helper function to easily set the path of the file or asset to be used.
+ *
+ * @param   string $filePath
+ * @return  string
  */
 if (!function_exists('theme_asset')) {
     function theme_asset($filePath)
@@ -140,6 +155,9 @@ if (!function_exists('theme_asset')) {
 
 /**
  * Converts the markdown content to HTML
+ *
+ * @param   string $markdown
+ * @return  string
  */
 if (!function_exists('markdown')) {
     function markdown($markdown)
@@ -153,6 +171,10 @@ if (!function_exists('markdown')) {
 
 /**
  * Strips the content of the post to make an excerpt.
+ *
+ * @param   string  $post
+ * @param   int     $limit
+ * @return  string
  */
 if (!function_exists('excerpt')) {
     function excerpt($post, $limit = 50) {
@@ -181,6 +203,11 @@ if (!function_exists('excerpt')) {
 
 /**
  * Renders the post tags in a better fashion. :)
+ *
+ * @param   array   $tags
+ * @param   string  $delimiter
+ * @param   boolean $convertToLink
+ * @return  string
  */
 if (!function_exists('post_tags')) {
     function post_tags($tags, $delimiter = ',', $convertToLink = true)
@@ -216,6 +243,8 @@ if (!function_exists('post_tags')) {
 
 /**
  * Returns the list of navigation menu
+ *
+ * @return null|array
  */
 if (!function_exists('navigation_menu')) {
     function navigation_menu()

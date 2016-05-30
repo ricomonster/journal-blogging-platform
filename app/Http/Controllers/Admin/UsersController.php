@@ -5,6 +5,10 @@ use Illuminate\Http\Request;
 use Journal\Http\Requests;
 use Journal\Http\Controllers\Controller;
 
+/**
+ * Class UsersController
+ * @package Journal\Http\Controllers\Admin
+ */
 class UsersController extends Controller
 {
     public function changePassword()

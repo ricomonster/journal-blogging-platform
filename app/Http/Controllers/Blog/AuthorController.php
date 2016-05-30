@@ -7,6 +7,10 @@ use Journal\Http\Controllers\Blog\BlogController;
 use Journal\Repositories\Blog\BlogRepositoryInterface;
 use Journal\Repositories\User\UserRepositoryInterface;
 
+/**
+ * Class 
+ * @package Journal\Http\Controllers\API
+ */
 class AuthorController extends BlogController
 {
     /**

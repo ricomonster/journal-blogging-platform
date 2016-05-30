@@ -6,6 +6,10 @@ use Journal\Http\Requests;
 use Journal\Http\Controllers\API\ApiController;
 use Journal\Repositories\Tag\TagRepositoryInterface;
 
+/**
+ * Class ApiTagsController
+ * @package Journal\Http\Controllers\API
+ */
 class ApiTagsController extends ApiController
 {
     protected $tags;

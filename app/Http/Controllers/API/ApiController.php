@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Journal\Http\Controllers\Controller;
 use Journal\Http\Requests;
 
+/**
+ * Class ApiController
+ * @package Journal\Http\Controllers\API
+ */
 class ApiController extends Controller
 {
     // API Response Status Codes
