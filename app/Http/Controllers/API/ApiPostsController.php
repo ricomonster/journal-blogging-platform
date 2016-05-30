@@ -102,8 +102,8 @@ class ApiPostsController extends ApiController
         $slug = $this->posts->generateSlug($request->input('string'), $postId);
 
         return $this->respond([
-		'slug' => $slug
-	]);
+    		'slug' => $slug
+    	]);
     }
 
     /**
