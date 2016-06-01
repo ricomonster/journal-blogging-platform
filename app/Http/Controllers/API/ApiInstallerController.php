@@ -185,6 +185,8 @@ class ApiInstallerController extends ApiController
 
     /**
      * "Install" Journal by putting a file somewhere in the storage path
+     *
+     * @return void
      */
     protected function installJournal()
     {

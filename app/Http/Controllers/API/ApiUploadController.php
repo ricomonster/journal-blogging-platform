@@ -11,9 +11,23 @@ use Journal\Http\Controllers\API\ApiController;
  */
 class ApiUploadController extends ApiController
 {
+    /**
+     * File system path of the upload path
+     *
+     * @var string
+     */
     protected $uploadPath;
+
+    /**
+     * Name of the folder where the file is to be stored.
+     *
+     * @var string
+     */
     protected $uploadUrl;
 
+    /**
+     * ApiUploadController constructor
+     */
     public function __construct()
     {
         $yearMonth = date('Y/m');

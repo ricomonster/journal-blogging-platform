@@ -15,13 +15,32 @@ use Validator;
  */
 class ApiPostsController extends ApiController
 {
+    /**
+     *
+     */
     const POST_NO_TITLE = 'Untitled';
 
+    /**
+     * The post repository interface instance.
+     * @var PostRepositoryInterface
+     */
     protected $posts;
+
+    /**
+     * The tag repository interface instance.
+     * @var TagRepositoryInterface
+     */
     protected $tags;
+
+    /**
+     * The user repository interface instance.
+     * @var UserRepositoryInterface
+     */
     protected $users;
 
     /**
+     * ApiPostsController constructor
+     *
      * @param PostRepositoryInterface $posts
      * @param TagRepositoryInterface  $tags
      * @param UserRepositoryInterface $users
@@ -36,8 +55,8 @@ class ApiPostsController extends ApiController
     /**
      * Performs the action to delete a post.
      *
-     * @param  Request $request [description]
-     * @return [type]           [description]
+     * @param  Request $request
+     * @return Response
      */
     public function delete(Request $request)
     {
@@ -58,7 +77,8 @@ class ApiPostsController extends ApiController
         if (empty($post)) {
             return $this->setStatusCode(self::NOT_FOUND)
                 ->respondWithError([
-                    'message' => self::POST_NOT_FOUND]);
+                    'message' => self::POST_NOT_FOUND
+                ]);
         }
 
         // check if the user exists
@@ -74,7 +94,8 @@ class ApiPostsController extends ApiController
         if ($post->author_id != $user->id) {
             return $this->setStatusCode(self::FORBIDDEN)
                 ->respondWithError([
-                    'message' => self::UNAUTHORIZED_ACCESS]);
+                    'message' => self::UNAUTHORIZED_ACCESS
+                ]);
         }
 
         // delete post
@@ -82,15 +103,21 @@ class ApiPostsController extends ApiController
 
         return $this->respond([
             'error' => false
-	]);
+        ]);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function generateSlug(Request $request)
     {
         // check if there's a string given
         if (empty($request->input('string'))) {
             return $this->setStatusCode(self::BAD_REQUEST)
-                ->respondWithError(['message' => 'String is required.']);
+                ->respondWithError([
+                    'message' => 'String is required.'
+                ]);
         }
 
         // check if the string is equal to Journal because this is a restricted
@@ -138,14 +165,16 @@ class ApiPostsController extends ApiController
 
             // return the post
             return $this->respond([
-                'post' => $post->toArray()]);
+                'post' => $post->toArray()
+            ]);
         }
 
         // return all posts
         $posts = $this->posts->all();
 
         return $this->respond([
-            'posts' => $posts->toArray()]);
+            'posts' => $posts->toArray()
+        ]);
     }
 
     /**
@@ -162,7 +191,9 @@ class ApiPostsController extends ApiController
         if (!$request->input('author_id') ||
             empty($request->input('author_id'))) {
             return $this->setStatusCode(self::BAD_REQUEST)
-                ->respondWithError(['message' => self::AUTHOR_ID_REQUIRED]);
+                ->respondWithError([
+                    'message' => self::AUTHOR_ID_REQUIRED
+                ]);
         }
 
         // check if the user exists
@@ -206,7 +237,9 @@ class ApiPostsController extends ApiController
             // check if the post exists
             if (empty($post)) {
                 return $this->setStatusCode(self::NOT_FOUND)
-                    ->respondWithError(['message' => self::POST_NOT_FOUND]);
+                    ->respondWithError([
+                        'message' => self::POST_NOT_FOUND
+                    ]);
             }
 
             // update
@@ -214,7 +247,8 @@ class ApiPostsController extends ApiController
 
             // update the post
             return $this->respond([
-                'post' => $post->toArray()]);
+                'post' => $post->toArray()
+            ]);
         }
 
         // check if published date is set
@@ -226,7 +260,8 @@ class ApiPostsController extends ApiController
         $post = $this->posts->create($postData);
 
         return $this->respond([
-            'post' => $post->toArray()]);
+            'post' => $post->toArray()
+        ]);
     }
 
     /**

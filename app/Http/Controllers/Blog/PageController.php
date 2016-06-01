@@ -7,6 +7,10 @@ use Journal\Http\Controllers\Blog\BlogController;
 use Journal\Repositories\Blog\BlogRepositoryInterface;
 use Auth;
 
+/**
+ * Class PageController
+ * @package Journal\Http\Controllers\Blog
+ */
 class PageController extends BlogController
 {
     /**
@@ -17,6 +21,7 @@ class PageController extends BlogController
 
     /**
      * PageController constructor.
+     * 
      * @param BlogRepositoryInterface $blog
      */
     public function __construct(BlogRepositoryInterface $blog)

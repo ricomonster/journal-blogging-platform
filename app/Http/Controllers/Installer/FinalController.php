@@ -6,6 +6,10 @@ use Journal\Http\Requests;
 use Journal\Http\Controllers\Controller;
 use DB;
 
+/**
+ * Class FinalController
+ * @package Journal\Http\Controllers\Installer
+ */
 class FinalController extends Controller
 {
     public function page()

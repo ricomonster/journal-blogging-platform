@@ -8,6 +8,10 @@ use Journal\Http\Controllers\Controller;
 use Journal\Support\PermissionsChecker;
 use Journal\Support\RequirementsChecker;
 
+/**
+ * Class WelcomeController
+ * @package Journal\Http\Controllers\Installer
+ */
 class WelcomeController extends Controller
 {
     protected $folders;
@@ -15,6 +19,12 @@ class WelcomeController extends Controller
     protected $requirements;
     protected $server;
 
+    /**
+     * WelcomeController constructor
+     *
+     * @param PermissionsChecker  $permissions
+     * @param RequirementsChecker $requirements
+     */
     public function __construct(PermissionsChecker $permissions, RequirementsChecker $requirements)
     {
         $this->folders  = config('installer.permissions');

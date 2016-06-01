@@ -6,6 +6,10 @@ use Journal\Http\Requests;
 use Journal\Http\Controllers\Controller;
 use Journal\Support\EnvironmentManager;
 
+/**
+ * Class DatabaseController
+ * @package Journal\Http\Controllers\Installer
+ */
 class DatabaseController extends Controller
 {
     protected $environment;

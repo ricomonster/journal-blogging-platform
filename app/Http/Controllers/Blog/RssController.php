@@ -8,6 +8,10 @@ use Journal\Repositories\Blog\BlogRepositoryInterface;
 use App;
 use URL;
 
+/**
+ * Class RssController
+ * @package Journal\Http\Controllers\Blog
+ */
 class RssController extends BlogController
 {
     /**
@@ -50,7 +54,7 @@ class RssController extends BlogController
             $feed->link          = url('rss');
             $feed->pubdate       = $posts[0]->created_at;
             $feed->lang          = 'en';
-            
+
             $feed->setDateFormat('datetime');
             $feed->setShortening(true);
             $feed->setTextLimit(100);

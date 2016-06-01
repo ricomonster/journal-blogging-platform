@@ -12,6 +12,10 @@ use Journal\Repositories\Settings\SettingsRepositoryInterface;
  */
 class ApiSettingsController extends ApiController
 {
+    /**
+     * The setting repository interface instance.
+     * @var SettingsRepositoryInterface
+     */
     protected $settings;
 
     public function __construct(SettingsRepositoryInterface $settings)
@@ -19,6 +23,12 @@ class ApiSettingsController extends ApiController
         $this->settings = $settings;
     }
 
+    /**
+     * Fetches the settings based on the given query.
+     *
+     * @param  Request $request
+     * @return mixed
+     */
     public function get(Request $request)
     {
         $fields = $request->input('fields');
@@ -33,6 +43,12 @@ class ApiSettingsController extends ApiController
         return $this->respond(['settings' => $settings]);
     }
 
+    /**
+     * Create or update a setting.
+     *
+     * @param  Request $request
+     * @return mixed
+     */
     public function saveSettings(Request $request)
     {
         $requests = $request->all();
@@ -86,6 +102,7 @@ class ApiSettingsController extends ApiController
     /**
      * API endpoint to get and return the list of available themes.
      *
+     * @return mixed
      */
     public function themes()
     {
@@ -94,6 +111,11 @@ class ApiSettingsController extends ApiController
         ]);
     }
 
+    /**
+     * Gets the list of installed themes.
+     *
+     * @return mixed
+     */
     protected function getInstalledThemes()
     {
         $themeLists = [];

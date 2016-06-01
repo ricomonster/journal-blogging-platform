@@ -6,6 +6,10 @@ use Journal\Http\Requests;
 use Journal\Http\Controllers\Controller;
 use Journal\Role;
 
+/**
+ * Class SetupController
+ * @package Journal\Http\Controllers\Installer
+ */
 class SetupController extends Controller
 {
     public function page()

@@ -12,8 +12,17 @@ use Journal\Repositories\Tag\TagRepositoryInterface;
  */
 class ApiTagsController extends ApiController
 {
+    /**
+     * The tag repository interface instance.
+     * @var TagRepositoryInterface
+     */
     protected $tags;
 
+    /**
+     * ApiTagsController constructor
+     *
+     * @param TagRepositoryInterface $tags [description]
+     */
     public function __construct(TagRepositoryInterface $tags)
     {
         $this->tags = $tags;
@@ -111,7 +120,8 @@ class ApiTagsController extends ApiController
         $tags = $this->tags->all();
 
         return $this->respond([
-            'tags' => $tags->toArray()]);
+            'tags' => $tags->toArray()
+        ]);
     }
 
     /**
