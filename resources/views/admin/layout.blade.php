@@ -22,7 +22,7 @@
     @include('admin.scripts.globals')
 </head>
 
-<body id="journal_layout" class="open-sidebar">
+<body id="journal_layout" class="{!! (session('sidebar') === 'open') ? 'open-sidebar' : 'close-sidebar' !!}">
     <div id="journal_app" class="full-height">
         <!-- Sidebar -->
         @include('admin.common.sidebar')

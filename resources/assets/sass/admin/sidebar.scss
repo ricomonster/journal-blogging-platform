@@ -1,7 +1,8 @@
 #sidebar {
     .content {
-        background-color: $primary-bg-color;
-        border-right: 1px solid $border-color;
+        // background-color: $primary-bg-color;
+        background-color: $text;
+        // border-right: 1px solid $border-color;
         bottom: 0;
         left: 0;
         padding: 0 15px;
@@ -11,7 +12,7 @@
         width: 220px;
 
         .sidebar-header {
-            border-bottom: 1px solid $border-color;
+            border-bottom: 1px solid $subtext;
             padding: 15px 0 5px;
 
             .blog-title {
@@ -20,7 +21,7 @@
                 font-weight: bold;
 
                 a {
-                    color: $text;
+                    color: $primary-bg-color;
                     text-decoration: none;
                 }
             }
@@ -57,10 +58,11 @@
                     }
 
                     a {
-                        border-left: 3px solid $sidebar-bg-color;
-                        color: $text;
+                        border-left: 3px solid $text;
+                        color: $subtext;
                         display: block;
                         line-height: 18px;
+                        min-height: 28px;
                         padding: 5px 0 5px 10px;
                         text-decoration: none;
 
@@ -72,15 +74,16 @@
                     }
 
                     a:hover {
-                        border-left-color: $border-color;
+                        border-left-color: $secondary-bg-color;
+                        color: $secondary-bg-color;
                     }
                 }
 
                 li.active {
                     a {
-                        border-left-color: $text;
-                        color: $text;
-                        font-weight: bold;
+                        border-left-color: $secondary-bg-color;
+                        color: $secondary-bg-color;
+                        // font-weight: bold;
                     }
                 }
 
@@ -88,6 +91,30 @@
                     content : "";
                     height: 10px;
                     min-height: 10px;
+                }
+            }
+        }
+    }
+}
+
+.close-sidebar {
+    #sidebar {
+        .content {
+            width: 50px;
+
+            .sidebar-header {
+                display: none;
+            }
+
+            .sidebar-content {
+                .menu {
+                    li {
+                        a {
+                            .text {
+                                display: none;
+                            }
+                        }
+                    }
                 }
             }
         }

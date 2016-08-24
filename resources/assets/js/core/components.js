@@ -22,3 +22,4 @@ require('./../journal-components/time-ago');
  * Load Directives that most of the components used.
  */
 require('./../directives/button-loader');
+// require('./../directives/text');

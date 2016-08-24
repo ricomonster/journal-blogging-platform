@@ -9437,6 +9437,9 @@ body {
 .open-sidebar .main-content {
   margin-left: 220px; }
 
+.close-sidebar .main-content {
+  margin-left: 50px; }
+
 .page-header {
   background-color: #ffffff;
   border-bottom: 1px solid #dbdbdb;
@@ -10063,6 +10066,7 @@ a {
       top: 0;
       z-index: 100; }
     #posts_list_page .post-lists .lists-wrapper {
+      background-color: #fafafa;
       bottom: 0;
       left: 0;
       overflow: auto;
@@ -10393,8 +10397,7 @@ a {
   border-radius: 0; }
 
 #sidebar .content {
-  background-color: #ffffff;
-  border-right: 1px solid #dbdbdb;
+  background-color: #262626;
   bottom: 0;
   left: 0;
   padding: 0 15px;
@@ -10403,14 +10406,14 @@ a {
   transition: all 0.4s ease 0s;
   width: 220px; }
   #sidebar .content .sidebar-header {
-    border-bottom: 1px solid #dbdbdb;
+    border-bottom: 1px solid #a5a7aa;
     padding: 15px 0 5px; }
     #sidebar .content .sidebar-header .blog-title {
       margin: 0 0 5px;
       font-size: 18px;
       font-weight: bold; }
       #sidebar .content .sidebar-header .blog-title a {
-        color: #262626;
+        color: #ffffff;
         text-decoration: none; }
     #sidebar .content .sidebar-header .user-name {
       color: #a5a7aa; }
@@ -10436,10 +10439,11 @@ a {
           padding: 3px 15px;
           text-transform: uppercase; }
         #sidebar .content .sidebar-content .menu li a {
-          border-left: 3px solid #f5f7f8;
-          color: #262626;
+          border-left: 3px solid #262626;
+          color: #a5a7aa;
           display: block;
           line-height: 18px;
+          min-height: 28px;
           padding: 5px 0 5px 10px;
           text-decoration: none; }
           #sidebar .content .sidebar-content .menu li a i.fa {
@@ -10447,15 +10451,22 @@ a {
             font-size: 18px;
             margin-right: 10px; }
         #sidebar .content .sidebar-content .menu li a:hover {
-          border-left-color: #dbdbdb; }
+          border-left-color: #fafafa;
+          color: #fafafa; }
       #sidebar .content .sidebar-content .menu li.active a {
-        border-left-color: #262626;
-        color: #262626;
-        font-weight: bold; }
+        border-left-color: #fafafa;
+        color: #fafafa; }
       #sidebar .content .sidebar-content .menu li.divider {
         content: "";
         height: 10px;
         min-height: 10px; }
+
+.close-sidebar #sidebar .content {
+  width: 50px; }
+  .close-sidebar #sidebar .content .sidebar-header {
+    display: none; }
+  .close-sidebar #sidebar .content .sidebar-content .menu li a .text {
+    display: none; }
 
 /**
  * Installer

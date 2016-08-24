@@ -31,6 +31,7 @@ Route::group([
             Route::get('themes', 'ApiSettingsController@themes');
 
             Route::post('save_settings', 'ApiSettingsController@saveSettings');
+            Route::post('sidebar', 'ApiSettingsController@sidebar');
         });
 
         // Tag Routes

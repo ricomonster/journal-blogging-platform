@@ -18,6 +18,11 @@ class ApiSettingsController extends ApiController
      */
     protected $settings;
 
+    /**
+     * ApiSettingsController constructor
+     *
+     * @param SettingsRepositoryInterface $settings
+     */
     public function __construct(SettingsRepositoryInterface $settings)
     {
         $this->settings = $settings;
@@ -97,6 +102,29 @@ class ApiSettingsController extends ApiController
 
         return $this->respond([
             'settings' => $settings]);
+    }
+
+    /**
+     * @param  Request $request
+     * @return mixed
+     */
+    public function sidebar(Request $request)
+    {
+        // check if there's a given status
+        if (!$request->input('status')) {
+            return $this->respond([
+                'error' => false
+            ]);
+        }
+
+        // set in the session
+        session([
+            'sidebar' => $request->input('status')
+        ]);
+
+        return $this->respond([
+            'error' => false
+        ]);
     }
 
     /**

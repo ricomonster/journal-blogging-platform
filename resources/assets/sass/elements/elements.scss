@@ -23,6 +23,12 @@ body {
     }
 }
 
+.close-sidebar {
+    .main-content {
+        margin-left: 50px;
+    }
+}
+
 .page-header {
     background-color: $primary-bg-color;
     border-bottom: 1px solid $border-color;
